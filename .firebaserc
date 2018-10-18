@@ -1,0 +1,5 @@
+{
+  "projects": {
+    "default": "ng2-pokemon-api"
+  }
+}
