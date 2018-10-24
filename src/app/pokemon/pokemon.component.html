@@ -1,3 +1,14 @@
-<p>
-  pokemon works!
-</p>
+
+<div id="wrapper">
+
+  <mat-card *ngFor="let poke of pokemon | async"
+    matRipple
+    >
+
+    <img src="{{ poke?.image }}" alt="">
+
+    <p id="name">{{ (poke?.pokemon | async)?.name }}</p>
+
+  </mat-card>
+
+</div>

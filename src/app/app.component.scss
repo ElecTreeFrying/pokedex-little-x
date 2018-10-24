@@ -2,20 +2,27 @@ $icon-size: 35px;
 
 #wrapper {
 
-  .wrap > .mat-toolbar {
+  .mat-toolbar > .wrap {
+    // padding: 0;
 
-    .mat-icon {
-      height: $icon-size;
-      width: $icon-size;
-      cursor: pointer;
-    }
+    > .mat-toolbar {
+      padding: 0;
 
-    span {
-      margin-left: 12px;
-      cursor: pointer;
+      .mat-icon {
+        height: $icon-size;
+        width: $icon-size;
+        cursor: pointer;
+      }
+
+      span {
+        margin-left: 12px;
+        cursor: pointer;
+      }
+
     }
 
   }
+
 
 
 

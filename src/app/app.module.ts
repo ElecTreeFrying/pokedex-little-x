@@ -7,7 +7,7 @@ import 'hammerjs';
 import { SharedService } from './common/core/service/shared.service';
 
 import { AppRoutingModule } from './app-routing.module';
-import { AppMatModule } from './common/core/module/app-mat/app-mat.module';
+import { AppMatModule } from './common/core/module/app-mat.module';
 
 import { AppComponent } from './app.component';
 

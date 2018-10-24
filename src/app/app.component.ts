@@ -25,7 +25,7 @@ export class AppComponent implements OnInit {
         relativeTo: this.route,
         skipLocationChange: true
       })
-    }, 2000);
+    }, 100);
   }
 
 }

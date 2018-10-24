@@ -4,6 +4,8 @@
 .firebase
 .firebaserc
 /src/environments/**
+firebase-debug.log
+kanji.js
 
 # compiled output
 /dist
