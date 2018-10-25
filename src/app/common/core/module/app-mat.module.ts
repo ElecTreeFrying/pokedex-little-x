@@ -3,6 +3,10 @@ import {
   MatToolbarModule,
   MatIconModule,
   MatButtonModule,
+  MatSidenavModule,
+  MatExpansionModule,
+  MatDividerModule,
+  MatRippleModule,
 } from '@angular/material';
 
 @NgModule({
@@ -10,6 +14,10 @@ import {
     MatToolbarModule,
     MatIconModule,
     MatButtonModule,
+    MatSidenavModule,
+    MatExpansionModule,
+    MatDividerModule,
+    MatRippleModule,
   ]
 })
 export class AppMatModule { }

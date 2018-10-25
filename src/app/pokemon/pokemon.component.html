@@ -1,14 +1,18 @@
 
 <div id="wrapper">
 
-  <mat-card *ngFor="let poke of pokemon | async"
-    matRipple
-    >
+  <h1>{{ region }}</h1>
 
-    <img src="{{ poke?.image }}" alt="">
+  <mat-divider></mat-divider>
 
-    <p id="name">{{ (poke?.pokemon | async)?.name }}</p>
-
-  </mat-card>
+  <div id="pokemon">
+    <mat-card *ngFor="let poke of _pokemon" matRipple (click)="selectPokemon(poke)">
+      <img src="{{ poke?.image }}" alt="{{ poke?.name }}" (load)="imageLoaded()">
+      <div *ngIf="!isLoad">
+        <mat-progress-spinner mode="indeterminate" [color]="'accent'"></mat-progress-spinner>
+      </div>
+      <p id="name">{{ poke.name }}</p>
+    </mat-card>
+  </div>
 
 </div>

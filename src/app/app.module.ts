@@ -3,6 +3,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import 'hammerjs';
+import 'simplebar';
 
 import { SharedService } from './common/core/service/shared.service';
 

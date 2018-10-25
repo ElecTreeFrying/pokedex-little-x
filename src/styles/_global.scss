@@ -1,8 +1,8 @@
 html, body {
   margin: 0;
-  // color: antiquewhite;
+  color: antiquewhite;
   font-family: 'Roboto', sans-serif;
-  // background-color: rgb(48, 48, 48); 
+  background-color: rgb(48, 48, 48);
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -34,15 +34,23 @@ input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-i
   flex: 1 1 auto;
 }
 
-@media (min-width: 576px) {
-  .wrap {
-    max-width: 540px;
-  }
+.simplebar-wrapper {
+  // overflow: hidden;
+  // overflow-y: hidden;
+  overflow-y: auto;
 }
+
+// @media (min-width: 576px) {
+//   .wrap {
+//     max-width: 540px;
+//     max-width: 460px;
+//   }
+// }
 
 @media (min-width: 768px) {
   .wrap {
     max-width: 720px;
+    // max-width: 460px;
   }
 }
 

@@ -1,30 +1,67 @@
 $icon-size: 35px;
 
-#wrapper {
+.mat-sidenav {
 
-  .mat-toolbar > .wrap {
-    // padding: 0;
+  h3 {
+    margin: 0;
+    padding: 15px;
+    cursor: pointer;
+  }
+
+  .mat-expansion-panel {
+    width: 300px;
+    .mat-expansion-panel-header {
+      color: white;
+    }
+  }
+
+  #panel-content {
+    margin-left: -24px;
+    margin-bottom: -16px;
+    .mat-expansion-panel-header {
+      padding-left: 31.5px;
+    }
+  }
+
+}
+
+.mat-sidenav-container {
+  #wrapper {
 
     > .mat-toolbar {
+      position: absolute;
+      z-index: 5;
+    }
+
+    > .mat-toolbar > .wrap {
       padding: 0;
 
-      .mat-icon {
-        height: $icon-size;
-        width: $icon-size;
-        cursor: pointer;
-      }
+      > .mat-toolbar {
+        padding: 0;
 
-      span {
-        margin-left: 12px;
-        cursor: pointer;
-      }
+        .mat-icon-button {
+          .mat-icon {
+            transform: translateY(4px);
+          }
+        }
 
+        .mat-icon {
+          height: $icon-size;
+          width: $icon-size;
+          cursor: pointer;
+        }
+
+        span {
+          margin-left: 12px;
+          cursor: pointer;
+        }
+      }
+    }
+
+    #content {
+      height: 100vh;
+      overflow-y: auto;
     }
 
   }
-
-
-
-
-
 }

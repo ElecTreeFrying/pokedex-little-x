@@ -1,12 +1,19 @@
+
 #wrapper {
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: center;
-  padding-top: 50px;
+  padding: 0 32px;
+  padding-top: calc(25px + 8vh);
+
+  #pokemon {
+    // border: 2px solid orange;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    padding: 7.5px 0;
+  }
 
   .mat-card {
-    width: 200px;
-    height: 239px;
+    width: 160px;
+    height: 199px;
     margin: 7.5px 7.5px;
     cursor: pointer;
 
@@ -16,11 +23,23 @@
       font-family: 'Bai Jamjuree', sans-serif;
       font-weight: 600;
       margin-top: 15px;
+      bottom: 0;
     }
 
     img {
-      width: 168px;
+      width: 128px;
       pointer-events: none;
+    }
+
+    > div {
+      display: flex;
+      position: absolute;
+      left: 0;
+      right: 0;
+
+      .mat-progress-spinner {
+        margin: auto;
+      }
     }
 
   }

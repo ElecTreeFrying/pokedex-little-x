@@ -1,22 +1,92 @@
-<div id="wrapper">
 
-  <mat-toolbar color="primary">
-    <div class="wrap">
-      <mat-toolbar color="primary">
+<mat-sidenav-container>
 
-        <mat-icon svgIcon="logo"></mat-icon>
-        <span>Pokedex v2</span>
+  <mat-sidenav #sidenav mode="side" opened>
+
+    <h3 matRipple>Pokédex</h3>
+
+    <mat-divider></mat-divider>
+
+    <mat-accordion displayMode="flat">
+
+      <mat-expansion-panel expanded>
+        <mat-expansion-panel-header matRipple>Pokémon Generation</mat-expansion-panel-header>
+        <ng-template matExpansionPanelContent>
+          <div id="panel-content">
+            <mat-expansion-panel matRipple hideToggle="true" disabled
+              *ngFor="let item of list; let i = index" (click)="getPokemonByGeneration(i + 1)">
+              <mat-expansion-panel-header>Generation {{ i + 1 }} - {{ item }}</mat-expansion-panel-header>
+            </mat-expansion-panel>
+          </div>
+        </ng-template>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel matRipple hideToggle="true" disabled (click)="getPokemonByGeneration(0)">
+        <mat-expansion-panel-header>National Pokédex</mat-expansion-panel-header>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel hideToggle="true" disabled>
+        <mat-expansion-panel-header>Berries</mat-expansion-panel-header>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel hideToggle="true" disabled>
+        <mat-expansion-panel-header>Contests</mat-expansion-panel-header>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel hideToggle="true" disabled>
+        <mat-expansion-panel-header>Items</mat-expansion-panel-header>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel hideToggle="true" disabled>
+        <mat-expansion-panel-header>Locations</mat-expansion-panel-header>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel hideToggle="true" disabled>
+        <mat-expansion-panel-header>Moves</mat-expansion-panel-header>
+      </mat-expansion-panel>
+
+    </mat-accordion>
+
+  </mat-sidenav>
+
+  <mat-sidenav #pokemon mode="over" position="end" opened>
+
+    <h3 matRipple>Pokédex</h3>
+
+    <mat-divider></mat-divider>
+
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <div id="wrapper">
+
+      <mat-toolbar color="primary" (click)="sidenav.toggle()">
+
+        <button mat-icon-button>
+          <mat-icon>reorder</mat-icon>
+        </button>
+        <span>Pokédex</span>
+        <!-- <div class="wrap">
+          <mat-toolbar color="primary">
+            <button mat-icon-button>
+              <mat-icon>reorder</mat-icon>
+            </button>
+            <span>Pokédex</span>
+          </mat-toolbar>
+        </div> -->
 
       </mat-toolbar>
+
+      <div id="content" data-simplebar>
+        <!-- <div class="wrap"> -->
+        <div class="">
+
+          <router-outlet></router-outlet>
+
+        </div>
+      </div>
+
     </div>
-  </mat-toolbar>
+  </mat-sidenav-content>
 
-  <div id="content">
-    <div class="wrap">
-
-      <router-outlet></router-outlet>
-
-    </div>
-  </div>
-
-</div>
+</mat-sidenav-container>

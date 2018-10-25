@@ -4,6 +4,9 @@ import {
   MatButtonModule,
   MatIconModule,
   MatRippleModule,
+  MatDividerModule,
+  MatProgressSpinnerModule,
+  MatSidenavModule,
 } from '@angular/material';
 
 @NgModule({
@@ -12,6 +15,9 @@ import {
     MatButtonModule,
     MatIconModule,
     MatRippleModule,
+    MatDividerModule,
+    MatProgressSpinnerModule,
+    MatSidenavModule,
   ]
 })
 export class PokemonMatModule { }

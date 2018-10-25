@@ -3,6 +3,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { MatIconRegistry } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
 
+import { SharedService } from './common/core/service/shared.service';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -10,9 +12,12 @@ import { DomSanitizer } from '@angular/platform-browser';
 })
 export class AppComponent implements OnInit {
 
+  list = []
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
+    private shared: SharedService,
     iconRegistry: MatIconRegistry, sanitizer: DomSanitizer
   ) {
     const url = sanitizer.bypassSecurityTrustResourceUrl('../assets/icons/pokeball.svg');
@@ -26,6 +31,12 @@ export class AppComponent implements OnInit {
         skipLocationChange: true
       })
     }, 100);
+
+    this.list = this.shared.region.slice(1);
+  }
+
+  getPokemonByGeneration(gen: number) {
+    this.shared.setPokemon(gen);
   }
 
 }
