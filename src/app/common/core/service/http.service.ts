@@ -3,7 +3,10 @@ import { HttpClient } from '@angular/common/http';
 
 import { map } from 'rxjs/operators'
 
-const IMAGE_PATH = '../../assets/pokemon';
+import { SharedService } from './shared.service';
+
+// const IMAGE_PATH = '../../assets/pokemon';
+const IMAGE_PATH = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon';
 
 @Injectable({
   providedIn: 'root'
@@ -12,9 +15,10 @@ export class HttpService {
 
   constructor(
     private http: HttpClient,
+    private shared: SharedService
   ) { }
 
-  getAllPokemon() {
+  get getAllPokemon() {
     return this.http.get(`https://pokeapi.co/api/v2/pokedex/1/`).pipe(
       map((gen: any) => {
         return gen.pokemon_entries.map((spec: any) => {
@@ -28,7 +32,6 @@ export class HttpService {
           delete spec.entry_number;
           return spec;
         });
-        // }).slice(0, 24);
       })
     )
   }
@@ -41,13 +44,23 @@ export class HttpService {
           const buffer = spec.url.split('/');
           spec['slug'] = name;
           spec['id'] = buffer[buffer.length - 2];
-          spec['image'] = `${IMAGE_PATH}/${spec.id}.png`
+          spec['image'] = `${IMAGE_PATH}/${spec.id}.png`;
           spec['name'] = name[0].toUpperCase() + name.slice(1);
           return spec;
         }).sort((a, b) => a.id - b.id);
-        // }).sort((a, b) => a.id - b.id).slice(0, 24);
       })
     )
+  }
+
+  getPokemon(config: any) {
+    this.shared.setSelected({ ...config });
+    if (config.url === '') return;
+    return this.http.get(config.url).pipe(
+    ).subscribe((response) => {
+
+      this.shared.setSelected({ ...response, ...config });
+
+    });
   }
 
 }

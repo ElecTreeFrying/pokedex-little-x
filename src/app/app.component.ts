@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatIconRegistry } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
+import { MatSidenav } from '@angular/material';
 
 import { SharedService } from './common/core/service/shared.service';
 
@@ -12,6 +13,8 @@ import { SharedService } from './common/core/service/shared.service';
 })
 export class AppComponent implements OnInit {
 
+  @ViewChild('sidenav') main: MatSidenav;
+  @ViewChild('pokemon') nav: MatSidenav;
   list = []
 
   constructor(
@@ -29,14 +32,26 @@ export class AppComponent implements OnInit {
       this.router.navigate(['pokemon'], {
         relativeTo: this.route,
         skipLocationChange: true
+      }).then(() => {
+        this.getPokemonByGeneration(1);
       })
-    }, 100);
+    }, 700);
 
     this.list = this.shared.region.slice(1);
+
+    this.shared.selectedChange.subscribe((res: any) => {
+      res.isEsc ? this.main.opened ? 0 : this.toggle(false) : this.toggle(res.id > 1);
+    });
   }
 
   getPokemonByGeneration(gen: number) {
     this.shared.setPokemon(gen);
+  }
+
+  toggle(option: boolean) {
+    if (option) return;
+    this.nav.toggle();
+    this.main.toggle();
   }
 
 }

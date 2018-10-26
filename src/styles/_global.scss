@@ -33,35 +33,3 @@ input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-i
 .fill-all {
   flex: 1 1 auto;
 }
-
-.simplebar-wrapper {
-  // overflow: hidden;
-  // overflow-y: hidden;
-  overflow-y: auto;
-}
-
-// @media (min-width: 576px) {
-//   .wrap {
-//     max-width: 540px;
-//     max-width: 460px;
-//   }
-// }
-
-@media (min-width: 768px) {
-  .wrap {
-    max-width: 720px;
-    // max-width: 460px;
-  }
-}
-
-@media (min-width: 992px) {
-  .wrap {
-    max-width: 960px;
-  }
-}
-
-@media (min-width: 1200px) {
-  .wrap {
-    max-width: 1140px;
-  }
-}

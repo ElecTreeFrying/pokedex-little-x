@@ -5,10 +5,10 @@
 
   <mat-divider></mat-divider>
 
-  <div id="pokemon">
+  <div id="pokemon" (keydown)="onEsc($event)">
     <mat-card *ngFor="let poke of _pokemon" matRipple (click)="selectPokemon(poke)">
-      <img src="{{ poke?.image }}" alt="{{ poke?.name }}" (load)="imageLoaded()">
-      <div *ngIf="!isLoad">
+      <img *ngIf="!isLoad" src="{{ poke?.image }}" alt="{{ poke?.name }}" (load)="imageLoaded()">
+      <div *ngIf="isLoad">
         <mat-progress-spinner mode="indeterminate" [color]="'accent'"></mat-progress-spinner>
       </div>
       <p id="name">{{ poke.name }}</p>

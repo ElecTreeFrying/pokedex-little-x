@@ -23,7 +23,11 @@
       font-family: 'Bai Jamjuree', sans-serif;
       font-weight: 600;
       margin-top: 15px;
+      position: absolute;
+      left: 0;
+      right: 0;
       bottom: 0;
+      margin-bottom: 16px;
     }
 
     img {
@@ -34,8 +38,10 @@
     > div {
       display: flex;
       position: absolute;
+      top: 0;
       left: 0;
       right: 0;
+      bottom: 0;
 
       .mat-progress-spinner {
         margin: auto;
