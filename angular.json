@@ -102,10 +102,8 @@
             "tsConfig": "src/tsconfig.spec.json",
             "karmaConfig": "src/karma.conf.js",
             "styles": [
-              "src/styles.scss",
-              "https://fonts.googleapis.com/css?family=Roboto:300,400,500",
-              "https://fonts.googleapis.com/css?family=Bai+Jamjuree",
-              "https://fonts.googleapis.com/icon?family=Material+Icons"
+              "https://fonts.googleapis.com/css?family=Roboto:300,400,500|Bai+Jamjuree",
+              "src/styles.scss"
             ],
             "scripts": [],
             "assets": [

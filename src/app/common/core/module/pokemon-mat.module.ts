@@ -7,6 +7,9 @@ import {
   MatDividerModule,
   MatProgressSpinnerModule,
   MatSidenavModule,
+  MatBottomSheetModule,
+  MatInputModule,
+  MatFormFieldModule,
 } from '@angular/material';
 
 @NgModule({
@@ -18,6 +21,9 @@ import {
     MatDividerModule,
     MatProgressSpinnerModule,
     MatSidenavModule,
+    MatBottomSheetModule,
+    MatInputModule,
+    MatFormFieldModule,
   ]
 })
 export class PokemonMatModule { }

@@ -33,6 +33,13 @@
     img {
       width: 128px;
       pointer-events: none;
+
+      opacity: 1;
+      transition: opacity 0.3s;
+    }
+
+    img[data-src] {
+      opacity: 0;
     }
 
     > div {

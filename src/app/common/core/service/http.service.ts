@@ -13,13 +13,30 @@ const IMAGE_PATH = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/spr
 })
 export class HttpService {
 
+  private url: string = '';
+
   constructor(
     private http: HttpClient,
     private shared: SharedService
   ) { }
 
   get getAllPokemon() {
-    return this.http.get(`https://pokeapi.co/api/v2/pokedex/1/`).pipe(
+    return JSON.parse(localStorage.getItem(`national`));
+  }
+
+  getPokedexByGeneration(gen: number): any {
+    return JSON.parse(localStorage.getItem(`generation_${gen}`))
+  }
+
+  loadNationalAndAllGenerations() {
+    this.loadNational();
+    for (let i = 0; i < 7; i++) {
+      this.loadGeneration(i+1);
+    }
+  }
+
+  loadNational() {
+    this.http.get(`../../../../assets/api/v2/pokedex/1/index.json`).pipe(
       map((gen: any) => {
         return gen.pokemon_entries.map((spec: any) => {
           const name = spec.pokemon_species.name;
@@ -33,11 +50,13 @@ export class HttpService {
           return spec;
         });
       })
-    )
+    ).subscribe((res) => {
+      localStorage.setItem(`national`, JSON.stringify(res));
+    });
   }
 
-  getPokedexByGeneration(gen: number) {
-    return this.http.get(`https://pokeapi.co/api/v2/generation/${gen}/`).pipe(
+  loadGeneration(i: number) {
+    this.http.get(`../../../../assets/api/v2/generation/${i}/index.json`).pipe(
       map((gen: any) => {
         return gen.pokemon_species.map((spec) => {
           const name = spec.name;
@@ -49,17 +68,18 @@ export class HttpService {
           return spec;
         }).sort((a, b) => a.id - b.id);
       })
-    )
+    ).subscribe((res) => {
+      localStorage.setItem(`generation_${i}`, JSON.stringify(res));
+    });
   }
 
   getPokemon(config: any) {
     this.shared.setSelected({ ...config });
-    if (config.url === '') return;
-    return this.http.get(config.url).pipe(
-    ).subscribe((response) => {
-
+    if (this.url === config.url) return;
+    this.url = config.url;
+    if (config.isEsc) return;
+    this.http.get(config.url).subscribe((response) => {
       this.shared.setSelected({ ...response, ...config });
-
     });
   }
 

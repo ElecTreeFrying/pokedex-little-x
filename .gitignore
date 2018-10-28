@@ -7,6 +7,7 @@
 /src/assets/pokemon
 firebase-debug.log
 kanji.js
+api
 
 # compiled output
 /dist

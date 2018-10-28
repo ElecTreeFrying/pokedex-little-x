@@ -32,36 +32,30 @@ $icon-size: 35px;
     > .mat-toolbar {
       position: absolute;
       z-index: 5;
-    }
 
-    > .mat-toolbar > .wrap {
-      padding: 0;
-
-      > .mat-toolbar {
-        padding: 0;
-
-        .mat-icon-button {
-          .mat-icon {
-            transform: translateY(4px);
-          }
-        }
-
-        .mat-icon {
-          height: $icon-size;
-          width: $icon-size;
-          cursor: pointer;
-        }
-
-        span {
-          margin-left: 12px;
-          cursor: pointer;
-        }
+      span {
+        cursor: pointer;
+        margin-right: auto;
       }
     }
 
     #content {
       height: 100vh;
       overflow-y: auto;
+
+      #spinner {
+        position: absolute;
+        display: flex;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+
+        .mat-progress-spinner {
+          width: 500px;
+          margin: auto;
+        }
+      }
     }
 
   }

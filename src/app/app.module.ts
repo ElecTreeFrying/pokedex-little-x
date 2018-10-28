@@ -1,33 +1,26 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
-import 'hammerjs';
-import 'simplebar';
-
-import { SharedService } from './common/core/service/shared.service';
+import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
+import { AppProviderModule } from './app-provider.module';
 import { AppMatModule } from './common/core/module/app-mat.module';
 
 import { AppComponent } from './app.component';
+import { PokemonNavComponent } from './pokemon-nav/pokemon-nav.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    PokemonNavComponent
   ],
   imports: [
     BrowserModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
     AppRoutingModule,
-    AppMatModule,
+    AppProviderModule,
+    AppMatModule
   ],
   bootstrap: [
     AppComponent
-  ],
-  providers: [
-    SharedService
   ]
 })
 export class AppModule { }

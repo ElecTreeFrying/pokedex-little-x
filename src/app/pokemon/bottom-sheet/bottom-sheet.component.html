@@ -1,0 +1,9 @@
+
+<h4>Filter Pokémon</h4>
+
+<form [formGroup]="filterForm">
+  <mat-form-field color="accent" appearance="outline">
+    <mat-label>{{ data }}</mat-label>
+    <input matInput type="text" formControlName="filter">
+  </mat-form-field>
+</form>
