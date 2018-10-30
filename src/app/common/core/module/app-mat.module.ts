@@ -8,6 +8,7 @@ import {
   MatDividerModule,
   MatRippleModule,
   MatProgressSpinnerModule,
+  MatSnackBarModule,
 } from '@angular/material';
 
 @NgModule({
@@ -20,6 +21,7 @@ import {
     MatDividerModule,
     MatRippleModule,
     MatProgressSpinnerModule,
+    MatSnackBarModule,
   ]
 })
 export class AppMatModule { }

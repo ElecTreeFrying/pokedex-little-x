@@ -7,9 +7,9 @@
 
   <div id="pokemon" (keydown)="onEsc($event)">
     <mat-card *ngFor="let poke of _pokemon" matRipple (click)="selectPokemon(poke)">
-      <!-- <img *ngIf="!isLoad" src="{{ poke?.image }}" alt="{{ poke?.name }}"> -->
       <img
         *ngIf="!isLoad"
+         defaultImage="assets/defaultimage.png"
          alt="{{ poke?.name }}"
          lazyLoad="{{ poke?.image }}"
          offset="50000">

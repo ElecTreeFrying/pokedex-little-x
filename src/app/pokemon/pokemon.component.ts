@@ -18,6 +18,7 @@ export class PokemonComponent implements OnInit {
 
   _pokemon = [];
   isLoad: boolean = true;
+  cherry: string = 'https://cdn130.picsart.com/257281221032212.png?r1024x1024';
   region: string = 'Kanto Region';
   sheet: { option: boolean, isOpen: boolean, object?: any } = { option: false, isOpen: false };
 
@@ -39,13 +40,14 @@ export class PokemonComponent implements OnInit {
       this.region = 'Loading...';
       this._pokemon.map((p) => p.name = '');
 
-      pokemon.gen === 0
-        ? (() => { this.isLoad = false;
-            this.region = pokemon.region;
-            this._pokemon = this.service.getAllPokemon; })()
-        : (() => { this.isLoad = false;
-            this.region = pokemon.region;
-            this._pokemon = this.service.getPokedexByGeneration(pokemon.gen); })();
+      this.isLoad = false
+      // window.stop();``
+      document.close();
+      this.region = pokemon.region;
+      this._pokemon = pokemon.other
+        ? this.service.getPokedexByGeneration(pokemon.gen)
+        : this.service.getPokedex(pokemon.gen)
+
     });
 
     this.shared.bottomsheetChange.subscribe(() => {
@@ -72,12 +74,16 @@ export class PokemonComponent implements OnInit {
 
   ngOnInit() {
     this._pokemon = this.service.getPokedexByGeneration(1);
+    setTimeout(() => {
+      this._pokemon = this.service.getPokedexByGeneration(1);
+    }, 300);
+
     this.isLoad = false;
   }
 
   selectPokemon(poke: any) {
     if (this.isLoad) return;
-    const url = `https://pokeapi.co/api/v2/pokemon/${poke.slug}/`;
+    const url = `assets/api/v2/pokemon/${poke.id}/index.json`;
     this.service.getPokemon({ url, name: poke.name, isEsc: false });
   }
 

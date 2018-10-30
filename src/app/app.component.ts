@@ -16,7 +16,8 @@ export class AppComponent implements OnInit {
 
   @ViewChild('sidenav') main: MatSidenav;
   @ViewChild('pokemon') nav: MatSidenav;
-  list: any[] = [];
+  generation: any[] = [];
+  pokedex: any[] = [];
   pokemonName: string = '';
   isLoaded: boolean = false;
 
@@ -29,17 +30,19 @@ export class AppComponent implements OnInit {
   ) {
     const url = sanitizer.bypassSecurityTrustResourceUrl('../assets/icons/pokeball.svg');
     iconRegistry.addSvgIcon('logo', url);
+    this.http.localStorageInit(false);
   }
 
   ngOnInit() {
+    this.http.localStorageInit(true);
+
     this.router.navigate(['pokemon'], {
       relativeTo: this.route,
       skipLocationChange: true
     })
 
-    this.http.loadNationalAndAllGenerations();
-
-    this.list = this.shared.region.slice(1);
+    this.generation = this.shared.region.slice(1, 8);
+    this.pokedex = this.shared.pokedex;
     this.pokemonName = 'Loading...';
 
     this.shared.selectedChange.subscribe((res: any) => {
@@ -65,8 +68,12 @@ export class AppComponent implements OnInit {
     this.shared.setBottomsheet()
   }
 
-  getPokemonByGeneration(gen: number) {
-    this.shared.setPokemon(gen);
+  getPokemonByGeneration(gen: number, other: boolean = true) {
+    this.shared.setPokemon({ gen, other });
+  }
+
+  getPokemonByPokedex(gen: number, other: boolean = false) {
+    this.shared.setPokemon(gen === 10 ? { gen: 15, other } : { gen, other });
   }
 
   toggle() {

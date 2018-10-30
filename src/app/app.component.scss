@@ -2,6 +2,11 @@ $icon-size: 35px;
 
 .mat-sidenav {
 
+  > div {
+    height: 92.8vh;
+    overflow-y: auto;
+  }
+
   h3 {
     margin: 0;
     padding: 15px;
@@ -10,6 +15,7 @@ $icon-size: 35px;
 
   .mat-expansion-panel {
     width: 300px;
+
     .mat-expansion-panel-header {
       color: white;
       // color: black;
@@ -20,7 +26,8 @@ $icon-size: 35px;
     margin-left: -24px;
     margin-bottom: -16px;
     .mat-expansion-panel-header {
-      padding-left: 31.5px;
+      // padding-left: 31.5px;
+      padding-left: 38px;
     }
   }
 

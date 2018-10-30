@@ -3,42 +3,60 @@
 
   <mat-sidenav #sidenav mode="side" opened>
 
-    <h3 matRipple>Pokédex X</h3>
-    <mat-divider></mat-divider>
+    <div data-simplebar>
 
-    <mat-accordion displayMode="flat">
+      <h3 matRipple>Meta Pokédex</h3>
+      <mat-divider></mat-divider>
 
-      <mat-expansion-panel expanded>
-        <mat-expansion-panel-header matRipple>Pokémon Generation</mat-expansion-panel-header>
-        <ng-template matExpansionPanelContent>
-          <div id="panel-content">
-            <mat-expansion-panel matRipple hideToggle="true" disabled
-              *ngFor="let item of list; let i = index" (click)="getPokemonByGeneration(i + 1)">
-              <mat-expansion-panel-header>Generation {{ i + 1 }} - {{ item }}</mat-expansion-panel-header>
-            </mat-expansion-panel>
-          </div>
-        </ng-template>
-      </mat-expansion-panel>
-      <mat-expansion-panel matRipple hideToggle="true" disabled (click)="getPokemonByGeneration(0)">
-        <mat-expansion-panel-header>National Pokédex</mat-expansion-panel-header>
-      </mat-expansion-panel>
-      <mat-expansion-panel hideToggle="true" disabled>
-        <mat-expansion-panel-header>Berries</mat-expansion-panel-header>
-      </mat-expansion-panel>
-      <mat-expansion-panel hideToggle="true" disabled>
-        <mat-expansion-panel-header>Contests</mat-expansion-panel-header>
-      </mat-expansion-panel>
-      <mat-expansion-panel hideToggle="true" disabled>
-        <mat-expansion-panel-header>Items</mat-expansion-panel-header>
-      </mat-expansion-panel>
-      <mat-expansion-panel hideToggle="true" disabled>
-        <mat-expansion-panel-header>Locations</mat-expansion-panel-header>
-      </mat-expansion-panel>
-      <mat-expansion-panel hideToggle="true" disabled>
-        <mat-expansion-panel-header>Moves</mat-expansion-panel-header>
-      </mat-expansion-panel>
+      <mat-accordion displayMode="flat">
 
-    </mat-accordion>
+        <mat-expansion-panel expanded>
+          <mat-expansion-panel-header matRipple>Pokémon Generation</mat-expansion-panel-header>
+          <ng-template matExpansionPanelContent>
+            <div id="panel-content">
+              <mat-expansion-panel matRipple hideToggle="true" disabled
+                *ngFor="let item of generation; let i = index" (click)="getPokemonByGeneration(i + 1)">
+                <mat-expansion-panel-header>Generation {{ i + 1 }} - {{ item }}</mat-expansion-panel-header>
+              </mat-expansion-panel>
+            </div>
+          </ng-template>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel>
+          <mat-expansion-panel-header matRipple>Pokédex Version</mat-expansion-panel-header>
+          <ng-template matExpansionPanelContent>
+            <div id="panel-content">
+              <mat-expansion-panel matRipple hideToggle="true" disabled
+              *ngFor="let item of pokedex; let i = index; first as isFirst" (click)="getPokemonByPokedex(i + 1)">
+                <mat-expansion-panel-header *ngIf="isFirst">{{ item }}</mat-expansion-panel-header>
+                <mat-expansion-panel-header *ngIf="!isFirst">{{ item }}</mat-expansion-panel-header>
+              </mat-expansion-panel>
+            </div>
+          </ng-template>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel matRipple hideToggle="true" disabled>
+          <mat-expansion-panel-header>Berries</mat-expansion-panel-header>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel matRipple hideToggle="true" disabled>
+          <mat-expansion-panel-header>Contests</mat-expansion-panel-header>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel matRipple hideToggle="true" disabled>
+          <mat-expansion-panel-header>Items</mat-expansion-panel-header>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel matRipple hideToggle="true" disabled>
+          <mat-expansion-panel-header>Locations</mat-expansion-panel-header>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel matRipple hideToggle="true" disabled>
+          <mat-expansion-panel-header>Moves</mat-expansion-panel-header>
+        </mat-expansion-panel>
+
+      </mat-accordion>
+    </div>
 
   </mat-sidenav>
 
@@ -49,21 +67,19 @@
   </mat-sidenav>
 
   <mat-sidenav-content>
-    <!-- <div id="wrapper"> -->
     <div id="wrapper">
 
       <mat-toolbar color="primary">
         <button mat-icon-button (click)="pokemon.opened ? toggle() : sidenav.toggle()">
           <mat-icon>reorder</mat-icon>
         </button>
-        <span>Pokédex X</span>
+        <span>Meta Pokédex</span>
         <button mat-icon-button (click)="searchPokemon()">
           <mat-icon>search</mat-icon>
         </button>
       </mat-toolbar>
 
       <div id="content" data-simplebar>
-      <!-- <div id="content"> -->
 
         <div id="spinner" *ngIf="!isLoaded">
           <mat-progress-spinner mode="indeterminate" [color]="'warn'"></mat-progress-spinner>
