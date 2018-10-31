@@ -22,7 +22,7 @@ import { BottomSheetComponent } from './bottom-sheet/bottom-sheet.component';
   ],
   declarations: [
     PokemonComponent,
-    BottomSheetComponent
+    BottomSheetComponent,
   ],
 })
 export class PokemonModule { }

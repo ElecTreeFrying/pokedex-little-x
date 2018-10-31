@@ -7,6 +7,8 @@ import { AppMatModule } from './common/core/module/app-mat.module';
 
 import { AppComponent } from './app.component';
 import { PokemonNavComponent } from './pokemon-nav/pokemon-nav.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -17,7 +19,8 @@ import { PokemonNavComponent } from './pokemon-nav/pokemon-nav.component';
     BrowserModule,
     AppRoutingModule,
     AppProviderModule,
-    AppMatModule
+    AppMatModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   bootstrap: [
     AppComponent

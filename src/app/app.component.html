@@ -15,7 +15,7 @@
           <ng-template matExpansionPanelContent>
             <div id="panel-content">
               <mat-expansion-panel matRipple hideToggle="true" disabled
-                *ngFor="let item of generation; let i = index" (click)="getPokemonByGeneration(i + 1)">
+                *ngFor="let item of generation; let i = index" (mousedown)="getPokemonByGeneration(i)">
                 <mat-expansion-panel-header>Generation {{ i + 1 }} - {{ item }}</mat-expansion-panel-header>
               </mat-expansion-panel>
             </div>
@@ -27,7 +27,7 @@
           <ng-template matExpansionPanelContent>
             <div id="panel-content">
               <mat-expansion-panel matRipple hideToggle="true" disabled
-              *ngFor="let item of pokedex; let i = index; first as isFirst" (click)="getPokemonByPokedex(i + 1)">
+              *ngFor="let item of pokedex; let i = index; first as isFirst" (mousedown)="getPokemonByPokedex(i)">
                 <mat-expansion-panel-header *ngIf="isFirst">{{ item }}</mat-expansion-panel-header>
                 <mat-expansion-panel-header *ngIf="!isFirst">{{ item }}</mat-expansion-panel-header>
               </mat-expansion-panel>

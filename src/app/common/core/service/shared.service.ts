@@ -8,7 +8,7 @@ const IMAGE_PATH = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/spr
 })
 export class SharedService {
 
-  region = [ 'National Pokédex', 'Kanto Region', 'Jhoto Region', 'Hoenn Region', 'Sinnoh Region', 'Unova Region', 'Kalos Region', 'Alola Region', 'Collection Library' ];
+  region = [ 'Kanto Region', 'Jhoto Region', 'Hoenn Region', 'Sinnoh Region', 'Unova Region', 'Kalos Region', 'Alola Region', 'Collection Library' ];
 
   pokedex = [ 'National Pokédex', 'Red, Blue and Yellow', 'Gold, Silver and Crystal', 'Ruby, Emerald and Saphire', 'Diamond and Pearl', 'Platinum', 'Heartgold and Soulsilver', 'Black and White', 'Black2 and White 2', 'Omega Ruby and Alpha Saphire', 'Conquest Library' ];
 
@@ -42,51 +42,15 @@ export class SharedService {
   constructor() { }
 
   setPokemon(poke: { gen: number, other: boolean }) {
-    const gen = poke.gen === 1 && poke.other
-      ? 1 : poke.gen === 1 && !poke.other
-      ? 0 : ( ( poke.gen >= 2 && poke.gen <= 4 ) || ( poke.gen >= 5 && poke.gen <= 9 ) || poke.gen === 11 ) && !poke.other
-      ? poke.gen - 1 : poke.gen === 15
-      ? 9 : poke.gen;
-
-    this.pokemonChange.next({ gen: poke.gen, region: poke.other ? this.region[gen] : this.pokedex_version[gen], other: poke.other });
+    this.pokemonChange.next({ gen: poke.gen, region: poke.other ? this.region[poke.gen] : this.pokedex_version[poke.gen], other: poke.other });
   }
 
   setSelected(spec: any) {
     this.selectedChange.next({ ...spec });
   }
 
-  setBottomsheet() {
-    this.bottomsheetChange.next({});
-  }
-
-  static toDataURL(url, callback) {
-    var xhr = new XMLHttpRequest();
-    xhr.onload = function() {
-      var reader = new FileReader();
-      reader.onloadend = function() {
-        callback(reader.result);
-      }
-      reader.readAsDataURL(xhr.response);
-    };
-    xhr.open('GET', url);
-    xhr.responseType = 'blob';
-    xhr.send();
-  }
-
-  static toBase64AllPNG() {
-    let images = [];
-    for (let i = 1; i < 803; i++) {
-      images.push(new Promise((resolve) => {
-        const url = `${IMAGE_PATH}/${i}.png`;;
-        this.toDataURL(url, function(dataUrl) {
-          resolve({ image: dataUrl, url });
-        })
-      }));
-    }
-
-    Promise.all(images).then((res) => {
-      console.log(res);
-    })
+  setBottomsheet(option: any = 0) {
+    this.bottomsheetChange.next(option);
   }
 
 }

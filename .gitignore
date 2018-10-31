@@ -4,10 +4,8 @@
 .firebase
 .firebaserc
 /src/environments/**
-/src/assets/pokemon
-/src/assets/api/v2/**
-firebase-debug.log
 kanji.js
+firebase-debug.log
 
 # compiled output
 /dist

@@ -2,8 +2,11 @@
 <h4>Filter Pokémon</h4>
 
 <form [formGroup]="filterForm">
+
   <mat-form-field color="accent" appearance="outline">
-    <mat-label>{{ data }}</mat-label>
-    <input matInput type="text" formControlName="filter">
+    <mat-label>{{ data?.region }}</mat-label>
+    <input matInput [matAutocomplete]="reactiveAuto" formControlName="filter">
+    <mat-autocomplete #reactiveAuto="matAutocomplete" [displayWith]="displayFn"></mat-autocomplete>
   </mat-form-field>
+
 </form>

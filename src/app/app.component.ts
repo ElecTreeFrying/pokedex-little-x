@@ -28,20 +28,18 @@ export class AppComponent implements OnInit {
     private shared: SharedService,
     iconRegistry: MatIconRegistry, sanitizer: DomSanitizer
   ) {
+    this.http.localStorageInit();
     const url = sanitizer.bypassSecurityTrustResourceUrl('../assets/icons/pokeball.svg');
     iconRegistry.addSvgIcon('logo', url);
-    this.http.localStorageInit(false);
   }
 
   ngOnInit() {
-    this.http.localStorageInit(true);
-
     this.router.navigate(['pokemon'], {
       relativeTo: this.route,
       skipLocationChange: true
     })
 
-    this.generation = this.shared.region.slice(1, 8);
+    this.generation = this.shared.region.slice(0, 7);
     this.pokedex = this.shared.pokedex;
     this.pokemonName = 'Loading...';
 
@@ -73,7 +71,7 @@ export class AppComponent implements OnInit {
   }
 
   getPokemonByPokedex(gen: number, other: boolean = false) {
-    this.shared.setPokemon(gen === 10 ? { gen: 15, other } : { gen, other });
+    this.shared.setPokemon({ gen, other });
   }
 
   toggle() {

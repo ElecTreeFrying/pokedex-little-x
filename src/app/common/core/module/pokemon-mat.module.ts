@@ -10,6 +10,7 @@ import {
   MatBottomSheetModule,
   MatInputModule,
   MatFormFieldModule,
+  MatAutocompleteModule,
 } from '@angular/material';
 
 @NgModule({
@@ -24,6 +25,7 @@ import {
     MatBottomSheetModule,
     MatInputModule,
     MatFormFieldModule,
+    MatAutocompleteModule,
   ]
 })
 export class PokemonMatModule { }
