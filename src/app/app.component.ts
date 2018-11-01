@@ -76,7 +76,7 @@ export class AppComponent implements OnInit {
     this.shared.setPokemon = { gen, other };
   }
 
-  private toggle() {
+  toggle() {
     this.nav.toggle();
     this.main.toggle();
   }
