@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { MatBottomSheet } from '@angular/material';
+import { MatBottomSheet, MatBottomSheetRef } from '@angular/material';
 
 import { HttpService } from '../common/core/service/http.service';
 import { SharedService } from '../common/core/service/shared.service';
 
 import { BottomSheetComponent } from './bottom-sheet/bottom-sheet.component';
+
+import { PokeCard } from '../common/shared/interface/shared';
 
 @Component({
   selector: 'app-pokemon',
@@ -16,13 +18,12 @@ import { BottomSheetComponent } from './bottom-sheet/bottom-sheet.component';
 })
 export class PokemonComponent implements OnInit {
 
-  _pokemon = [];
-  isLoad: boolean = true;
+  _pokemon: PokeCard[] = [];
   cherry: string = 'https://cdn130.picsart.com/257281221032212.png?r1024x1024';
   region: string = 'Kanto Region';
   currentGen: number = 0;
   pokemonOther: boolean = true;
-  sheet: { option: any, isOpen: boolean, object?: any } = { option: false, isOpen: false };
+  sheet: { isOpen: boolean, object?: MatBottomSheetRef<any> } = { isOpen: false };
 
   constructor(
     private bottomsheet: MatBottomSheet,
@@ -31,12 +32,9 @@ export class PokemonComponent implements OnInit {
   ) {
     this.shared.pokemonChange.subscribe((pokemon: any) => {
 
-      if (this.region === pokemon.region) return;
-      this.isLoad = true;
-      this.region = 'Loading...';
-      this._pokemon.map((p) => p.name = '');
+      this.keyDownEsc();
 
-      this.isLoad = false
+      if (this.region === pokemon.region) return;
       this.region = pokemon.region;
       this.currentGen = pokemon.gen;
       this.pokemonOther = pokemon.other
@@ -46,11 +44,7 @@ export class PokemonComponent implements OnInit {
 
     });
 
-    this.shared.bottomsheetChange.subscribe((res: any) => {
-
-      if (res !== 0) {
-        this.sheet.option = res;
-      }
+    this.shared.bottomsheetChange.subscribe((res: PokeCard[] | number) => {
 
       res === 0 && this.sheet.isOpen
         ? this.sheet.object.dismiss()
@@ -61,52 +55,45 @@ export class PokemonComponent implements OnInit {
                 data: { region: this.region, pokemon: this._pokemon }
               })
 
-              this.sheet.object.keydownEvents().subscribe((res) => {
-                console.log(res);
-              });
-
-              this.sheet.object.instance.filterObservable.subscribe((res) => {
+              this.sheet.object.instance.filterObservable.subscribe((res: PokeCard[]) => {
                 this.keyDown();
                 this._pokemon = res;
-                this.sheet.option = res;
               });
 
-              this.sheet.object.afterOpened().subscribe(() => {
-                this.sheet.isOpen = true;
-              });
+              this.sheet.object.afterOpened().subscribe(() => { this.sheet.isOpen = true; });
+              this.sheet.object.afterDismissed().subscribe(() => { this.closeSheet(); })
 
-              this.sheet.object.afterDismissed().subscribe(() => {
-                this.closeSheet();
-              })
             })() : 0;
 
     });
   }
 
   ngOnInit() {
-    this.isLoad = false;
     this.sheet.isOpen = false;
-    setTimeout(() => {
-      this._pokemon = this.service.getPokedexByGeneration(0);
-    }, 400);
+    this.shared.sharedChange.subscribe((res: PokeCard[]) => {
+      this._pokemon = res;
+    });
   }
 
   trackByFn(index) {
     return index;
   }
 
-  selectPokemon(poke: any) {
-    if (this.isLoad) return;
+  selectPokemon(poke: PokeCard) {
     const url = `assets/api/v2/pokemon/${poke.id}/index.json`;
     this.service.getPokemon({ url, name: poke.name, isEsc: false });
   }
 
   onEsc(event?: KeyboardEvent) {
-    if (this.isLoad) return;
     if (event.key === 'Escape') {
       this.service.getPokemon({ url: '', name: 'Loading...', isEsc: true });
       this.sheet.isOpen ? this.closeSheet() : 0;
     }
+  }
+
+  private keyDownEsc() {
+    const event = new KeyboardEvent('keydown', { key: 'Escape' });
+    document.dispatchEvent(event);
   }
 
   private keyDown() {

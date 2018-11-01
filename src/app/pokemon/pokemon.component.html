@@ -8,14 +8,10 @@
   <div id="pokemon" (keydown)="onEsc($event)">
     <mat-card *ngFor="let poke of _pokemon; trackBy: trackByFn" matRipple (click)="selectPokemon(poke)">
       <img
-        *ngIf="!isLoad"
          defaultImage="assets/defaultimage.png"
          alt="{{ poke?.name }}"
          lazyLoad="{{ poke?.image }}"
          offset="50000">
-      <div *ngIf="isLoad">
-        <mat-progress-spinner mode="indeterminate" [color]="'accent'"></mat-progress-spinner>
-      </div>
       <p id="name">{{ poke?.name }}</p>
     </mat-card>
   </div>

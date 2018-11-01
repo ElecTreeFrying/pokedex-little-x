@@ -1,20 +1,20 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 
-const IMAGE_PATH = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon';
+import { Types, PokeConfig, PokeCard } from '../../shared/interface/shared';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SharedService {
 
-  region = [ 'Kanto Region', 'Jhoto Region', 'Hoenn Region', 'Sinnoh Region', 'Unova Region', 'Kalos Region', 'Alola Region', 'Collection Library' ];
+  region: string[] = [ 'Kanto Region', 'Jhoto Region', 'Hoenn Region', 'Sinnoh Region', 'Unova Region', 'Kalos Region', 'Alola Region', 'Collection Library' ];
 
-  pokedex = [ 'National Pokédex', 'Red, Blue and Yellow', 'Gold, Silver and Crystal', 'Ruby, Emerald and Saphire', 'Diamond and Pearl', 'Platinum', 'Heartgold and Soulsilver', 'Black and White', 'Black2 and White 2', 'Omega Ruby and Alpha Saphire', 'Conquest Library' ];
+  pokedex: string[] = [ 'National Pokédex', 'Red, Blue and Yellow', 'Gold, Silver and Crystal', 'Ruby, Emerald and Saphire', 'Diamond and Pearl', 'Platinum', 'Heartgold and Soulsilver', 'Black and White', 'Black2 and White 2', 'Omega Ruby and Alpha Saphire', 'Conquest Library' ];
 
-  pokedex_version = [ 'National Pokédex', 'Pokemon Red, Blue and Yellow Version Pokédex', 'Pokemon Gold, Silver and Crystal Version Pokédex', 'Pokemon Ruby, Emerald and Saphire Version Pokédex', 'Pokemon Diamond and Pearl Version Pokédex', 'Pokemon Platinum Version Pokédex', 'Pokemon Heartgold and Soulsilver Version Pokédex', 'Pokemon Black and White Version Pokédex', 'Pokemon Black2 and White 2 Version Pokédex', 'Pokemon Omega Ruby and Alpha Saphire Version Pokédex', 'Conquest Library' ];
+  pokedex_version: string[] = [ 'National Pokédex', 'Pokemon Red, Blue and Yellow Version Pokédex', 'Pokemon Gold, Silver and Crystal Version Pokédex', 'Pokemon Ruby, Emerald and Saphire Version Pokédex', 'Pokemon Diamond and Pearl Version Pokédex', 'Pokemon Platinum Version Pokédex', 'Pokemon Heartgold and Soulsilver Version Pokédex', 'Pokemon Black and White Version Pokédex', 'Pokemon Black2 and White 2 Version Pokédex', 'Pokemon Omega Ruby and Alpha Saphire Version Pokédex', 'Conquest Library' ];
 
-  types: { name: string, color: string }[] = [
+  types: Types[] = [
     { name: 'normal', color: '#B6B6A8' },
     { name: 'fire', color: '#FF6043' },
     { name: 'water', color: '#52A8FF' },
@@ -35,21 +35,26 @@ export class SharedService {
     { name: 'fairy', color: '#F0A8F0' }
   ]
 
+  sharedChange = new Subject();
   pokemonChange = new Subject();
   selectedChange = new Subject();
   bottomsheetChange = new Subject();
 
   constructor() { }
 
-  setPokemon(poke: { gen: number, other: boolean }) {
+  set setShared(item: any) {
+    this.sharedChange.next(item);
+  }
+
+  set setPokemon(poke: PokeConfig) {
     this.pokemonChange.next({ gen: poke.gen, region: poke.other ? this.region[poke.gen] : this.pokedex_version[poke.gen], other: poke.other });
   }
 
-  setSelected(spec: any) {
+  set setSelected(spec: any) {
     this.selectedChange.next({ ...spec });
   }
 
-  setBottomsheet(option: any = 0) {
+  set setBottomsheet(option: PokeCard[] | number) {
     this.bottomsheetChange.next(option);
   }
 

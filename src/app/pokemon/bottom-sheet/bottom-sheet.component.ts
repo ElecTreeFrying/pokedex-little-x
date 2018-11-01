@@ -6,6 +6,8 @@ import { Observable } from 'rxjs/Observable';
 
 import { SharedService } from '../../common/core/service/shared.service';
 
+import { PokeCard, BottomSheetData } from '../../common/shared/interface/shared';
+
 @Component({
   selector: 'app-bottom-sheet',
   templateUrl: './bottom-sheet.component.html',
@@ -19,7 +21,7 @@ export class BottomSheetComponent implements OnInit {
 
   constructor(
     @Inject(FormBuilder) public fb: FormBuilder,
-    @Inject(MAT_BOTTOM_SHEET_DATA) public data: any,
+    @Inject(MAT_BOTTOM_SHEET_DATA) public data: BottomSheetData,
     private shared: SharedService
   ) {
     this.filterForm = fb.group({
@@ -37,8 +39,8 @@ export class BottomSheetComponent implements OnInit {
         map(b => this.filterPokemon(b))
       )
 
-    this.filterObservable.subscribe((res) => {
-      this.shared.setBottomsheet(res)
+    this.filterObservable.subscribe((res: PokeCard[]) => {
+      this.shared.setBottomsheet = res;
     });
 
   }
@@ -47,11 +49,11 @@ export class BottomSheetComponent implements OnInit {
     return value && typeof value === 'object' ? value.name : value;
   }
 
-  filterPokemon(value: string) {
+  filterPokemon(value: string): PokeCard[] {
     return value ? this._filter(this.data.pokemon, value) : this.data.pokemon;
   }
 
-  private _filter(pokemon: any[], value: string) {
+  private _filter(pokemon: any[], value: string): PokeCard[] {
     const filterValue = value.toLowerCase();
     return pokemon.filter(poke => poke.name.toLowerCase().includes(filterValue));
   }

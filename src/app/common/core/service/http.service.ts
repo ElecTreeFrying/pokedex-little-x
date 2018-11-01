@@ -6,6 +6,8 @@ import * as _ from 'lodash';
 
 import { SharedService } from './shared.service';
 
+import { PokeCard, PokeCardConfig } from '../../shared/interface/shared';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -18,12 +20,12 @@ export class HttpService {
     private shared: SharedService
   ) { }
 
-  getPokedex(dex: number) {
+  getPokedex(dex: number): PokeCard[] {
     dex = dex === 9 ? 13 : dex === 10 ? 9 : dex;
     return JSON.parse(sessionStorage.getItem(`pokedex`))[dex];
   }
 
-  getPokedexByGeneration(gen: number): any {
+  getPokedexByGeneration(gen: number): PokeCard[] {
     return JSON.parse(localStorage.getItem(`generation`))[gen]
   }
 
@@ -37,7 +39,7 @@ export class HttpService {
   loadPokedex() {
     this.http.get(`assets/api/pokedex.json`).pipe(
       map((inedx: any[]) => {
-        return inedx.map((gen) => {
+        return inedx.map((gen: any) => {
           return gen.pokemon_entries.map((spec: any) => {
             const name = spec.pokemon_species.name;
             spec['gen'] = gen.descriptions[0].description;
@@ -61,7 +63,7 @@ export class HttpService {
     this.http.get(`assets/api/generation.json`).pipe(
       map((index: any[]) => {
         return index.map((gen: any) => {
-          return gen.pokemon_species.map((spec) => {
+          return gen.pokemon_species.map((spec: any) => {
               const name = spec.name;
               const buffer = spec.url.split('/');
               spec['gen'] = gen.name;
@@ -73,18 +75,19 @@ export class HttpService {
             }).sort((a, b) => a.id - b.id);
         })
       })
-    ).subscribe((res) => {
+    ).subscribe((res: any[]) => {
+      this.shared.setShared = res[0];
       localStorage.setItem(`generation`, JSON.stringify(res));
     });
   }
 
-  getPokemon(config: any) {
-    this.shared.setSelected({ ...config });
+  getPokemon(config: PokeCardConfig) {
+    this.shared.setSelected = { ...config };
     if (this.url === config.url) return;
     this.url = config.url;
     if (config.isEsc) return;
-    this.http.get(config.url).subscribe((response) => {
-      this.shared.setSelected({ ...response, ...config });
+    this.http.get(config.url).subscribe((res) => {
+      this.shared.setSelected = { ...res, ...config };
     });
   }
 

@@ -7,6 +7,8 @@ import { MatSidenav } from '@angular/material';
 import { HttpService } from './common/core/service/http.service';
 import { SharedService } from './common/core/service/shared.service';
 
+import { PokeCardConfig } from './common/shared/interface/shared';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -16,8 +18,8 @@ export class AppComponent implements OnInit {
 
   @ViewChild('sidenav') main: MatSidenav;
   @ViewChild('pokemon') nav: MatSidenav;
-  generation: any[] = [];
-  pokedex: any[] = [];
+  generation: string[] = [];
+  pokedex: string[] = [];
   pokemonName: string = '';
   isLoaded: boolean = false;
 
@@ -43,7 +45,7 @@ export class AppComponent implements OnInit {
     this.pokedex = this.shared.pokedex;
     this.pokemonName = 'Loading...';
 
-    this.shared.selectedChange.subscribe((res: any) => {
+    this.shared.selectedChange.subscribe((res: PokeCardConfig | any) => {
       const main = this.main.opened;
       const nav = this.nav.opened;
       const isEsc = res.isEsc;
@@ -63,18 +65,18 @@ export class AppComponent implements OnInit {
   }
 
   searchPokemon() {
-    this.shared.setBottomsheet()
+    this.shared.setBottomsheet = 0;
   }
 
   getPokemonByGeneration(gen: number, other: boolean = true) {
-    this.shared.setPokemon({ gen, other });
+    this.shared.setPokemon = { gen, other };
   }
 
   getPokemonByPokedex(gen: number, other: boolean = false) {
-    this.shared.setPokemon({ gen, other });
+    this.shared.setPokemon = { gen, other };
   }
 
-  toggle() {
+  private toggle() {
     this.nav.toggle();
     this.main.toggle();
   }
