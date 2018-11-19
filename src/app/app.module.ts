@@ -8,12 +8,14 @@ import { AppMatModule } from './common/core/module/app-mat.module';
 
 import { AppComponent } from './app.component';
 import { PokemonNavComponent } from './pokemon-nav/pokemon-nav.component';
+import { ImageUrlPipe } from './common/shared/pipe/image-url.pipe';
 import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
     AppComponent,
-    PokemonNavComponent
+    PokemonNavComponent,
+    ImageUrlPipe,
   ],
   imports: [
     BrowserModule,

@@ -1,6 +1,81 @@
 
-<div id="wrapper2">
-  <p>
-    pokemon-nav works!
-  </p>
+<div id="nav" data-simplebar>
+
+  <img src="{{ poke?.id | imageUrl: 'blank' }}" width="250" alt="poke?.name">
+
+  <div class="sprites">
+    <div>
+      <p>Front</p>
+      <img
+         defaultImage="assets/defaultimage.png"
+         alt="{{ poke?.name }}"
+         lazyLoad="{{ poke?.id | imageUrl: 'front_default' }}"
+         offset="50000"
+         width="100" height="100">
+    </div>
+    <div>
+      <p>Back</p>
+      <img
+        defaultImage="assets/defaultimage.png"
+        alt="{{ poke?.name }}"
+        lazyLoad="{{ poke?.id | imageUrl: 'back_default' }}"
+        offset="50000"
+        width="100" height="100">
+    </div>
+    <div>
+      <p>Shiny Front</p>
+      <img
+        defaultImage="assets/defaultimage.png"
+        alt="{{ poke?.name }}"
+        lazyLoad="{{ poke?.id | imageUrl: 'front_shiny' }}"
+        offset="50000"
+        width="100" height="100">
+    </div>
+    <div>
+      <p>Shiny Back</p>
+      <img
+        defaultImage="assets/defaultimage.png"
+        alt="{{ poke?.name }}"
+        lazyLoad="{{ poke?.id | imageUrl: 'back_shiny' }}"
+        offset="50000"
+        width="100" height="100">
+    </div>
+  </div>
+
+
+
+  <mat-divider></mat-divider>
+  <h4>pokemon types</h4>
+  <div *ngFor="let x of poke?.types">
+    <p>{{ x?.type?.name }} ----- {{ x?.slot }}</p>
+  </div>
+
+  <mat-divider></mat-divider>
+  <h4>ability</h4>
+  <p *ngFor="let ability of poke?.abilities">{{ ability.ability.name }}</p>
+
+  <mat-divider></mat-divider>
+  <h4>abilities</h4>
+  <p>Base experience: {{ poke?.base_experience }}</p>
+  <p>Height: {{ poke?.height }}</p>
+  <p>Weight: {{ poke?.weight }}</p>
+
+  <mat-divider></mat-divider>
+  <h4>status</h4>
+  <div *ngFor="let x of poke?.stats">
+    <p>{{ x?.stat?.name }} ----- {{ x?.base_stat }}</p>
+  </div>
+
+  <mat-divider></mat-divider>
+  <h4>game indixes</h4>
+  <div *ngFor="let x of poke?.game_indices">
+    <p>{{ x?.game_index }} ----- {{ x?.version?.name }}</p>
+  </div>
+
+  <mat-divider></mat-divider>
+  <h4>moves</h4>
+  <div *ngFor="let x of poke?.moves">
+    <p>{{ x?.move.name }}</p>
+  </div>
+
 </div>

@@ -35,12 +35,17 @@ export class SharedService {
     { name: 'fairy', color: '#F0A8F0' }
   ]
 
+  navChange = new Subject();
   sharedChange = new Subject();
   pokemonChange = new Subject();
   selectedChange = new Subject();
   bottomsheetChange = new Subject();
 
   constructor() { }
+
+  setNav(option: boolean) {
+    this.navChange.next(option);
+  }
 
   set setShared(item: any) {
     this.sharedChange.next(item);

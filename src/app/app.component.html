@@ -63,11 +63,11 @@
   <mat-sidenav #pokemon mode="side" position="end">
     <h3 matRipple>{{ pokemonName }}</h3>
     <mat-divider></mat-divider>
-    <app-pokemon-nav></app-pokemon-nav>
+    <app-pokemon-nav *ngIf="isOpened"></app-pokemon-nav>
   </mat-sidenav>
 
   <mat-sidenav-content>
-    <div id="wrapper">
+    <div id="wrapper" *ngIf="platform.isBrowser">
 
       <mat-toolbar color="primary">
         <button mat-icon-button (click)="pokemon.opened ? toggle() : sidenav.toggle()">
@@ -93,3 +93,5 @@
   </mat-sidenav-content>
 
 </mat-sidenav-container>
+
+<ng-snotify></ng-snotify>

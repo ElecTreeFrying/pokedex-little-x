@@ -13,7 +13,7 @@ import { PokeCard, PokeCardConfig } from '../../shared/interface/shared';
 })
 export class HttpService {
 
-  private url: string = '';
+  url: string = '';
 
   constructor(
     private http: HttpClient,
@@ -83,7 +83,6 @@ export class HttpService {
 
   getPokemon(config: PokeCardConfig) {
     this.shared.setSelected = { ...config };
-    if (this.url === config.url) return;
     this.url = config.url;
     if (config.isEsc) return;
     this.http.get(config.url).subscribe((res) => {
