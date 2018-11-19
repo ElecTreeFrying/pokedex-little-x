@@ -30,8 +30,6 @@ export class HttpService {
   }
 
   localStorageInit() {
-    localStorage.clear();
-    sessionStorage.clear();
     this.loadGeneration();
     this.loadPokedex();
   }
