@@ -9,7 +9,9 @@ export interface PokeConfig {
 }
 
 export interface PokeCardConfig {
-  url: string;
+  url_pokemon: string;
+  url_species: string;
+  version: string;
   name: string;
   isEsc: boolean;
 }
@@ -17,6 +19,7 @@ export interface PokeCardConfig {
 export interface PokeCard {
   id: string;
   gen: string;
+  version: string;
   name: string;
   slug: string;
   image: string;

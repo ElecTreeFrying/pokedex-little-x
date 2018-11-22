@@ -9,6 +9,7 @@ import { AppMatModule } from './common/core/module/app-mat.module';
 import { AppComponent } from './app.component';
 import { PokemonNavComponent } from './pokemon-nav/pokemon-nav.component';
 import { ImageUrlPipe } from './common/shared/pipe/image-url.pipe';
+import { GenSortPipe } from './common/shared/pipe/gen-sort.pipe';
 import { environment } from '../environments/environment';
 
 @NgModule({
@@ -16,6 +17,7 @@ import { environment } from '../environments/environment';
     AppComponent,
     PokemonNavComponent,
     ImageUrlPipe,
+    GenSortPipe
   ],
   imports: [
     BrowserModule,

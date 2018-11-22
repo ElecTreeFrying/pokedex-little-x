@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { first } from 'rxjs/operators'
 
 import { SharedService } from '../common/core/service/shared.service';
@@ -8,9 +8,11 @@ import { SharedService } from '../common/core/service/shared.service';
   templateUrl: './pokemon-nav.component.html',
   styleUrls: ['./pokemon-nav.component.scss']
 })
-export class PokemonNavComponent implements OnInit, OnDestroy {
+export class PokemonNavComponent implements OnInit {
 
   poke: any;
+  region: boolean = true;
+  data: boolean = true;
   isLoad: boolean = false;
 
   constructor(
@@ -18,14 +20,13 @@ export class PokemonNavComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.shared.selectedChange.pipe( first() ).subscribe((res: any) => {
-      this.poke = res;
-      console.log(res);
-    });
-  }
+    this.region = localStorage.region !== 'Kalos Region';
+    this.data = localStorage.region !== 'Alola Region';
 
-  ngOnDestroy() {
-    // console.log('destroy');
+    this.shared.selectedChange.pipe( first() ).subscribe((res: any) => {
+      console.log(res);
+      this.poke = res;
+    });
   }
 
 }

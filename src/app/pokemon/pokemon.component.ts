@@ -70,6 +70,7 @@ export class PokemonComponent implements OnInit {
 
   ngOnInit() {
     this.sheet.isOpen = false;
+    localStorage.region = 'Kanto Region';
     this.shared.sharedChange.subscribe((res: PokeCard[]) => {
       this._pokemon = res;
     });
@@ -81,12 +82,12 @@ export class PokemonComponent implements OnInit {
 
   selectPokemon(poke: PokeCard) {
     const url = `assets/api/v2/pokemon/${poke.id}/index.json`;
-    this.service.getPokemon({ url, name: poke.name, isEsc: false });
+    this.service.getPokemon({ url_pokemon: url, url_species: poke.url, version: poke.version, name: poke.name, isEsc: false });
   }
 
   onEsc(event?: KeyboardEvent) {
     if (event.key === 'Escape') {
-      this.service.getPokemon({ url: '', name: 'Loading...', isEsc: true });
+      this.service.getPokemon({ url_pokemon: '', url_species: '', version: '', name: 'Loading...', isEsc: true });
       this.sheet.isOpen ? this.closeSheet() : 0;
     }
   }

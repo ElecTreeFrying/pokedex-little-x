@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { map } from 'rxjs/operators'
+import { map, switchMap } from 'rxjs/operators'
 import * as _ from 'lodash';
 
 import { SharedService } from './shared.service';
@@ -41,10 +41,12 @@ export class HttpService {
           return gen.pokemon_entries.map((spec: any) => {
             const name = spec.pokemon_species.name;
             spec['gen'] = gen.descriptions[0].description;
+            spec['version'] = gen.name;
             spec['slug'] = name;
-            spec['id'] = spec.entry_number;
+            spec['id'] = spec.pokemon_species.url.split('/')[6];
             spec['image'] = spec.image.image;
             spec['name'] = name[0].toUpperCase() + name.slice(1);
+            spec['url'] = spec.pokemon_species.url;
             delete spec.pokemon_species;
             delete spec.pokemon_entries;
             delete spec.entry_number;
@@ -65,6 +67,7 @@ export class HttpService {
               const name = spec.name;
               const buffer = spec.url.split('/');
               spec['gen'] = gen.name;
+              spec['version'] = gen.name;
               spec['slug'] = name;
               spec['id'] = buffer[buffer.length - 2];
               spec['image'] = spec.image.image;
@@ -81,9 +84,27 @@ export class HttpService {
 
   getPokemon(config: PokeCardConfig) {
     this.shared.setSelected = { ...config };
-    this.url = config.url;
-    if (config.isEsc) return;
-    this.http.get(config.url).subscribe((res) => {
+    this.url = config.url_pokemon;
+    if (config.isEsc || Number(this.url.split('/')[4]) >= 722) return;
+    this.http.get(config.url_pokemon).pipe(
+      switchMap((pokemon: any) => {
+        const p = config.url_species.replace(/https:\/\/pokeapi.co/gi, 'assets');
+        return this.http.get(p + 'index.json').pipe(
+          map((species: any) => ({ ...pokemon, species })),
+          switchMap((res2: any) => {
+            const p = res2.species.evolution_chain.url;
+            return this.http.get('assets' + p + 'index.json').pipe(
+              map((evolution: any) => {
+                const e0 = evolution.chain;
+                const e1 = e0 !== undefined ? e0.evolves_to[0] : undefined;
+                const e2 = e1 !== undefined ? e1.evolves_to[0] : undefined;
+                return { ...res2, evolution: [ e0, e1, e2 ] }
+              })
+            )
+          })
+        )
+      })
+    ).subscribe((res) => {
       this.shared.setSelected = { ...res, ...config };
     });
   }

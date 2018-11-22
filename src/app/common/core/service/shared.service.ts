@@ -52,6 +52,7 @@ export class SharedService {
   }
 
   set setPokemon(poke: PokeConfig) {
+    localStorage.region = poke.other ? this.region[poke.gen] : this.pokedex_version[poke.gen]
     this.pokemonChange.next({ gen: poke.gen, region: poke.other ? this.region[poke.gen] : this.pokedex_version[poke.gen], other: poke.other });
   }
 
