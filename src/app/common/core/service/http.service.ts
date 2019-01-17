@@ -13,8 +13,6 @@ import { PokeCard, PokeCardConfig } from '../../shared/interface/shared';
 })
 export class HttpService {
 
-  url: string = '';
-
   constructor(
     private http: HttpClient,
     private shared: SharedService
@@ -32,6 +30,56 @@ export class HttpService {
   localStorageInit() {
     this.loadGeneration();
     this.loadPokedex();
+
+    const front_default = this.http.get('assets/sprites/front_default.json');
+    const back_default = this.http.get('assets/sprites/back_default.json');
+    const front_shiny = this.http.get('assets/sprites/front_shiny.json');
+    const back_shiny = this.http.get('assets/sprites/back_shiny.json');
+
+    front_default.pipe(
+      switchMap((front_def: any[]) => {
+        return back_default.pipe(
+          map((back_def: any[]) => {
+            return {
+              front_def: front_def.map((e) => {
+                e.front_def_image = e.image;
+                e.front_def_url = e.url;
+                delete e.image; delete e.url; return e;
+              }),
+              back_def: back_def.map((e) => {
+                e.back_def_image = e.image;
+                e.back_def_url = e.url;
+                delete e.image; delete e.url; return e;
+              })
+            };
+          }),
+          switchMap((merge1) => {
+            return front_shiny.pipe(
+              map((front_sh: any[]) => ({
+                ...merge1,
+                front_sh: front_sh.map((e) => {
+                  e.front_sh_image = e.image;
+                  e.front_sh_url = e.url;
+                  delete e.image; delete e.url; return e;
+                })
+              })),
+              switchMap((merge2) => {
+                return back_shiny.pipe(
+                  map((back_sh: any[]) => ({
+                    ...merge2,
+                    back_sh: back_sh.map((e) => {
+                      e.back_sh_image = e.image;
+                      e.back_sh_url = e.url;
+                      delete e.image; delete e.url; return e;
+                    })
+                  }))
+                )
+              })
+            )
+          })
+        )
+      })
+    ).subscribe(() => 0);
   }
 
   loadPokedex() {
@@ -84,8 +132,19 @@ export class HttpService {
 
   getPokemon(config: PokeCardConfig) {
     this.shared.setSelected = { ...config };
-    this.url = config.url_pokemon;
-    if (config.isEsc || Number(this.url.split('/')[4]) >= 722) return;
+    const url = config.url_pokemon;
+    if (config.isEsc || Number(url.split('/')[4]) >= 722) return;
+
+    // const index = config.url_pokemon.split('/').reverse()[1];
+    //
+    // console.log(index);
+    //
+    // this.http.get(`assets/api/pokemon.json`).pipe(
+    //   map((p: any[]) => p.find(e => e.id.toString() === index))
+    // ).subscribe((response) => {
+    //   console.log('pkmn: ', response);
+    // });
+
     this.http.get(config.url_pokemon).pipe(
       switchMap((pokemon: any) => {
         const p = config.url_species.replace(/https:\/\/pokeapi.co/gi, 'assets');
@@ -107,6 +166,12 @@ export class HttpService {
     ).subscribe((res) => {
       this.shared.setSelected = { ...res, ...config };
     });
+  }
+
+  getPokemonMoves(move: any) {
+    return this.http.get('assets/api/moves.json').pipe(
+      map((moves: any[]) => moves.find(e => e.name === move))
+    )
   }
 
 }

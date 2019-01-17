@@ -1,14 +1,18 @@
 
+<!-- Lorem ipsum dolor sit amet, consectetur adipisicing elit -->
+
+<!-- <div id="nav" data-simplebar *ngIf="indicators.isShow"> -->
 <div id="nav" data-simplebar>
 
-  <h1>#{{ poke?.id }}</h1>
+  <h1 id="p-id">#{{ poke?.id }}</h1>
 
-  <img src="{{ poke?.id | imageUrl: 'blank' }}" width="250" alt="poke?.name">
+  <img id="p-img" src="{{ poke?.id | imageUrl: 'blank' }}" width="250" alt="poke?.name">
 
   <div class="sprites">
     <div>
       <p>Front</p>
       <img
+         id="p-s-front"
          defaultImage="assets/defaultimage.png"
          alt="{{ poke?.name }}"
          lazyLoad="{{ poke?.id | imageUrl: 'front_default' }}"
@@ -18,6 +22,7 @@
     <div *ngIf="region">
       <p>Back</p>
       <img
+        id="p-s-back"
         defaultImage="assets/defaultimage.png"
         alt="{{ poke?.name }}"
         lazyLoad="{{ poke?.id | imageUrl: 'back_default' }}"
@@ -27,6 +32,7 @@
     <div>
       <p>Shiny Front</p>
       <img
+        id="p-s-sfront"
         defaultImage="assets/defaultimage.png"
         alt="{{ poke?.name }}"
         lazyLoad="{{ poke?.id | imageUrl: 'front_shiny' }}"
@@ -36,6 +42,7 @@
     <div *ngIf="region">
       <p>Shiny Back</p>
       <img
+        id="p-s-sback"
         defaultImage="assets/defaultimage.png"
         alt="{{ poke?.name }}"
         lazyLoad="{{ poke?.id | imageUrl: 'back_shiny' }}"
@@ -44,7 +51,6 @@
     </div>
   </div>
 
-
   <mat-divider></mat-divider>
   <h4>evolution</h4>
   <div class="sprites">
@@ -52,6 +58,7 @@
       <p *ngIf="x?.species?.name">{{ x?.species?.name }}</p>
       <img
         *ngIf="x?.species?.name"
+        class="p-ev-name"
         defaultImage="assets/defaultimage.png"
         alt="{{ poke?.name }}"
         lazyLoad="{{ x?.species?.url | imageUrl: 'url' }}"
@@ -62,8 +69,12 @@
 
   <mat-divider></mat-divider>
   <h4>pokemon types</h4>
-  <div *ngFor="let x of poke?.types">
-    <p>{{ x?.type?.name }} ----- {{ x?.slot }}</p>
+  <div id="pokemon-type" *ngFor="let x of poke?.types">
+
+    <div class="p-type">
+      <span [ngStyle]="{ 'background': x?.type?.name | pokeType }">{{ x?.type?.name }}</span>
+    </div>
+
   </div>
 
   <mat-divider></mat-divider>
@@ -94,16 +105,58 @@
     <p>{{ x?.stat?.name }} ----- {{ x?.base_stat }}</p>
   </div>
 
-  <mat-divider></mat-divider>
+  <!-- <mat-divider></mat-divider>
   <h4>game indixes</h4>
-  <div *ngFor="let x of poke?.game_indices">
+  <div *ngFor="let x of poke?.game_indices | util">
     <p>{{ x?.game_index }} ----- {{ x?.version?.name }}</p>
-  </div>
+  </div> -->
 
   <mat-divider></mat-divider>
   <h4>moves</h4>
-  <div *ngFor="let x of poke?.moves">
-    <p>{{ x?.move.name }}</p>
+
+  <div id="pokemon-moves">
+    
+    <mat-accordion displayMode="flat">
+
+      <mat-expansion-panel (opened)="indicators.physical = true" (closed)="indicators.physical = false">
+        <mat-expansion-panel-header>Physical</mat-expansion-panel-header>
+        <ng-template matExpansionPanelContent>
+
+          <mat-chip-list aria-orientation="horizontal" *ngIf="indicators.physical">
+            <div *ngFor="let x of poke?.moves; let i = index; trackBy: trackByFn">
+              <mat-chip [ngStyle]="{ 'background': x?.type | pokeType }" *ngIf="x?.className === 'physical'"  (click)="selectMove(x?.move.name)">{{ x?.move.name }}</mat-chip>
+            </div>
+          </mat-chip-list>
+        </ng-template>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel (opened)="indicators.status = true" (closed)="indicators.status = false">
+        <mat-expansion-panel-header>Status</mat-expansion-panel-header>
+        <ng-template matExpansionPanelContent>
+          
+          <mat-chip-list aria-orientation="horizontal" *ngIf="indicators.status">
+            <div *ngFor="let x of poke?.moves; let i = index; trackBy: trackByFn">
+              <mat-chip [ngStyle]="{ 'background': x?.type | pokeType }" *ngIf="x?.className === 'status'"  (click)="selectMove(x?.move.name)">{{ x?.move.name }}</mat-chip>
+            </div>
+          </mat-chip-list>
+        </ng-template>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel (opened)="indicators.special = true" (closed)="indicators.special = false">
+        <mat-expansion-panel-header>Special</mat-expansion-panel-header>
+        <ng-template matExpansionPanelContent>
+          
+          <mat-chip-list aria-orientation="horizontal" *ngIf="indicators.special">
+            <div *ngFor="let x of poke?.moves; let i = index; trackBy: trackByFn">
+              <mat-chip [ngStyle]="{ 'background': x?.type | pokeType }" *ngIf="x?.className === 'special'"  (click)="selectMove(x?.move.name)">{{ x?.move.name }}</mat-chip>
+            </div>
+          </mat-chip-list>
+        </ng-template>
+      </mat-expansion-panel>
+
+    </mat-accordion>
+    
   </div>
+
 
 </div>

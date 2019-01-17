@@ -1,9 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatIconRegistry } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatSidenav } from '@angular/material';
 import { Platform } from '@angular/cdk/platform';
+import { ReplaySubject } from 'rxjs/ReplaySubject';
+import { takeUntil } from 'rxjs/operators'
 
 import { HttpService } from './common/core/service/http.service';
 import { SharedService } from './common/core/service/shared.service';
@@ -24,7 +26,10 @@ export class AppComponent implements OnInit {
   pokemonName: string = '';
   isLoaded: boolean = false;
   isOpened: boolean = false;
+  isMoveUp: boolean = false;
 
+  private destroyed: ReplaySubject<boolean> = new ReplaySubject(1);
+  
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -48,7 +53,8 @@ export class AppComponent implements OnInit {
     this.pokedex = this.shared.pokedex;
     this.pokemonName = 'Loading...';
 
-    this.shared.selectedChange.subscribe((res: PokeCardConfig | any) => {
+    this.shared.selectedChange.pipe( takeUntil(this.destroyed) ).subscribe((res: PokeCardConfig | any) => {
+
       const main = this.main.opened;
       const nav = this.nav.opened;
       const isEsc = res.isEsc;
@@ -62,13 +68,19 @@ export class AppComponent implements OnInit {
           : 0;
     });
 
-    this.nav.closedStart.subscribe(() => {
+    this.nav.closedStart.pipe( takeUntil(this.destroyed) ).subscribe(() => {
       setTimeout(() => { this.shared.setNav(false); }, 300);
     });
 
-    this.shared.navChange.subscribe((res: any) => {
+    this.shared.navChange.pipe( takeUntil(this.destroyed) ).subscribe((res: any) => {
       this.isOpened = res;
     });
+    
+  }
+  
+  ngOnDestroy() {
+    this.destroyed.next(true);
+    this.destroyed.complete();
   }
 
   onActivate() {
@@ -78,6 +90,10 @@ export class AppComponent implements OnInit {
   searchPokemon() {
     this.shared.setBottomsheet = 0;
   }
+  
+  sidenavChange(option: boolean) {
+    this.shared.setSidenav = option;
+  }
 
   getPokemonByGeneration(gen: number, other: boolean = true) {
     this.shared.setPokemon = { gen, other };
@@ -85,6 +101,25 @@ export class AppComponent implements OnInit {
 
   getPokemonByPokedex(gen: number, other: boolean = false) {
     this.shared.setPokemon = { gen, other };
+  }
+  
+  onScroll(event: Event) {
+    
+    const scrollTop = event.target['scrollTop'];
+    const scrollHeight = event.target['scrollHeight'];
+    const clientHeight = event.target['clientHeight'];
+    const isLast = scrollHeight - scrollTop === clientHeight;
+
+    this.isMoveUp = scrollTop > 300;
+
+    if (isLast) {
+      console.log(isLast);
+    }
+    
+  }
+  
+  scrollToTop() {
+    window.scroll(0,0);
   }
 
   toggle(option: boolean = false) {

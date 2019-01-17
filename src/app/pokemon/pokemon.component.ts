@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatBottomSheet, MatBottomSheetRef } from '@angular/material';
+import { ReplaySubject } from 'rxjs/ReplaySubject';
+import { takeUntil } from 'rxjs/operators'
 
 import { HttpService } from '../common/core/service/http.service';
 import { SharedService } from '../common/core/service/shared.service';
@@ -25,12 +27,14 @@ export class PokemonComponent implements OnInit {
   pokemonOther: boolean = true;
   sheet: { isOpen: boolean, object?: MatBottomSheetRef<any> } = { isOpen: false };
 
+  private destroyed: ReplaySubject<boolean> = new ReplaySubject(1);
+
   constructor(
     private bottomsheet: MatBottomSheet,
     private service: HttpService,
     private shared: SharedService
   ) {
-    this.shared.pokemonChange.subscribe((pokemon: any) => {
+    this.shared.pokemonChange.pipe( takeUntil(this.destroyed) ).subscribe((pokemon: any) => {
 
       this.keyDownEsc();
 
@@ -44,7 +48,7 @@ export class PokemonComponent implements OnInit {
 
     });
 
-    this.shared.bottomsheetChange.subscribe((res: PokeCard[] | number) => {
+    this.shared.bottomsheetChange.pipe( takeUntil(this.destroyed) ).subscribe((res: PokeCard[] | number) => {
 
       res === 0 && this.sheet.isOpen
         ? this.sheet.object.dismiss()
@@ -75,6 +79,11 @@ export class PokemonComponent implements OnInit {
       this._pokemon = res;
     });
   }
+  
+  ngOnDestroy() {
+    this.destroyed.next(true);
+    this.destroyed.complete();
+  }
 
   trackByFn(index) {
     return index;
@@ -83,6 +92,7 @@ export class PokemonComponent implements OnInit {
   selectPokemon(poke: PokeCard) {
     const url = `assets/api/v2/pokemon/${poke.id}/index.json`;
     this.service.getPokemon({ url_pokemon: url, url_species: poke.url, version: poke.version, name: poke.name, isEsc: false });
+    
   }
 
   onEsc(event?: KeyboardEvent) {

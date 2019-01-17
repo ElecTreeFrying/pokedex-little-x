@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
 import { ServiceWorkerModule } from '@angular/service-worker';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -10,6 +9,8 @@ import { AppComponent } from './app.component';
 import { PokemonNavComponent } from './pokemon-nav/pokemon-nav.component';
 import { ImageUrlPipe } from './common/shared/pipe/image-url.pipe';
 import { GenSortPipe } from './common/shared/pipe/gen-sort.pipe';
+import { PokeTypePipe } from './common/shared/pipe/poke-type.pipe';
+import { SharedPipe } from './common/shared/pipe/shared.pipe';
 import { environment } from '../environments/environment';
 
 @NgModule({
@@ -17,10 +18,11 @@ import { environment } from '../environments/environment';
     AppComponent,
     PokemonNavComponent,
     ImageUrlPipe,
-    GenSortPipe
+    GenSortPipe,
+    PokeTypePipe,
+    SharedPipe,
   ],
   imports: [
-    BrowserModule,
     AppRoutingModule,
     AppProviderModule,
     AppMatModule,

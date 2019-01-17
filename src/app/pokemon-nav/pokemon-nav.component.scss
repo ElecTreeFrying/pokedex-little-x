@@ -2,7 +2,8 @@
 #nav {
   width: 700px;
   height: 93vh;
-  overflow: auto;
+  // overflow-x: hidden;
+  overflow-y: auto;
 
   p {
     margin: 0;
@@ -16,28 +17,35 @@
     p { text-align: center; }
   }
 
-}
+  #pokemon-type {
+    display: inline-block;
+    margin: 0 3px;
 
-.ring-1 {
-  width: 10px;
-  height: 10px;
-  margin: 0 auto;
-  padding: 10px;
-  border: 7px dashed #4b9cdb;
-  border-radius: 100%;
-  animation: loadingD 1.5s 0.3s cubic-bezier(.17,.37,.43,.67) infinite;
-}
+    .p-type {
+      margin: 5px 0;
 
-@keyframes loadingD {
-  0 {
-    transform: rotate(0deg);
+      > span {
+        border-radius: 47.73px;
+        // background: red;
+        padding: 5px;
+      }
+    }
   }
 
-  50% {
-    transform: rotate(180deg);
+  #pokemon-moves {
+    padding: 0 5px;
   }
 
-  100% {
-    transform: rotate(360deg);
+  #test {
+
+    #collapse {
+      background: #565656;
+      height: 0;
+
+      p {
+        overflow: hidden;
+      }
+    }
+
   }
 }

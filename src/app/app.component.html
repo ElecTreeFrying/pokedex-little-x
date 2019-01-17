@@ -1,4 +1,8 @@
 
+<button mat-fab *ngIf="isMoveUp" (click)="scrollToTop()">
+  <mat-icon>keyboard_arrow_up</mat-icon>
+</button>
+
 <mat-sidenav-container>
 
   <mat-sidenav #sidenav mode="side" opened>
@@ -60,7 +64,9 @@
 
   </mat-sidenav>
 
-  <mat-sidenav #pokemon mode="side" position="end">
+  <mat-sidenav
+      #pokemon mode="side" position="end"
+      (openedStart)="sidenavChange(true)" (closedStart)="sidenavChange(false)">
     <h3 matRipple>{{ pokemonName }}</h3>
     <mat-divider></mat-divider>
     <app-pokemon-nav *ngIf="isOpened"></app-pokemon-nav>
@@ -79,13 +85,14 @@
         </button>
       </mat-toolbar>
 
-      <div id="content" data-simplebar>
+      <!-- <div id="content" data-simplebar> -->
+      <div id="content" (scroll)="onScroll($event)">
 
         <div id="spinner" *ngIf="!isLoaded">
           <mat-progress-spinner mode="indeterminate" [color]="'warn'"></mat-progress-spinner>
         </div>
 
-        <router-outlet (activate)="onActivate()"></router-outlet>
+        <router-outlet (activate)="onActivate()" (scroll)="onScroll($event)"></router-outlet>
 
       </div>
 

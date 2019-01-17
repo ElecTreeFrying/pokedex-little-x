@@ -38,8 +38,10 @@ export class SharedService {
   navChange = new Subject();
   sharedChange = new Subject();
   pokemonChange = new Subject();
+  sidenavChange = new Subject();
   selectedChange = new Subject();
   bottomsheetChange = new Subject();
+  withContentChange = new Subject();
 
   constructor() { }
 
@@ -55,6 +57,10 @@ export class SharedService {
     localStorage.region = poke.other ? this.region[poke.gen] : this.pokedex_version[poke.gen]
     this.pokemonChange.next({ gen: poke.gen, region: poke.other ? this.region[poke.gen] : this.pokedex_version[poke.gen], other: poke.other });
   }
+  
+  set setSidenav(option: boolean) {
+    this.sidenavChange.next(option);
+  }
 
   set setSelected(spec: any) {
     this.selectedChange.next({ ...spec });
@@ -62,6 +68,10 @@ export class SharedService {
 
   set setBottomsheet(option: PokeCard[] | number) {
     this.bottomsheetChange.next(option);
+  }
+  
+  set setWithContent(option: boolean) {
+    this.withContentChange.next(option);
   }
 
 }
