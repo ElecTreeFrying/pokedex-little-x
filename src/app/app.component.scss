@@ -3,10 +3,10 @@ $icon-size: 35px;
 .mat-fab {
   position: absolute;
   z-index: 10;
-  right: 0;
   bottom: 0;
-  margin-right: 2vw;
-  margin-bottom: 2vh;
+  margin: 2vh 2vw;
+  
+  transition: left 1s, right 2s;
 }
 
 .mat-sidenav {
@@ -53,21 +53,6 @@ $icon-size: 35px;
         cursor: pointer;
         margin-right: auto;
       }
-    }
-
-    #content::-webkit-scrollbar-track {
-    	border-radius: 5px;
-      display: none;
-    }
-
-    #content::-webkit-scrollbar {
-      border-radius: 5px;
-    }
-
-    #content::-webkit-scrollbar-thumb {
-    	border-radius: 10px;
-    	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
-      background-color: rgba(black, 0.5);
     }
 
     #content {

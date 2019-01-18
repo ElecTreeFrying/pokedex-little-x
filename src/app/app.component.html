@@ -1,8 +1,4 @@
 
-<button mat-fab *ngIf="isMoveUp" (click)="scrollToTop()">
-  <mat-icon>keyboard_arrow_up</mat-icon>
-</button>
-
 <mat-sidenav-container>
 
   <mat-sidenav #sidenav mode="side" opened>
@@ -85,13 +81,12 @@
         </button>
       </mat-toolbar>
 
-      <!-- <div id="content" data-simplebar> -->
-      <div id="content" (scroll)="onScroll($event)">
+      <div id="content" data-simplebar #content>
 
         <div id="spinner" *ngIf="!isLoaded">
           <mat-progress-spinner mode="indeterminate" [color]="'warn'"></mat-progress-spinner>
         </div>
-
+        
         <router-outlet (activate)="onActivate()" (scroll)="onScroll($event)"></router-outlet>
 
       </div>
@@ -102,3 +97,7 @@
 </mat-sidenav-container>
 
 <ng-snotify></ng-snotify>
+
+<button mat-fab *ngIf="isMoveUp" [ngStyle]="{ 'left': main.opened ? 'auto' : 0, 'right': main.opened ? 0 : 'auto' }" (click)="scrollToTop()">
+  <mat-icon>keyboard_arrow_up</mat-icon>
+</button>

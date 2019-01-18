@@ -42,6 +42,7 @@ export class SharedService {
   selectedChange = new Subject();
   bottomsheetChange = new Subject();
   withContentChange = new Subject();
+  isAvailableChange = new Subject();
 
   constructor() { }
 
@@ -72,6 +73,10 @@ export class SharedService {
   
   set setWithContent(option: boolean) {
     this.withContentChange.next(option);
+  }
+  
+  set setIsAvailable(option: any) {
+    this.isAvailableChange.next(option);
   }
 
 }

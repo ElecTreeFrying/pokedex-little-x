@@ -24,6 +24,7 @@ export class PokemonComponent implements OnInit {
   cherry: string = 'https://cdn130.picsart.com/257281221032212.png?r1024x1024';
   region: string = 'Kanto Region';
   currentGen: number = 0;
+  isAvailable: boolean = true;
   pokemonOther: boolean = true;
   sheet: { isOpen: boolean, object?: MatBottomSheetRef<any> } = { isOpen: false };
 
@@ -34,6 +35,12 @@ export class PokemonComponent implements OnInit {
     private service: HttpService,
     private shared: SharedService
   ) {
+    this.shared.isAvailableChange.subscribe((res: any) => {
+      
+      const condition = !res.phaseTime && res.valid;
+      this.isAvailable = condition;
+    });
+    
     this.shared.pokemonChange.pipe( takeUntil(this.destroyed) ).subscribe((pokemon: any) => {
 
       this.keyDownEsc();
@@ -90,6 +97,7 @@ export class PokemonComponent implements OnInit {
   }
 
   selectPokemon(poke: PokeCard) {
+    if (!this.isAvailable) return;
     const url = `assets/api/v2/pokemon/${poke.id}/index.json`;
     this.service.getPokemon({ url_pokemon: url, url_species: poke.url, version: poke.version, name: poke.name, isEsc: false });
     
