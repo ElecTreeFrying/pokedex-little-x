@@ -4,9 +4,6 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
 
-// import { SharedService } from './app/common/core/service/shared.service';
-// SharedService.toBase64AllPNG();
-
 if (environment.production) {
   enableProdMode();
 }
