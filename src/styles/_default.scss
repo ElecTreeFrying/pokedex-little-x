@@ -1,0 +1,39 @@
+
+html, body {
+  margin: 0;
+  height: 100%;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  user-select: none;
+}
+
+.wrap {
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+@media (min-width: 576px) {
+  .wrap {
+    max-width: 540px;
+  }
+}
+
+@media (min-width: 768px) {
+  .wrap {
+    max-width: 720px;
+  }
+}
+
+@media (min-width: 992px) {
+  .wrap {
+    max-width: 960px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .wrap {
+    max-width: 1140px;
+  }
+}

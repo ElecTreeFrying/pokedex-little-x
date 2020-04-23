@@ -1,0 +1,29 @@
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: lighter;
+}
+
+input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.mat-typography {
+  color: antiquewhite;
+  background-color: rgb(48, 48, 48);
+}
+
+p:focus,
+.mat-fab:focus, 
+.mat-ripple:focus,
+.mat-button:focus,
+.mat-icon-button:focus,
+.mat-raised-button:focus,
+.mat-stroked-button:focus,
+.mat-menu-item:focus {
+  outline: none;
+}
+
+
+
+

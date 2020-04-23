@@ -1,5 +1,14 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
+# user
+.vscode
+.firebase
+.firebaserc
+*.spec.ts
+
+# environments
+src/environments/**
+
 # compiled output
 /dist
 /tmp
