@@ -1,0 +1,41 @@
+
+<div class="wrap">
+  <div class="card-content">
+    
+    <div matRipple *ngFor="let entry of entries; trackBy: trackByID">
+      <mat-card>
+        <div class="image" *ngIf="route['isItems'] || route['isCategory']">
+          <img 
+            mat-card-image 
+            offset="300"
+            defaultImage="assets/images/berry.png" 
+            errorImage="assets/images/berry.png" 
+            [lazyLoad]="entry?.byte64 | idToImage" 
+            [alt]="entry?.name">
+        </div>
+        <img *ngIf="route['isGames']"
+          mat-card-image 
+          offset="300"
+          defaultImage="assets/images/berry.png" 
+          errorImage="assets/images/berry.png" 
+          [lazyLoad]="entry?.byte64 | idToImage" 
+          [alt]="entry?.name">
+        <mat-card-content>
+          <p>{{ entry?.name | cardText }}</p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <div matRipple *ngIf="entries?.length === defaultLength">
+      <mat-card (click)="entries = all">
+        <mat-card-content class="load-more">
+          <mat-icon>add</mat-icon>
+        </mat-card-content>
+        <mat-card-content>
+          <p>Load more</p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    
+  </div>
+</div>

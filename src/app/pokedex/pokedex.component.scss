@@ -1,0 +1,14 @@
+
+.card-content {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+
+  .mat-card {
+    width: 150px;
+    background-color: #4E1338;
+    color: white;
+    margin: 8px;
+  }
+}
+

@@ -1,0 +1,17 @@
+
+
+<div class="card-content">
+  
+  <div matRipple *ngFor="let selection of selections">
+    <mat-card (click)="go(selection, 'category')">
+      <mat-card-content>
+    
+        <p>{{ selection?.name }}</p>
+    
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+</div>
+
+

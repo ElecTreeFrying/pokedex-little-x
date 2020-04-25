@@ -1,0 +1,36 @@
+
+.card-content {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  $measure: 30px;
+  margin-top: $measure;
+  margin-bottom: $measure;
+
+  .mat-ripple {
+    margin: 8px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .mat-card {
+    // width: 190px;
+    width: 150px;
+    height: 70px;
+    background-color: #4E1338;
+    
+    .mat-card-content {
+      display: flex;
+      height: 38px;
+    }
+
+    p {
+      font-family: 'Poppins', 'Poppins-Regular';
+      font-size: 1.15em;
+      color: white;
+      text-align: center;
+      margin: auto;
+    }
+  }
+}
+

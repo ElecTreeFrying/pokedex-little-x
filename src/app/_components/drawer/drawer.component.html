@@ -1,0 +1,314 @@
+
+
+<mat-accordion displayMode="flat">
+  
+  <!-- home -->
+  <mat-expansion-panel hideToggle #home (click)="home.close()">
+    <mat-expansion-panel-header routerLink="/">
+      <mat-panel-title><span>Home</span></mat-panel-title>
+    </mat-expansion-panel-header>
+  </mat-expansion-panel>
+
+  <!-- pokemon -->
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title><span>Pokemon</span></mat-panel-title>
+    </mat-expansion-panel-header>
+    <ng-template matExpansionPanelContent>
+      <mat-accordion displayMode="flat">
+        <mat-expansion-panel class="inner">
+          <mat-expansion-panel-header>
+            <mat-panel-title><span>Type</span></mat-panel-title>
+          </mat-expansion-panel-header>
+          <ng-template matExpansionPanelContent>
+      
+            <mat-action-list>
+              <button 
+                mat-list-item 
+                *ngFor="let item of pokedex"
+                (click)="go(item, 'pokedex')">
+                <mat-icon>arrow_right</mat-icon>
+                <span class="nav">{{ item?.name }}</span>
+              </button>
+            </mat-action-list>
+      
+          </ng-template>
+        </mat-expansion-panel>
+        <mat-expansion-panel class="inner">
+          <mat-expansion-panel-header>
+            <mat-panel-title><span>Lorem ipsum</span></mat-panel-title>
+          </mat-expansion-panel-header>
+          <ng-template matExpansionPanelContent>
+      
+            <!-- include here -->
+      
+          </ng-template>
+        </mat-expansion-panel>
+        <mat-expansion-panel class="inner last">
+          <mat-expansion-panel-header>
+            <mat-panel-title><span>Lorem ipsum</span></mat-panel-title>
+          </mat-expansion-panel-header>
+          <ng-template matExpansionPanelContent>
+      
+            <!-- include here -->
+      
+          </ng-template>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </ng-template>
+  </mat-expansion-panel>
+
+  <!-- games -->
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title><span>Games</span></mat-panel-title>
+    </mat-expansion-panel-header>
+    <ng-template matExpansionPanelContent>
+      <mat-accordion displayMode="flat">
+        <mat-expansion-panel class="inner">
+          <mat-expansion-panel-header>
+            <mat-panel-title><span>Pokédex</span></mat-panel-title>
+          </mat-expansion-panel-header>
+          <ng-template matExpansionPanelContent>
+      
+            <mat-action-list>
+              <button 
+                mat-list-item 
+                *ngFor="let item of pokedex"
+                (click)="go(item, 'pokedex')">
+                <mat-icon>arrow_right</mat-icon>
+                <span class="nav">{{ item?.name }}</span>
+              </button>
+            </mat-action-list>
+      
+          </ng-template>
+        </mat-expansion-panel>
+        <mat-expansion-panel class="inner">
+          <mat-expansion-panel-header>
+            <mat-panel-title><span>Generation</span></mat-panel-title>
+          </mat-expansion-panel-header>
+          <ng-template matExpansionPanelContent>
+      
+            <mat-action-list>
+              <button 
+                mat-list-item 
+                *ngFor="let item of generation"
+                (click)="go(item, 'generation')">
+                <mat-icon>arrow_right</mat-icon>
+                <span class="nav">{{ item?.name }}</span>
+              </button>
+            </mat-action-list>
+      
+          </ng-template>
+        </mat-expansion-panel>
+        <mat-expansion-panel class="inner last">
+          <mat-expansion-panel-header>
+            <mat-panel-title><span>Version group</span></mat-panel-title>
+          </mat-expansion-panel-header>
+          <ng-template matExpansionPanelContent>
+      
+            <mat-action-list>
+              <button 
+                mat-list-item 
+                *ngFor="let item of versionGroup"
+                (click)="go(item, 'version-group')">
+                <mat-icon>arrow_right</mat-icon>
+                <span class="nav">{{ item?.name }}</span>
+              </button>
+            </mat-action-list>
+      
+          </ng-template>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </ng-template>
+  </mat-expansion-panel>
+
+  <!-- items -->
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title><span>Items</span></mat-panel-title>
+    </mat-expansion-panel-header>
+    <ng-template matExpansionPanelContent>
+      <mat-accordion displayMode="flat">
+        <mat-expansion-panel class="inner">
+          <mat-expansion-panel-header>
+            <mat-panel-title><span>Attributes</span></mat-panel-title>
+          </mat-expansion-panel-header>
+          <ng-template matExpansionPanelContent>
+      
+            <mat-action-list class="inner">
+              <button 
+                mat-list-item 
+                *ngFor="let item of items"
+                (click)="go(item, 'items')">
+                <mat-icon>arrow_right</mat-icon>
+                <span class="nav">{{ item?.name }}</span>
+              </button>
+            </mat-action-list>
+      
+          </ng-template>
+        </mat-expansion-panel>
+        <mat-expansion-panel class="inner last" hideToggle #berries (click)="berries.close()">
+          <mat-expansion-panel-header (click)="selection('items', 'categories')">
+            <mat-panel-title><span>Categories</span></mat-panel-title>
+          </mat-expansion-panel-header>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </ng-template>
+  </mat-expansion-panel>
+
+  <!-- berries -->
+  <mat-expansion-panel hideToggle #berries (click)="berries.close()">
+    <mat-expansion-panel-header routerLInk="/">
+      <mat-panel-title><span>Berries</span></mat-panel-title>
+    </mat-expansion-panel-header>
+  </mat-expansion-panel>
+
+  <!-- moves -->
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title><span>Moves</span></mat-panel-title>
+    </mat-expansion-panel-header>
+    <ng-template matExpansionPanelContent>
+      <mat-accordion displayMode="flat">
+        <mat-expansion-panel class="inner">
+          <mat-expansion-panel-header>
+            <mat-panel-title><span>Type</span></mat-panel-title>
+          </mat-expansion-panel-header>
+          <ng-template matExpansionPanelContent>
+      
+            <mat-action-list>
+              <button 
+                mat-list-item 
+                *ngFor="let item of pokedex"
+                (click)="go(item, 'pokedex')">
+                <mat-icon>arrow_right</mat-icon>
+                <span class="nav">{{ item?.name }}</span>
+              </button>
+            </mat-action-list>
+      
+          </ng-template>
+        </mat-expansion-panel>
+        <mat-expansion-panel class="inner">
+          <mat-expansion-panel-header>
+            <mat-panel-title><span>Lorem ipsum</span></mat-panel-title>
+          </mat-expansion-panel-header>
+          <ng-template matExpansionPanelContent>
+      
+            <!-- include here -->
+      
+          </ng-template>
+        </mat-expansion-panel>
+        <mat-expansion-panel class="inner last">
+          <mat-expansion-panel-header>
+            <mat-panel-title><span>Lorem ipsum</span></mat-panel-title>
+          </mat-expansion-panel-header>
+          <ng-template matExpansionPanelContent>
+      
+            <!-- include here -->
+      
+          </ng-template>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </ng-template>
+  </mat-expansion-panel>
+  
+  <!-- machine -->
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title><span>Machine</span></mat-panel-title>
+    </mat-expansion-panel-header>
+    <ng-template matExpansionPanelContent>
+      <mat-accordion displayMode="flat">
+        <mat-expansion-panel class="inner">
+          <mat-expansion-panel-header>
+            <mat-panel-title><span>Type</span></mat-panel-title>
+          </mat-expansion-panel-header>
+          <ng-template matExpansionPanelContent>
+      
+            <mat-action-list>
+              <button 
+                mat-list-item 
+                *ngFor="let item of pokedex"
+                (click)="go(item, 'pokedex')">
+                <mat-icon>arrow_right</mat-icon>
+                <span class="nav">{{ item?.name }}</span>
+              </button>
+            </mat-action-list>
+      
+          </ng-template>
+        </mat-expansion-panel>
+        <mat-expansion-panel class="inner">
+          <mat-expansion-panel-header>
+            <mat-panel-title><span>Lorem ipsum</span></mat-panel-title>
+          </mat-expansion-panel-header>
+          <ng-template matExpansionPanelContent>
+      
+            <!-- include here -->
+      
+          </ng-template>
+        </mat-expansion-panel>
+        <mat-expansion-panel class="inner last">
+          <mat-expansion-panel-header>
+            <mat-panel-title><span>Lorem ipsum</span></mat-panel-title>
+          </mat-expansion-panel-header>
+          <ng-template matExpansionPanelContent>
+      
+            <!-- include here -->
+      
+          </ng-template>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </ng-template>
+  </mat-expansion-panel>
+
+  <!-- location -->
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title><span>Location</span></mat-panel-title>
+    </mat-expansion-panel-header>
+    <ng-template matExpansionPanelContent>
+      <mat-accordion displayMode="flat">
+        <mat-expansion-panel class="inner">
+          <mat-expansion-panel-header>
+            <mat-panel-title><span>Type</span></mat-panel-title>
+          </mat-expansion-panel-header>
+          <ng-template matExpansionPanelContent>
+      
+            <mat-action-list>
+              <button 
+                mat-list-item 
+                *ngFor="let item of pokedex"
+                (click)="go(item, 'pokedex')">
+                <mat-icon>arrow_right</mat-icon>
+                <span class="nav">{{ item?.name }}</span>
+              </button>
+            </mat-action-list>
+      
+          </ng-template>
+        </mat-expansion-panel>
+        <mat-expansion-panel class="inner">
+          <mat-expansion-panel-header>
+            <mat-panel-title><span>Lorem ipsum</span></mat-panel-title>
+          </mat-expansion-panel-header>
+          <ng-template matExpansionPanelContent>
+      
+            <!-- include here -->
+      
+          </ng-template>
+        </mat-expansion-panel>
+        <mat-expansion-panel class="inner last">
+          <mat-expansion-panel-header>
+            <mat-panel-title><span>Lorem ipsum</span></mat-panel-title>
+          </mat-expansion-panel-header>
+          <ng-template matExpansionPanelContent>
+      
+            <!-- include here -->
+      
+          </ng-template>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </ng-template>
+  </mat-expansion-panel>
+
+</mat-accordion>

@@ -24,6 +24,7 @@
     "@angular/service-worker": "~9.1.2",
     "bootstrap": "^4.4.1",
     "lodash": "^4.17.15",
+    "ng-lazyload-image": "^7.1.0",
     "rxjs": "~6.5.4",
     "simplebar": "^5.1.0",
     "tslib": "^1.10.0",

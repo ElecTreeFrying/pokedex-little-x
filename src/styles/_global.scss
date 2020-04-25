@@ -8,12 +8,8 @@ input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-i
   margin: 0;
 }
 
-.mat-typography {
-  color: antiquewhite;
-  background-color: rgb(48, 48, 48);
-}
-
 p:focus,
+span:focus,
 .mat-fab:focus, 
 .mat-ripple:focus,
 .mat-button:focus,
@@ -23,7 +19,3 @@ p:focus,
 .mat-menu-item:focus {
   outline: none;
 }
-
-
-
-

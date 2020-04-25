@@ -1,0 +1,54 @@
+
+.card-content {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  $measure: 30px;
+  margin-top: $measure;
+  margin-bottom: $measure;
+
+  .mat-ripple {
+    margin: 8px;
+    border-radius: 4px;
+    cursor: pointer;
+
+    p {
+      font-family: 'Poppins', 'Poppins-Regular';
+      font-size: 1.15em;
+      text-align: center;
+    }
+  }
+
+  .mat-card {
+    width: 150px;
+    height: 202px;
+    background-color: #4E1338;
+    color: white;
+
+    .image {
+      height: 150px;
+      width: 150px;
+      margin: -16px -16px 16px -16px;
+      display: flex;
+
+      .mat-card-image {
+        height: auto;
+        width: auto;
+        margin: auto;
+      }
+    }
+
+    .load-more {
+      height: calc(100% - 36px);
+
+      .mat-icon {
+        position: absolute;
+        font-size: 80px;
+        margin-left: 20px;
+        margin-top: 20px;
+      }
+    }
+    
+  }
+}
+

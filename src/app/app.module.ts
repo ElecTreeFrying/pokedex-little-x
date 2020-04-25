@@ -1,24 +1,28 @@
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule } from '@angular/core';
 
+import { AppProviderModule } from './_common/providers/app-provider.module';
 import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
+import { DrawerComponent } from './_components/drawer/drawer.component';
 
 import { environment } from '../environments/environment';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    DrawerComponent
   ],
   imports: [
     BrowserModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     BrowserAnimationsModule,
-    AppRoutingModule,
+    AppProviderModule,
+    AppRoutingModule
   ],
   bootstrap: [ 
     AppComponent 

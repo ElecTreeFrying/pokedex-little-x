@@ -1,0 +1,31 @@
+
+.mat-drawer-container {
+  background-color: #340522;
+  color: white;
+}
+
+.mat-drawer {
+  background-color: #46002A;
+  color: white;
+  width: 350px;
+  display: flex;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.mat-toolbar {
+  background-color: #530034;
+  color: white;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+
+  span {
+    margin-left: 16px;
+    cursor: pointer;
+  }
+}
+
+#router {
+  display: flex;
+}

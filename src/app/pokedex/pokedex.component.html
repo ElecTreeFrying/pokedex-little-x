@@ -1,0 +1,22 @@
+
+<div class="wrap">
+  <div class="card-content">
+    
+    <mat-card *ngFor="let item of (pokemon | async)?.pokemon_entries">
+      
+      <img 
+        mat-card-image 
+        offset="300"
+        [defaultImage]="'assets/images/berry.png'" 
+        [errorImage]="'assets/images/berry.png'" 
+        [lazyLoad]="item?.pokemon_species?.url | idToImage | async" 
+        [alt]="item?.pokemon_species?.name">
+
+      <mat-card-content>
+        <span>{{ item?.pokemon_species?.name }}</span>
+      </mat-card-content>
+    
+    </mat-card>
+    
+  </div>
+</div>
