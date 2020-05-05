@@ -3,6 +3,7 @@ import { Component, OnInit, AfterViewInit, OnDestroy, ChangeDetectorRef } from '
 import { PokeapiService } from '../_common/services/pokeapi.service';
 import { SharedService } from '../_common/services/shared.service';
 import { Subscription } from 'rxjs';
+import { uniqBy } from 'lodash';
 
 
 @Component({
@@ -12,56 +13,51 @@ import { Subscription } from 'rxjs';
 })
 export class GamesComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  entries: any;
-  all: any;
-  defaultLength: number;
+  entries: any[];
+  all: any[];
   route: any;
+  toggle: boolean;
 
   subscriptions: Subscription[];
 
   constructor(
     private cd: ChangeDetectorRef,
     private api: PokeapiService,
-    private shared: SharedService
+    public shared: SharedService
   ) { }
 
   ngOnInit(): void {
     
-    this.defaultLength = 25;
     this.route = {};
+    this.toggle = false;
     this.subscriptions = [];
 
     this.subscriptions.push(this.shared.routeChange.subscribe((res) => {
-
-      sessionStorage.setItem('route', JSON.stringify(res));
-      const route = res.type;
-
-      const isGames = route === 'pokedex' || route === 'generation' || route === 'version-group';
-      const isItems = route === 'items';
-      const isCategory = route === 'category';
-  
-      this.route['isGames'] = isGames;
-      this.route['isItems'] = isItems;
-      this.route['isCategory'] = isCategory;
-
-      if (isGames) {
-        this.setupEntries(res);
-      } else if (isItems) {
-        this.setupItems(res);
-      } else if (isCategory) {
-        this.setupCategory(res);
-      }
-      
-
+      this.setupProcess = res;
     }));
 
-    // this.api.pokemon();
+    // this.api.pokemon_();
   }
 
   ngAfterViewInit() {
 
-    // console.log(this.shared.categories);
+    this.subscriptions.push(this.shared.loadMore.subscribe((res) => {
+    
+      const full = this.entries.length === this.all.length;
 
+      if (res !== 1 || full) return;
+      
+      this.shared.updateLoadMoreSelection = 0;
+      
+      this.entries = uniqBy(this.entries.concat(
+        this.api.nextEntries(this.all)
+      ), 'name');
+
+      this.shared.loading = false;
+      this.shared.updateIsLoadingSelection = false;
+
+      // console.log(this.entries);
+    }));
   }
 
   ngOnDestroy() {
@@ -70,7 +66,42 @@ export class GamesComponent implements OnInit, AfterViewInit, OnDestroy {
     })
   }
 
-  setupEntries(res: any) {
+  select(entry: any) {
+
+    this.shared.updateSelectedEntrySelection = this.toggle ? false : true;
+    this.toggle = this.toggle ? false : true;
+    this.shared.id = entry.id;
+    // console.log(entry);
+
+    const isGames = this.route['isGames'];
+    const isItems = this.route['isItems'];
+    const isCategory = this.route['isCategory'];
+
+  }
+
+  set setupProcess(res: any) {
+
+    sessionStorage.setItem('route', JSON.stringify(res));
+    const route = res.type;
+
+    const isGames = route === 'pokedex' || route === 'generation' || route === 'version-group';
+    const isItems = route === 'items';
+    const isCategory = route === 'category';
+
+    this.route['isGames'] = isGames;
+    this.route['isItems'] = isItems;
+    this.route['isCategory'] = isCategory;
+
+    if (isGames) {
+      this.setupEntries = res;
+    } else if (isItems) {
+      this.setupItems = res;
+    } else if (isCategory) {
+      this.setupCategory = res;
+    }
+  }
+
+  set setupEntries(res: any) {
 
     let entries = [];
     
@@ -84,8 +115,7 @@ export class GamesComponent implements OnInit, AfterViewInit, OnDestroy {
       const session = sessionStorage.getItem('entries')
 
       this.entries = <any[]>JSON.parse(session);
-      this.all = this.entries;
-      this.entries = this.entries.slice(0, this.defaultLength);
+      this.displayEntries();
       return;
     }
 
@@ -97,39 +127,29 @@ export class GamesComponent implements OnInit, AfterViewInit, OnDestroy {
         (<any[]>entries.find(e => e['id'] === 14).entries)
       )
       
-      this.all = this.entries;
-      this.entries = this.entries.slice(0, this.defaultLength);
+      this.displayEntries();
       return;
     }
 
-    this.entries = entries.find(e => e['id'] === res.id).entries;
-    this.all = this.entries;
-    this.entries = this.entries.slice(0, this.defaultLength);
-    
-    sessionStorage.setItem('entries', JSON.stringify(this.all));
+    this.setView(entries, res);
   }
 
-  setupItems(res: any) {
+  set setupItems(res: any) {
 
-    const items = this.shared.item_attributes;
+    const entries = this.shared.item_attributes;
 
-    if (!items) {
+    if (!entries) {
       const session = sessionStorage.getItem('entries')
 
       this.entries = <any[]>JSON.parse(session);
-      this.all = this.entries;
-      this.entries = this.entries.slice(0, this.defaultLength);
+      this.displayEntries();
       return;
     }
 
-    this.entries = items.find(e => e['id'] === res.id).entries;
-    this.all = this.entries;
-    this.entries = this.entries.slice(0, this.defaultLength);
-
-    sessionStorage.setItem('entries', JSON.stringify(this.all));
+    this.setView(entries, res);
   }
 
-  setupCategory(res: any) {
+  set setupCategory(res: any) {
 
     const entries = this.shared.item_categories;
 
@@ -137,16 +157,30 @@ export class GamesComponent implements OnInit, AfterViewInit, OnDestroy {
       const session = sessionStorage.getItem('entries')
 
       this.entries = <any[]>JSON.parse(session);
-      this.all = this.entries;
-      this.entries = this.entries.slice(0, this.defaultLength);
+      this.displayEntries();
       return;
     }
 
-    this.entries = entries.find(e => e['id'] === res.id).entries;
-    this.all = this.entries;
-    this.entries = this.entries.slice(0, this.defaultLength);
+    this.setView(entries, res);  
+  }
 
+  private setView(entries: any, res: any) {
+    this.entries = entries.find(e => e['id'] === res.id).entries;
+    this.displayEntries();
     sessionStorage.setItem('entries', JSON.stringify(this.all));
+  }
+
+  private displayEntries() {
+    this.all = this.entries;
+    this.entries = this.entries.slice(0, this.shared.defaultLength);
+
+    const _length = this.all.length - 50;
+
+    this.shared.item_meta = {
+      // ceil: Math.ceil(this.all.length/this.shared.defaultLength),
+      ceil: Math.ceil(_length/20) + 1,
+      floor: Math.floor(this.all.length/this.shared.defaultLength)*this.shared.defaultLength
+    };
   }
 
   trackByID(index: number, item: any) {

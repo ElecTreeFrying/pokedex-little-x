@@ -9,7 +9,7 @@
         offset="300"
         [defaultImage]="'assets/images/berry.png'" 
         [errorImage]="'assets/images/berry.png'" 
-        [lazyLoad]="item?.pokemon_species?.url | idToImage | async" 
+        [lazyLoad]="item?.pokemon_species?.url | idToImage: 'byte64' | async" 
         [alt]="item?.pokemon_species?.name">
 
       <mat-card-content>

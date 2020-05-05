@@ -3,9 +3,6 @@
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
-  $measure: 30px;
-  margin-top: $measure;
-  margin-bottom: $measure;
 
   .mat-ripple {
     margin: 8px;

@@ -4,13 +4,13 @@ import { MatCardModule } from '@angular/material/card';
 import { MatRippleModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 
-import { IdToImagePipe } from '../pipes/id-to-image.pipe';
+import { IdToImagePipeModule } from '../modules/id-to-image-pipe.module';
+
 import { CardTextPipe } from '../pipes/card-text.pipe';
 
 
 @NgModule({
   declarations: [
-    IdToImagePipe,
     CardTextPipe,
   ],
   exports: [
@@ -18,8 +18,8 @@ import { CardTextPipe } from '../pipes/card-text.pipe';
     MatCardModule,
     MatRippleModule,
     MatIconModule,
+    IdToImagePipeModule,
     
-    IdToImagePipe,
     CardTextPipe,
   ]
 })

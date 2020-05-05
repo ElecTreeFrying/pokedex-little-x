@@ -1,14 +1,6 @@
 
-
 <mat-accordion displayMode="flat">
   
-  <!-- home -->
-  <mat-expansion-panel hideToggle #home (click)="home.close()">
-    <mat-expansion-panel-header routerLink="/">
-      <mat-panel-title><span>Home</span></mat-panel-title>
-    </mat-expansion-panel-header>
-  </mat-expansion-panel>
-
   <!-- pokemon -->
   <mat-expansion-panel>
     <mat-expansion-panel-header>
@@ -159,7 +151,7 @@
 
   <!-- berries -->
   <mat-expansion-panel hideToggle #berries (click)="berries.close()">
-    <mat-expansion-panel-header routerLInk="/">
+    <mat-expansion-panel-header matRipple routerLInk="/">
       <mat-panel-title><span>Berries</span></mat-panel-title>
     </mat-expansion-panel-header>
   </mat-expansion-panel>

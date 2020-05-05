@@ -8,3 +8,11 @@ $dark-warn:    mat-palette($mat-deep-orange);
 $dark-theme:   mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
 
 @include mat-progress-bar-theme($dark-theme);
+
+@include mat-progress-spinner-theme(
+  mat-dark-theme(
+    mat-palette($mat-orange), 
+    mat-palette($mat-orange), 
+    mat-palette($mat-orange)
+  ) 
+);

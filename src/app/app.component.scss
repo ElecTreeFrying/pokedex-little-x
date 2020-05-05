@@ -1,16 +1,33 @@
 
-.mat-drawer-container {
+.mat-sidenav-container {
   background-color: #340522;
   color: white;
 }
 
-.mat-drawer {
+.mat-sidenav {
   background-color: #46002A;
   color: white;
   width: 350px;
   display: flex;
   overflow-x: hidden;
   overflow-y: auto;
+}
+
+[position="end"] {
+  width: 500px;
+  background: white;
+  color: black;
+
+}
+
+.spinner {
+  overflow: hidden;
+  display: flex;
+  padding: 96px 0;
+
+  .mat-spinner {
+    margin: auto;
+  }
 }
 
 .mat-toolbar {
@@ -20,12 +37,36 @@
   top: 0;
   z-index: 100;
 
-  span {
-    margin-left: 16px;
-    cursor: pointer;
+  .mat-button {
+    font-size: 20px;
+
+    &:nth-child(3) {
+      margin-left: 16px;
+    }
+
+    &:nth-child(3),
+    &:nth-child(4) {
+      font-size: 16px;
+    }
+  }
+
+  .mat-icon-button:last-child {
+    margin-left: auto;
   }
 }
 
 #router {
-  display: flex;
+  padding: 30px 0;
+}
+
+.loading {
+  width: 100%;
+  
+  > * {
+    position: absolute;
+    left: 0;
+    right: 0;
+    text-align: center;
+    margin: 40px 0;
+  }
 }

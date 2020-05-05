@@ -8,6 +8,7 @@
 api.json
 flat.json
 items.json
+notes.md
 
 # environments
 src/environments/**

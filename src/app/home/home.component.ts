@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
+import { SharedService, home } from '../_common/services/shared.service';
+
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -7,9 +10,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  selection: any[]
+
+  constructor(
+    private shared: SharedService
+  ) { }
 
   ngOnInit(): void {
+    this.selection = home;
   }
 
 }

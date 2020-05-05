@@ -19,10 +19,12 @@ export class KeyboardDirective {
     if (this.isPressed) return;
     this.isPressed = true;
 
-    console.log();
-
     if (event.code === 'KeyA') {
-      this.toggle.next();
+      this.toggle.next(true);
+    }
+
+    if (event.code === 'Escape') {
+      this.toggle.next(false);
     }
   }
   

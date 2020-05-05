@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { PokeapiService } from '../../_common/services/pokeapi.service';
@@ -13,8 +13,6 @@ import { SharedService,
   styleUrls: ['./drawer.component.scss']
 })
 export class DrawerComponent implements OnInit {
-
-  @Output() navigated = new EventEmitter();
 
   pokedex: any;
   generation: any;
@@ -41,6 +39,7 @@ export class DrawerComponent implements OnInit {
     if (!games) return
 
     const id = games.key;
+    this.shared.index = { value: 0, count: 0 };
 
     this.router.navigate(['games'], {  
       queryParams: { name: games.name, id },
@@ -54,6 +53,7 @@ export class DrawerComponent implements OnInit {
   selection(parent: string, child: string) {
 
     const id = -99;
+    this.shared.index = { value: 0, count: 0 };
     
     this.router.navigate([ 'selection' ], {  
       queryParams: { name: child },

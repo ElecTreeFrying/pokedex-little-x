@@ -1,29 +1,52 @@
 
 <mat-toolbar class="mat-elevation-z5" #toolbar>
 
-  <button mat-icon-button (click)="drawer.toggle()">
+  <button mat-icon-button (click)="sidenavToggle(true)">
     <mat-icon *ngIf="!drawer.opened">menu</mat-icon>
     <mat-icon *ngIf="drawer.opened">menu_open</mat-icon>
   </button>
 
-  <span routerLink="/">Pokédex Little</span>
+  <button mat-button routerLink="/">Pokédex Little</button>
+
+  <button mat-button routerLink="/">Home</button>
+  <button mat-button routerLink="/">About</button>
+
+  <button mat-icon-button>
+    <mat-icon>search</mat-icon>
+  </button>
 
 </mat-toolbar>
 
 <mat-sidenav-container>
 
-  <mat-sidenav class="mat-elevation-z10" mode="side" opened data-simplebar #drawer>
+  <mat-sidenav class="mat-elevation-z10" position="start" mode="side" data-simplebar opened #drawer>
 
-    <app-drawer (navigated)="drawer.close()"></app-drawer>
+    <app-drawer></app-drawer>
     
   </mat-sidenav>
-  
-  <mat-sidenav-content keyboard (toggle)="drawer.toggle()" #drawerContent>
+
+  <mat-sidenav class="mat-elevation-z10" position="end" mode="side" data-simplebar #details
+    (openedChange)="$event?toggleDetails(true):toggleDetails(false)">
+
+    <div class="spinner" *ngIf="!isShowDetails">
+      <mat-spinner></mat-spinner>
+    </div>
+
+    <app-pokemon *ngIf="isShowDetails"></app-pokemon>
     
-    <div id="router" [ngStyle]="routerStyle" data-simplebar>
+  </mat-sidenav>
+
+  <mat-sidenav-content keyboard (toggle)="sidenavToggle($event)">
+    
+    <div id="router" [ngStyle]="routerStyle" data-simplebar #drawerContent>
       <router-outlet></router-outlet>
+      <div class="loading" *ngIf="shared?.isLoading | async">
+        <app-loading (opened)="loadingIsOpened($event)"></app-loading>
+      </div>
     </div>
 
   </mat-sidenav-content>
 
 </mat-sidenav-container>
+
+<ng-snotify></ng-snotify>

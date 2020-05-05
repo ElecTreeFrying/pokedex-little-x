@@ -1,6 +1,4 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
 
 
 @Pipe({
@@ -8,15 +6,17 @@ import { map } from 'rxjs/operators';
 })
 export class IdToImagePipe implements PipeTransform {
 
-  constructor(
-    private http: HttpClient
-  ) {}
+  constructor() {}
 
-  transform(value: string): any {
+  transform(value: any, type: string): string {
     
     if (!value) return;
 
-    return `data:image/png;base64,${value}`;
+    if (type === 'byte64') {
+      return `data:image/png;base64,${value}`;
+    } else if (type === 'etf_assets') {
+      return `https://raw.githubusercontent.com/ElecTreeFrying/assets/master/pokemon/${value}.png`;
+    }
   }
 
 }

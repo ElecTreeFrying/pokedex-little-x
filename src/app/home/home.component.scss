@@ -1,0 +1,17 @@
+
+.card-content {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+
+  .mat-card {
+    background-color: #4E1338;
+    color: white;
+  }
+
+  .mat-ripple {
+    width: 250px;
+    margin: 8px;
+  }
+
+}

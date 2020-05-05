@@ -1,12 +1,14 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-
+import { MatCardModule } from '@angular/material/card';
+import { MatRippleModule } from '@angular/material/core';
 
 
 @NgModule({
-  declarations: [],
-  imports: [
-    CommonModule
+  declarations: [
+  ],
+  exports: [
+    MatCardModule,
+    MatRippleModule,
   ]
 })
 export class HomeProviderModule { }

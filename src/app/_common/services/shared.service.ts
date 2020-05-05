@@ -10,9 +10,29 @@ export class SharedService {
 
   private routeChangeSource: BehaviorSubject<any>;
   private appInitializationSource = new BehaviorSubject(0);
+  private loadMoreSource = new BehaviorSubject(0);
+  private isLoadingSource = new BehaviorSubject(false);
+  private selectedEntrySource = new BehaviorSubject(undefined);
+  private loadingDetailsSource = new BehaviorSubject(false);
 
   routeChange: Observable<any>;
   appInitialization = this.appInitializationSource.asObservable();
+  loadMore = this.loadMoreSource.asObservable();
+  isLoading = this.isLoadingSource.asObservable();
+  selectedEntry = this.selectedEntrySource.asObservable();
+  loadingDetails = this.loadingDetailsSource.asObservable();
+
+  private _id: number;
+  get id() { return this._id; }
+  set id(id: number) { this._id = id; }
+
+  private _index: { value: number, count: number };
+  get index() { return this._index; }
+  set index(index: { value: number, count: number }) { this._index = index; }
+
+  private _pokemon: any[];
+  get pokemon() { return this._pokemon; }
+  set pokemon(pokemon: any) { this._pokemon = pokemon; }
 
   private _pokedex: any[];
   get pokedex() { return this._pokedex; }
@@ -30,21 +50,91 @@ export class SharedService {
   get item_categories() { return this._item_categories; }
   set item_categories(item_categories: any) { this._item_categories = item_categories; }
 
+  private _defaultLength: number;
+  get defaultLength() { return this._defaultLength; }
+  set defaultLength(defaultLength: number) { this._defaultLength = defaultLength; }
+
+  private _item_meta: { ceil: number, floor: number };
+  get item_meta() { return this._item_meta ? this._item_meta : { ceil: 0, floor: 0 }; }
+  set item_meta(item_meta: { ceil: number, floor: number }) { this._item_meta = item_meta; }
+
+  private _loading: boolean;
+  get loading() { return this._loading; }
+  set loading(loading: boolean) { this._loading = loading; }
+
   constructor() {
     const routeSession = sessionStorage.getItem('route');
     this.routeChangeSource = new BehaviorSubject(JSON.parse(routeSession));
     this.routeChange = this.routeChangeSource.asObservable();
   }
 
+  get sections() {
+    return [ true, true, false, false, true, false, false, true, false, true ];
+    // return [ false, false, false, false, false, false, false, false, false, false ];
+  }
+
+  get subSections() {
+    return [ false, false, false ];
+  }
+
   set updatedRouteChangeSelection(data: any){
-    this.routeChangeSource.next(data)
+    this.routeChangeSource.next(data);
   }
 
   set updateAppInitializationSelection(data: number) {
-    this.appInitializationSource.next(data)
+    this.appInitializationSource.next(data);
+  }
+
+  set updateLoadMoreSelection(data: number) {
+    this.loadMoreSource.next(data);
+  }
+
+  set updateIsLoadingSelection(data: boolean) {
+    this.isLoadingSource.next(data);
+  }
+
+  set updateSelectedEntrySelection(data: boolean) {
+    this.selectedEntrySource.next(data);
+  }
+
+  set updateLoadingDetailsSelection(data: boolean) {
+    this.loadingDetailsSource.next(data);
   }
 
 }
+
+export const home = [
+  { name: 'Pokemon', description: 'Pokemon' },
+  { name: 'Games', description: 'Pokemon entries in each Pokedex, Generation & Version groups.' },
+  { name: 'Items', description: 'Item listings per Item Attribute and Category.' },
+  { name: 'Berries', description: 'Berries' },
+  { name: 'Moves', description: 'Moves' },
+  { name: 'Machine', description: 'Machine' },
+  { name: 'Location', description: 'Location' }
+];
+
+export const type = [
+  { key: 1, name: "Normal", color: { default: "#A8A878", dark: "#6D6D4E", light: "#C6C6A7" } },
+  { key: 2, name: "Fighting", color: { default: "#C03028", dark: "#7D1F1A", light: "#D67873" } },
+  { key: 3, name: "Flying", color: { default: "#A890F0", dark: "#6D5E9C", light: "#C6B7F5" } },
+  { key: 4, name: "Poison", color: { default: "#A040A0", dark: "#682A68", light: "#C183C1" } },
+  { key: 5, name: "Ground", color: { default: "#E0C068", dark: "#927D44", light: "#EBD69D" } },
+  { key: 6, name: "Rock", color: { default: "#B8A038", dark: "#786824", light: "#D1C17D" } },
+  { key: 7, name: "Bug", color: { default: "#A8B820", dark: "#6D7815", light: "#C6D16E" } },
+  { key: 8, name: "Ghost", color: { default: "#705898", dark: "#493963", light: "#A292BC" } },
+  { key: 9, name: "Steel", color: { default: "#B8B8D0", dark: "#787887", light: "#D1D1E0" } },
+  { key: 10, name: "Fire", color: { default: "#F08030", dark: "#9C531F", light: "#F5AC78" } },
+  { key: 11, name: "Water", color: { default: "#6890F0", dark: "#445E9C", light: "#9DB7F5" } },
+  { key: 12, name: "Grass", color: { default: "#78C850", dark: "#4E8234", light: "#A7DB8D" } },
+  { key: 13, name: "Electric", color: { default: "#F8D030", dark: "#A1871F", light: "#FAE078" } },
+  { key: 14, name: "Psychic", color: { default: "#F85888", dark: "#A13959", light: "#FA92B2" } },
+  { key: 15, name: "Ice", color: { default: "#98D8D8", dark: "#638D8D", light: "#BCE6E6" } },
+  { key: 16, name: "Dragon", color: { default: "#7038F8", dark: "#4924A1", light: "#A27DFA" } },
+  { key: 17, name: "Dark", color: { default: "#705848", dark: "#49392F", light: "#A29288" } },
+  { key: 18, name: "Fairy", color: { default: "#EE99AC", dark: "#9B6470", light: "#F4BDC9" } },
+  { key: 10001, name: "Unknown", color: { default: undefined, dark: undefined, light: undefined } },
+  { key: 10002, name: "Shadow", color: { default: undefined, dark: undefined, light: undefined } }
+]
 
 export const pokedex = [
   { key: 1, name: 'National Pokedex' }, 
@@ -71,6 +161,39 @@ export const generation = [
   { key: 5, name: 'Generation V' },
   { key: 6, name: 'Generation VI' },
   { key: 7, name: 'Generation VII' }
+];
+
+export const version = [
+  { name: "Pokémon Red Version", id: 1 },
+  { name: "Pokémon Blue Version", id: 2 },
+  { name: "Pokémon Yellow Version", id: 3 },
+  { name: "Pokémon Gold Version", id: 4 },
+  { name: "Pokémon Silver Version", id: 5 },
+  { name: "Pokémon Crystal Version", id: 6 },
+  { name: "Pokémon Ruby Version", id: 7 },
+  { name: "Pokémon Sapphire Version", id: 8 },
+  { name: "Pokémon Emerald Version", id: 9 },
+  { name: "Pokémon Firered Version", id: 10 },
+  { name: "Pokémon Leafgreen Version", id: 11 },
+  { name: "Pokémon Diamond Version", id: 12 },
+  { name: "Pokémon Pearl Version", id: 13 },
+  { name: "Pokémon Platinum Version", id: 14 },
+  { name: "Pokémon Heartgold Version", id: 15 },
+  { name: "Pokémon Soulsilver Version", id: 16 },
+  { name: "Pokémon Black Version", id: 17 },
+  { name: "Pokémon White Version", id: 18 },
+  { name: "Pokémon Colosseum Version", id: 19 },
+  { name: "Pokémon XD Version", id: 20 },
+  { name: "Pokémon Black 2 Version", id: 21 },
+  { name: "Pokémon White 2 Version", id: 22 },
+  { name: "Pokémon X Version", id: 23 },
+  { name: "Pokémon Y Version", id: 24 },
+  { name: "Pokémon Omega Ruby Version", id: 25 },
+  { name: "Pokémon Alpha Sapphire Version", id: 26 },
+  { name: "Pokémon Sun Version", id: 27 },
+  { name: "Pokémon Moon Version", id: 28 },
+  { name: "Pokémon Ultra Sun Version", id: 29 },
+  { name: "Pokémon Ultra Moon Version", id: 30 }
 ];
 
 export const version_group = [
