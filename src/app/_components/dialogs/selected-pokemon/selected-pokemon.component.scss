@@ -1,0 +1,39 @@
+
+.close {
+  position: fixed;
+  top: 16px !important;
+  right: 16px !important;
+  z-index: 1000;
+}
+
+[data-simplebar] {
+  display: flex;
+  overflow: auto;
+  max-height: 90vh;
+}
+
+.content {
+  margin: -24px;
+  display: flex;
+  position: absolute;
+  align-items: stretch;
+  height: 90vh;
+  width: 90vw;
+  overflow: hidden;
+
+  .entries {
+    background-color: #340522;
+    color: white;
+
+    min-width: calc(100% - 500px);
+    max-width: calc(100% - 500px);
+    padding: 0;
+  }
+  
+  .details {
+    min-width: 500px;
+    max-width: 500px;
+    padding: 0;
+  }
+}
+

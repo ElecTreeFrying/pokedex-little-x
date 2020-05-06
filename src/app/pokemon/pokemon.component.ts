@@ -88,8 +88,8 @@ export class PokemonComponent implements OnInit, OnDestroy {
       closeOnNavigation: true,
       autoFocus: false,
       data: { data, entry: this.pokemon },
-      minHeight: '100vh',
-      minWidth: '100vw',
+      minHeight: '90vh',
+      minWidth: '90vw',
     });
   }
 

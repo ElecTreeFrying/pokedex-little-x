@@ -10,11 +10,16 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { environment } from '../environments/environment';
+import { TypeComponent } from './_components/dialogs/type/type.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
+    TypeComponent
+  ],
+  entryComponents: [
+    TypeComponent
   ],
   imports: [
     BrowserModule,

@@ -75,6 +75,8 @@ import { pokemonDialogComponents } from '../services/component-selector.service'
     MatProgressSpinnerModule,
     AppInitializationComponentModule,
 
+    MatDialogModule,
+
     DrawerComponent,
     PokemonComponent,
     LoadingComponent,

@@ -10,8 +10,11 @@ import { HabitatComponent } from '../../_components/dialogs/habitat/habitat.comp
 import { MoveComponent } from '../../_components/dialogs/move/move.component';
 import { ShapeComponent } from '../../_components/dialogs/shape/shape.component';
 
+// export const pokemonDialogComponents = [
+//   SelectedPokemonComponent, TypeComponent, AbilityComponent, ColorComponent, EggGroupsComponent, GrowthRateComponent, HabitatComponent, MoveComponent, ShapeComponent
+// ];
 export const pokemonDialogComponents = [
-  SelectedPokemonComponent, TypeComponent, AbilityComponent, ColorComponent, EggGroupsComponent, GrowthRateComponent, HabitatComponent, MoveComponent, ShapeComponent
+  SelectedPokemonComponent, AbilityComponent, ColorComponent, EggGroupsComponent, GrowthRateComponent, HabitatComponent, MoveComponent, ShapeComponent
 ];
 
 
@@ -22,7 +25,7 @@ export class ComponentSelectorService {
 
   constructor() { }
 
-  dialogComponent(res: any) {
+  dialogComponent(res: any): any {
     const id = pokemonDialogComponents
       .map((component: any, id: number) => {
         component = `${component}`.split(' ')[1].toLowerCase();
