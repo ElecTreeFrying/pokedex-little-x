@@ -2,20 +2,6 @@ import { Injectable } from '@angular/core';
 
 import { BehaviorSubject, Observable } from 'rxjs';
 
-import { SelectedPokemonComponent } from '../../_components/dialogs/selected-pokemon/selected-pokemon.component';
-import { TypeComponent } from '../../_components/dialogs/type/type.component';
-import { AbilityComponent } from '../../_components/dialogs/ability/ability.component';
-import { ColorComponent } from '../../_components/dialogs/color/color.component';
-import { EggGroupsComponent } from '../../_components/dialogs/egg-groups/egg-groups.component';
-import { GrowthRateComponent } from '../../_components/dialogs/growth-rate/growth-rate.component';
-import { HabitatComponent } from '../../_components/dialogs/habitat/habitat.component';
-import { MoveComponent } from '../../_components/dialogs/move/move.component';
-import { ShapeComponent } from '../../_components/dialogs/shape/shape.component';
-
-export const pokemonDialogComponents = [
-  SelectedPokemonComponent, TypeComponent, AbilityComponent, ColorComponent, EggGroupsComponent, GrowthRateComponent, HabitatComponent, MoveComponent, ShapeComponent
-];
-
 
 @Injectable({
   providedIn: 'root'
@@ -80,6 +66,10 @@ export class SharedService {
   get loading() { return this._loading; }
   set loading(loading: boolean) { this._loading = loading; }
 
+  private _dialogIsOpened: boolean;
+  get dialogIsOpened() { return this._dialogIsOpened; }
+  set dialogIsOpened(dialogIsOpened: boolean) { this._dialogIsOpened = dialogIsOpened; }
+
   constructor() {
     const routeSession = sessionStorage.getItem('route');
     this.routeChangeSource = new BehaviorSubject(JSON.parse(routeSession));
@@ -93,16 +83,6 @@ export class SharedService {
 
   get subSections() {
     return [ false, false, false ];
-  }
-
-  dialogComponent(res: any) {
-    const id = pokemonDialogComponents
-      .map((component: any, id: number) => {
-        component = `${component}`.split(' ')[1].toLowerCase();
-        return { component: `${component}`, id }
-      })
-      .find(e => e.component.includes(res.type.split('-').join(''))).id;
-    return pokemonDialogComponents[id];
   }
 
   set updatedRouteChangeSelection(data: any){

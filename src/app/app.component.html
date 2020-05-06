@@ -26,7 +26,14 @@
   </mat-sidenav>
 
   <mat-sidenav class="mat-elevation-z10" position="end" mode="side" data-simplebar #details
-    (openedChange)="$event?toggleDetails(true):toggleDetails(false)">
+    (openedChange)="$event?toggleDetails(true):toggleDetails(false)"
+    [ngStyle]="{ 'top': toolbarHeight + 'px !important' }">
+
+    <div class="close">
+      <button mat-icon-button (click)="sidenavToggle(false)">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
 
     <div class="spinner" *ngIf="!isShowDetails">
       <mat-spinner></mat-spinner>

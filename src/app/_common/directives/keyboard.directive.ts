@@ -1,5 +1,7 @@
 import { Directive, HostListener, Output, EventEmitter } from '@angular/core';
 
+import { SharedService } from '../services/shared.service';
+
 
 @Directive({
   selector: '[keyboard]'
@@ -11,7 +13,9 @@ export class KeyboardDirective {
   combination = [];
   isPressed = false;
 
-  constructor() { }
+  constructor(
+    private shared: SharedService
+  ) { }
 
   @HostListener('window:keyup', ['$event'])
   up(event: KeyboardEvent) {
@@ -30,7 +34,14 @@ export class KeyboardDirective {
   
   @HostListener('window:keydown', ['$event'])
   down(event: KeyboardEvent) {
-    this.isPressed = false;
+
+    if (this.shared.dialogIsOpened) {
+      this.isPressed = true;
+    } else {
+      this.isPressed = false;
+    }
+
+    // this.isPressed = false;
   }
 
 }

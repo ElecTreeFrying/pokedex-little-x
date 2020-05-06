@@ -18,6 +18,10 @@
   background: white;
   color: black;
 
+  .close {
+    position: fixed;
+    right: 0 !important;
+  }
 }
 
 .spinner {

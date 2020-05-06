@@ -31,7 +31,7 @@ import { TypeColorPipe } from '../pipes/type-color.pipe';
 
 import { KeyboardDirective } from '../directives/keyboard.directive';
 
-import { pokemonDialogComponents } from '../services/shared.service';
+import { pokemonDialogComponents } from '../services/component-selector.service';
 
 
 @NgModule({

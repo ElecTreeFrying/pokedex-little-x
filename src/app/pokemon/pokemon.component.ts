@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 
 import { PokeapiService } from '../_common/services/pokeapi.service';
 import { SharedService } from '../_common/services/shared.service';
+import { ComponentSelectorService } from '../_common/services/component-selector.service';
 import { SnotifyService } from '../_common/services/snotify.service';
 
 
@@ -30,6 +31,7 @@ export class PokemonComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private api: PokeapiService,
     public shared: SharedService,
+    private componentSelector: ComponentSelectorService,
     private snotify: SnotifyService
   ) { }
 
@@ -77,22 +79,18 @@ export class PokemonComponent implements OnInit, OnDestroy {
 
   showDetails(data: any, type: string) {
 
-    // execute commands on click;
+    this.shared.dialogIsOpened = true;
 
-    const component = this.shared.dialogComponent({ data, type });
+    const component = this.componentSelector.dialogComponent({ data, type });
 
     const ref = this.dialog.open(component, {
       id: type,
       closeOnNavigation: true,
       autoFocus: false,
-      data: { data, entry: this.pokemon }
+      data: { data, entry: this.pokemon },
+      minHeight: '100vh',
+      minWidth: '100vw',
     });
-
-    ref.afterClosed().subscribe(() => {
-    
-      // do stuff on after closed.
-    });
-    
   }
 
   section(i: number, option: boolean = true) {

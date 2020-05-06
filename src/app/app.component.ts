@@ -30,7 +30,8 @@ export class AppComponent implements OnInit, AfterViewInit {
   simplebar: any;
   isLoading: boolean;
   isShowDetails: boolean;
-  sideDrawerState: { drawer: boolean, details: boolean }
+  sideDrawerState: { drawer: boolean, details: boolean };
+  toolbarHeight: number;
 
   constructor(
     private overlay: Overlay,
@@ -44,6 +45,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.isLoading = false;
     this.isShowDetails = false;
     this.sideDrawerState = { drawer: true, details: false };
+    this.toolbarHeight = 0;
   }
 
   sidenavToggle(event: boolean) {
@@ -65,6 +67,9 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   pageListeners() {
+
+    this.toolbarHeight = this._toolbarHeight;
+    this.cd.detectChanges();
 
     this.shared.appInitialization.subscribe((res: number) => {
       res === 1 ? this.attachOverlay = true  : 
@@ -186,6 +191,10 @@ export class AppComponent implements OnInit, AfterViewInit {
       'max-height': `calc(100vh - ${toolbarHeight}px)`, 
       'min-height': `calc(100vh - ${toolbarHeight}px)` 
     }
+  }
+
+  private get _toolbarHeight() {
+    return this.toolbar._elementRef.nativeElement.clientHeight;
   }
 
 }
