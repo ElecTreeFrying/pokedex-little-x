@@ -77,8 +77,6 @@ export class PokemonComponent implements OnInit, OnDestroy {
 
   showDetails(data: any, type: string) {
 
-    console.log(data);
-
     // execute commands on click;
 
     const component = this.shared.dialogComponent({ data, type });
@@ -87,7 +85,7 @@ export class PokemonComponent implements OnInit, OnDestroy {
       id: type,
       closeOnNavigation: true,
       autoFocus: false,
-      data
+      data: { data, entry: this.pokemon }
     });
 
     ref.afterClosed().subscribe(() => {
