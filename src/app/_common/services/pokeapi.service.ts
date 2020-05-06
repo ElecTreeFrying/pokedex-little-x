@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, mergeMap, exhaustMap, toArray } from 'rxjs/operators'
-import { of, merge } from 'rxjs';
-import { intersectionBy } from 'lodash';
+import { of, merge, forkJoin } from 'rxjs';
+import { intersectionBy, sortBy } from 'lodash';
 
 import { SharedService } from './shared.service';
 
@@ -42,7 +42,36 @@ export class PokeapiService {
       shared.item_attributes = res.item_attributes;
       shared.item_categories = res.item_categories;
 
+      shared.keys = {
+        types: res.keys.types,
+        no_habitat: intersectionBy(res.pokemon, res.keys.no_habitat, 'id')
+      }
     });
+  }
+
+  httpTestPokemon() {
+    this.http.get('https://pokeapi.co/api/v2/pokemon?offset=0&limit=964').pipe(
+      exhaustMap(e => e['results'].map(c => this.http.get(c['url']))),
+      mergeMap((e: any) => e),
+      mergeMap((e) => {
+
+        return of(e).pipe(
+          exhaustMap((pokemon: any) => {
+            return this.http.get(e['species']['url']).pipe(
+              map((species) => {
+                pokemon['species']['data'] = species;
+                return { ...pokemon }
+              })
+            );
+          })
+        );
+
+      }),
+      toArray(),
+      map((e) => {
+        console.log(e);
+      })
+    )
   }
 
   get moves() {
@@ -58,9 +87,7 @@ export class PokeapiService {
         });
 
         return this.http.get('https://pokeapi.co/api/v2/move?offset=0&limit=746').pipe(
-          map((e) => intersectionBy(e['results'], moves, 'name')),
-          exhaustMap(e => of(e.map(e => this.http.get(e['url'])))),
-          exhaustMap((e: any) => e),
+          exhaustMap((e) => intersectionBy(e['results'], moves, 'name').map(c => this.http.get(c['url']))),
           mergeMap((e: any) => e),
           toArray(),
         );
@@ -96,7 +123,9 @@ export class PokeapiService {
         );
 
         const types = of(
-          pokemon['types'].map((e) => this.http.get(e['type']['url']))
+          pokemon['types'].map((e: any) => forkJoin({
+            data: this.http.get(e['type']['url']), type: of(e), _types_: of(true)
+          }))
         ).pipe(
           exhaustMap((e: any) => e),
           mergeMap((e: any) => e),
@@ -113,11 +142,15 @@ export class PokeapiService {
         const _result = result.filter(e => e.length);
 
         const data = result.find(e => e.hasOwnProperty('abilities'));
+        const types = _result.find((e) => e.filter(e => e.hasOwnProperty('_types_')).length > 0);
         
         data['species']['data'] = result.find(e => e.hasOwnProperty('base_happiness'));
         data['abilities'] = _result.find((e) => e.filter(e => e.hasOwnProperty('effect_changes')).length > 0);
         data['game_indices'] = _result.find((e) => e.filter(e => e.hasOwnProperty('version_group')).length > 0);
-        data['types'] = _result.find((e) => e.filter(e => e.hasOwnProperty('damage_relations')).length > 0);
+
+        data['types'] = sortBy(
+          types.map((type) => ({ data: type['data'], ...type['type'] })), [ 'slot' ]
+        );
 
         delete data['forms'];
 
@@ -160,9 +193,18 @@ export class PokeapiService {
           map((e) => ({ ...e, _growth_rate_: true }))
         );
         
-        const habitat = this.http.get(specie['habitat']['url']).pipe(
-          map((e) => ({ ...e, _habitat_: true }))
-        );
+        let habitat = undefined;
+        if (specie['habitat']) {
+          habitat = this.http.get(specie['habitat']['url']).pipe(
+            map((e) => ({ ...e, _habitat_: true }))
+          );
+        } else {
+          habitat = of({ 
+            id: -1, name: 'unknown', _habitat_: true, 
+            names: [ { language: { name: 'en' }, name: 'unknown' } ],
+            pokemon_species: this.shared.keys.no_habitat
+          })
+        }
         
         const shape = this.http.get(specie['shape']['url']).pipe(
           map((e) => ({ ...e, _shape_: true }))
@@ -197,6 +239,10 @@ export class PokeapiService {
 
         const data = result.find(e => e.hasOwnProperty('base_happiness'));
 
+        if (!data['habitat']) {
+          data['habitat'] = {};
+        }
+
         data['color']['data'] = result.find(e => e.hasOwnProperty('_color_'));
         data['growth_rate']['data'] = result.find(e => e.hasOwnProperty('_growth_rate_'));
         data['habitat']['data'] = result.find(e => e.hasOwnProperty('_habitat_'));
@@ -229,7 +275,7 @@ export class PokeapiService {
             level: 1,
             evolution: chain['chain']['evolves_to'][0]['species']['name'],
             pokemon: chain['chain']['evolves_to'][0],
-            entry_number: +id,
+            id: +id,
             sprite: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`
           }
         } else {
@@ -237,7 +283,7 @@ export class PokeapiService {
           first = {
             name: chain['chain']['species']['name'],
             level: 1, evolution: null, pokemon: null,
-            entry_number: +id,
+            id: +id,
             sprite: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`
           }
 
@@ -252,7 +298,7 @@ export class PokeapiService {
             level: chain['chain']['evolves_to'][0]['evolution_details'][0]['min_level'],
             evolution: first['pokemon']['evolves_to'][0]['species']['name'],
             pokemon: first['pokemon']['evolves_to'][0],
-            entry_number: +id,
+            id: +id,
             sprite: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`
           }
         } else {
@@ -261,7 +307,7 @@ export class PokeapiService {
             name: first['pokemon']['species']['name'],
             level: chain['chain']['evolves_to'][0]['evolution_details'][0]['min_level'],
             evolution: null, pokemon: null,
-            entry_number: +id,
+            id: +id,
             sprite: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`
           }
 
@@ -276,7 +322,7 @@ export class PokeapiService {
             level: first['pokemon']['evolves_to'][0]['evolution_details'][0]['min_level'],
             evolution: second['pokemon']['evolves_to'][0]['species']['name'],
             pokemon: second['pokemon']['evolves_to'][0],
-            entry_number: +id,
+            id: +id,
             sprite: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`
           }
         } else {
@@ -285,7 +331,7 @@ export class PokeapiService {
             name: second['pokemon']['species']['name'],
             level: first['pokemon']['evolves_to'][0]['evolution_details'][0]['min_level'],
             evolution: null, pokemon: null,
-            entry_number: +id,
+            id: +id,
             sprite: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`
           }
         }

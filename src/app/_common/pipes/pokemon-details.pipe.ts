@@ -2,11 +2,17 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { capitalize, sortBy, unionBy } from 'lodash';
 import { version, pokedex, type } from '../services/shared.service';
 
+import { SharedService } from '../services/shared.service';
+
 
 @Pipe({
   name: 'pokemonDetails'
 })
 export class PokemonDetailsPipe implements PipeTransform {
+
+  constructor(
+    private shared: SharedService
+  ) {}
 
   transform(value: any, key: string, object?: any): any {
 
@@ -21,14 +27,36 @@ export class PokemonDetailsPipe implements PipeTransform {
     }
     
     else if (key === 'type') {
-      return value.names.find(e => e['language']['name'] === 'en').name;
+      return value.data.names.find(e => e['language']['name'] === 'en').name;
     }
 
     else if (key.includes('type-')) {
-      return unionBy(
-        value[0].damage_relations[key.replace('type-', '')],
-        value[1].damage_relations[key.replace('type-', '')], 'name'
-      )
+      if (value.length === 2) {
+
+        const types = unionBy(
+          value[0].data.damage_relations[key.replace('type-', '')],
+          value[1].data.damage_relations[key.replace('type-', '')], 'name'
+        ).map((type: any) => {
+          type.id = +type.url.split('/').reverse()[1];
+          type.data = this.shared.keys.types.find(e => e.id === type.id);
+          return type;
+        });
+
+        return sortBy(types, [ 'id' ]);
+      } else if (value.length === 1) {
+
+        const types = value[0].data.damage_relations[key
+          .replace('type-', '')]
+          .map((type: any) => {
+            type.id = +type.url.split('/').reverse()[1];
+            type.data = this.shared.keys.types.find(e => e.id === type.id);
+            return type;
+          });
+
+        return sortBy(types, [ 'id' ]);
+      } else if (value.length === 0) {
+        return [];
+      }
     }
 
     else if (key === 'typ-damage-relation') {
@@ -121,7 +149,7 @@ export class PokemonDetailsPipe implements PipeTransform {
         .map((pokemon) => {
           pokemon.display = pokemon.name.split('-').map(e => capitalize(e)).join(' ');
           return pokemon;
-        })
+        });
     }
 
     else if (key === 'species-variation-sprite') {
@@ -199,6 +227,8 @@ export class PokemonDetailsPipe implements PipeTransform {
         })
         .map((move, i) => ({ ...object[i], data: move, name: move.name, color: move.color }));
     }
+
+    // Information filters
 
     // #1
 
@@ -278,12 +308,6 @@ export class PokemonDetailsPipe implements PipeTransform {
       const hatch_counter = value.species.data.hatch_counter;
       return `${(hatch_counter + 1) * 255} steps`;
     }
-
-    // click filter
-
-
-
-
   }
 
 }
