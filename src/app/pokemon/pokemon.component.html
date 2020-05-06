@@ -252,7 +252,7 @@
               <mat-chip 
                 class="mat-elevation-z3"
                 *ngFor="let type of pokemon?.types | pokemonDetails: 'type-double_damage_to'"
-                (click)="showDetails(type, 'type')"
+                (click)="showDetails(type?.data, 'type')"
                 [ngStyle]="{ 'background': type | pokemonDetails: 'typ-damage-relation' | typeColor: 'light' }">
                 <span>{{ type | pokemonDetails: 'typ-damage-relation' }}</span>
               </mat-chip>
@@ -274,7 +274,7 @@
               <mat-chip 
                 class="mat-elevation-z3"
                 *ngFor="let type of pokemon?.types | pokemonDetails: 'type-half_damage_from'"
-                (click)="showDetails(type, 'type')"
+                (click)="showDetails(type?.data, 'type')"
                 [ngStyle]="{ 'background': type | pokemonDetails: 'typ-damage-relation' | typeColor: 'light' }">
                 <span>{{ type | pokemonDetails: 'typ-damage-relation' }}</span>
               </mat-chip>
@@ -296,7 +296,7 @@
               <mat-chip 
                 class="mat-elevation-z3"
                 *ngFor="let type of pokemon?.types | pokemonDetails: 'type-half_damage_to'"
-                (click)="showDetails(type, 'type')"
+                (click)="showDetails(type?.data, 'type')"
                 [ngStyle]="{ 'background': type | pokemonDetails: 'typ-damage-relation' | typeColor: 'light' }">
                 <span>{{ type | pokemonDetails: 'typ-damage-relation' }}</span>
               </mat-chip>
@@ -318,7 +318,7 @@
               <mat-chip 
                 class="mat-elevation-z3"
                 *ngFor="let type of pokemon?.types | pokemonDetails: 'type-no_damage_from'"
-                (click)="showDetails(type, 'type')"
+                (click)="showDetails(type?.data, 'type')"
                 [ngStyle]="{ 'background': type | pokemonDetails: 'typ-damage-relation' | typeColor: 'light' }">
                 <span>{{ type | pokemonDetails: 'typ-damage-relation' }}</span>
               </mat-chip>
@@ -340,7 +340,7 @@
               <mat-chip 
                 class="mat-elevation-z3"
                 *ngFor="let type of pokemon?.types | pokemonDetails: 'type-no_damage_to'"
-                (click)="showDetails(type, 'type')"
+                (click)="showDetails(type?.data, 'type')"
                 [ngStyle]="{ 'background': type | pokemonDetails: 'typ-damage-relation' | typeColor: 'light' }">
                 <span>{{ type | pokemonDetails: 'typ-damage-relation' }}</span>
               </mat-chip>
