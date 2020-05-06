@@ -1,21 +1,281 @@
-<div class="close">
-  <button mat-icon-button (click)="ref.close(null)">
-    <mat-icon>close</mat-icon>
-  </button>
-</div>
 
 <div class="content">
   
-  <div class="entries">
-    <div data-simplebar>
-      <p *ngFor="let item of [0,0,0,0,0,0,0,0,0,0,0,0]">Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet maxime dolores ullam quia modi obcaecati numquam suscipit ad eligendi assumenda voluptas similique cumque nisi, tempora dignissimos quisquam optio. Accusantium, corporis?</p>
+  <div class="entries" data-simplebar>
+    <div class="card-header mat-elevation-z5">
+      <p>Pokemon entries</p>
+      <mat-chip-list>
+        <mat-chip 
+          class="mat-elevation-z3"
+          [ngStyle]="{ 'background': data | dialogDetails: 'entries-header-color' }">
+          <span>{{ data | dialogDetails: 'entries-header-chip' }}</span>
+        </mat-chip>
+      </mat-chip-list>
+    </div>
+    <div class="card-container">
+      <div matRipple *ngFor="let entry of data | dialogDetails: 'entries'">
+        <mat-card>
+          <mat-card-content>
+            <img 
+              mat-card-image 
+              offset="300"
+              defaultImage="assets/images/berry.png" 
+              errorImage="assets/images/berry.png" 
+              [lazyLoad]="entry?.byte64 | dialogDetails: 'entry-image'" 
+              [alt]="entry?.name">
+          </mat-card-content>
+          <mat-card-content class="text-container">
+            <p>{{ entry?.name | dialogDetails: 'entry-name' }}</p>
+          </mat-card-content>
+        </mat-card>
+      </div>
     </div>
   </div>
   
-  <div class="details">
-    <div data-simplebar>
-      <p *ngFor="let item of [0,0,0,0,0,0,0,0,0,0,0,0]">Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet maxime dolores ullam quia modi obcaecati numquam suscipit ad eligendi assumenda voluptas similique cumque nisi, tempora dignissimos quisquam optio. Accusantium, corporis?</p>
+  <div class="information" data-simplebar>
+
+    <div class="close">
+      <button mat-icon-button (click)="ref.close(null)">
+        <mat-icon>close</mat-icon>
+      </button>
     </div>
+
+    <div class="heading">
+
+      <div class="text-head">
+        <p class="type">Type: </p>
+        <mat-chip-list>
+          <mat-chip 
+            class="mat-elevation-z3"
+            [ngStyle]="{ 'background': data | dialogDetails: 'entries-header-color' }">
+            <span>{{ data | dialogDetails: 'entries-header-chip' }}</span>
+          </mat-chip>
+        </mat-chip-list>
+      </div>
+
+      <div class="text-descriptions">
+        <p class="head">Damage class: {{ data | dialogDetails: 'damage-class-name' }}</p>
+        <p class="description">{{ data | dialogDetails: 'damage-class-description' }}</p>
+      </div>
+
+    </div>
+  
+    <mat-divider></mat-divider>
+
+    <div class="details">
+
+      <div class="detail mat-elevation-z5">
+        <div class="key" (click)="section(0)" [matTooltip]="sections[0] ? 'Collapse' : 'Expand types'" matTooltipClass="poke-tooltip">
+        <span>Types</span>
+          <mat-icon *ngIf="!sections[0]">keyboard_arrow_down</mat-icon>
+          <mat-icon *ngIf="sections[0]">keyboard_arrow_up</mat-icon>
+        </div>
+        <div class="value" *ngIf="sections[0]">
+          <span class="description">Types are properties for Pokémon and their moves. Each type has three properties: which types of Pokémon it is super effective against, which types of Pokémon it is not very effective against, and which types of Pokémon it is completely ineffective against.</span>
+          
+          <mat-divider></mat-divider>
+  
+          <div class="inner-detail mat-elevation-z3">
+            <div class="inner-key">
+              <span><strong>Double damage from</strong></span>
+              <mat-divider></mat-divider>
+              <span>A list of types that are very effective against this pokémon.</span>
+            </div>
+            <div class="inner-value">
+              <p *ngIf="(data | dialogDetails: 'type-double_damage_from').length === 0">
+                No type available.
+              </p>
+              <mat-chip-list>
+                <mat-chip 
+                  class="mat-elevation-z3"
+                  *ngFor="let type of data | dialogDetails: 'type-double_damage_from'"
+                  [ngStyle]="{ 'background': type | dialogDetails: 'typ-damage-relation-color' }">
+                  <span>{{ type | dialogDetails: 'typ-damage-relation' }}</span>
+                </mat-chip>
+              </mat-chip-list>
+            </div>
+          </div>
+  
+          <div class="inner-detail mat-elevation-z3">
+            <div class="inner-key">
+              <span><strong>Double damage to</strong></span>
+              <mat-divider></mat-divider>
+              <span>A list of types this pokémon is very effect against.</span>
+            </div>
+            <div class="inner-value">
+              <p *ngIf="(data | dialogDetails: 'type-double_damage_to').length === 0">
+                No type available.
+              </p>
+              <mat-chip-list>
+                <mat-chip 
+                  class="mat-elevation-z3"
+                  *ngFor="let type of data | dialogDetails: 'type-double_damage_to'"
+                  [ngStyle]="{ 'background': type | dialogDetails: 'typ-damage-relation-color' }">
+                  <span>{{ type | dialogDetails: 'typ-damage-relation' }}</span>
+                </mat-chip>
+              </mat-chip-list>
+            </div>
+          </div>
+  
+          <div class="inner-detail mat-elevation-z3">
+            <div class="inner-key">
+              <span><strong>Half damage from</strong></span>
+              <mat-divider></mat-divider>
+              <span>A list of types that are not very effective against this pokémon.</span>
+            </div>
+            <div class="inner-value">
+              <p *ngIf="(data | dialogDetails: 'type-half_damage_from').length === 0">
+                No type available.
+              </p>
+              <mat-chip-list>
+                <mat-chip 
+                  class="mat-elevation-z3"
+                  *ngFor="let type of data | dialogDetails: 'type-half_damage_from'"
+                  [ngStyle]="{ 'background': type | dialogDetails: 'typ-damage-relation-color' }">
+                  <span>{{ type | dialogDetails: 'typ-damage-relation' }}</span>
+                </mat-chip>
+              </mat-chip-list>
+            </div>
+          </div>
+  
+          <div class="inner-detail mat-elevation-z3">
+            <div class="inner-key">
+              <span><strong>Half damage to</strong></span>
+              <mat-divider></mat-divider>
+              <span>A list of types this pokémon is not very effect against.</span>
+            </div>
+            <div class="inner-value">
+              <p *ngIf="(data | dialogDetails: 'type-half_damage_to').length === 0">
+                No type available.
+              </p>
+              <mat-chip-list>
+                <mat-chip 
+                  class="mat-elevation-z3"
+                  *ngFor="let type of data | dialogDetails: 'type-half_damage_to'"
+                  [ngStyle]="{ 'background': type | dialogDetails: 'typ-damage-relation-color' }">
+                  <span>{{ type | dialogDetails: 'typ-damage-relation' }}</span>
+                </mat-chip>
+              </mat-chip-list>
+            </div>
+          </div>
+  
+          <div class="inner-detail mat-elevation-z3">
+            <div class="inner-key">
+              <span><strong>No damage from</strong></span>
+              <mat-divider></mat-divider>
+              <span>A list of types that have no effect on this pokémon.</span>
+            </div>
+            <div class="inner-value">
+              <p *ngIf="(data | dialogDetails: 'type-no_damage_from').length === 0">
+                No type available.
+              </p>
+              <mat-chip-list>
+                <mat-chip 
+                  class="mat-elevation-z3"
+                  *ngFor="let type of data | dialogDetails: 'type-no_damage_from'"
+                  [ngStyle]="{ 'background': type | dialogDetails: 'typ-damage-relation-color' }">
+                  <span>{{ type | dialogDetails: 'typ-damage-relation' }}</span>
+                </mat-chip>
+              </mat-chip-list>
+            </div>
+          </div>
+  
+          <div class="inner-detail mat-elevation-z3">
+            <div class="inner-key">
+              <span><strong>No damage to</strong></span>
+              <mat-divider></mat-divider>
+              <span>A list of types this pokémon has no effect on.</span>
+            </div>
+            <div class="inner-value">
+              <p *ngIf="(data | dialogDetails: 'type-no_damage_to').length === 0">
+                No type available.
+              </p>
+              <mat-chip-list>
+                <mat-chip 
+                  class="mat-elevation-z3"
+                  *ngFor="let type of data | dialogDetails: 'type-no_damage_to'"
+                  [ngStyle]="{ 'background': type | dialogDetails: 'typ-damage-relation-color' }">
+                  <span>{{ type | dialogDetails: 'typ-damage-relation' }}</span>
+                </mat-chip>
+              </mat-chip-list>
+            </div>
+          </div>
+  
+        </div>
+      </div>
+  
+      <div class="detail mat-elevation-z5">
+        <div class="key" (click)="section(1)" [matTooltip]="sections[1] ? 'Collapse' : 'Expand moves'" matTooltipClass="poke-tooltip">
+          <span>Moves</span>
+          <mat-icon *ngIf="!sections[1]">keyboard_arrow_down</mat-icon>
+          <mat-icon *ngIf="sections[1]">keyboard_arrow_up</mat-icon>
+        </div>
+        <div class="value" *ngIf="sections[1]">
+  
+          <div class="inner-detail mat-elevation-z3">
+            <div class="inner-key expansion" (click)="section(0, false)" [matTooltip]="subSections[0] ? 'Collapse' : 'Expand physical moves'" matTooltipClass="poke-tooltip">
+              <span>Physical</span>
+              <mat-icon *ngIf="!subSections[0]">keyboard_arrow_down</mat-icon>
+              <mat-icon *ngIf="subSections[0]">keyboard_arrow_up</mat-icon>
+            </div>
+            <div class="inner-value" *ngIf="subSections[0]">
+              <mat-chip-list>
+                <mat-chip 
+                  class="mat-elevation-z3"
+                  *ngFor="let move of moves?.physical | dialogDetails: 'moves-color'"
+                  [ngStyle]="{ 'background': move?.color }">
+                  <span>{{ move?.name }}</span>
+                </mat-chip>
+              </mat-chip-list>
+            </div>
+          </div>
+  
+          <div class="inner-detail mat-elevation-z3">
+            <div class="inner-key expansion" (click)="section(1, false)" [matTooltip]="subSections[1] ? 'Collapse' : 'Expand special moves'" matTooltipClass="poke-tooltip">
+              <span>Special</span>
+              <mat-icon *ngIf="!subSections[1]">keyboard_arrow_down</mat-icon>
+              <mat-icon *ngIf="subSections[1]">keyboard_arrow_up</mat-icon>
+            </div>
+            <div class="inner-value" *ngIf="subSections[1]">
+              <mat-chip-list>
+                <mat-chip 
+                  class="mat-elevation-z3"
+                  *ngFor="let move of moves?.special | dialogDetails: 'moves-color'"
+                  [ngStyle]="{ 'background': move?.color }">
+                  <span>{{ move?.name }}</span>
+                </mat-chip>
+              </mat-chip-list>
+            </div>
+          </div>
+  
+          <div class="inner-detail mat-elevation-z3">
+            <div class="inner-key expansion" (click)="section(2, false)" [matTooltip]="subSections[2] ? 'Collapse' : 'Expand status moves'" matTooltipClass="poke-tooltip">
+              <span>Status</span>
+              <mat-icon *ngIf="!subSections[2]">keyboard_arrow_down</mat-icon>
+              <mat-icon *ngIf="subSections[2]">keyboard_arrow_up</mat-icon>
+            </div>
+            <div class="inner-value" *ngIf="subSections[2]">
+              <mat-chip-list>
+                <mat-chip 
+                  class="mat-elevation-z3"
+                  *ngFor="let move of moves?.status | dialogDetails: 'moves-color'"
+                  [ngStyle]="{ 'background': move?.color }">
+                  <span>{{ move?.name }}</span>
+                </mat-chip>
+              </mat-chip-list>
+            </div>
+          </div>
+  
+        </div>
+      </div>
+  
+      <div class="credits">
+        <p class="app">Pokédex Little</p>
+        <p class="developer">by ElecTreeFrying</p>
+      </div>
+
+    </div>
+
   </div>
   
 </div>

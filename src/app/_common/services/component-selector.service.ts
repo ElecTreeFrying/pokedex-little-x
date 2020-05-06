@@ -10,10 +10,11 @@ import { HabitatComponent } from '../../_components/dialogs/habitat/habitat.comp
 import { MoveComponent } from '../../_components/dialogs/move/move.component';
 import { ShapeComponent } from '../../_components/dialogs/shape/shape.component';
 
-// export const pokemonDialogComponents = [
-//   SelectedPokemonComponent, TypeComponent, AbilityComponent, ColorComponent, EggGroupsComponent, GrowthRateComponent, HabitatComponent, MoveComponent, ShapeComponent
-// ];
 export const pokemonDialogComponents = [
+  SelectedPokemonComponent, TypeComponent, AbilityComponent, ColorComponent, EggGroupsComponent, GrowthRateComponent, HabitatComponent, MoveComponent, ShapeComponent
+];
+
+export const _pokemonDialogComponents = [
   SelectedPokemonComponent, AbilityComponent, ColorComponent, EggGroupsComponent, GrowthRateComponent, HabitatComponent, MoveComponent, ShapeComponent
 ];
 

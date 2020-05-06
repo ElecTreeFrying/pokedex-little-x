@@ -19,6 +19,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { LazyLoadImageModule } from 'ng-lazyload-image';
 
 import { AppInitializationComponentModule } from '../modules/app-initialization-component.module';
+import { DialogTypeComponentModule } from '../modules/dialog-type-component.module';
 import { IdToImagePipeModule } from '../modules/id-to-image-pipe.module';
 
 import { DrawerComponent } from '../../_components/drawer/drawer.component';
@@ -31,7 +32,7 @@ import { TypeColorPipe } from '../pipes/type-color.pipe';
 
 import { KeyboardDirective } from '../directives/keyboard.directive';
 
-import { pokemonDialogComponents } from '../services/component-selector.service';
+import { pokemonDialogComponents, _pokemonDialogComponents } from '../services/component-selector.service';
 
 
 @NgModule({
@@ -43,14 +44,13 @@ import { pokemonDialogComponents } from '../services/component-selector.service'
     PokemonDetailsPipe,
     TypeColorPipe,
     KeyboardDirective,
-    ...pokemonDialogComponents
+    ..._pokemonDialogComponents
   ],
   entryComponents: [
     ...pokemonDialogComponents
   ],
   imports: [
     CommonModule,
-    MatRippleModule,
     MatRippleModule,
     MatDividerModule,
     MatExpansionModule,
@@ -62,7 +62,9 @@ import { pokemonDialogComponents } from '../services/component-selector.service'
     MatChipsModule,
     MatDialogModule,
     IdToImagePipeModule,
-    LazyLoadImageModule
+    LazyLoadImageModule,
+
+    DialogTypeComponentModule,
   ],
   exports: [
     SnotifyModule,
@@ -74,8 +76,7 @@ import { pokemonDialogComponents } from '../services/component-selector.service'
     MatIconModule,
     MatProgressSpinnerModule,
     AppInitializationComponentModule,
-
-    MatDialogModule,
+    DialogTypeComponentModule,
 
     DrawerComponent,
     PokemonComponent,

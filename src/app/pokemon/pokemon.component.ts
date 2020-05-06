@@ -12,7 +12,7 @@ import { SnotifyService } from '../_common/services/snotify.service';
   selector: 'app-pokemon',
   templateUrl: './pokemon.component.html',
   styleUrls: ['./pokemon.component.scss'],
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class PokemonComponent implements OnInit, OnDestroy {
 
@@ -44,6 +44,7 @@ export class PokemonComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    
     this.initial();
 
     this.subscriptions.push(this.api.pokemon.subscribe((res) => {

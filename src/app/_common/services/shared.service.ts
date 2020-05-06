@@ -2,6 +2,11 @@ import { Injectable } from '@angular/core';
 
 import { BehaviorSubject, Observable } from 'rxjs';
 
+interface Key { 
+  types: any[];
+  move_damage_class: any[];
+  no_habitat: any[];
+}
 
 @Injectable({
   providedIn: 'root'
@@ -42,9 +47,9 @@ export class SharedService {
   get generation() { return this._generation; }
   set generation(generation: any) { this._generation = generation; }
 
-  private _keys: { no_habitat: any[], types: any[] };
+  private _keys: Key;
   get keys() { return this._keys; }
-  set keys(keys: { no_habitat: any[], types: any[] }) { this._keys = keys; }
+  set keys(keys: Key) { this._keys = keys; }
 
   private _item_attributes: any[];
   get item_attributes() { return this._item_attributes; }

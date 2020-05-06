@@ -45,12 +45,13 @@ export class PokeapiService {
 
       shared.keys = {
         types: res.keys.types,
+        move_damage_class: res.keys.move_damage_class,
         no_habitat: intersectionBy(res.pokemon, res.keys.no_habitat, 'id')
-      }
+      };
     });
   }
 
-  httpTestPokemon() {
+  httpTest() {
     this.http.get('https://pokeapi.co/api/v2/pokemon?offset=0&limit=964').pipe(
       exhaustMap(e => e['results'].map(c => this.http.get(c['url']))),
       mergeMap((e: any) => e),
@@ -72,7 +73,16 @@ export class PokeapiService {
       map((e) => {
         console.log(e);
       })
-    )
+    );
+
+    this.http.get('https://pokeapi.co/api/v2/move-damage-class/').pipe(
+      exhaustMap(e => e['results'].map(c => this.http.get(c['url']))),
+      mergeMap((e: any) => e),
+      toArray(),
+      map((e) => {
+        console.log(e);
+      })
+    ).subscribe(() => 0);
   }
 
   get moves() {
@@ -94,6 +104,14 @@ export class PokeapiService {
         );
       })
     )
+  }
+
+  detailMoves(moves: any[]) {
+    return this.http.get('https://pokeapi.co/api/v2/move?offset=0&limit=746').pipe(
+      exhaustMap((e) => intersectionBy(e['results'], moves, 'name').map(c => this.http.get(c['url']))),
+      mergeMap((e: any) => e),
+      toArray(),
+    );
   }
 
   get pokemon() {
