@@ -7,8 +7,6 @@
   <p>Please wait...</p>
 </div>
 
-
-
 <div class="content" *ngIf="!isLoading">
   
   <div class="heading">
@@ -17,8 +15,8 @@
       <p class="name">{{ pokemon | pokemonDetails: 'species-name' }}</p>
       <p class="genus" #genus>{{ pokemon | pokemonDetails: 'species-genus' }}</p>
       <div class="types">
-        <p matRipple class="type mat-elevation-z3" *ngFor="let type of pokemon?.types; let isFirst = first; let isLast = last" 
-          (click)="showDetails(type, 'type')"
+        <p matRipple matTooltip="show more details" matTooltipClass="poke-tooltip" class="type mat-elevation-z3" *ngFor="let type of pokemon?.types; let isFirst = first; let isLast = last" 
+          (click)="showDetails(type?.data, 'type')"
           [ngStyle]="{ 
             'margin-left': isFirst ? '0' : '3px',
             'margin-right': isLast ? '0' : '3px',
@@ -141,7 +139,7 @@
           </div>
         </div>
 
-        <div matRipple (click)="showDetails(pokemon.species.data.growth_rate.data, 'growth_rate')" matTooltip="show more details" matTooltipClass="poke-tooltip" class="inner-detail medium mat-elevation-z3">
+        <div matRipple (click)="showDetails(pokemon.species.data.growth_rate.data, 'growth-rate')" matTooltip="show more details" matTooltipClass="poke-tooltip" class="inner-detail medium mat-elevation-z3">
           <div class="inner-key">
             <span>Growth rate</span>
           </div>
@@ -167,8 +165,8 @@
           </div>
         </div>
 
-        <div matRipple (click)="showDetails(pokemon.species.data.egg_groups, 'egg-group')" matTooltip="show more details" matTooltipClass="poke-tooltip" class="inner-detail medium mat-elevation-z3">
-          <div class="inner-key">
+        <div matRipple (click)="showDetails(pokemon.species.data.egg_groups, 'egg-groups')" matTooltip="show more details" matTooltipClass="poke-tooltip" class="inner-detail medium mat-elevation-z3">
+        <div class="inner-key">
             <span>Egg groups</span>
           </div>
           <div class="inner-value">
@@ -197,7 +195,7 @@
       <div class="value" *ngIf="sections[2]">
         <span class="description">Abilities provide passive effects for Pokémon in battle or in the over world. Pokémon have multiple possible abilities but can have only one ability at a time.</span>
         <mat-divider></mat-divider>
-        <div matRipple class="inner-detail mat-elevation-z3" *ngFor="let ability of pokemon?.abilities; let isLast = last" [ngStyle]="{ 'margin-bottom': isLast ? '8px' : '16px', 'cursor': 'pointer' }" (click)="showDetails(ability, 'ability')">
+        <div matRipple matTooltip="show more details" matTooltipClass="poke-tooltip" class="inner-detail mat-elevation-z3" *ngFor="let ability of pokemon?.abilities; let isLast = last" [ngStyle]="{ 'margin-bottom': isLast ? '8px' : '16px', 'cursor': 'pointer' }" (click)="showDetails(ability, 'ability')">
           <div class="inner-key">
             <span>{{ ability | pokemonDetails: 'ability-name' }}</span>
           </div>
@@ -232,7 +230,7 @@
               <mat-chip 
                 class="mat-elevation-z3"
                 *ngFor="let type of pokemon?.types | pokemonDetails: 'type-double_damage_from'"
-                (click)="showDetails(type, 'type')"
+                (click)="showDetails(type?.data, 'type')"
                 [ngStyle]="{ 'background': type | pokemonDetails: 'typ-damage-relation' | typeColor: 'light' }">
                 <span>{{ type | pokemonDetails: 'typ-damage-relation' }}</span>
               </mat-chip>
@@ -362,7 +360,7 @@
       <div class="value evolution" *ngIf="sections[4]">
 
         <div class="pokemon" *ngIf="pokemon | pokemonDetails: 'evolution-1-next'">
-          <div matRipple matTooltip="select pokémon" matTooltipClass="poke-tooltip" class="image">
+          <div matRipple matTooltip="select pokémon" matTooltipClass="poke-tooltip" class="image" (click)="showDetails(pokemon.species.data.evolution_chain.data.first.id, 'pokemon')">
             <img 
               defaultImage="assets/images/berry-resize.png" 
               errorImage="assets/images/berry-resize.png"
@@ -379,7 +377,7 @@
         </div>
 
         <div class="pokemon" *ngIf="pokemon | pokemonDetails: 'evolution-2-next'">
-          <div matRipple matTooltip="select pokémon" matTooltipClass="poke-tooltip" class="image">
+          <div matRipple matTooltip="select pokémon" matTooltipClass="poke-tooltip" class="image" (click)="showDetails(pokemon.species.data.evolution_chain.data.second.id, 'pokemon')">
             <img 
               defaultImage="assets/images/berry-resize.png" 
               errorImage="assets/images/berry-resize.png"
@@ -393,7 +391,7 @@
         </div>
 
         <div class="pokemon" *ngIf="pokemon | pokemonDetails: 'evolution-3-next'">
-          <div matRipple matTooltip="select pokémon" matTooltipClass="poke-tooltip" class="image">
+          <div matRipple matTooltip="select pokémon" matTooltipClass="poke-tooltip" class="image" (click)="showDetails(pokemon.species.data.evolution_chain.data.third.id, 'pokemon')">
             <img 
               defaultImage="assets/images/berry-resize.png" 
               errorImage="assets/images/berry-resize.png"
@@ -420,16 +418,17 @@
           matRipple
           matTooltip="select pokémon" 
           matTooltipClass="poke-tooltip" 
-          *ngFor="let pokemon of pokemon | pokemonDetails: 'species-variations'">
+          *ngFor="let entry of pokemon | pokemonDetails: 'species-variations'"
+          (click)="showDetails(entry?.id, 'pokemon')">
           <div class="inner-key">
-            <span>{{ pokemon?.display }}</span>
+            <span>{{ entry?.display }}</span>
           </div>
           <div class="inner-value">
             <img 
               defaultImage="assets/images/berry-resize.png" 
               errorImage="assets/images/berry-resize.png" 
-              [lazyLoad]="pokemon | pokemonDetails: 'species-variation-sprite'" 
-              [alt]="pokemon?.name">
+              [lazyLoad]="entry | pokemonDetails: 'species-variation-sprite'" 
+              [alt]="entry?.name">
           </div>
         </div>
 

@@ -15,6 +15,7 @@ import { MatRippleModule } from '@angular/material/core';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatDialogModule } from '@angular/material/dialog';
 import { LazyLoadImageModule } from 'ng-lazyload-image';
 
 import { AppInitializationComponentModule } from '../modules/app-initialization-component.module';
@@ -30,6 +31,8 @@ import { TypeColorPipe } from '../pipes/type-color.pipe';
 
 import { KeyboardDirective } from '../directives/keyboard.directive';
 
+import { pokemonDialogComponents } from '../services/shared.service';
+
 
 @NgModule({
   declarations: [
@@ -39,7 +42,11 @@ import { KeyboardDirective } from '../directives/keyboard.directive';
     NormalizePipe,
     PokemonDetailsPipe,
     TypeColorPipe,
-    KeyboardDirective
+    KeyboardDirective,
+    ...pokemonDialogComponents
+  ],
+  entryComponents: [
+    ...pokemonDialogComponents
   ],
   imports: [
     CommonModule,
@@ -53,12 +60,9 @@ import { KeyboardDirective } from '../directives/keyboard.directive';
     MatProgressSpinnerModule,
     MatTooltipModule,
     MatChipsModule,
+    MatDialogModule,
     IdToImagePipeModule,
-    LazyLoadImageModule,
-  ],
-  providers: [
-    { provide: 'SnotifyToastConfig', useValue: ToastDefaults },
-    SnotifyService
+    LazyLoadImageModule
   ],
   exports: [
     SnotifyModule,
@@ -77,6 +81,10 @@ import { KeyboardDirective } from '../directives/keyboard.directive';
     PokemonDetailsPipe,
     NormalizePipe,
     KeyboardDirective
+  ],
+  providers: [
+    SnotifyService,
+    { provide: 'SnotifyToastConfig', useValue: ToastDefaults }
   ]
 })
 export class AppProviderModule { }

@@ -1,4 +1,5 @@
 import { Component, ViewChild, OnInit, OnDestroy, ElementRef, ChangeDetectorRef, ViewEncapsulation } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 
 import { PokeapiService } from '../_common/services/pokeapi.service';
@@ -26,6 +27,7 @@ export class PokemonComponent implements OnInit, OnDestroy {
 
   constructor(
     private cd: ChangeDetectorRef,
+    private dialog: MatDialog,
     private api: PokeapiService,
     public shared: SharedService,
     private snotify: SnotifyService
@@ -46,7 +48,7 @@ export class PokemonComponent implements OnInit, OnDestroy {
       
       this.pokemon = res;
       
-      // console.log('loaded all pokémon', res);
+      console.log('loaded all pokémon', res);
 
       if (this.moves.hasOwnProperty('physical')) {
         this.displayToView();
@@ -76,6 +78,23 @@ export class PokemonComponent implements OnInit, OnDestroy {
   showDetails(data: any, type: string) {
 
     console.log(data);
+
+    // execute commands on click;
+
+    const component = this.shared.dialogComponent({ data, type });
+
+    const ref = this.dialog.open(component, {
+      id: type,
+      closeOnNavigation: true,
+      autoFocus: false,
+      data
+    });
+
+    ref.afterClosed().subscribe(() => {
+    
+      // do stuff on after closed.
+    });
+    
   }
 
   section(i: number, option: boolean = true) {

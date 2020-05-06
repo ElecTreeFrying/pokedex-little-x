@@ -2,6 +2,20 @@ import { Injectable } from '@angular/core';
 
 import { BehaviorSubject, Observable } from 'rxjs';
 
+import { SelectedPokemonComponent } from '../../_components/dialogs/selected-pokemon/selected-pokemon.component';
+import { TypeComponent } from '../../_components/dialogs/type/type.component';
+import { AbilityComponent } from '../../_components/dialogs/ability/ability.component';
+import { ColorComponent } from '../../_components/dialogs/color/color.component';
+import { EggGroupsComponent } from '../../_components/dialogs/egg-groups/egg-groups.component';
+import { GrowthRateComponent } from '../../_components/dialogs/growth-rate/growth-rate.component';
+import { HabitatComponent } from '../../_components/dialogs/habitat/habitat.component';
+import { MoveComponent } from '../../_components/dialogs/move/move.component';
+import { ShapeComponent } from '../../_components/dialogs/shape/shape.component';
+
+export const pokemonDialogComponents = [
+  SelectedPokemonComponent, TypeComponent, AbilityComponent, ColorComponent, EggGroupsComponent, GrowthRateComponent, HabitatComponent, MoveComponent, ShapeComponent
+];
+
 
 @Injectable({
   providedIn: 'root'
@@ -42,6 +56,10 @@ export class SharedService {
   get generation() { return this._generation; }
   set generation(generation: any) { this._generation = generation; }
 
+  private _keys: { no_habitat: any[], types: any[] };
+  get keys() { return this._keys; }
+  set keys(keys: { no_habitat: any[], types: any[] }) { this._keys = keys; }
+
   private _item_attributes: any[];
   get item_attributes() { return this._item_attributes; }
   set item_attributes(item_attributes: any) { this._item_attributes = item_attributes; }
@@ -75,6 +93,16 @@ export class SharedService {
 
   get subSections() {
     return [ false, false, false ];
+  }
+
+  dialogComponent(res: any) {
+    const id = pokemonDialogComponents
+      .map((component: any, id: number) => {
+        component = `${component}`.split(' ')[1].toLowerCase();
+        return { component: `${component}`, id }
+      })
+      .find(e => e.component.includes(res.type.split('-').join(''))).id;
+    return pokemonDialogComponents[id];
   }
 
   set updatedRouteChangeSelection(data: any){
