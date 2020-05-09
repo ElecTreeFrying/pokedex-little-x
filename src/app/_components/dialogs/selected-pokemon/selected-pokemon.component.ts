@@ -49,13 +49,10 @@ export class SelectedPokemonComponent implements OnInit, OnDestroy {
 
     this.shared.id = +this.data.data;
 
-    console.log(this.data.data);
-
     this.subscriptions.push(this.api.pokemon.subscribe((pokemon: any) => {
       
       this.pokemon = pokemon;
-      console.log(this.pokemon);
-      
+
       const res = this.api.moves(pokemon.moves);
       
       this.moves.physical = res.filter(e => e['damage_class']['name'] === 'physical');
