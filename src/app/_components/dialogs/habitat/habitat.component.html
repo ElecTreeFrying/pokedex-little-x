@@ -1,21 +1,55 @@
-<div class="close">
-  <button mat-icon-button (click)="ref.close(null)">
-    <mat-icon>close</mat-icon>
-  </button>
-</div>
 
 <div class="content">
   
-  <div class="entries">
-    <div data-simplebar>
-      <p *ngFor="let item of [0,0,0,0,0,0,0,0,0,0,0,0]">Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet maxime dolores ullam quia modi obcaecati numquam suscipit ad eligendi assumenda voluptas similique cumque nisi, tempora dignissimos quisquam optio. Accusantium, corporis?</p>
+  <div class="entries" data-simplebar>
+    <div class="card-header mat-elevation-z5">
+      <p>Pokemon entries</p>
+    </div>
+    <div class="card-container">
+      <div matRipple *ngFor="let entry of data | dialogDetails: 'entries'">
+        <mat-card>
+          <mat-card-content>
+            <img 
+              mat-card-image 
+              offset="300"
+              defaultImage="assets/images/berry.png" 
+              errorImage="assets/images/berry.png" 
+              [lazyLoad]="entry?.byte64 | dialogDetails: 'entry-image'" 
+              [alt]="entry?.name">
+          </mat-card-content>
+          <mat-card-content class="text-container">
+            <p>{{ entry?.name | dialogDetails: 'entry-name' }}</p>
+          </mat-card-content>
+        </mat-card>
+      </div>
     </div>
   </div>
   
-  <div class="details">
-    <div data-simplebar>
-      <p *ngFor="let item of [0,0,0,0,0,0,0,0,0,0,0,0]">Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet maxime dolores ullam quia modi obcaecati numquam suscipit ad eligendi assumenda voluptas similique cumque nisi, tempora dignissimos quisquam optio. Accusantium, corporis?</p>
+  <div class="information" data-simplebar>
+
+    <div class="close">
+      <button mat-icon-button (click)="ref.close(null)">
+        <mat-icon>close</mat-icon>
+      </button>
     </div>
+
+    <div class="heading">
+
+      <div class="text-head">
+        <p class="type">Habitat: {{ data | dialogDetails: 'entries-header-chip' }}</p>
+      </div>
+
+    </div>
+
+    <div class="details">
+  
+      <div class="credits">
+        <p class="app">Pokédex Little</p>
+        <p class="developer">by ElecTreeFrying</p>
+      </div>
+
+    </div>
+  
   </div>
   
 </div>

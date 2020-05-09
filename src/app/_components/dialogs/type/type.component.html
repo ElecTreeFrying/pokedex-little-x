@@ -54,8 +54,8 @@
       </div>
 
       <div class="text-descriptions">
-        <p class="head">Damage class: {{ data | dialogDetails: 'damage-class-name' }}</p>
-        <p class="description">{{ data | dialogDetails: 'damage-class-description' }}</p>
+        <p class="head">Damage class: {{ data | dialogDetails: 'move-damage-class-name' }}</p>
+        <p class="description">{{ data | dialogDetails: 'move-damage-class-description' }}</p>
       </div>
 
     </div>
@@ -79,7 +79,7 @@
             <div class="inner-key">
               <span><strong>Double damage from</strong></span>
               <mat-divider></mat-divider>
-              <span>A list of types that are very effective against this pokémon.</span>
+              <span>A list of types that are very effective against this type.</span>
             </div>
             <div class="inner-value">
               <p *ngIf="(data | dialogDetails: 'type-double_damage_from').length === 0">
@@ -100,7 +100,7 @@
             <div class="inner-key">
               <span><strong>Double damage to</strong></span>
               <mat-divider></mat-divider>
-              <span>A list of types this pokémon is very effect against.</span>
+              <span>A list of types this type is very effect against.</span>
             </div>
             <div class="inner-value">
               <p *ngIf="(data | dialogDetails: 'type-double_damage_to').length === 0">
@@ -121,7 +121,7 @@
             <div class="inner-key">
               <span><strong>Half damage from</strong></span>
               <mat-divider></mat-divider>
-              <span>A list of types that are not very effective against this pokémon.</span>
+              <span>A list of types that are not very effective against this type.</span>
             </div>
             <div class="inner-value">
               <p *ngIf="(data | dialogDetails: 'type-half_damage_from').length === 0">
@@ -142,7 +142,7 @@
             <div class="inner-key">
               <span><strong>Half damage to</strong></span>
               <mat-divider></mat-divider>
-              <span>A list of types this pokémon is not very effect against.</span>
+              <span>A list of types this type is not very effect against.</span>
             </div>
             <div class="inner-value">
               <p *ngIf="(data | dialogDetails: 'type-half_damage_to').length === 0">
@@ -163,7 +163,7 @@
             <div class="inner-key">
               <span><strong>No damage from</strong></span>
               <mat-divider></mat-divider>
-              <span>A list of types that have no effect on this pokémon.</span>
+              <span>A list of types that have no effect on this type.</span>
             </div>
             <div class="inner-value">
               <p *ngIf="(data | dialogDetails: 'type-no_damage_from').length === 0">
@@ -184,7 +184,7 @@
             <div class="inner-key">
               <span><strong>No damage to</strong></span>
               <mat-divider></mat-divider>
-              <span>A list of types this pokémon has no effect on.</span>
+              <span>A list of types this type has no effect on.</span>
             </div>
             <div class="inner-value">
               <p *ngIf="(data | dialogDetails: 'type-no_damage_to').length === 0">

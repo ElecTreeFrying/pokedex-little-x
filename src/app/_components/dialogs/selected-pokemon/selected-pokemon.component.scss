@@ -1,39 +1,248 @@
 
-.close {
-  position: fixed;
-  top: 16px !important;
-  right: 16px !important;
-  z-index: 1000;
+.spinner {
+  overflow: hidden;
+  display: flex;
+  padding: 96px 0;
+  overflow: hidden;
+
+  .mat-spinner {
+    margin: auto;
+  }
+}
+
+.spinner-message {
+  display: flex;
+  overflow: hidden;
+
+  p {
+    font-family: 'VT323', monospace;
+    margin: auto;
+    font-size: 2em;
+  }
+}
+
+.poke-tooltip {
+  background-color: #4E1338;
 }
 
 [data-simplebar] {
   display: flex;
-  overflow: auto;
+  flex-flow: row wrap;
   max-height: 90vh;
 }
 
 .content {
+  font-family: 'VT323', monospace;
   margin: -24px;
-  display: flex;
-  position: absolute;
-  align-items: stretch;
-  height: 90vh;
-  width: 90vw;
-  overflow: hidden;
-
-  .entries {
-    background-color: #340522;
-    color: white;
-
-    min-width: calc(100% - 500px);
-    max-width: calc(100% - 500px);
-    padding: 0;
-  }
   
+  .heading {
+    display: flex;
+    justify-content: space-between;
+    padding: 16px 16px 32px 16px;
+    padding-bottom: 32px;
+    width: 500px;
+    
+    .text {
+      padding: 14px 0 0 14px;
+
+      .number { 
+        font-size: 2em; 
+        transform: translateX(-1px); 
+      }
+      .name { 
+        font-size: 3em;
+        line-height: 28px;
+        transform: translateX(-2px); 
+      }
+      .genus { 
+        padding-top: 4px; 
+        font-size: 1.5em;
+        letter-spacing: 2px; 
+      }
+      .info {
+        margin: 32px 0 8px 0;
+        font-size: 1.4em;
+        font-weight: 900;
+        letter-spacing: 2px;
+        color: white;
+      }
+    }
+
+    img {
+      width: 256px;
+      height: 256px;
+    }
+
+    .types {
+      display: flex;
+
+      .type {
+        margin: 0;
+        padding: 7px 12px;
+        font-size: 1.4em;
+        border-radius: 50px;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .mat-divider {
+    margin: 0 16px;
+  }
+
   .details {
-    min-width: 500px;
-    max-width: 500px;
-    padding: 0;
+    padding: 32px;
+    width: 500px;
+  }
+
+  .detail {
+    border: 1.5px solid violet;
+    font-size: 1.5em;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+    
+    .key {
+      background: violet;
+      padding: 8px 12px;
+      display: flex;
+      justify-content: space-between;
+      cursor: pointer;
+    }
+    
+    .value {
+      padding: 8px 12px;
+
+      .description {
+        display: block;
+        margin-bottom: 8px;
+      }
+
+      .mat-divider {
+        margin: 0 0 8px 0;
+      }
+
+      .mat-chip {
+        cursor: pointer;
+      }
+
+      .mat-chip span {
+        font-size: 21px;
+      }
+    }
+  }
+
+  .credits {
+    margin: 64px 0 32px 0;
+
+    .app, .developer {
+      font-family: 'Cairo', 'Cairo-SemiBold';
+      font-size: 21px;
+      text-align: center;
+      letter-spacing: 4px;
+      margin: 4px 0;
+    }
+  }
+
+  .inner-detail {
+    border: 1.5px solid orange;
+    margin: 8px 0;
+    
+    .inner-key {
+      background: orange;
+      padding: 8px 12px;
+
+      .mat-divider {
+        margin: 8px 0;
+      }
+    }
+
+    .expansion {
+      display: flex;
+      justify-content: space-between;
+      cursor: pointer;
+      height: 36px;
+    }
+    
+    .inner-value {
+      padding: 8px 12px;
+    }
+  }
+
+  .information {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+
+    .small {
+      width: 130px;
+      font-size: 21px;
+      text-align: center;
+      cursor: pointer;
+    }
+    
+    .medium {
+      width: 200px;
+      font-size: 21px;
+      text-align: center;
+      cursor: pointer;
+    }
+  }
+
+  .evolution {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+
+    .image {
+      border-radius: 10px;
+      cursor: pointer;
+
+      img {
+        width: 130px;
+      }
+    }
+
+    .name {
+      text-align: center;
+    }
+
+    .mat-icon {
+      position: absolute;
+      transform: translate(120px, -105px);
+    }
+  }
+
+  .varieties .inner-detail {
+    cursor: pointer;
+  }
+
+  .varieties, .sprites {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    
+    .inner-detail {
+      margin: 8px;
+    }
+
+    .inner-value, .inner-key {
+      display: flex;
+      img {
+        margin: auto;
+        width: 130px;
+      }
+      span {
+        margin: auto;
+      }
+    }
+  }
+
+  .version-entries {
+    display: flex;
+    flex-flow: row wrap;
+
+    .inner-key, .inner-value {
+      flex: 1 1 50%;
+    }
   }
 }
-

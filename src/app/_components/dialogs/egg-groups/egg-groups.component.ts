@@ -11,6 +11,8 @@ import { SharedService } from '../../../_common/services/shared.service';
 })
 export class EggGroupsComponent implements OnInit, OnDestroy {
 
+  double: boolean
+
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public ref: MatDialogRef<EggGroupsComponent>,
@@ -20,8 +22,7 @@ export class EggGroupsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
-    console.log(this.data);
-
+    this.double = this.data.data.length === 2;
   }
 
   ngOnDestroy() {

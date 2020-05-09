@@ -47,28 +47,18 @@ export class PokemonComponent implements OnInit, OnDestroy {
     
     this.initial();
 
-    this.subscriptions.push(this.api.pokemon.subscribe((res) => {
+    this.subscriptions.push(this.api.pokemon.subscribe((pokemon: any) => {
       
-      this.pokemon = res;
+      this.pokemon = pokemon;
       
-      console.log('loaded all pokémon', res);
-
-      if (this.moves.hasOwnProperty('physical')) {
-        this.displayToView();
-      }
-    }));
-    
-    this.subscriptions.push(this.api.moves.subscribe((res) => {
+      const res = this.api.moves(pokemon.moves);
       
       this.moves.physical = res.filter(e => e['damage_class']['name'] === 'physical');
       this.moves.special = res.filter(e => e['damage_class']['name'] === 'special');
       this.moves.status = res.filter(e => e['damage_class']['name'] === 'status');
       
-      // console.log('Loaded all moves', res);
-      
-      if (this.pokemon) {
-        this.displayToView();
-      }
+      this.displayToView();
+
     }));
   }
 
@@ -84,13 +74,17 @@ export class PokemonComponent implements OnInit, OnDestroy {
 
     const component = this.componentSelector.dialogComponent({ data, type });
 
+    const isPanel = type === 'move' || type === 'pokemon';
+
     const ref = this.dialog.open(component, {
       id: type,
       closeOnNavigation: true,
       autoFocus: false,
       data: { data, entry: this.pokemon },
       minHeight: '90vh',
-      minWidth: '90vw',
+      maxHeight: '90vh',
+      minWidth: isPanel ? '500px' : '90vw',
+      maxWidth: isPanel ? '500px' : '90vw',
     });
   }
 

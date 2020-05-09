@@ -516,7 +516,7 @@
               <mat-chip 
                 class="mat-elevation-z3"
                 *ngFor="let move of moves?.physical | pokemonDetails: 'moves': pokemon?.moves"
-                (click)="showDetails(move, 'move')"
+                (click)="showDetails(move?.data, 'move')"
                 [ngStyle]="{ 'background': move?.color }">
                 <span>{{ move?.name }}</span>
               </mat-chip>
@@ -535,7 +535,7 @@
               <mat-chip 
                 class="mat-elevation-z3"
                 *ngFor="let move of moves?.special | pokemonDetails: 'moves': pokemon?.moves"
-                (click)="showDetails(move, 'move')"
+                (click)="showDetails(move?.data, 'move')"
                 [ngStyle]="{ 'background': move?.color }">
                 <span>{{ move?.name }}</span>
               </mat-chip>
@@ -554,7 +554,7 @@
               <mat-chip 
                 class="mat-elevation-z3"
                 *ngFor="let move of moves?.status | pokemonDetails: 'moves': pokemon?.moves"
-                (click)="showDetails(move, 'move')"
+                (click)="showDetails(move?.data, 'move')"
                 [ngStyle]="{ 'background': move?.color }">
                 <span>{{ move?.name }}</span>
               </mat-chip>

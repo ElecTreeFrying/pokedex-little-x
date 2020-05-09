@@ -11,6 +11,8 @@ import { SharedService } from '../../../_common/services/shared.service';
 })
 export class AbilityComponent implements OnInit, OnDestroy {
 
+  sections: any[];
+
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public ref: MatDialogRef<AbilityComponent>,
@@ -18,14 +20,18 @@ export class AbilityComponent implements OnInit, OnDestroy {
     private shared: SharedService
   ) { }
 
+  
   ngOnInit(): void {
-
-    console.log(this.data);
-
+    
+    this.sections = [ false, false ];
   }
 
   ngOnDestroy() {
     this.shared.dialogIsOpened = false;
+  }
+
+  section(i: number, option: boolean = true) {
+    this.sections[i] = this.sections[i] ? false : true;
   }
 
 }

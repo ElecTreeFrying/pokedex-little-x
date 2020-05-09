@@ -1,39 +1,219 @@
 
-.close {
-  position: fixed;
-  top: 16px !important;
-  right: 16px !important;
-  z-index: 1000;
-}
-
-[data-simplebar] {
-  display: flex;
-  overflow: auto;
-  max-height: 90vh;
+.poke-tooltip {
+  background-color: #4E1338;
 }
 
 .content {
   margin: -24px;
   display: flex;
-  position: absolute;
-  align-items: stretch;
   height: 90vh;
   width: 90vw;
   overflow: hidden;
+}
 
-  .entries {
+.entries {
+  background-color: #340522;
+  color: white;
+
+  width: calc(100% - 500px);
+  padding: 0 0 24px 0;
+
+  .card-header {
     background-color: #340522;
-    color: white;
+    padding: 20px 28px;
+    display: flex;
+    flex-flow: row wrap;
+    width: 100%;
+    position: fixed;
+    width: calc(90vw - 500px);
+    z-index: 1000;
+    height: 73px;
 
-    min-width: calc(100% - 500px);
-    max-width: calc(100% - 500px);
-    padding: 0;
+    p {
+      font-size: 2em;
+      font-family: Roboto, "Helvetica Neue", sans-serif;
+      color: white;
+      margin: 0 20px 0 0;
+      transform: translateY(6px);
+    }
   }
-  
-  .details {
-    min-width: 500px;
-    max-width: 500px;
-    padding: 0;
+
+  .card-container {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    padding-top: 73px + 8px;
+  }
+
+  .mat-ripple {
+    width: 150px;
+    border-radius: 4px;
+    color: white;
+    margin: 8px;
+    cursor: pointer;
+    
+    .mat-card {
+      background-color: #4E1338;
+      height: 222px;
+    }
+
+    .text-container {
+      height: 40px;
+      display: flex;
+    }
+
+    p {
+      margin: auto;
+      text-align: center;
+      color: white;
+      font-family: 'Poppins', 'Poppins-Regular';
+      font-size: 1.15em;
+    }
+
+    p.adjust {
+      transform: translateY(10px);
+    }
   }
 }
 
+.information {
+  width: 500px;
+  font-family: 'VT323', monospace;
+  
+  .close {
+    position: fixed;
+    z-index: 1000;
+    width: 500px;
+    display: flex;
+
+    .mat-icon-button {
+      margin-left: auto;
+    }
+  }
+
+  .heading {
+    padding: 32px;
+    display: flex;
+    flex-flow: column wrap;
+  
+    .text-head {
+      display: flex;
+
+      .type {
+        font-size: 2.6em;
+        margin: 0 16px 0 0;
+        transform: translateY(4px);
+      }
+
+      .mat-chip-list .mat-chip {
+        cursor: pointer;
+      }
+  
+      .mat-chip-list .mat-chip span {
+        font-family: Roboto, "Helvetica Neue", sans-serif;
+        font-size: 1.5em;
+        padding: 0 4px;
+      }
+    }
+
+    .text-descriptions {
+
+      .head {
+        font-size: 2em;
+        margin-top: 40px;
+        letter-spacing: 1.5px;
+      }
+
+      .short {
+        margin-top: 20px;
+      }
+
+      .description {
+        font-size: 1.5em;
+        letter-spacing: 1px;
+        margin: 0;
+      }
+    }
+  }
+  
+  .mat-divider {
+    margin: 0 16px;
+  }
+}
+
+.details {
+  padding: 32px;
+
+  .detail {
+    border: 1.5px solid violet;
+    font-size: 1.5em;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+    
+    .key {
+      background: violet;
+      padding: 8px 12px;
+      display: flex;
+      justify-content: space-between;
+      cursor: pointer;
+    }
+    
+    .value {
+      padding: 8px 12px;
+
+      .description {
+        display: block;
+        margin-bottom: 8px;
+      }
+
+      .mat-divider {
+        margin: 0 0 8px 0;
+      }
+
+      .mat-chip {
+        cursor: pointer;
+      }
+
+      .mat-chip span {
+        font-size: 21px;
+      }
+    }
+  }
+
+  .inner-detail {
+    border: 1.5px solid orange;
+    margin: 8px 0;
+    
+    .inner-key {
+      background: orange;
+      padding: 8px 12px;
+
+      .mat-divider {
+        margin: 8px 0;
+      }
+    }
+
+    .expansion {
+      display: flex;
+      justify-content: space-between;
+      cursor: pointer;
+      height: 36px;
+    }
+    
+    .inner-value {
+      padding: 8px 12px;
+    }
+  }
+}
+
+.credits {
+  margin: 64px 0 32px 0;
+
+  .app, .developer {
+    font-family: 'Cairo', 'Cairo-SemiBold';
+    font-size: 21px;
+    text-align: center;
+    letter-spacing: 4px;
+    margin: 4px 0;
+  }
+}

@@ -42,12 +42,24 @@ export class PokeapiService {
       shared.generation = res.generation;
       shared.item_attributes = res.item_attributes;
       shared.item_categories = res.item_categories;
-
+      
       shared.keys = {
         types: res.keys.types,
         move_damage_class: res.keys.move_damage_class,
         no_habitat: intersectionBy(res.pokemon, res.keys.no_habitat, 'id')
       };
+    });
+    
+    this.http.get('https://pokeapi.co/api/v2/move?offset=0&limit=746').pipe(
+      exhaustMap((e) => e['results'].map(c => this.http.get(c['url']))),
+      mergeMap((e: any) => e),
+      toArray()
+    ).subscribe((res) => {
+    
+      shared.updateAppInitializationSelection = 2;
+      
+      shared.moves = res;
+    
     });
   }
 
@@ -85,25 +97,14 @@ export class PokeapiService {
     ).subscribe(() => 0);
   }
 
-  get moves() {
-    
-    const id = this.shared.id;
+  moves(moves: any) {
 
-    return this.http.get(`https://pokeapi.co/api/v2/pokemon/${id}`).pipe(
-      exhaustMap((pokemon: any) => {
-        
-        const moves = pokemon.moves.map((move: any) => {
-          move.name = move.move.name;
-          return move;
-        });
+    moves = moves.map((move: any) => {
+      move.name = move.move.name;
+      return move;
+    });
 
-        return this.http.get('https://pokeapi.co/api/v2/move?offset=0&limit=746').pipe(
-          exhaustMap((e) => intersectionBy(e['results'], moves, 'name').map(c => this.http.get(c['url']))),
-          mergeMap((e: any) => e),
-          toArray(),
-        );
-      })
-    )
+    return intersectionBy(this.shared.moves, moves, 'name');
   }
 
   detailMoves(moves: any[]) {
@@ -111,6 +112,79 @@ export class PokeapiService {
       exhaustMap((e) => intersectionBy(e['results'], moves, 'name').map(c => this.http.get(c['url']))),
       mergeMap((e: any) => e),
       toArray(),
+    );
+  }
+
+  flatMove(res: any) {
+
+    const data: any = res;
+
+    data.contest_effect = this.addData(data.contest_effect);
+    data.contest_type = this.addData(data.contest_type);
+    data.damage_class = this.addData(data.damage_class);
+    data.generation = this.addData(data.generation);
+    data.super_contest_effect = this.addData(data.super_contest_effect);
+    data.target = this.addData(data.target);
+    data.meta.ailment = this.addData(data.meta.ailment);
+    data.meta.category = this.addData(data.meta.category);
+
+    let contest_effect, contest_type, damage_class, generation, super_contest_effect, target, ailment, category, machines;
+
+    if (res.contest_effect.hasOwnProperty('url')) {
+      contest_effect = this.http.get(res.contest_effect.url).pipe(map(e => ({ ...e, _contest_effect_: true }))); }
+    if (res.contest_type.hasOwnProperty('url')) {
+      contest_type = this.http.get(res.contest_type.url).pipe(map(e => ({ ...e, _contest_type_: true }))); }
+    if (res.damage_class.hasOwnProperty('url')) {
+      damage_class = this.http.get(res.damage_class.url).pipe(map(e => ({ ...e,  _damage_class_: true}))); }
+    if (res.generation.hasOwnProperty('url')) {
+      generation = this.http.get(res.generation.url).pipe(map(e => ({ ...e, _generation_: true }))); }
+    if (res.super_contest_effect.hasOwnProperty('url')) {
+      super_contest_effect = this.http.get(res.super_contest_effect.url).pipe(map(e => ({ ...e, _super_contest_effect_: true }))); }
+    if (res.target.hasOwnProperty('url')) {
+      target = this.http.get(res.target.url).pipe(map(e => ({ ...e, _target_: true }))); }
+    if (res.meta.ailment.hasOwnProperty('url')) {
+      ailment = this.http.get(res.meta.ailment.url).pipe(map(e => ({ ...e, _ailment_: true }))); }
+    if (res.meta.category.hasOwnProperty('url')) {
+      category = this.http.get(res.meta.category.url).pipe(map(e => ({ ...e, _category_: true }))); }
+
+    if (res.machines) {
+      machines = of(
+        res.machines.map((e: any) => {
+          return this.http.get(e['machine']['url']).pipe(
+            map((c) => {
+              e.machine.data = c;
+              return { ...e };
+            })
+          )
+        })
+      ).pipe(
+        exhaustMap((e: any) => e),
+        mergeMap((e: any) => e),
+        toArray()
+      );      
+    }
+
+    const toMerge = [ contest_effect, contest_type, damage_class, generation, 
+      super_contest_effect, target, machines, ailment, category ].filter(e => e);
+
+    return merge( ...toMerge ).pipe(
+      toArray(),
+      map((res: any[]) => {
+    
+        data.contest_effect.data = res.find(e => e._contest_effect_);
+        data.contest_type.data = res.find(e => e._contest_type_);
+        data.damage_class.data = res.find(e => e._damage_class_);
+        data.generation.data = res.find(e => e._generation_);
+        data.super_contest_effect.data = res.find(e => e._super_contest_effect_);
+        data.target.data = res.find(e => e._target_);
+        
+        data.meta.ailment.data = res.find(e => e._ailment_);
+        data.meta.category.data = res.find(e => e._category_);
+        
+        data.machines = res.find(e => e.length > 0);
+  
+        return data;
+      })
     );
   }
 
@@ -362,6 +436,14 @@ export class PokeapiService {
         return { first, second, third };
       })
     )
+  }
+
+  private addData(object: any) {
+    if (!object) {
+      return {};
+    } else {
+      return object;
+    }
   }
 
 

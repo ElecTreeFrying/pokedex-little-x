@@ -1,21 +1,104 @@
-<div class="close">
-  <button mat-icon-button (click)="ref.close(null)">
-    <mat-icon>close</mat-icon>
-  </button>
-</div>
 
 <div class="content">
   
-  <div class="entries">
-    <div data-simplebar>
-      <p *ngFor="let item of [0,0,0,0,0,0,0,0,0,0,0,0]">Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet maxime dolores ullam quia modi obcaecati numquam suscipit ad eligendi assumenda voluptas similique cumque nisi, tempora dignissimos quisquam optio. Accusantium, corporis?</p>
+  <div class="entries" data-simplebar>
+    <div class="card-header mat-elevation-z5">
+      <p>Pokemon entries</p>
+    </div>
+    <div class="card-container">
+      <div matRipple *ngFor="let entry of data | dialogDetails: 'entries'">
+        <mat-card>
+          <mat-card-content>
+            <img 
+              mat-card-image 
+              offset="300"
+              defaultImage="assets/images/berry.png" 
+              errorImage="assets/images/berry.png" 
+              [lazyLoad]="entry?.byte64 | dialogDetails: 'entry-image'" 
+              [alt]="entry?.name">
+          </mat-card-content>
+          <mat-card-content class="text-container">
+            <p>{{ entry?.name | dialogDetails: 'entry-name' }}</p>
+          </mat-card-content>
+        </mat-card>
+      </div>
     </div>
   </div>
   
-  <div class="details">
-    <div data-simplebar>
-      <p *ngFor="let item of [0,0,0,0,0,0,0,0,0,0,0,0]">Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet maxime dolores ullam quia modi obcaecati numquam suscipit ad eligendi assumenda voluptas similique cumque nisi, tempora dignissimos quisquam optio. Accusantium, corporis?</p>
+  <div class="information" data-simplebar>
+
+    <div class="close">
+      <button mat-icon-button (click)="ref.close(null)">
+        <mat-icon>close</mat-icon>
+      </button>
     </div>
+
+    <div class="heading">
+
+      <div class="text-head">
+        <p class="type">Ability: {{ data | dialogDetails: 'entries-header-chip' }}</p>
+      </div>
+
+      <div class="text-descriptions">
+        <p class="head"><strong>Effect:</strong></p>
+        <p class="description">{{ data | dialogDetails: 'text-effect-entry-effect' }}</p>
+
+        <p class="head short"><strong>Short effect:</strong></p>
+        <p class="description">{{ data | dialogDetails: 'text-effect-entry-short_effect' }}</p>
+      </div>
+
+    </div>
+  
+    <mat-divider></mat-divider>
+
+    <div class="details">
+
+      <div class="detail mat-elevation-z5">
+        <div class="key" (click)="section(0)" [matTooltip]="sections[0] ? 'Collapse' : 'Expand effect changes'" matTooltipClass="poke-tooltip">
+          <span>Effect changes</span>
+          <mat-icon *ngIf="!sections[0]">keyboard_arrow_down</mat-icon>
+          <mat-icon *ngIf="sections[0]">keyboard_arrow_up</mat-icon>
+        </div>
+        <div class="value" *ngIf="sections[0]">
+          <span *ngIf="(data | dialogDetails: 'ability-effect-changes').length === 0">
+            No changes available.
+          </span>
+          <div class="inner-detail mat-elevation-z3" *ngFor="let entries of data | dialogDetails: 'ability-effect-changes'">
+            <div class="inner-key">
+              <span>{{ entries?.label }}</span>
+            </div>
+            <div class="inner-value">
+              <span>{{ entries?.effect }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="detail mat-elevation-z5">
+        <div class="key" (click)="section(1)" [matTooltip]="sections[1] ? 'Collapse' : 'Expand description entries'" matTooltipClass="poke-tooltip">
+          <span>Description entries</span>
+          <mat-icon *ngIf="!sections[1]">keyboard_arrow_down</mat-icon>
+          <mat-icon *ngIf="sections[1]">keyboard_arrow_up</mat-icon>
+        </div>
+        <div class="value" *ngIf="sections[1]">
+            <div class="inner-detail mat-elevation-z3" *ngFor="let entries of data | dialogDetails: 'ability-text-entries'">
+              <div class="inner-key">
+                <span>{{ entries?.label }}</span>
+            </div>
+            <div class="inner-value">
+              <span>{{ entries?.effect }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div class="credits">
+        <p class="app">Pokédex Little</p>
+        <p class="developer">by ElecTreeFrying</p>
+      </div>
+
+    </div>
+
   </div>
   
 </div>

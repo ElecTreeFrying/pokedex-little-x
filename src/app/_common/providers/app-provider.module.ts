@@ -19,39 +19,36 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { LazyLoadImageModule } from 'ng-lazyload-image';
 
 import { AppInitializationComponentModule } from '../modules/app-initialization-component.module';
-import { DialogTypeComponentModule } from '../modules/dialog-type-component.module';
+import { DialogComponentModule } from '../modules/dialog-component.module';
 import { IdToImagePipeModule } from '../modules/id-to-image-pipe.module';
+import { PokemonDetailsPipeModule } from '../modules/pokemon-details-pipe.module';
+import { TypeColorPipeModule } from '../modules/type-color-pipe.module';
 
 import { DrawerComponent } from '../../_components/drawer/drawer.component';
 import { PokemonComponent } from '../../pokemon/pokemon.component';
 import { LoadingComponent } from '../../_components/loading/loading.component';
 
 import { NormalizePipe } from '../pipes/normalize.pipe';
-import { PokemonDetailsPipe } from '../pipes/pokemon-details.pipe';
-import { TypeColorPipe } from '../pipes/type-color.pipe';
 
 import { KeyboardDirective } from '../directives/keyboard.directive';
 
-import { pokemonDialogComponents, _pokemonDialogComponents } from '../services/component-selector.service';
+import { pokemonDialogComponents } from '../services/component-selector.service';
 
 
 @NgModule({
   declarations: [
-    DrawerComponent,
+    DrawerComponent,      // components
     PokemonComponent,
     LoadingComponent,
-    NormalizePipe,
-    PokemonDetailsPipe,
-    TypeColorPipe,
-    KeyboardDirective,
-    ..._pokemonDialogComponents
+    NormalizePipe,        // pipes
+    KeyboardDirective,    // directives
   ],
   entryComponents: [
     ...pokemonDialogComponents
   ],
   imports: [
-    CommonModule,
-    MatRippleModule,
+    CommonModule,         // angular
+    MatRippleModule,      // material modules
     MatDividerModule,
     MatExpansionModule,
     MatListModule,
@@ -61,29 +58,30 @@ import { pokemonDialogComponents, _pokemonDialogComponents } from '../services/c
     MatTooltipModule,
     MatChipsModule,
     MatDialogModule,
-    IdToImagePipeModule,
-    LazyLoadImageModule,
-
-    DialogTypeComponentModule,
+    DialogComponentModule,// import components
+    IdToImagePipeModule,  // import declarations
+    PokemonDetailsPipeModule,
+    TypeColorPipeModule,
+    LazyLoadImageModule   // third party modules
   ],
   exports: [
-    SnotifyModule,
-    ScrollingModule,
+    ScrollingModule,      // material modules
     OverlayModule,
     MatSidenavModule,
     MatToolbarModule,
     MatButtonModule,
     MatIconModule,
     MatProgressSpinnerModule,
-    AppInitializationComponentModule,
-    DialogTypeComponentModule,
+    AppInitializationComponentModule,   // export components
+    DialogComponentModule,              // export declarations
+    SnotifyModule,         // third party modules
+    
 
-    DrawerComponent,
+    DrawerComponent,       // components
     PokemonComponent,
     LoadingComponent,
-    PokemonDetailsPipe,
-    NormalizePipe,
-    KeyboardDirective
+    NormalizePipe,         // pipes
+    KeyboardDirective      // directives
   ],
   providers: [
     SnotifyService,

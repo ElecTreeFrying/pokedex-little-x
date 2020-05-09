@@ -14,10 +14,6 @@ export const pokemonDialogComponents = [
   SelectedPokemonComponent, TypeComponent, AbilityComponent, ColorComponent, EggGroupsComponent, GrowthRateComponent, HabitatComponent, MoveComponent, ShapeComponent
 ];
 
-export const _pokemonDialogComponents = [
-  SelectedPokemonComponent, AbilityComponent, ColorComponent, EggGroupsComponent, GrowthRateComponent, HabitatComponent, MoveComponent, ShapeComponent
-];
-
 
 @Injectable({
   providedIn: 'root'

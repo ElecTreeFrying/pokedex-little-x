@@ -22,6 +22,14 @@ export class PokemonDetailsPipe implements PipeTransform {
       return value.species.data.names.find(e => e['language']['name'] === 'en').name;
     }
 
+    if (key === 'species-name-dialog') {
+      if (value.name.length < 6) {
+        return value.name.split('-').map(e => capitalize(e)).join('-');
+      } else {
+        return value.name.split('-').map(e => capitalize(e)).join(' ');
+      }
+    }
+
     else if (key === 'species-genus') {
       return value.species.data.genera.find(e => e['language']['name'] === 'en').genus;
     }
@@ -210,11 +218,11 @@ export class PokemonDetailsPipe implements PipeTransform {
     else if (key === 'moves') {
 
       if (value.filter(e => e.hasOwnProperty('color')).length > 0) {
-        return value; 
+        return value;
       }
-      
+
       return value
-        .map((move) => { 
+        .map((move: any) => { 
 
           const id = +move.type.url.split('/').reverse()[1]
           
@@ -225,7 +233,7 @@ export class PokemonDetailsPipe implements PipeTransform {
 
           return move; 
         })
-        .map((move, i) => ({ ...object[i], data: move, name: move.name, color: move.color }));
+        .map((move: any, i: number) => ({ ...object[i], data: move, name: move.name, color: move.color }));
     }
 
     // Information filters

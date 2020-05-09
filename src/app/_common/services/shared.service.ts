@@ -47,6 +47,10 @@ export class SharedService {
   get generation() { return this._generation; }
   set generation(generation: any) { this._generation = generation; }
 
+  private _moves: any[];
+  get moves() { return this._moves; }
+  set moves(moves: any) { this._moves = moves; }
+
   private _keys: Key;
   get keys() { return this._keys; }
   set keys(keys: Key) { this._keys = keys; }
@@ -83,7 +87,6 @@ export class SharedService {
 
   get sections() {
     return [ true, true, false, false, true, false, false, true, false, true ];
-    // return [ false, false, false, false, false, false, false, false, false, false ];
   }
 
   get subSections() {
@@ -94,8 +97,14 @@ export class SharedService {
     this.routeChangeSource.next(data);
   }
 
+  appInitializationCounter: number = 0;
   set updateAppInitializationSelection(data: number) {
-    this.appInitializationSource.next(data);
+    if (data === 2) {
+      this.appInitializationCounter++;
+      this.appInitializationCounter === 3 ? this.appInitializationSource.next(data) : 0;
+    } else {
+      this.appInitializationSource.next(data);
+    }
   }
 
   set updateLoadMoreSelection(data: number) {
