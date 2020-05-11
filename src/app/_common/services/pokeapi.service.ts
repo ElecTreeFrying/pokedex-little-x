@@ -6,6 +6,8 @@ import { intersectionBy, sortBy } from 'lodash';
 
 import { SharedService } from './shared.service';
 
+import { environment } from '../../../environments/environment';
+
 
 @Injectable({
   providedIn: 'root'
@@ -27,34 +29,35 @@ export class PokeapiService {
     shared.defaultLength = 50;
     shared.index = { value: 0, count: 0 };
     
-    this.http.get('assets/api.json').subscribe((res: any) => {
+    this.loadAPI();
+    this.loadMoves();
+  }
 
-      console.log('API loaded!');
+  private loadAPI() {
+    this.http.get(environment.data.api).subscribe((res: any) => {
 
-      shared.updateAppInitializationSelection = 2;
+      this.shared.updateAppInitializationSelection = 2;
 
-      shared.pokemon = res.pokemon;
-      shared.pokedex = res.pokedex;
-      shared.generation = res.generation;
-      shared.item_attributes = res.item_attributes;
-      shared.item_categories = res.item_categories;
+      this.shared.pokemon = res.pokemon;
+      this.shared.pokedex = res.pokedex;
+      this.shared.generation = res.generation;
+      this.shared.item_attributes = res.item_attributes;
+      this.shared.item_categories = res.item_categories;
       
-      shared.keys = {
+      this.shared.keys = {
         types: res.keys.types,
         move_damage_class: res.keys.move_damage_class,
         no_habitat: intersectionBy(res.pokemon, res.keys.no_habitat, 'id')
       };
     });
+  }
+
+  private loadMoves() {
+    this.http.get(environment.data.moves).subscribe((res) => {
     
-    this.http.get('https://pokeapi.co/api/v2/move?offset=0&limit=746').pipe(
-      exhaustMap((e) => e['results'].map(c => this.http.get(c['url']))),
-      mergeMap((e: any) => e),
-      toArray()
-    ).subscribe((res) => {
-    
-      shared.updateAppInitializationSelection = 2;
+      this.shared.updateAppInitializationSelection = 2;
       
-      shared.moves = res;
+      this.shared.moves = res;
     
     });
   }

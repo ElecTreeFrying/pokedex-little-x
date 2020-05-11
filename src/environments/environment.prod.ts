@@ -9,5 +9,9 @@ export const environment = {
     messagingSenderId: "695077639923",
     appId: "1:695077639923:web:5d512d2739e432958b4986",
     measurementId: "G-R23GN3SHHX"
+  },
+  data: {
+    api: 'https://dl.dropboxusercontent.com/s/is00pz4v1ayz2nu/api.json?dl=0',
+    moves: 'https://dl.dropbox.com/s/ienyhx8owprhprq/moves.json?dl=0'
   }
 };
