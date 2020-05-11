@@ -183,6 +183,30 @@
     }
   }
 
+  .stat {
+    display: flex;
+    align-items: center;
+    border: 2px solid white;
+    padding: 0 5px;
+    position: relative;
+
+    p {
+      width: 158px;
+      margin: 8px 0;
+    }
+
+    .mat-progress-bar {
+      flex: 1;
+      height: 15px;
+    }
+
+    &:hover {
+      border: 2px solid orange;
+      border-radius: 4px;
+      transition: 0.4s;
+    }
+  }
+
   .evolution {
     display: flex;
     flex-flow: row wrap;

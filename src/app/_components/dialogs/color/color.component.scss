@@ -61,6 +61,17 @@
     margin: 8px;
     cursor: pointer;
     
+    .mat-icon {
+      color: white;
+      font-size: 5em;
+      transform: translate(23.75px, 30px);
+    }
+
+    .load-more-icon {
+      height: 150px;
+      margin: 0;
+    }
+    
     .mat-card {
       background-color: #4E1338;
       height: 222px;

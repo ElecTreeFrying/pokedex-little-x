@@ -11,7 +11,10 @@ import { SharedService } from '../../../_common/services/shared.service';
 })
 export class EggGroupsComponent implements OnInit, OnDestroy {
 
-  double: boolean
+  double: boolean;
+  num1: number = 20;
+  num2: number = 20;
+
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,

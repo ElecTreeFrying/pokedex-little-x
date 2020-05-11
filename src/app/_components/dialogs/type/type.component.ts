@@ -14,6 +14,7 @@ import { SharedService } from '../../../_common/services/shared.service';
 export class TypeComponent implements OnInit, OnDestroy {
 
   moves: any;
+  num: number;
   sections: any[];
   subSections: any[];
 
@@ -29,6 +30,7 @@ export class TypeComponent implements OnInit, OnDestroy {
 
   private initial() {
     this.moves = {};
+    this.num = 20;
     this.sections = [ true, true ];
     this.subSections = [ false, false, false ];
     this.subscriptions = [];
@@ -38,13 +40,10 @@ export class TypeComponent implements OnInit, OnDestroy {
 
     this.initial();
 
-    this.subscriptions.push(this.api.detailMoves(this.data.data.moves).subscribe((res) => {
-
-      this.moves.physical = res.filter(e => e['damage_class']['name'] === 'physical');
-      this.moves.special = res.filter(e => e['damage_class']['name'] === 'special');
-      this.moves.status = res.filter(e => e['damage_class']['name'] === 'status');
-
-    }));
+    const res = this.api.detailMoves(this.data.data.moves);
+    this.moves.physical = res.filter(e => e['damage_class']['name'] === 'physical');
+    this.moves.special = res.filter(e => e['damage_class']['name'] === 'special');
+    this.moves.status = res.filter(e => e['damage_class']['name'] === 'status');
   }
 
   ngOnDestroy() {

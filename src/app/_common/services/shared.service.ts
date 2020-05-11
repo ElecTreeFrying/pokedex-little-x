@@ -2,10 +2,13 @@ import { Injectable } from '@angular/core';
 
 import { BehaviorSubject, Observable } from 'rxjs';
 
+
 interface Key { 
   types: any[];
   move_damage_class: any[];
   no_habitat: any[];
+  natures?: any[];
+  characteristics?: any[];
 }
 
 @Injectable({
@@ -101,7 +104,7 @@ export class SharedService {
   set updateAppInitializationSelection(data: number) {
     if (data === 2) {
       this.appInitializationCounter++;
-      this.appInitializationCounter === 3 ? this.appInitializationSource.next(data) : 0;
+      this.appInitializationCounter === 2 ? this.appInitializationSource.next(data) : 0;
     } else {
       this.appInitializationSource.next(data);
     }
@@ -126,13 +129,25 @@ export class SharedService {
 }
 
 export const home = [
-  { name: 'Pokemon', description: 'Pokemon' },
-  { name: 'Games', description: 'Pokemon entries in each Pokedex, Generation & Version groups.' },
-  { name: 'Items', description: 'Item listings per Item Attribute and Category.' },
-  { name: 'Berries', description: 'Berries' },
-  { name: 'Moves', description: 'Moves' },
-  { name: 'Machine', description: 'Machine' },
-  { name: 'Location', description: 'Location' }
+  { 
+    name: 'Pokémon ', 
+    description: 'Explore pokémon entries per Pokedex, Generation & Version groups, pokémon details and many more.'
+  }, { 
+    name: 'Items', 
+    description: 'Item listings per Item Attribute and Category.' 
+  }, { 
+    name: 'Berries', 
+    description: 'Berries' 
+  }, { 
+    name: 'Moves', 
+    description: 'Moves' 
+  }, { 
+    name: 'Machine', 
+    description: 'Machine' 
+  }, { 
+    name: 'Location', 
+    description: 'Location' 
+  }
 ];
 
 export const type = [
@@ -156,7 +171,7 @@ export const type = [
   { key: 18, name: "Fairy", color: { default: "#EE99AC", dark: "#9B6470", light: "#F4BDC9" } },
   { key: 10001, name: "Unknown", color: { default: undefined, dark: undefined, light: undefined } },
   { key: 10002, name: "Shadow", color: { default: undefined, dark: undefined, light: undefined } }
-]
+];
 
 export const pokedex = [
   { key: 1, name: 'National Pokedex' }, 

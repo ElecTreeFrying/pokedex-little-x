@@ -11,6 +11,8 @@ import { SharedService } from '../../../_common/services/shared.service';
 })
 export class ColorComponent implements OnInit, OnDestroy {
 
+  num: number = 20;
+
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public ref: MatDialogRef<ColorComponent>,

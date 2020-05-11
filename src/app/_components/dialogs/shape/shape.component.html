@@ -6,7 +6,7 @@
       <p>Pokemon entries</p>
     </div>
     <div class="card-container">
-      <div matRipple *ngFor="let entry of data | dialogDetails: 'entries'">
+      <div matRipple *ngFor="let entry of data | dialogDetails: 'entries' | dialogDetails: 'slice': num">
         <mat-card>
           <mat-card-content>
             <img 
@@ -19,6 +19,16 @@
           </mat-card-content>
           <mat-card-content class="text-container">
             <p>{{ entry?.name | dialogDetails: 'entry-name' }}</p>
+          </mat-card-content>
+        </mat-card>
+      </div>
+      <div matRipple *ngIf="num !== 0" (click)="num = 0">
+        <mat-card>
+          <mat-card-content class="load-more-icon">
+            <mat-icon>add</mat-icon>
+          </mat-card-content>
+          <mat-card-content class="text-container">
+            <p>Load all</p>
           </mat-card-content>
         </mat-card>
       </div>

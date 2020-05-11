@@ -27,7 +27,7 @@ export class PokemonComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[];
 
   constructor(
-    private cd: ChangeDetectorRef,
+    public cd: ChangeDetectorRef,
     private dialog: MatDialog,
     private api: PokeapiService,
     public shared: SharedService,
@@ -51,11 +51,11 @@ export class PokemonComponent implements OnInit, OnDestroy {
       
       this.pokemon = pokemon;
       
-      const res = this.api.moves(pokemon.moves);
+      const moves = this.api.moves(pokemon.moves);
       
-      this.moves.physical = res.filter(e => e['damage_class']['name'] === 'physical');
-      this.moves.special = res.filter(e => e['damage_class']['name'] === 'special');
-      this.moves.status = res.filter(e => e['damage_class']['name'] === 'status');
+      this.moves.physical = moves.filter(e => e['damage_class']['name'] === 'physical');
+      this.moves.special = moves.filter(e => e['damage_class']['name'] === 'special');
+      this.moves.status = moves.filter(e => e['damage_class']['name'] === 'status');
       
       this.displayToView();
 

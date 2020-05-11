@@ -66,6 +66,7 @@ export class SelectedPokemonComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.shared.id = this.oldID;
+    this.shared.dialogIsOpened = false;
     this.subscriptions.forEach((subscription: Subscription) => {
       subscription.unsubscribe();
     });

@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild, ViewContainerRef, ElementRef, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, ViewContainerRef, ElementRef, ChangeDetectorRef, HostListener } from '@angular/core';
 import { MatToolbar } from '@angular/material/toolbar';
 import { MatSidenav } from '@angular/material/sidenav';
 import { 
@@ -46,24 +46,6 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.isShowDetails = false;
     this.sideDrawerState = { drawer: true, details: false };
     this.toolbarHeight = 0;
-  }
-
-  sidenavToggle(event: boolean) {
-
-    this.shared.id = undefined;
-    const drawer = this.sideDrawerState.drawer;
-
-    if (event) {
-      this.drawer.toggle();
-      this.details.close();
-      this.sideDrawerState = { drawer: drawer ? false : true, details: false };
-    } else {
-      this.drawer.open();
-      this.details.close();
-      this.sideDrawerState = { drawer: true, details: false };
-    }
-
-    this.cd.detectChanges();
   }
 
   pageListeners() {
@@ -152,6 +134,24 @@ export class AppComponent implements OnInit, AfterViewInit {
     });
   }
 
+  sidenavToggle(event: boolean) {
+
+    this.shared.id = undefined;
+    const drawer = this.sideDrawerState.drawer;
+
+    if (event) {
+      this.drawer.toggle();
+      this.details.close();
+      this.sideDrawerState = { drawer: drawer ? false : true, details: false };
+    } else {
+      this.drawer.open();
+      this.details.close();
+      this.sideDrawerState = { drawer: true, details: false };
+    }
+
+    this.cd.detectChanges();
+  }
+
   set attachOverlay(option: boolean) {
     switch(option) {
       case true: {
@@ -195,6 +195,16 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   private get _toolbarHeight() {
     return this.toolbar._elementRef.nativeElement.clientHeight;
+  }
+
+  @HostListener('window:keyup', ['$event'])
+  private up(event: KeyboardEvent) {
+
+    if (event.code === 'Escape') {
+      // this.shared.id = undefined;
+      // console.log('ESC', this.shared.id);
+      // this.sidenavToggle(false);
+    }
   }
 
 }

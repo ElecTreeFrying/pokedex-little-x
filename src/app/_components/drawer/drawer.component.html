@@ -1,59 +1,10 @@
 
 <mat-accordion displayMode="flat">
-  
-  <!-- pokemon -->
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title><span>Pokemon</span></mat-panel-title>
-    </mat-expansion-panel-header>
-    <ng-template matExpansionPanelContent>
-      <mat-accordion displayMode="flat">
-        <mat-expansion-panel class="inner">
-          <mat-expansion-panel-header>
-            <mat-panel-title><span>Type</span></mat-panel-title>
-          </mat-expansion-panel-header>
-          <ng-template matExpansionPanelContent>
-      
-            <mat-action-list>
-              <button 
-                mat-list-item 
-                *ngFor="let item of pokedex"
-                (click)="go(item, 'pokedex')">
-                <mat-icon>arrow_right</mat-icon>
-                <span class="nav">{{ item?.name }}</span>
-              </button>
-            </mat-action-list>
-      
-          </ng-template>
-        </mat-expansion-panel>
-        <mat-expansion-panel class="inner">
-          <mat-expansion-panel-header>
-            <mat-panel-title><span>Lorem ipsum</span></mat-panel-title>
-          </mat-expansion-panel-header>
-          <ng-template matExpansionPanelContent>
-      
-            <!-- include here -->
-      
-          </ng-template>
-        </mat-expansion-panel>
-        <mat-expansion-panel class="inner last">
-          <mat-expansion-panel-header>
-            <mat-panel-title><span>Lorem ipsum</span></mat-panel-title>
-          </mat-expansion-panel-header>
-          <ng-template matExpansionPanelContent>
-      
-            <!-- include here -->
-      
-          </ng-template>
-        </mat-expansion-panel>
-      </mat-accordion>
-    </ng-template>
-  </mat-expansion-panel>
 
   <!-- games -->
-  <mat-expansion-panel>
+  <mat-expansion-panel expanded>
     <mat-expansion-panel-header>
-      <mat-panel-title><span>Games</span></mat-panel-title>
+      <mat-panel-title><span>Pokémon</span></mat-panel-title>
     </mat-expansion-panel-header>
     <ng-template matExpansionPanelContent>
       <mat-accordion displayMode="flat">
@@ -254,50 +205,32 @@
     </ng-template>
   </mat-expansion-panel>
 
-  <!-- location -->
+  <!-- locations -->
   <mat-expansion-panel>
     <mat-expansion-panel-header>
-      <mat-panel-title><span>Location</span></mat-panel-title>
+      <mat-panel-title><span>Locations</span></mat-panel-title>
     </mat-expansion-panel-header>
     <ng-template matExpansionPanelContent>
       <mat-accordion displayMode="flat">
-        <mat-expansion-panel class="inner">
+        <mat-expansion-panel class="inner" hideToggle #location2 (click)="location2.close()">
           <mat-expansion-panel-header>
-            <mat-panel-title><span>Type</span></mat-panel-title>
+            <mat-panel-title><span>Regions</span></mat-panel-title>
           </mat-expansion-panel-header>
-          <ng-template matExpansionPanelContent>
-      
-            <mat-action-list>
-              <button 
-                mat-list-item 
-                *ngFor="let item of pokedex"
-                (click)="go(item, 'pokedex')">
-                <mat-icon>arrow_right</mat-icon>
-                <span class="nav">{{ item?.name }}</span>
-              </button>
-            </mat-action-list>
-      
-          </ng-template>
         </mat-expansion-panel>
-        <mat-expansion-panel class="inner">
+        <mat-expansion-panel class="inner" hideToggle #location1 (click)="location1.close()">
           <mat-expansion-panel-header>
-            <mat-panel-title><span>Lorem ipsum</span></mat-panel-title>
+            <mat-panel-title><span>Locations</span></mat-panel-title>
           </mat-expansion-panel-header>
-          <ng-template matExpansionPanelContent>
-      
-            <!-- include here -->
-      
-          </ng-template>
         </mat-expansion-panel>
-        <mat-expansion-panel class="inner last">
+        <mat-expansion-panel class="inner" hideToggle #location3 (click)="location3.close()">
           <mat-expansion-panel-header>
-            <mat-panel-title><span>Lorem ipsum</span></mat-panel-title>
+            <mat-panel-title><span>Location areas</span></mat-panel-title>
           </mat-expansion-panel-header>
-          <ng-template matExpansionPanelContent>
-      
-            <!-- include here -->
-      
-          </ng-template>
+        </mat-expansion-panel>
+        <mat-expansion-panel class="inner last" hideToggle #location4 (click)="location4.close()">
+          <mat-expansion-panel-header>
+            <mat-panel-title><span>Pal park areas</span></mat-panel-title>
+          </mat-expansion-panel-header>
         </mat-expansion-panel>
       </mat-accordion>
     </ng-template>
