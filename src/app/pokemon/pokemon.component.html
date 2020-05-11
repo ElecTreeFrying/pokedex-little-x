@@ -187,12 +187,26 @@
     </div>
 
     <div class="detail mat-elevation-z5">
-      <div class="key" (click)="section(2)" [matTooltip]="sections[2] ? 'Collapse' : 'Expand abilities'" matTooltipClass="poke-tooltip">
-        <span>Abilities</span>
+      <div class="key" (click)="section(2)" [matTooltip]="sections[2] ? 'Collapse' : 'Expand description'" matTooltipClass="poke-tooltip">
+        <span>Stats</span>
         <mat-icon *ngIf="!sections[2]">keyboard_arrow_down</mat-icon>
         <mat-icon *ngIf="sections[2]">keyboard_arrow_up</mat-icon>
       </div>
-      <div class="value" *ngIf="sections[2]">
+      <div class="value stats" *ngIf="sections[2]">
+        <div matRipple class="stat" *ngFor="let stat of pokemon | pokemonDetails: 'stats'" (click)="showDetails(stat, 'stat')" matTooltip="show more details" matTooltipClass="poke-tooltip">
+          <p>{{ stat?.name }}:</p>
+          <mat-progress-bar [value]="stat?.value" [matTooltip]="stat?.base_stat" matTooltipClass="poke-tooltip"></mat-progress-bar>
+        </div>
+      </div>
+    </div>
+
+    <div class="detail mat-elevation-z5">
+      <div class="key" (click)="section(3)" [matTooltip]="sections[3] ? 'Collapse' : 'Expand abilities'" matTooltipClass="poke-tooltip">
+        <span>Abilities</span>
+        <mat-icon *ngIf="!sections[3]">keyboard_arrow_down</mat-icon>
+        <mat-icon *ngIf="sections[3]">keyboard_arrow_up</mat-icon>
+      </div>
+      <div class="value" *ngIf="sections[3]">
         <span class="description">Abilities provide passive effects for Pokémon in battle or in the over world. Pokémon have multiple possible abilities but can have only one ability at a time.</span>
         <mat-divider></mat-divider>
         <div matRipple matTooltip="show more details" matTooltipClass="poke-tooltip" class="inner-detail mat-elevation-z3" *ngFor="let ability of pokemon?.abilities; let isLast = last" [ngStyle]="{ 'margin-bottom': isLast ? '8px' : '16px', 'cursor': 'pointer' }" (click)="showDetails(ability, 'ability')">

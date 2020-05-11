@@ -86,7 +86,7 @@ export class SharedService {
   }
 
   get sections() {
-    return [ true, true, false, false, true, false, false, true, false, true ];
+    return [ true, true, true, false, false, true, false, false, true, false, true ];
   }
 
   get subSections() {
@@ -293,4 +293,13 @@ export const categories = [
   { key: 44, name: 'Mega stones' },
   { key: 45, name: 'Memories' },
   { key: 46, name: 'Z - crystals' }
-]
+];
+
+export const stat = [
+  { id: 1, name: 'hp', max: 255 },
+  { id: 2, name: 'attack', max: 190 },
+  { id: 3, name: 'defense', max: 230 },
+  { id: 4, name: 'special-attack', max: 194 },
+  { id: 5, name: 'special-defense', max: 230 },
+  { id: 6, name: 'speed', max: 180 }
+];

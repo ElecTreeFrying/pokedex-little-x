@@ -26,6 +26,7 @@ import { EggGroupsComponent } from '../../_components/dialogs/egg-groups/egg-gro
 import { AbilityComponent } from '../../_components/dialogs/ability/ability.component';
 import { MoveComponent } from '../../_components/dialogs/move/move.component';
 import { SelectedPokemonComponent } from '../../_components/dialogs/selected-pokemon/selected-pokemon.component';
+import { StatComponent } from '../../_components/dialogs/stat/stat.component';
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import { SelectedPokemonComponent } from '../../_components/dialogs/selected-pok
     EggGroupsComponent,
     AbilityComponent,
     MoveComponent,
-    SelectedPokemonComponent
+    SelectedPokemonComponent,
+    StatComponent
   ],
   imports: [
     CommonModule,
@@ -67,7 +69,8 @@ import { SelectedPokemonComponent } from '../../_components/dialogs/selected-pok
     EggGroupsComponent,
     AbilityComponent,
     MoveComponent,
-    SelectedPokemonComponent
+    SelectedPokemonComponent,
+    StatComponent
   ]
 })
 export class DialogComponentModule { }

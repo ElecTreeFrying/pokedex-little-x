@@ -13,7 +13,11 @@ export class DialogDetailsPipe implements PipeTransform {
     private shared: SharedService
   ) {}
 
-  transform(value: any, type: string): any {
+  transform(value: any, type: string, object?: any): any {
+
+    if (type === 'stat-name') {
+      return capitalize(value.data.name.split('-').join(' '));
+    }
 
     if (type === 'move-damage-class-name') {
       return capitalize(value.data.move_damage_class.name);
@@ -71,6 +75,11 @@ export class DialogDetailsPipe implements PipeTransform {
         });
       }
       return intersectionBy(this.shared.pokemon, value, 'id');
+    }
+
+    else if (type === 'slice') {
+      if (object === 0) return value;
+      return value.slice(0, object);
     }
 
     else if (type.includes('entries-egg-group-')) {
@@ -156,6 +165,34 @@ export class DialogDetailsPipe implements PipeTransform {
         data.effect = res.flavor_text;
         return data;
       });
+    }
+
+    else if (type.includes('stat-affecting')) {
+      const $ = type.replace('stat-', '').split('-');
+
+      if (type.includes('moves')) {
+        return value.data[$[0]][$[1]].map((move: any) => {
+          const id = +move.move.type.url.split('/').reverse()[1];
+          move.color = TypeShared.find(e => e.key === id).color.default
+          return move;
+        });
+      }
+
+      return value.data[$[0]][$[1]];
+    }
+
+    else if (type === 'stat-move-name') {
+      return value.split('-').join(' ');
+    }
+
+    else if (type === 'stat-move-change') {
+      return +value > 0 ? `+${value}` : value;
+    }
+
+    else if (type === 'stat-characteristics') {
+      return value.data.characteristics.map((characteristic: any) => {
+        return characteristic.data.descriptions.find(e => e.language.name === 'en').description;
+      })
     }
 
     else if (type === 'damage-class-name') {

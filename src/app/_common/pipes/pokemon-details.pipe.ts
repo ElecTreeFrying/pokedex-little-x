@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { capitalize, sortBy, unionBy } from 'lodash';
-import { version, pokedex, type } from '../services/shared.service';
+import { version, pokedex, type, stat } from '../services/shared.service';
 
 import { SharedService } from '../services/shared.service';
 
@@ -89,6 +89,24 @@ export class PokemonDetailsPipe implements PipeTransform {
         .map(e => e['flavor_text'])[0].split('\n').join(' ');
     }
 
+    else if (key === 'stats') {
+
+      if (value.stats.filter(e => e.hasOwnProperty('value')).length > 0) {
+        return value.stats[0].name === 'Hp' ? value.stats : value.stats.reverse();
+      }
+
+      return value.stats.map((_stat: any) => {
+        const id = +_stat.stat.url.split('/').reverse()[1];
+        const min = +_stat.base_stat;
+        const max = stat.find(e => e.id === id).max;
+        const value = +((min/max)*100).toFixed(0);
+        _stat.name = capitalize(_stat.stat.name.split('-').join(' '));
+        _stat.value = value;
+        _stat.base_stat = `Base stat: ${min} pts.`;
+        return _stat;
+      }).reverse();
+    }
+
     else if (key === 'ability-name') {
       return value.names.find(e => e['language']['name'] === 'en').name;
     }
@@ -161,9 +179,12 @@ export class PokemonDetailsPipe implements PipeTransform {
     }
 
     else if (key === 'species-variation-sprite') {
-      if (value.id < 10090) {
+      if (value.id <= 807) {
+        const url = 'https://raw.githubusercontent.com/ElecTreeFrying/assets/master/pokemon';
+        return `${url}/${value.id}.png`;
+      } else if (value.id <= 10090 && value.id > 807) {
         return value.sprites.front_default;
-      } else {
+      } else if (value.id >= 10091) {
         const id = +value.species.url.split('/').reverse()[1];
         const name = value.name.split('-').slice(1).join('-')
         const url = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon';

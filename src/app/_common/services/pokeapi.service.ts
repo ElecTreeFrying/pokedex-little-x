@@ -27,14 +27,10 @@ export class PokeapiService {
     shared.defaultLength = 50;
     shared.index = { value: 0, count: 0 };
     
-    if (sessionStorage.getItem('entries')) {
-      setTimeout(() => {
-        shared.updateAppInitializationSelection = 2;      
-      }, 1000);
-    }
-
     this.http.get('assets/api.json').subscribe((res: any) => {
-      
+
+      console.log('API loaded!');
+
       shared.updateAppInitializationSelection = 2;
 
       shared.pokemon = res.pokemon;
@@ -67,25 +63,30 @@ export class PokeapiService {
     this.http.get('https://pokeapi.co/api/v2/pokemon?offset=0&limit=964').pipe(
       exhaustMap(e => e['results'].map(c => this.http.get(c['url']))),
       mergeMap((e: any) => e),
-      mergeMap((e) => {
+      // mergeMap((e) => {
 
-        return of(e).pipe(
-          exhaustMap((pokemon: any) => {
-            return this.http.get(e['species']['url']).pipe(
-              map((species) => {
-                pokemon['species']['data'] = species;
-                return { ...pokemon }
-              })
-            );
-          })
-        );
+      //   return of(e).pipe(
+      //     exhaustMap((pokemon: any) => {
+      //       return this.http.get(e['species']['url']).pipe(
+      //         map((species) => {
+      //           pokemon['species']['data'] = species;
+      //           return { ...pokemon }
+      //         })
+      //       );
+      //     })
+      //   );
 
-      }),
+      // }),
       toArray(),
+      
+      map((e: any) => {
+        return e.map(c => c.stats.find(c => c.stat.name === 'speed'));
+      }),
+
       map((e) => {
         console.log(e);
       })
-    );
+    ).subscribe(() => 0);
 
     this.http.get('https://pokeapi.co/api/v2/move-damage-class/').pipe(
       exhaustMap(e => e['results'].map(c => this.http.get(c['url']))),
@@ -94,7 +95,7 @@ export class PokeapiService {
       map((e) => {
         console.log(e);
       })
-    ).subscribe(() => 0);
+    );
   }
 
   moves(moves: any) {
@@ -108,11 +109,7 @@ export class PokeapiService {
   }
 
   detailMoves(moves: any[]) {
-    return this.http.get('https://pokeapi.co/api/v2/move?offset=0&limit=746').pipe(
-      exhaustMap((e) => intersectionBy(e['results'], moves, 'name').map(c => this.http.get(c['url']))),
-      mergeMap((e: any) => e),
-      toArray(),
-    );
+    return intersectionBy(this.shared.moves, moves, 'name');
   }
 
   flatMove(res: any) {
@@ -184,6 +181,96 @@ export class PokeapiService {
         data.machines = res.find(e => e.length > 0);
   
         return data;
+      })
+    );
+  }
+
+  loadNature() {
+  }
+  
+  load_natures_characteristics() {
+
+    const characteristic = this.http.get('https://pokeapi.co/api/v2/characteristic/?offset=0&limit=30').pipe(
+      exhaustMap(e => e['results'].map(c => this.http.get(c.url))),
+      mergeMap((e: any) => e),
+      toArray()
+    );
+    
+    const nature = this.http.get('https://pokeapi.co/api/v2/nature?offset=0&limit=25').pipe(
+      exhaustMap(e => e['results'].map(c => this.http.get(c.url))),
+      mergeMap((e: any) => e),
+      toArray()
+    );
+    
+    return merge(nature, characteristic)
+      .pipe(
+        toArray(),
+        map((res) => {
+          const characteristic = res.find(e => e.length === 30);
+          const nature = res.find(e => e.length === 25);
+          this.shared.keys.characteristics = characteristic;
+          this.shared.keys.natures = nature;
+        })
+      );
+  }
+
+  flatStat(stat: any) {
+
+    return this.http.get(stat.stat.url).pipe(
+      map((res: any) => {
+
+        if (!res.move_damage_class) {
+          res.move_damage_class = {};
+        }
+
+        res.move_damage_class.data = this.shared.keys.move_damage_class.find(e => 
+          e.name === res.move_damage_class.name
+        );
+        
+        let affecting_moves_increase = res.affecting_moves.increase.map(e => e.move);
+        affecting_moves_increase = intersectionBy(this.shared.moves, affecting_moves_increase, 'name')
+          .map((move: any, i: number) => {
+            const data: any = res.affecting_moves.increase[i];
+            data.move = move;
+            return data;
+          });
+
+        let affecting_moves_decrease = res.affecting_moves.decrease.map(e => e.move);
+        affecting_moves_decrease = intersectionBy(this.shared.moves, affecting_moves_decrease, 'name')
+          .map((move: any, i: number) => {
+            const data: any = res.affecting_moves.decrease[i];
+            data.move = move;
+            return data;
+          });
+
+        let affecting_natures_increase = res.affecting_natures.increase;
+        affecting_natures_increase = intersectionBy(this.shared.keys.natures, affecting_natures_increase, 'name')
+          .map((nature: any, i: number) => {
+            const data: any = res.affecting_natures.increase[i];
+            data.data = nature;
+            return data;
+          });
+
+        let affecting_natures_decrease = res.affecting_natures.decrease;
+        affecting_natures_decrease = intersectionBy(this.shared.keys.natures, affecting_natures_decrease, 'name')
+          .map((nature: any, i: number) => {
+            const data: any = res.affecting_natures.decrease[i];
+            data.data = nature;
+            return data;
+          });
+
+        let characteristics = res.characteristics.map((characteristic: any) => {
+          characteristic.id = +characteristic.url.split('/').reverse()[1];
+          return characteristic;
+        });
+        characteristics = intersectionBy(this.shared.keys.characteristics, characteristics, 'id')
+          .map((characteristic: any, i: number) => {
+            const data: any = res.characteristics.find(e => e.id === characteristic.id);
+            data.data = characteristic;
+            return data;
+          });
+
+        return res;
       })
     );
   }

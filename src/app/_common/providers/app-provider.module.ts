@@ -16,6 +16,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { LazyLoadImageModule } from 'ng-lazyload-image';
 
 import { AppInitializationComponentModule } from '../modules/app-initialization-component.module';
@@ -58,6 +59,7 @@ import { pokemonDialogComponents } from '../services/component-selector.service'
     MatTooltipModule,
     MatChipsModule,
     MatDialogModule,
+    MatProgressBarModule,
     DialogComponentModule,// import components
     IdToImagePipeModule,  // import declarations
     PokemonDetailsPipeModule,

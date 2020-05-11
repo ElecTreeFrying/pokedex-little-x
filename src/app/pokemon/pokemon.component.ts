@@ -74,7 +74,7 @@ export class PokemonComponent implements OnInit, OnDestroy {
 
     const component = this.componentSelector.dialogComponent({ data, type });
 
-    const isPanel = type === 'move' || type === 'pokemon';
+    const isPanel = type === 'move' || type === 'pokemon' || type ==='stat';
 
     const ref = this.dialog.open(component, {
       id: type,

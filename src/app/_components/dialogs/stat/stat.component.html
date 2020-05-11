@@ -1,0 +1,186 @@
+
+<div class="spinner" *ngIf="isLoading">
+  <mat-spinner></mat-spinner>
+</div>
+
+<div class="spinner-message" *ngIf="isLoading">
+  <p>Please wait...</p>
+</div>
+
+<div class="content" *ngIf="!isLoading">
+  
+  <div class="information" data-simplebar>
+
+    <div class="close">
+      <button mat-icon-button (click)="ref.close(null)">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+
+    <div class="heading">
+
+      <div class="text-head">
+        <p class="type">Stat: {{ data | dialogDetails: 'stat-name' }}</p>
+      </div>
+
+      <div class="text-descriptions" *ngIf="data?.data?.move_damage_class.data">
+        <p class="head">Damage class: {{ data | dialogDetails: 'move-damage-class-name' }}</p>
+        <p class="description">{{ data | dialogDetails: 'move-damage-class-description' }}</p>
+      </div>
+
+    </div>
+  
+    <mat-divider></mat-divider>
+
+    <div class="details">
+
+      <div class="detail mat-elevation-z5">
+        <div class="key" (click)="sections[0] = sections[0] ? false : true" [matTooltip]="sections[0] ? 'Collapse' : 'Expand affecting moves'" matTooltipClass="poke-tooltip">
+        <span>Affecting moves</span>
+          <mat-icon *ngIf="!sections[0]">keyboard_arrow_down</mat-icon>
+          <mat-icon *ngIf="sections[0]">keyboard_arrow_up</mat-icon>
+        </div>
+        <div class="value" *ngIf="sections[0]">
+          <span class="description">A detail of moves which affect this stat positively or negatively.</span>
+          
+          <mat-divider></mat-divider>
+  
+          <div class="inner-detail mat-elevation-z3">
+            <div class="inner-key">
+              <span><strong>Increase</strong></span>
+              <mat-divider></mat-divider>
+              <span>A list of moves and how they change the referenced stat.</span>
+            </div>
+            <div class="inner-value">
+              <p *ngIf="(data | dialogDetails: 'stat-affecting_moves-increase')?.length === 0">
+                No type available.
+              </p>
+              <mat-chip-list>
+                <mat-chip 
+                  class="mat-elevation-z3"
+                  *ngFor="let move of data | dialogDetails: 'stat-affecting_moves-increase'"
+                  [ngStyle]="{ 'background': move?.color }">
+                  <span>{{ move?.move?.name | dialogDetails: 'stat-move-name' }} ({{ move?.change | dialogDetails: 'stat-move-change' }})</span>
+                </mat-chip>
+              </mat-chip-list>
+            </div>
+          </div>
+  
+          <div class="inner-detail mat-elevation-z3">
+            <div class="inner-key">
+              <span><strong>Decrease</strong></span>
+              <mat-divider></mat-divider>
+              <span>A list of moves and how they change the referenced stat.</span>
+            </div>
+            <div class="inner-value">
+              <p *ngIf="(data | dialogDetails: 'stat-affecting_moves-decrease')?.length === 0">
+                No type available.
+              </p>
+              <mat-chip-list>
+                <mat-chip 
+                  class="mat-elevation-z3"
+                  *ngFor="let move of data | dialogDetails: 'stat-affecting_moves-decrease'"
+                  [ngStyle]="{ 'background': move?.color }">
+                  <span>{{ move?.move?.name | dialogDetails: 'stat-move-name' }} ({{ move?.change | dialogDetails: 'stat-move-change' }})</span>
+                </mat-chip>
+              </mat-chip-list>
+            </div>
+          </div>
+  
+        </div>
+      </div>
+
+      <div class="detail mat-elevation-z5">
+        <div class="key" (click)="sections[1] = sections[1] ? false : true" [matTooltip]="sections[1] ? 'Collapse' : 'Expand affecting natures'" matTooltipClass="poke-tooltip">
+        <span>Affecting natures</span>
+          <mat-icon *ngIf="!sections[1]">keyboard_arrow_down</mat-icon>
+          <mat-icon *ngIf="sections[1]">keyboard_arrow_up</mat-icon>
+        </div>
+        <div class="value" *ngIf="sections[1]">
+          <span class="description">A detail of natures which affect this stat positively or negatively.</span>
+          
+          <mat-divider></mat-divider>
+  
+          <div class="inner-detail mat-elevation-z3">
+            <div class="inner-key">
+              <span><strong>Increase</strong></span>
+              <mat-divider></mat-divider>
+              <span>A list of natures and how they change the referenced stat.</span>
+            </div>
+            <div class="inner-value">
+              <p *ngIf="(data | dialogDetails: 'stat-affecting_natures-increase')?.length === 0">
+                No type available.
+              </p>
+              <mat-chip-list>
+                <mat-chip 
+                  class="mat-elevation-z3"
+                  *ngFor="let nature of data | dialogDetails: 'stat-affecting_natures-increase'">
+                  <span>{{ nature?.name }}</span>
+                </mat-chip>
+              </mat-chip-list>
+            </div>
+          </div>
+  
+          <div class="inner-detail mat-elevation-z3">
+            <div class="inner-key">
+              <span><strong>Decrease</strong></span>
+              <mat-divider></mat-divider>
+              <span>A list of nature sand how they change the referenced stat.</span>
+            </div>
+            <div class="inner-value">
+              <p *ngIf="(data | dialogDetails: 'stat-affecting_natures-decrease')?.length === 0">
+                No type available.
+              </p>
+              <mat-chip-list>
+                <mat-chip 
+                  class="mat-elevation-z3"
+                  *ngFor="let nature of data | dialogDetails: 'stat-affecting_natures-decrease'">
+                  <span>{{ nature?.name }}</span>
+                </mat-chip>
+              </mat-chip-list>
+            </div>
+          </div>
+  
+        </div>
+      </div>
+
+      <div class="detail mat-elevation-z5">
+        <div class="key" (click)="sections[2] = sections[2] ? false : true" [matTooltip]="sections[2] ? 'Collapse' : 'Expand characteristics'" matTooltipClass="poke-tooltip">
+        <span>Characteristics</span>
+          <mat-icon *ngIf="!sections[2]">keyboard_arrow_down</mat-icon>
+          <mat-icon *ngIf="sections[2]">keyboard_arrow_up</mat-icon>
+        </div>
+        <div class="value" *ngIf="sections[2]">
+          <span class="description">Characteristics indicate which stat contains a Pokémon's highest IV. A Pokémon's Characteristic is determined by the remainder of its highest IV divided by 5 (gene_modulo).</span>
+          
+          <mat-divider></mat-divider>
+  
+          <div class="inner-detail mat-elevation-z3">
+            <div class="inner-key">
+              <span>Characteristic</span>
+            </div>
+            <div class="inner-value">
+              <mat-chip-list>
+                <mat-chip 
+                  class="mat-elevation-z3"
+                  *ngFor="let characteristic of data | dialogDetails: 'stat-characteristics'">
+                  <span>{{ characteristic }}</span>
+                </mat-chip>
+              </mat-chip-list>
+            </div>
+          </div>
+  
+        </div>
+      </div>
+
+      <div class="credits">
+        <p class="app">Pokédex Little</p>
+        <p class="developer">by ElecTreeFrying</p>
+      </div>
+
+    </div>
+
+  </div>
+  
+</div>
+
