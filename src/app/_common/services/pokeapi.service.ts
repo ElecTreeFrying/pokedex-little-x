@@ -187,9 +187,6 @@ export class PokeapiService {
       })
     );
   }
-
-  loadNature() {
-  }
   
   load_natures_characteristics() {
 
@@ -316,7 +313,7 @@ export class PokeapiService {
         );
 
         return merge(
-          species, entry, ability, game_indices, types
+          species, entry, ability, types
         );
       }),
       toArray(),
@@ -329,11 +326,12 @@ export class PokeapiService {
         
         data['species']['data'] = result.find(e => e.hasOwnProperty('base_happiness'));
         data['abilities'] = _result.find((e) => e.filter(e => e.hasOwnProperty('effect_changes')).length > 0);
-        data['game_indices'] = _result.find((e) => e.filter(e => e.hasOwnProperty('version_group')).length > 0);
 
         data['types'] = sortBy(
           types.map((type) => ({ data: type['data'], ...type['type'] })), [ 'slot' ]
         );
+
+        console.log(data);
 
         delete data['forms'];
 
@@ -534,161 +532,6 @@ export class PokeapiService {
     } else {
       return object;
     }
-  }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  // ----------------------------------------------------------------- //
-  // ----------------------------------------------------------------- // 
-  // ----------------------------------------------------------------- //
-
-  // --------------------- D O  N O T  T O U C H --------------------- //
-
-  // ----------------------------------------------------------------- //
-  // ----------------------------------------------------------------- //
-  // ----------------------------------------------------------------- //
-
-  // dev
-
-  pokemon_() {
-
-    merge(
-      this.mergeItem(1),
-    ).pipe( toArray() ).subscribe((res) => {
-    
-      console.log(res);
-      
-    });
-    
-  }
-  
-  private _mergeItem1(id: number) {
-    const flat = this.http.get('assets/flat.json');
-    return merge(
-      this.http.get(`https://pokeapi.co/api/v2/pokedex/${id}`).pipe(
-        map(e => e['pokemon_entries'].map((pokemon) => {
-          const id = +pokemon['pokemon_species']['url'].split('/').reverse()[1];
-          const name = pokemon['pokemon_species']['name'];
-          const entry_number = pokemon['entry_number'];
-          return { id, name, entry_number };
-        }))
-      ),
-      flat
-    ).pipe(
-      toArray(),
-      map((res) => {
-        const flat = <any[]>res[1];
-        const item = <any[]>res[0];
-        return {
-          id,
-          entries: item.map((e: any) => {
-            const fromFlat = flat.find(c => c['id'] === e['id']);
-            return { ...fromFlat, ...e }
-          })
-        };
-      })
-    );
-  }
-
-  private _mergeItem2(id: number) {
-    const flat = this.http.get('assets/flat.json');
-
-    return merge(
-      this.http.get(`https://pokeapi.co/api/v2/generation/${id}`).pipe(
-        map(e => e['pokemon_species'].map((pokemon) => {
-          const id = +pokemon['url'].split('/').reverse()[1];
-          const name = pokemon['name'];
-          return { id, name };
-        })),
-      ),
-      flat
-    ).pipe(
-      toArray(),
-      map((res) => {
-        const flat = <any[]>res[1];
-        const item = <any[]>res[0];
-        return {
-          id,
-          entries: item.map((e: any) => {
-            const fromFlat = flat.find(c => c['id'] === e['id']);
-            return { ...fromFlat, ...e }
-          })
-        };
-      })
-    );
-  }
-
-  private _mergeItemAll3() {
-    return this.http.get('assets/items.json').pipe(
-      map((e: any) => ({
-        id: 0,
-        entries: e.map((c) => {
-          c['name'] = c['name'].replace('.png', '');
-          return c;
-        })
-      }))
-    );
-  }
-
-  private _mergeItem3(id: number) {
-    const items = this.http.get('assets/items.json').pipe(
-      map((e: any) => e.map((c) => {
-        c['name'] = c['name'].replace('.png', '');
-        return c;
-      }))
-    );
-
-    return merge(
-      this.http.get(`https://pokeapi.co/api/v2/item-attribute/${id}`).pipe(map((e) => e['items'])),
-      items
-    ).pipe(
-      toArray(),
-      map((res) => {
-        const item = <any[]>res[0];
-        const flat = <any[]>res[1];
-        return {
-          id,
-          entries: intersectionBy(flat, item, 'name')
-        };
-      })
-    );
-  }
-
-  private mergeItem(id: number) {
-    const items = this.http.get('assets/items.json').pipe(
-      map((e: any) => e.map((c) => {
-        c['name'] = c['name'].replace('.png', '');
-        return c;
-      }))
-    );
-
-    return merge(
-      this.http.get(`https://pokeapi.co/api/v2/item-category/${id}`).pipe(map((e) => e['items'])),
-      items
-    ).pipe(
-      toArray(),
-      map((res) => {
-        const item = <any[]>res[0];
-        const flat = <any[]>res[1];
-
-        return {
-          id,
-          entries: intersectionBy(flat, item, 'name')
-        };
-      })
-    );
   }
 
 }

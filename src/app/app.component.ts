@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild, ViewContainerRef, ElementRef, ChangeDetectorRef, HostListener } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, ViewContainerRef, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { MatToolbar } from '@angular/material/toolbar';
 import { MatSidenav } from '@angular/material/sidenav';
 import { 
@@ -195,16 +195,6 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   private get _toolbarHeight() {
     return this.toolbar._elementRef.nativeElement.clientHeight;
-  }
-
-  @HostListener('window:keyup', ['$event'])
-  private up(event: KeyboardEvent) {
-
-    if (event.code === 'Escape') {
-      // this.shared.id = undefined;
-      // console.log('ESC', this.shared.id);
-      // this.sidenavToggle(false);
-    }
   }
 
 }
