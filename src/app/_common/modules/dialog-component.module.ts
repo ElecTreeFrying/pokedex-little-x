@@ -18,30 +18,12 @@ import { PokemonDetailsPipeModule } from './pokemon-details-pipe.module';
 import { TypeColorPipeModule } from './type-color-pipe.module';
 import { IdToImagePipeModule } from './id-to-image-pipe.module';
 
-import { TypeComponent } from '../../_components/dialogs/type/type.component';
-import { ColorComponent } from '../../_components/dialogs/color/color.component';
-import { HabitatComponent } from '../../_components/dialogs/habitat/habitat.component';
-import { ShapeComponent } from '../../_components/dialogs/shape/shape.component';
-import { GrowthRateComponent } from '../../_components/dialogs/growth-rate/growth-rate.component';
-import { EggGroupsComponent } from '../../_components/dialogs/egg-groups/egg-groups.component';
-import { AbilityComponent } from '../../_components/dialogs/ability/ability.component';
-import { MoveComponent } from '../../_components/dialogs/move/move.component';
-import { SelectedPokemonComponent } from '../../_components/dialogs/selected-pokemon/selected-pokemon.component';
-import { StatComponent } from '../../_components/dialogs/stat/stat.component';
+import { pokemonDialogComponents } from '../services/component-selector.service';
 
 
 @NgModule({
   declarations: [
-    TypeComponent,
-    ColorComponent,
-    HabitatComponent,
-    ShapeComponent,
-    GrowthRateComponent,
-    EggGroupsComponent,
-    AbilityComponent,
-    MoveComponent,
-    SelectedPokemonComponent,
-    StatComponent
+    ...pokemonDialogComponents
   ],
   imports: [
     CommonModule,
@@ -63,16 +45,7 @@ import { StatComponent } from '../../_components/dialogs/stat/stat.component';
     IdToImagePipeModule
   ],
   exports: [
-    TypeComponent,
-    ColorComponent,
-    HabitatComponent,
-    ShapeComponent,
-    GrowthRateComponent,
-    EggGroupsComponent,
-    AbilityComponent,
-    MoveComponent,
-    SelectedPokemonComponent,
-    StatComponent
+    ...pokemonDialogComponents
   ]
 })
 export class DialogComponentModule { }
