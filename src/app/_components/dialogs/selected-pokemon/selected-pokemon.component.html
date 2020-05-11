@@ -186,12 +186,26 @@
     </div>
 
     <div class="detail mat-elevation-z5">
-      <div class="key" (click)="section(2)" [matTooltip]="sections[2] ? 'Collapse' : 'Expand abilities'" matTooltipClass="poke-tooltip">
-        <span>Abilities</span>
+      <div class="key" (click)="section(2)" [matTooltip]="sections[2] ? 'Collapse' : 'Expand description'" matTooltipClass="poke-tooltip">
+        <span>Stats</span>
         <mat-icon *ngIf="!sections[2]">keyboard_arrow_down</mat-icon>
         <mat-icon *ngIf="sections[2]">keyboard_arrow_up</mat-icon>
       </div>
-      <div class="value" *ngIf="sections[2]">
+      <div class="value stats" *ngIf="sections[2]">
+        <div matRipple class="stat" *ngFor="let stat of pokemon | pokemonDetails: 'stats'">
+          <p>{{ stat?.name }}:</p>
+          <mat-progress-bar [value]="stat?.value"></mat-progress-bar>
+        </div>
+      </div>
+    </div>
+
+    <div class="detail mat-elevation-z5">
+      <div class="key" (click)="section(3)" [matTooltip]="sections[3] ? 'Collapse' : 'Expand abilities'" matTooltipClass="poke-tooltip">
+        <span>Abilities</span>
+        <mat-icon *ngIf="!sections[3]">keyboard_arrow_down</mat-icon>
+        <mat-icon *ngIf="sections[3]">keyboard_arrow_up</mat-icon>
+      </div>
+      <div class="value" *ngIf="sections[3]">
         <span class="description">Abilities provide passive effects for Pokémon in battle or in the over world. Pokémon have multiple possible abilities but can have only one ability at a time.</span>
         <mat-divider></mat-divider>
         <div matRipple class="inner-detail mat-elevation-z3" *ngFor="let ability of pokemon?.abilities; let isLast = last" [ngStyle]="{ 'margin-bottom': isLast ? '8px' : '16px', 'cursor': 'pointer' }">
@@ -206,12 +220,12 @@
     </div>
 
     <div class="detail mat-elevation-z5">
-      <div class="key" (click)="section(3)" [matTooltip]="sections[3] ? 'Collapse' : 'Expand types'" matTooltipClass="poke-tooltip">
+      <div class="key" (click)="section(4)" [matTooltip]="sections[4] ? 'Collapse' : 'Expand types'" matTooltipClass="poke-tooltip">
       <span>Types</span>
-        <mat-icon *ngIf="!sections[3]">keyboard_arrow_down</mat-icon>
-        <mat-icon *ngIf="sections[3]">keyboard_arrow_up</mat-icon>
+        <mat-icon *ngIf="!sections[4]">keyboard_arrow_down</mat-icon>
+        <mat-icon *ngIf="sections[4]">keyboard_arrow_up</mat-icon>
       </div>
-      <div class="value" *ngIf="sections[3]">
+      <div class="value" *ngIf="sections[4]">
         <span class="description">Types are properties for Pokémon and their moves. Each type has three properties: which types of Pokémon it is super effective against, which types of Pokémon it is not very effective against, and which types of Pokémon it is completely ineffective against.</span>
         <mat-divider></mat-divider>
 
@@ -345,12 +359,12 @@
     </div>
 
     <div class="detail mat-elevation-z5">
-      <div class="key" (click)="section(4)" [matTooltip]="sections[4] ? 'Collapse' : 'Expand evolution'" matTooltipClass="poke-tooltip">
+      <div class="key" (click)="section(5)" [matTooltip]="sections[5] ? 'Collapse' : 'Expand evolution'" matTooltipClass="poke-tooltip">
         <span>Evolution</span>
-        <mat-icon *ngIf="!sections[4]">keyboard_arrow_down</mat-icon>
-        <mat-icon *ngIf="sections[4]">keyboard_arrow_up</mat-icon>
+        <mat-icon *ngIf="!sections[5]">keyboard_arrow_down</mat-icon>
+        <mat-icon *ngIf="sections[5]">keyboard_arrow_up</mat-icon>
       </div>
-      <div class="value evolution" *ngIf="sections[4]">
+      <div class="value evolution" *ngIf="sections[5]">
 
         <div class="pokemon" *ngIf="pokemon | pokemonDetails: 'evolution-1-next'">
           <div matRipple class="image">
@@ -399,12 +413,12 @@
     </div>
 
     <div class="detail mat-elevation-z5">
-      <div class="key" (click)="section(5)" [matTooltip]="sections[5] ? 'Collapse' : 'Expand varieties'" matTooltipClass="poke-tooltip">
+      <div class="key" (click)="section(6)" [matTooltip]="sections[6] ? 'Collapse' : 'Expand varieties'" matTooltipClass="poke-tooltip">
         <span>Varieties</span>
-        <mat-icon *ngIf="!sections[5]">keyboard_arrow_down</mat-icon>
-        <mat-icon *ngIf="sections[5]">keyboard_arrow_up</mat-icon>
+        <mat-icon *ngIf="!sections[6]">keyboard_arrow_down</mat-icon>
+        <mat-icon *ngIf="sections[6]">keyboard_arrow_up</mat-icon>
       </div>
-      <div class="value varieties" *ngIf="sections[5]">
+      <div class="value varieties" *ngIf="sections[6]">
 
         <div 
           class="inner-detail mat-elevation-z3" 
@@ -426,12 +440,12 @@
     </div>
 
     <div class="detail mat-elevation-z5">
-      <div class="key" (click)="section(6)" [matTooltip]="sections[6] ? 'Collapse' : 'Expand sprites'" matTooltipClass="poke-tooltip">
+      <div class="key" (click)="section(7)" [matTooltip]="sections[7] ? 'Collapse' : 'Expand sprites'" matTooltipClass="poke-tooltip">
         <span>Sprites</span>
-        <mat-icon *ngIf="!sections[6]">keyboard_arrow_down</mat-icon>
-        <mat-icon *ngIf="sections[6]">keyboard_arrow_up</mat-icon>
+        <mat-icon *ngIf="!sections[7]">keyboard_arrow_down</mat-icon>
+        <mat-icon *ngIf="sections[7]">keyboard_arrow_up</mat-icon>
       </div>
-      <div class="value sprites" *ngIf="sections[6]">
+      <div class="value sprites" *ngIf="sections[7]">
 
         <div class="inner-detail mat-elevation-z3" *ngFor="let entry of pokemon | pokemonDetails: 'sprites'">
           <div class="inner-key">
@@ -450,12 +464,12 @@
     </div>
 
     <div class="detail mat-elevation-z5">
-      <div class="key" (click)="section(7)" [matTooltip]="sections[7] ? 'Collapse' : 'Expand pokédex version entries'" matTooltipClass="poke-tooltip">
+      <div class="key" (click)="section(8)" [matTooltip]="sections[8] ? 'Collapse' : 'Expand pokédex version entries'" matTooltipClass="poke-tooltip">
         <span>Pokédex version entries</span>
-        <mat-icon *ngIf="!sections[7]">keyboard_arrow_down</mat-icon>
-        <mat-icon *ngIf="sections[7]">keyboard_arrow_up</mat-icon>
+        <mat-icon *ngIf="!sections[8]">keyboard_arrow_down</mat-icon>
+        <mat-icon *ngIf="sections[8]">keyboard_arrow_up</mat-icon>
       </div>
-      <div class="value" *ngIf="sections[7]">
+      <div class="value" *ngIf="sections[8]">
         <span class="description">A list of pokedexes and the indexes reserved within them for this pokémon specie.</span>
         <mat-divider></mat-divider>
         <div class="inner-detail version-entries mat-elevation-z3" *ngFor="let entries of pokemon | pokemonDetails: 'species-pokedex-numbers'">
@@ -470,12 +484,12 @@
     </div>
 
     <div class="detail mat-elevation-z5">
-      <div class="key" (click)="section(8)" [matTooltip]="sections[8] ? 'Collapse' : 'Expand description entries'" matTooltipClass="poke-tooltip">
+      <div class="key" (click)="section(9)" [matTooltip]="sections[9] ? 'Collapse' : 'Expand description entries'" matTooltipClass="poke-tooltip">
         <span>Description entries</span>
-        <mat-icon *ngIf="!sections[8]">keyboard_arrow_down</mat-icon>
-        <mat-icon *ngIf="sections[8]">keyboard_arrow_up</mat-icon>
+        <mat-icon *ngIf="!sections[9]">keyboard_arrow_down</mat-icon>
+        <mat-icon *ngIf="sections[9]">keyboard_arrow_up</mat-icon>
       </div>
-      <div class="value" *ngIf="sections[8]">
+      <div class="value" *ngIf="sections[9]">
         <div class="inner-detail mat-elevation-z3" *ngFor="let entries of pokemon | pokemonDetails: 'species-version-entries'">
           <div class="inner-key">
             <span>{{ entries | pokemonDetails: 'species-version-name' }}</span>
@@ -488,12 +502,12 @@
     </div>
 
     <div class="detail mat-elevation-z5">
-      <div class="key" (click)="section(9)" [matTooltip]="sections[9] ? 'Collapse' : 'Expand moves'" matTooltipClass="poke-tooltip">
+      <div class="key" (click)="section(10)" [matTooltip]="sections[10] ? 'Collapse' : 'Expand moves'" matTooltipClass="poke-tooltip">
         <span>Moves</span>
-        <mat-icon *ngIf="!sections[9]">keyboard_arrow_down</mat-icon>
-        <mat-icon *ngIf="sections[9]">keyboard_arrow_up</mat-icon>
+        <mat-icon *ngIf="!sections[10]">keyboard_arrow_down</mat-icon>
+        <mat-icon *ngIf="sections[10]">keyboard_arrow_up</mat-icon>
       </div>
-      <div class="value" *ngIf="sections[9]">
+      <div class="value" *ngIf="sections[10]">
 
         <div class="inner-detail mat-elevation-z3">
           <div class="inner-key expansion" (click)="section(0, false)" [matTooltip]="subSections[0] ? 'Collapse' : 'Expand physical moves'" matTooltipClass="poke-tooltip">

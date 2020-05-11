@@ -10,6 +10,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 import { LazyLoadImageModule } from 'ng-lazyload-image';
 import { DialogDetailsPipeModule } from './dialog-details-pipe.module';
@@ -54,6 +55,7 @@ import { StatComponent } from '../../_components/dialogs/stat/stat.component';
     MatIconModule,
     MatButtonModule,
     MatProgressSpinnerModule,
+    MatProgressBarModule,
     
     DialogDetailsPipeModule,
     PokemonDetailsPipeModule,
