@@ -150,7 +150,7 @@ export class PokeapiService {
     if (res.machines) {
       machines = of(
         res.machines.map((e: any) => {
-          return this.http.get(e['machine']['url']).pipe(
+          return this.http.get(this.shared.toGithubRaw(e['machine']['url'])).pipe(
             map((c) => {
               e.machine.data = c;
               return { ...e };
@@ -278,24 +278,17 @@ export class PokeapiService {
   get pokemon() {
 
     const id = this.shared.id;
+    const url = `https://pokeapi.co/api/v2/pokemon/${id}/`;
 
-    return this.http.get(`https://pokeapi.co/api/v2/pokemon/${id}`).pipe(
+    return this.http.get(this.shared.toGithubRaw(url)).pipe(
       exhaustMap((pokemon) => {
         
-        const species = this.species(pokemon['species']['url']);
+        const species = this.species(this.shared.toGithubRaw(pokemon['species']['url']), pokemon);
 
-        const entry = this.http.get(`https://pokeapi.co/api/v2/pokemon/${id}`);
+        const entry = of(pokemon);
 
         const ability = of(
-          pokemon['abilities'].map((e) => this.http.get(e['ability']['url']))
-        ).pipe(
-          exhaustMap((e: any) => e),
-          mergeMap((e: any) => e),
-          toArray(),
-        );
-
-        const game_indices = of(
-          pokemon['game_indices'].map((e) => this.http.get(e['version']['url']))
+          pokemon['abilities'].map((e) => this.http.get(this.shared.toGithubRaw(e['ability']['url'])))
         ).pipe(
           exhaustMap((e: any) => e),
           mergeMap((e: any) => e),
@@ -304,7 +297,7 @@ export class PokeapiService {
 
         const types = of(
           pokemon['types'].map((e: any) => forkJoin({
-            data: this.http.get(e['type']['url']), type: of(e), _types_: of(true)
+            data: this.http.get(this.shared.toGithubRaw(e['type']['url'])), type: of(e), _types_: of(true)
           }))
         ).pipe(
           exhaustMap((e: any) => e),
@@ -360,23 +353,23 @@ export class PokeapiService {
     }
   }
 
-  private species(url: string) {
+  private species(url: string, _pokemon: any) {
     return this.http.get(url).pipe(
       exhaustMap((specie) => {
         
-        const specie_ = this.http.get(url);
+        const specie_ = of(specie);
 
-        const color = this.http.get(specie['color']['url']).pipe(
+        const color = this.http.get(this.shared.toGithubRaw(specie['color']['url'])).pipe(
           map((e) => ({ ...e, _color_: true }))
         );
         
-        const growth_rate = this.http.get(specie['growth_rate']['url']).pipe(
+        const growth_rate = this.http.get(this.shared.toGithubRaw(specie['growth_rate']['url'])).pipe(
           map((e) => ({ ...e, _growth_rate_: true }))
         );
         
         let habitat = undefined;
         if (specie['habitat']) {
-          habitat = this.http.get(specie['habitat']['url']).pipe(
+          habitat = this.http.get(this.shared.toGithubRaw(specie['habitat']['url'])).pipe(
             map((e) => ({ ...e, _habitat_: true }))
           );
         } else {
@@ -387,12 +380,12 @@ export class PokeapiService {
           })
         }
         
-        const shape = this.http.get(specie['shape']['url']).pipe(
+        const shape = this.http.get(this.shared.toGithubRaw(specie['shape']['url'])).pipe(
           map((e) => ({ ...e, _shape_: true }))
         );
 
         const egg_groups = of(
-          specie['egg_groups'].map((e) => this.http.get(e['url']))
+          specie['egg_groups'].map((e) => this.http.get(this.shared.toGithubRaw(e['url'])))
         ).pipe(
           exhaustMap((e: any) => e),
           mergeMap((e: any) => e),
@@ -400,14 +393,21 @@ export class PokeapiService {
         );
         
         const varieties = of(
-          specie['varieties'].map((e) => this.http.get(e['pokemon']['url']))
+          specie['varieties'].map((e) => {
+            const id  = +e['pokemon']['url'].split('/').reverse()[1];
+            if (id === this.shared.id) {
+              return of(_pokemon);
+            } else {
+              return this.http.get(this.shared.toGithubRaw(e['pokemon']['url']));
+            }
+          })
         ).pipe(
           exhaustMap((e: any) => e),
           mergeMap((e: any) => e),
           toArray(),
         );
 
-        const evolution_chain = this.evolution_chain(specie['evolution_chain']['url']);
+        const evolution_chain = this.evolution_chain(this.shared.toGithubRaw(specie['evolution_chain']['url']));
 
         return merge(
           specie_, color, growth_rate, habitat, shape, egg_groups, varieties, evolution_chain
