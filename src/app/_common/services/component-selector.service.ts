@@ -21,16 +21,36 @@ export const pokemonDialogComponents = [
 })
 export class ComponentSelectorService {
 
+  fucking_bug = [
+    { type: 'type', component: TypeComponent },
+    { type: 'color', component: ColorComponent },
+    { type: 'habitat', component: HabitatComponent },
+    { type: 'shape', component: ShapeComponent },
+    { type: 'growth-rate', component: GrowthRateComponent },
+    { type: 'egg-groups', component: EggGroupsComponent },
+    { type: 'stat', component: StatComponent },
+    { type: 'ability', component: AbilityComponent },
+    { type: 'pokemon', component: SelectedPokemonComponent },
+    { type: 'move', component: MoveComponent }
+  ]
+
   constructor() { }
 
-  dialogComponent(res: any): any {
-    const id = pokemonDialogComponents
+  // before the fucking weird bug of index undefined
+  // bug happens deployed on firebase
+  // runs smoothly on development mode
+  _dialogComponent(res: any): any {
+    const index = pokemonDialogComponents
       .map((component: any, id: number) => {
         component = `${component}`.split(' ')[1].toLowerCase();
-        return { component: `${component}`, id }
+        return { component: `${component}`, id };
       })
       .find(e => e.component.includes(res.type.split('-').join(''))).id;
-    return pokemonDialogComponents[id];
+    return pokemonDialogComponents[index];
   }
-  
+
+  dialogComponent(res: any): any {
+    return this.fucking_bug.find(e => e.type === res.type).component;
+  }
+
 }
