@@ -265,6 +265,9 @@
           <mat-icon *ngIf="sections[3]">keyboard_arrow_up</mat-icon>
         </div>
         <div class="value" *ngIf="sections[3]">
+          <span *ngIf="(data | dialogDetails: 'machines')?.length === 0">
+            No available data.
+          </span>
           <div class="inner-detail mat-elevation-z3" *ngFor="let machine of data | dialogDetails: 'machines'">
             <div class="inner-key">
               <span>{{ machine._version }}</span>

@@ -245,6 +245,12 @@ export const version_group = [
   { key: 6, id: 9, name: 'Platinum' },
   { key: 7, id: 10, name: 'Heartgold, Soulsilver' },
   { key: 8, id: 11, name: 'Black, White' },
+  
+  { key: 0, id: 12, name: 'Colosseum' },
+  { key: 0, id: 13, name: 'XD' },
+  { key: 0, id: 17, name: 'Sum, Moon' },
+  { key: 0, id: 18, name: 'Ultra Sun, Ultra Moon' },
+
   { key: 9, id: 14, name: 'Black 2, White 2' },
   { key: -1, id: 15, name: 'X, Y' },
   { key: 15, id: 16, name: 'Omega Ruby, Alpha Sapphire' }

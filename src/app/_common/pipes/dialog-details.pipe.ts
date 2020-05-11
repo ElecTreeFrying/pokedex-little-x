@@ -216,14 +216,18 @@ export class DialogDetailsPipe implements PipeTransform {
 
     else if (type === 'machines') {
 
-      console.log(value.machines);
+      if (!value.machines) { return []; }
 
       return value.machines.map((machine: any) => {
         const id = +machine.version_group.url.split('/').reverse()[1];
         const version = version_group.find(e => e.id === id).name.replace(',', ' &');
         machine._item = machine.machine.data.item.name.toUpperCase();
         machine._move = machine.machine.data.move.name.split('-').join(' ');
-        machine._version = `Pokémon ${version} version`
+        if (id !== 12 && id !== 13) {
+          machine._version = `Pokémon ${version} version`;
+        } else  {
+          machine._version = version;
+        }
         return machine;
       });
     }
@@ -268,6 +272,7 @@ export class DialogDetailsPipe implements PipeTransform {
     }
 
     else if (type === 'contest-combo-normal-after') {
+      if (!value.contest_combos) return [];
       const object = value.contest_combos.normal.use_after;
       if (!object) return [];
       const moves = object.map((move: any) => {
@@ -281,6 +286,7 @@ export class DialogDetailsPipe implements PipeTransform {
     }
 
     else if (type === 'contest-combo-normal-before') {
+      if (!value.contest_combos) return [];
       const object = value.contest_combos.normal.use_before;
       if (!object) return [];
       const moves = object.map((move: any) => {
@@ -294,6 +300,7 @@ export class DialogDetailsPipe implements PipeTransform {
     }
 
     else if (type === 'contest-combo-super-after') {
+      if (!value.contest_combos) return [];
       const object = value.contest_combos.super.use_after;
       if (!object) return [];
       const moves = object.map((move: any) => {
@@ -307,6 +314,7 @@ export class DialogDetailsPipe implements PipeTransform {
     }
 
     else if (type === 'contest-combo-super-before') {
+      if (!value.contest_combos) return [];
       const object = value.contest_combos.super.use_before;
       if (!object) return [];
       const moves = object.map((move: any) => {

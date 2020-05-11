@@ -29,7 +29,7 @@ export class DrawerComponent implements OnInit {
   ngOnInit(): void {
     this.pokedex = pokedex;
     this.generation = generation;
-    this.versionGroup = version_group;
+    this.versionGroup = version_group.filter(e => e.key !== 0);
     this.items = items;
     this.categories = categories;
   }
