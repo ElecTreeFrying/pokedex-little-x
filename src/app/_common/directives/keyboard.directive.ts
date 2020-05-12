@@ -10,7 +10,6 @@ export class KeyboardDirective {
 
   @Output() toggle = new EventEmitter();
 
-  combination = [];
   isPressed = false;
 
   constructor(
@@ -20,7 +19,7 @@ export class KeyboardDirective {
   @HostListener('window:keyup', ['$event'])
   up(event: KeyboardEvent) {
     
-    if (this.isPressed) return;
+    if (this.isPressed || this.shared.bottomSheetIsOpened) return;
     this.isPressed = true;
 
     if (event.code === 'KeyA') {
@@ -32,8 +31,8 @@ export class KeyboardDirective {
     }
   }
   
-  @HostListener('window:keydown', ['$event'])
-  down(event: KeyboardEvent) {
+  @HostListener('window:keydown')
+  down() {
 
     if (this.shared.dialogIsOpened) {
       this.isPressed = true;

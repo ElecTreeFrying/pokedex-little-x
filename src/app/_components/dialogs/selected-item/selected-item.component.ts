@@ -19,9 +19,6 @@ export class SelectedItemComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-
-    console.log(this.data);
-
   }
 
   ngOnDestroy() {

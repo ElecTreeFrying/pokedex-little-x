@@ -324,8 +324,6 @@ export class PokeapiService {
           types.map((type) => ({ data: type['data'], ...type['type'] })), [ 'slot' ]
         );
 
-        console.log(data);
-
         delete data['forms'];
 
         return data;
