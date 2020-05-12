@@ -17,10 +17,12 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { LazyLoadImageModule } from 'ng-lazyload-image';
 
 import { AppInitializationComponentModule } from '../modules/app-initialization-component.module';
 import { DialogComponentModule } from '../modules/dialog-component.module';
+import { SearchComponentModule } from '../modules/search-component.module';
 import { IdToImagePipeModule } from '../modules/id-to-image-pipe.module';
 import { PokemonDetailsPipeModule } from '../modules/pokemon-details-pipe.module';
 import { TypeColorPipeModule } from '../modules/type-color-pipe.module';
@@ -62,6 +64,7 @@ import { pokemonDialogComponents } from '../services/component-selector.service'
     MatChipsModule,
     MatDialogModule,
     MatProgressBarModule,
+    MatBottomSheetModule,
     DialogComponentModule,// import components
     IdToImagePipeModule,  // import declarations
     PokemonDetailsPipeModule,
@@ -76,8 +79,10 @@ import { pokemonDialogComponents } from '../services/component-selector.service'
     MatButtonModule,
     MatIconModule,
     MatProgressSpinnerModule,
+    MatRippleModule,
     AppInitializationComponentModule,   // export components
     DialogComponentModule,              // export declarations
+    SearchComponentModule,
     SnotifyModule,         // third party modules
     
 

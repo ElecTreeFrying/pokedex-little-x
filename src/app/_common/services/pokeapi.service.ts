@@ -24,6 +24,7 @@ export class PokeapiService {
     this.count = 0;
 
     shared.dialogIsOpened = false;
+    shared.bottomSheetIsOpened = false;
     shared.updateAppInitializationSelection = 1;
     shared.updateLoadMoreSelection = 0;
     shared.defaultLength = 50;

@@ -1,6 +1,7 @@
 import { Component, OnInit, AfterViewInit, ViewChild, ViewContainerRef, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { MatToolbar } from '@angular/material/toolbar';
 import { MatSidenav } from '@angular/material/sidenav';
+import { MatBottomSheet, MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { 
   Overlay,
   OverlayRef
@@ -9,6 +10,7 @@ import { ComponentPortal } from '@angular/cdk/portal';
 import SimpleBar from 'simplebar';
 
 import { AppInitializationComponent } from './_components/app-initialization/app-initialization.component';
+import { SearchComponent } from './_components/search/search.component';
 
 import { SharedService } from './_common/services/shared.service';
 
@@ -36,6 +38,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   constructor(
     private overlay: Overlay,
     private viewContainerRef: ViewContainerRef,
+    private bottomSheet: MatBottomSheet,
     private cd: ChangeDetectorRef,
     public shared: SharedService
   ) {}
@@ -120,7 +123,9 @@ export class AppComponent implements OnInit, AfterViewInit {
       let scrollValue = target.scrollTop;
   
       const full = this.shared.item_meta.ceil === this.shared.index.count;
-  
+      
+      if (this.shared.bottomSheetIsOpened || this.shared.loading === null) return;
+
       if (scrollValue === maxScroll && !full && !this.shared.loading) {
         let count = 0;
         this.shared.loading = true;
@@ -131,6 +136,35 @@ export class AppComponent implements OnInit, AfterViewInit {
           count++;
         }, 400);
       }
+    });
+  }
+
+  private _bottomSheetRef: MatBottomSheetRef<SearchComponent>;
+
+  openSearch() {
+
+    if (this._bottomSheetRef) {
+      this._bottomSheetRef.dismiss();
+      this._bottomSheetRef = undefined;
+      this.shared.updateSearchSelection = '-1';
+      this.shared.bottomSheetIsOpened = false;
+      return;
+    }
+    
+    this.shared.bottomSheetIsOpened = true;
+    this.shared.updateSearchSelection = '';
+
+    this._bottomSheetRef = this.bottomSheet.open(SearchComponent, {
+      autoFocus: true,
+      closeOnNavigation: true,
+      hasBackdrop: false
+    })
+    
+    this._bottomSheetRef.afterDismissed().subscribe(() => {
+      if (!this._bottomSheetRef) return;
+      this._bottomSheetRef = undefined;
+      this.shared.updateSearchSelection = '-1';
+      this.shared.bottomSheetIsOpened = false;
     });
   }
 

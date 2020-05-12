@@ -22,6 +22,7 @@ export class SharedService {
   private isLoadingSource = new BehaviorSubject(false);
   private selectedEntrySource = new BehaviorSubject(undefined);
   private loadingDetailsSource = new BehaviorSubject(false);
+  private searchSource = new BehaviorSubject('-1');
 
   routeChange: Observable<any>;
   appInitialization = this.appInitializationSource.asObservable();
@@ -29,6 +30,7 @@ export class SharedService {
   isLoading = this.isLoadingSource.asObservable();
   selectedEntry = this.selectedEntrySource.asObservable();
   loadingDetails = this.loadingDetailsSource.asObservable();
+  search = this.searchSource.asObservable();
 
   private _id: number;
   get id() { return this._id; }
@@ -81,6 +83,10 @@ export class SharedService {
   private _dialogIsOpened: boolean;
   get dialogIsOpened() { return this._dialogIsOpened; }
   set dialogIsOpened(dialogIsOpened: boolean) { this._dialogIsOpened = dialogIsOpened; }
+
+  private _bottomSheetIsOpened: boolean;
+  get bottomSheetIsOpened() { return this._bottomSheetIsOpened; }
+  set bottomSheetIsOpened(bottomSheetIsOpened: boolean) { this._bottomSheetIsOpened = bottomSheetIsOpened; }
 
   constructor() {
     const routeSession = sessionStorage.getItem('route');
@@ -136,6 +142,10 @@ export class SharedService {
 
   set updateLoadingDetailsSelection(data: boolean) {
     this.loadingDetailsSource.next(data);
+  }
+
+  set updateSearchSelection(data: string) {
+    this.searchSource.next(data);
   }
 
 }
