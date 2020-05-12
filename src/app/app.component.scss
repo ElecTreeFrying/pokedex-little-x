@@ -1,4 +1,58 @@
 
+::ng-deep .mat-bottom-sheet-container {
+  min-width: 350px !important;
+}
+
+.load-more {
+  position: absolute;
+  right: 0;
+  top: 20vh;
+  z-index: 1000;
+
+  width: 56px + 170px;
+
+  background-color: violet;
+  padding: 16px;
+  border-top-left-radius: 50px;
+  border-bottom-left-radius: 50px;
+  cursor: pointer;
+
+  transform: translateX(170px);
+  transition: transform 0.5s ease;
+    
+  .mat-icon {
+    opacity: 1;
+    transition: opacity 0.5s ease;
+    color: black;
+    position: absolute;
+  }
+  
+  span {
+    font-family: 'VT323', monospace;
+    font-size: 2em;
+    margin-left: 8px;
+    opacity: 0;
+    transition: all 0.5s ease;
+  }
+  
+  &:hover {
+    transform: translateX(0px);
+    transition: all 0.5s ease;
+    
+    span {
+      opacity: 1;
+      transition: all 0.5s ease;
+    }
+
+    .mat-icon {
+      opacity: 0;
+      transition: all 0.5s ease;
+    }
+  }
+}
+
+
+
 .mat-sidenav-container {
   background-color: #340522;
   color: white;

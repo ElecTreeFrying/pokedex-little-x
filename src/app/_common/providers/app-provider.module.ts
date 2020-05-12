@@ -32,6 +32,7 @@ import { LoadingComponent } from '../../_components/loading/loading.component';
 import { NormalizePipe } from '../pipes/normalize.pipe';
 
 import { KeyboardDirective } from '../directives/keyboard.directive';
+import { TransitionEventDirective } from '../directives/transition-event.directive';
 
 import { pokemonDialogComponents } from '../services/component-selector.service';
 
@@ -43,6 +44,7 @@ import { pokemonDialogComponents } from '../services/component-selector.service'
     LoadingComponent,
     NormalizePipe,        // pipes
     KeyboardDirective,    // directives
+    TransitionEventDirective
   ],
   entryComponents: [
     ...pokemonDialogComponents
@@ -83,7 +85,8 @@ import { pokemonDialogComponents } from '../services/component-selector.service'
     PokemonComponent,
     LoadingComponent,
     NormalizePipe,         // pipes
-    KeyboardDirective      // directives
+    KeyboardDirective,     // directives
+    TransitionEventDirective
   ],
   providers: [
     SnotifyService,

@@ -39,8 +39,9 @@ export class DrawerComponent implements OnInit {
     if (!games) return
 
     const id = games.key;
+    this.shared.loading = false;
     this.shared.index = { value: 0, count: 0 };
-
+    
     this.router.navigate(['games'], {  
       queryParams: { name: games.name, id },
       fragment: type
@@ -49,10 +50,11 @@ export class DrawerComponent implements OnInit {
       this.shared.updatedRouteChangeSelection = { id, type };
     });
   }
-
+  
   selection(parent: string, child: string) {
-
+    
     const id = -99;
+    this.shared.loading = false;
     this.shared.index = { value: 0, count: 0 };
     
     this.router.navigate([ 'selection' ], {  
