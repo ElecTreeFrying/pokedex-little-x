@@ -43,12 +43,49 @@ export class AppComponent implements OnInit, AfterViewInit {
     public shared: SharedService
   ) {}
 
+  ngOnInit() {
+    
+    this.initial();
+  }
+
+  ngAfterViewInit() {
+
+    this.routerStyle = this.routerStyleProcess();
+
+    this.simplebar = new SimpleBar(this.drawerContent.nativeElement);
+    
+    this.scrollListener();
+    this.pageListeners();
+  }
+
   initial() {
     this.routerStyle = {};
     this.isLoading = false;
     this.isShowDetails = false;
     this.sideDrawerState = { drawer: true, details: false };
     this.toolbarHeight = 0;
+  }
+
+  scrollListener() {
+
+    this.simplebar.getScrollElement().addEventListener('scroll', (response: any) => {
+
+      const target = <HTMLElement>response.target;
+      const maxScroll = target.scrollHeight - target.clientHeight;
+      let scrollValue = target.scrollTop;
+  
+      const full = this.shared.item_meta.ceil === this.shared.index.count;
+      
+      if (this.shared.bottomSheetIsOpened || this.shared.loading === null) return;
+
+      if (scrollValue === maxScroll && !full && !this.shared.loading) {
+        this.shared.loading = true;
+        this.shared.updateIsLoadingSelection = true;
+        setTimeout(() => {
+          this.shared.updateLoadMoreSelection = 1;
+        }, 400);
+      }
+    });
   }
 
   pageListeners() {
@@ -96,46 +133,6 @@ export class AppComponent implements OnInit, AfterViewInit {
       }
 
       this.cd.detectChanges();
-    });
-  }
-
-  ngOnInit() {
-    
-    this.initial();
-  }
-
-  ngAfterViewInit() {
-
-    this.routerStyle = this.routerStyleProcess();
-
-    this.simplebar = new SimpleBar(this.drawerContent.nativeElement);
-    
-    this.scrollListener();
-    this.pageListeners();
-  }
-
-  scrollListener() {
-
-    this.simplebar.getScrollElement().addEventListener('scroll', (response: any) => {
-
-      const target = <HTMLElement>response.target;
-      const maxScroll = target.scrollHeight - target.clientHeight;
-      let scrollValue = target.scrollTop;
-  
-      const full = this.shared.item_meta.ceil === this.shared.index.count;
-      
-      if (this.shared.bottomSheetIsOpened || this.shared.loading === null) return;
-
-      if (scrollValue === maxScroll && !full && !this.shared.loading) {
-        let count = 0;
-        this.shared.loading = true;
-        this.shared.updateIsLoadingSelection = true;
-        setTimeout(() => {
-          if (count !== 0) return;
-          this.shared.updateLoadMoreSelection = 1;
-          count++;
-        }, 400);
-      }
     });
   }
 
