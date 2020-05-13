@@ -90,7 +90,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   pageListeners() {
 
-    this.toolbarHeight = this._toolbarHeight;
+    this.toolbarHeight = this.toolbar._elementRef.nativeElement.clientHeight;
     this.cd.detectChanges();
 
     this.shared.appInitialization.subscribe((res: number) => {
@@ -103,7 +103,7 @@ export class AppComponent implements OnInit, AfterViewInit {
       this.simplebar.getScrollElement().scrollTop = 0;
     });
 
-    this.details.openedChange.subscribe((res) => {
+    this.details.openedChange.subscribe((res: boolean) => {
       
       if (!res && this.shared.id) {
         this.drawer.close();
@@ -112,14 +112,6 @@ export class AppComponent implements OnInit, AfterViewInit {
       }
     });
 
-    this.details.openedStart.subscribe(() => {
-      this.shared.updateLoadMorePositionSelection = true;
-    });
-
-    this.details.closedStart.subscribe(() => {
-      this.shared.updateLoadMorePositionSelection = false;
-    });
-    
     this.shared.selectedEntry.subscribe((res) => {
 
       if (res === undefined) return;
@@ -208,10 +200,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     switch(option) {
       case true: {
         const portal = new ComponentPortal(AppInitializationComponent, this.viewContainerRef);
-        this.overlayRef = this.overlay.create({
-          disposeOnNavigation: true
-        });
-        
+        this.overlayRef = this.overlay.create({ disposeOnNavigation: true });
         this.overlayRef.attach(portal);
         break;
       }
@@ -235,18 +224,12 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
   
   private routerStyleProcess() {
-
     const toolbarHeight = this.toolbar._elementRef.nativeElement.clientHeight;
-
     return { 
       'height': `calc(100vh - ${toolbarHeight}px)`, 
       'max-height': `calc(100vh - ${toolbarHeight}px)`, 
       'min-height': `calc(100vh - ${toolbarHeight}px)` 
     }
-  }
-
-  private get _toolbarHeight() {
-    return this.toolbar._elementRef.nativeElement.clientHeight;
   }
 
 }

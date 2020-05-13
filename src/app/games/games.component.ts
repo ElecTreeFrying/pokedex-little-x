@@ -3,7 +3,7 @@ import { Component, OnInit, AfterViewInit, OnDestroy, ChangeDetectorRef } from '
 import { PokeapiService } from '../_common/services/pokeapi.service';
 import { SharedService } from '../_common/services/shared.service';
 import { Subscription } from 'rxjs';
-import { uniqBy } from 'lodash';
+import { uniqBy, sortBy } from 'lodash';
 
 
 @Component({
@@ -189,7 +189,9 @@ export class GamesComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private setView(entries: any, res: any) {
-    this.entries = entries.find(e => e['id'] === res.id).entries;
+    this.entries = sortBy(
+      entries.find(e => e['id'] === res.id).entries, [ 'id' ]
+    );
     this.displayEntries();
     sessionStorage.setItem('entries', JSON.stringify(this.all));
   }

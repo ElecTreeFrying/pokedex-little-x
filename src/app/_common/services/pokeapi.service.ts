@@ -64,45 +64,6 @@ export class PokeapiService {
     });
   }
 
-  httpTest() {
-    this.http.get('https://pokeapi.co/api/v2/pokemon?offset=0&limit=964').pipe(
-      exhaustMap(e => e['results'].map(c => this.http.get(c['url']))),
-      mergeMap((e: any) => e),
-      // mergeMap((e) => {
-
-      //   return of(e).pipe(
-      //     exhaustMap((pokemon: any) => {
-      //       return this.http.get(e['species']['url']).pipe(
-      //         map((species) => {
-      //           pokemon['species']['data'] = species;
-      //           return { ...pokemon }
-      //         })
-      //       );
-      //     })
-      //   );
-
-      // }),
-      toArray(),
-      
-      map((e: any) => {
-        return e.map(c => c.stats.find(c => c.stat.name === 'speed'));
-      }),
-
-      map((e) => {
-        console.log(e);
-      })
-    ).subscribe(() => 0);
-
-    this.http.get('https://pokeapi.co/api/v2/move-damage-class/').pipe(
-      exhaustMap(e => e['results'].map(c => this.http.get(c['url']))),
-      mergeMap((e: any) => e),
-      toArray(),
-      map((e) => {
-        console.log(e);
-      })
-    );
-  }
-
   moves(moves: any) {
 
     moves = moves.map((move: any) => {

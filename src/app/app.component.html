@@ -28,6 +28,8 @@
 
   <mat-sidenav class="mat-elevation-z10" position="end" mode="side" data-simplebar #details
     (openedChange)="$event?toggleDetails(true):toggleDetails(false)"
+    (openedStart)="shared.updateLoadMorePositionSelection = true"
+    (closedStart)="shared.updateLoadMorePositionSelection = false"
     [ngStyle]="{ 'top': toolbarHeight + 'px !important' }">
 
     <div class="close">
@@ -57,7 +59,7 @@
 
 </mat-sidenav-container>
 
-<div class="load-more" matRipple #loadMore [transitionEvent]="loadMore" (trigger)="attachOverlay = $event" (click)="toggleEntries()" 
+<div class="mat-elevation-z24 load-more" matRipple #loadMore [transitionEvent]="loadMore" (trigger)="attachOverlay = $event" (click)="toggleEntries()" 
   [ngStyle]="{ 'width': (shared.loadedAll | async) ? '81px + 8px + 32px' : '181px + 8px + 32px' }">
   <mat-icon>cached</mat-icon>
   <span *ngIf="(shared.loadedAll | async)">Refresh</span>

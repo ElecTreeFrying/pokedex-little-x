@@ -34,17 +34,17 @@ export class DrawerComponent implements OnInit {
     this.categories = categories;
   }
 
-  go(games: any, type: string) {
+  go(game: any, type: string) {
 
-    if (!games) return
+    if (!game) return
 
-    const id = games.key;
+    const id = game.key;
     this.shared.loading = false;
-    this.shared.updatedLoadedAllSelection = null;
+    this.shared.updatedLoadedAllSelection = false;
     this.shared.index = { value: 0, count: 0 };
     
     this.router.navigate(['games'], {  
-      queryParams: { name: games.name, id },
+      queryParams: { name: game.name, id },
       fragment: type
     }).then(() => {
       
@@ -56,7 +56,7 @@ export class DrawerComponent implements OnInit {
     
     const id = -99;
     this.shared.loading = false;
-    this.shared.updatedLoadedAllSelection = null;
+    this.shared.updatedLoadedAllSelection = false;
     this.shared.index = { value: 0, count: 0 };
     
     this.router.navigate([ 'selection' ], {  
