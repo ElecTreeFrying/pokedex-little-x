@@ -9,6 +9,7 @@ interface Key {
   no_habitat: any[];
   natures?: any[];
   characteristics?: any[];
+  pokemon_moves?: any[];
 }
 
 @Injectable({

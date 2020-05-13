@@ -49,7 +49,8 @@ export class PokeapiService {
       this.shared.keys = {
         types: res.keys.types,
         move_damage_class: res.keys.move_damage_class,
-        no_habitat: intersectionBy(res.pokemon, res.keys.no_habitat, 'id')
+        no_habitat: intersectionBy(res.pokemon, res.keys.no_habitat, 'id'),
+        pokemon_moves: []
       };
     });
   }
@@ -71,7 +72,16 @@ export class PokeapiService {
       return move;
     });
 
-    return intersectionBy(this.shared.moves, moves, 'name');
+    const result = intersectionBy(this.shared.moves, moves, 'name');
+
+    const isNotSaved = !this.shared.keys.pokemon_moves.find(e => e.id === this.shared.id);
+
+    if (isNotSaved) {
+      this.shared.keys.pokemon_moves.push({ id: this.shared.id, result });
+      return result;
+    } else {
+      return this.shared.keys.pokemon_moves.find(e => e.id === this.shared.id).result;
+    }
   }
 
   detailMoves(moves: any[]) {
