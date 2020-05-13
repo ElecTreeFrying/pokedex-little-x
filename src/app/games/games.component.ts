@@ -17,6 +17,7 @@ export class GamesComponent implements OnInit, AfterViewInit, OnDestroy {
   _entries: any[];
   all: any[];
   route: any;
+  state: any;
   toggle: boolean;
 
   subscriptions: Subscription[];
@@ -35,6 +36,7 @@ export class GamesComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.subscriptions.push(this.shared.routeChange.subscribe((res) => {
       this.setupProcess = res;
+      this.state = res;
     }));
 
     // this.api.pokemon_();
@@ -55,10 +57,16 @@ export class GamesComponent implements OnInit, AfterViewInit, OnDestroy {
         return;
       }
 
+      else if (res === -2) {
+        this.setupProcess = this.state;
+        this.shared.loading = false;
+        return;
+      }
+
       const full = this.entries.length === this.all.length;
 
       if (res !== 1 || full) return;
-      
+
       this.shared.updateLoadMoreSelection = 0;
       
       this.entries = uniqBy(this.entries.concat(

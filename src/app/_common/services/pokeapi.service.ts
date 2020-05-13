@@ -23,6 +23,7 @@ export class PokeapiService {
 
     this.count = 0;
 
+    shared.isLoadAll = true;
     shared.dialogIsOpened = false;
     shared.bottomSheetIsOpened = false;
     shared.updateAppInitializationSelection = 1;

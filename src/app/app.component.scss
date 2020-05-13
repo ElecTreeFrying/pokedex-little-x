@@ -5,36 +5,28 @@
 
 .load-more {
   position: absolute;
-  right: 0;
   top: 20vh;
   z-index: 1000;
-
-  width: 56px + 170px;
-
+  // width: 181px + 8px + 32px;
+  // width: 81px + 8px + 32px;
   background-color: violet;
-  padding: 16px;
-  border-top-left-radius: 50px;
-  border-bottom-left-radius: 50px;
   cursor: pointer;
+  padding: 16px;
 
-  transform: translateX(170px);
-  transition: transform 0.5s ease;
-    
   .mat-icon {
     opacity: 1;
     transition: opacity 0.5s ease;
     color: black;
     position: absolute;
   }
-  
+
   span {
     font-family: 'VT323', monospace;
     font-size: 2em;
-    margin-left: 8px;
     opacity: 0;
     transition: all 0.5s ease;
   }
-  
+
   &:hover {
     transform: translateX(0px);
     transition: all 0.5s ease;
@@ -51,7 +43,101 @@
   }
 }
 
+.close-left {
+  left: 0;
+  transform: translateX(-221px);
+}
 
+.close-right {
+  right: 0;
+  transform: translateX(221px);
+}
+
+.left {
+
+  left: 0;
+
+  border-top-right-radius: 50px;
+  border-bottom-right-radius: 50px;
+
+  transform: translateX(-164px);
+  transition: transform 0.5s ease;
+  
+  span {
+    margin-right: 8px;
+  }
+
+  .mat-icon {
+    right: 16px;
+  }
+}
+
+.right {
+
+  right: 0;
+
+  border-top-left-radius: 50px;
+  border-bottom-left-radius: 50px;
+
+  transform: translateX(164px);
+  transition: transform 0.5s ease;
+  
+  span {
+    margin-left: 8px;
+  }
+
+  .mat-icon {
+    left: 16px;
+  }
+}
+
+.close-left-refresh {
+  left: 0;
+  transform: translateX(-121px);
+}
+
+.close-right-refresh {
+  right: 0;
+  transform: translateX(121px);
+}
+
+.left-refresh {
+  
+  left: 0;
+
+  border-top-right-radius: 50px;
+  border-bottom-right-radius: 50px;
+  
+  transform: translateX(-64px);
+  transition: transform 0.5s ease;
+  
+  span {
+    margin-right: 8px;
+  }
+
+  .mat-icon {
+    right: 16px;
+  }
+}
+
+.right-refresh {
+  
+  right: 0;
+  
+  border-top-left-radius: 50px;
+  border-bottom-left-radius: 50px;
+  
+  transform: translateX(64px);
+  transition: transform 0.5s ease;
+  
+  span {
+    margin-left: 8px;
+  }
+
+  .mat-icon {
+    left: 16px;
+  }
+}
 
 .mat-sidenav-container {
   background-color: #340522;

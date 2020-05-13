@@ -110,9 +110,16 @@ export class AppComponent implements OnInit, AfterViewInit {
         this.details.open();
         this.sideDrawerState = { drawer: false, details: true };
       }
-
     });
 
+    this.details.openedStart.subscribe(() => {
+      this.shared.updateLoadMorePositionSelection = true;
+    });
+
+    this.details.closedStart.subscribe(() => {
+      this.shared.updateLoadMorePositionSelection = false;
+    });
+    
     this.shared.selectedEntry.subscribe((res) => {
 
       if (res === undefined) return;
@@ -181,6 +188,20 @@ export class AppComponent implements OnInit, AfterViewInit {
     }
 
     this.cd.detectChanges();
+  }
+
+  toggleEntries() {
+    if (this.shared.isLoadAll) {
+      this.simplebar.getScrollElement().scrollTop = 0;
+      this.shared.updatedLoadedAllSelection = true;
+      this.shared.updateLoadMoreSelection = -1;
+      this.shared.isLoadAll = false;
+    } else {
+      this.simplebar.getScrollElement().scrollTop = 0;
+      this.shared.updatedLoadedAllSelection = false;
+      this.shared.updateLoadMoreSelection = -2;
+      this.shared.isLoadAll = true;
+    }
   }
 
   set attachOverlay(option: boolean) {

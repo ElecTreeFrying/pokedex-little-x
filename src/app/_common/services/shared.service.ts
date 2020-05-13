@@ -16,6 +16,7 @@ interface Key {
 })
 export class SharedService {
 
+  private loadedAllSource = new BehaviorSubject(null);
   private routeChangeSource: BehaviorSubject<any>;
   private appInitializationSource = new BehaviorSubject(0);
   private loadMoreSource = new BehaviorSubject(0);
@@ -23,7 +24,9 @@ export class SharedService {
   private selectedEntrySource = new BehaviorSubject(undefined);
   private loadingDetailsSource = new BehaviorSubject(false);
   private searchSource = new BehaviorSubject('-1');
+  private loadMorePositionSource = new BehaviorSubject(false);
 
+  loadedAll = this.loadedAllSource.asObservable();
   routeChange: Observable<any>;
   appInitialization = this.appInitializationSource.asObservable();
   loadMore = this.loadMoreSource.asObservable();
@@ -31,6 +34,7 @@ export class SharedService {
   selectedEntry = this.selectedEntrySource.asObservable();
   loadingDetails = this.loadingDetailsSource.asObservable();
   search = this.searchSource.asObservable();
+  loadMorePosition = this.loadMorePositionSource.asObservable();
 
   private _id: number;
   get id() { return this._id; }
@@ -87,11 +91,17 @@ export class SharedService {
   private _bottomSheetIsOpened: boolean;
   get bottomSheetIsOpened() { return this._bottomSheetIsOpened; }
   set bottomSheetIsOpened(bottomSheetIsOpened: boolean) { this._bottomSheetIsOpened = bottomSheetIsOpened; }
+  
+  private _isLoadAll: boolean;
+  get isLoadAll() { return this._isLoadAll; }
+  set isLoadAll(isLoadAll: boolean) { this._isLoadAll = isLoadAll; }
 
   constructor() {
     const routeSession = sessionStorage.getItem('route');
     this.routeChangeSource = new BehaviorSubject(JSON.parse(routeSession));
     this.routeChange = this.routeChangeSource.asObservable();
+
+    this._repeat = [];
   }
 
   get sections() {
@@ -100,6 +110,20 @@ export class SharedService {
 
   get subSections() {
     return [ false, false, false ];
+  }
+
+
+  private _repeat: any[];
+  checkRepeat(res: any, object: string) {
+    this._repeat.unshift({
+      res, object
+    });
+    const array = this._repeat.filter(e => e.object === object).slice(0, 2);
+    if (array.length === 2) {
+      return array[1].res === array[0].res;
+    } else {
+      return false;
+    }
   }
 
   toGithubRaw(url: string) {
@@ -112,6 +136,10 @@ export class SharedService {
     }
     
     return url.replace(api, git) + 'index.json';
+  }
+
+  set updatedLoadedAllSelection(data: boolean){
+    this.loadedAllSource.next(data);
   }
 
   set updatedRouteChangeSelection(data: any){
@@ -146,6 +174,10 @@ export class SharedService {
 
   set updateSearchSelection(data: string) {
     this.searchSource.next(data);
+  }
+
+  set updateLoadMorePositionSelection(data: boolean) {
+    this.loadMorePositionSource.next(data);
   }
 
 }

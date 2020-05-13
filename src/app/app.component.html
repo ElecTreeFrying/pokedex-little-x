@@ -57,9 +57,11 @@
 
 </mat-sidenav-container>
 
-<div class="load-more" matRipple #loadMore transitionEvent (trigger)="attachOverlay = $event" (click)="shared.updateLoadMoreSelection = -1">
+<div class="load-more" matRipple #loadMore [transitionEvent]="loadMore" (trigger)="attachOverlay = $event" (click)="toggleEntries()" 
+  [ngStyle]="{ 'width': (shared.loadedAll | async) ? '81px + 8px + 32px' : '181px + 8px + 32px' }">
   <mat-icon>cached</mat-icon>
-  <span>Load all entries</span>
+  <span *ngIf="(shared.loadedAll | async)">Refresh</span>
+  <span *ngIf="!(shared.loadedAll | async)">Load all entries</span>
 </div>
 
 <ng-snotify></ng-snotify>
