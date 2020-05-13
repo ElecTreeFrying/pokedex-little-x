@@ -189,9 +189,13 @@ export class GamesComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private setView(entries: any, res: any) {
-    this.entries = sortBy(
-      entries.find(e => e['id'] === res.id).entries, [ 'id' ]
-    );
+    
+    if (res.type === 'generation') {
+      this.entries = sortBy(entries.find(e => e['id'] === res.id).entries, [ 'id' ]);
+    } else {
+      this.entries = entries.find(e => e['id'] === res.id).entries, [ 'id' ];
+    }
+
     this.displayEntries();
     sessionStorage.setItem('entries', JSON.stringify(this.all));
   }
