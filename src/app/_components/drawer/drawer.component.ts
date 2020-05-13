@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 
 import { PokeapiService } from '../../_common/services/pokeapi.service';
 import { SharedService, 
-  pokedex, generation, version_group, items, categories
+  type, pokedex, generation, version_group, items, categories, moves, locations
 } from '../../_common/services/shared.service';
 
 
@@ -14,11 +14,14 @@ import { SharedService,
 })
 export class DrawerComponent implements OnInit {
 
+  types: any;
   pokedex: any;
   generation: any;
   versionGroup: any;
   items: any;
   categories: any;
+  moves: any;
+  locations: any;
 
   constructor(
     private router: Router, 
@@ -27,11 +30,14 @@ export class DrawerComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.types = type.filter(e => e.key <= 18);
     this.pokedex = pokedex;
     this.generation = generation;
     this.versionGroup = version_group.filter(e => e.key !== 0);
     this.items = items;
     this.categories = categories;
+    this.moves = moves;
+    this.locations = locations;
   }
 
   go(game: any, type: string) {

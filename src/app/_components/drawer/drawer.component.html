@@ -1,5 +1,5 @@
 
-<mat-accordion displayMode="flat">
+<mat-accordion displayMode="flat" multi="true">
 
   <!-- games -->
   <mat-expansion-panel expanded>
@@ -44,7 +44,7 @@
       
           </ng-template>
         </mat-expansion-panel>
-        <mat-expansion-panel class="inner last">
+        <mat-expansion-panel class="inner">
           <mat-expansion-panel-header>
             <mat-panel-title><span>Version group</span></mat-panel-title>
           </mat-expansion-panel-header>
@@ -62,12 +62,17 @@
       
           </ng-template>
         </mat-expansion-panel>
+        <mat-expansion-panel class="inner last" hideToggle #types (click)="types.close()">
+          <mat-expansion-panel-header>
+            <mat-panel-title><span>Pokémon types</span></mat-panel-title>
+          </mat-expansion-panel-header>
+        </mat-expansion-panel>
       </mat-accordion>
     </ng-template>
   </mat-expansion-panel>
 
   <!-- items -->
-  <mat-expansion-panel>
+  <mat-expansion-panel expanded>
     <mat-expansion-panel-header>
       <mat-panel-title><span>Items</span></mat-panel-title>
     </mat-expansion-panel-header>
@@ -91,40 +96,38 @@
       
           </ng-template>
         </mat-expansion-panel>
-        <mat-expansion-panel class="inner last" hideToggle #berries (click)="berries.close()">
+        <mat-expansion-panel class="inner" hideToggle #categories (click)="categories.close()">
           <mat-expansion-panel-header (click)="selection('items', 'categories')">
             <mat-panel-title><span>Categories</span></mat-panel-title>
           </mat-expansion-panel-header>
         </mat-expansion-panel>
+        <mat-expansion-panel class="inner last" hideToggle #berries (click)="berries.close()">
+          <mat-expansion-panel-header matRipple routerLInk="/">
+            <mat-panel-title><span>Berries</span></mat-panel-title>
+          </mat-expansion-panel-header>
+        </mat-expansion-panel>
       </mat-accordion>
     </ng-template>
   </mat-expansion-panel>
 
-  <!-- berries -->
-  <mat-expansion-panel hideToggle #berries (click)="berries.close()">
-    <mat-expansion-panel-header matRipple routerLInk="/">
-      <mat-panel-title><span>Berries</span></mat-panel-title>
-    </mat-expansion-panel-header>
-  </mat-expansion-panel>
-
-  <!-- moves -->
-  <mat-expansion-panel>
+  <!-- others -->
+  <mat-expansion-panel expanded>
     <mat-expansion-panel-header>
-      <mat-panel-title><span>Moves</span></mat-panel-title>
+      <mat-panel-title><span>Others</span></mat-panel-title>
     </mat-expansion-panel-header>
     <ng-template matExpansionPanelContent>
       <mat-accordion displayMode="flat">
         <mat-expansion-panel class="inner">
           <mat-expansion-panel-header>
-            <mat-panel-title><span>Type</span></mat-panel-title>
+            <mat-panel-title><span>Moves</span></mat-panel-title>
           </mat-expansion-panel-header>
           <ng-template matExpansionPanelContent>
       
             <mat-action-list>
               <button 
                 mat-list-item 
-                *ngFor="let item of pokedex"
-                (click)="go(item, 'pokedex')">
+                *ngFor="let item of moves"
+                (click)="go(item, 'moves')">
                 <mat-icon>arrow_right</mat-icon>
                 <span class="nav">{{ item?.name }}</span>
               </button>
@@ -132,105 +135,23 @@
       
           </ng-template>
         </mat-expansion-panel>
-        <mat-expansion-panel class="inner">
-          <mat-expansion-panel-header>
-            <mat-panel-title><span>Lorem ipsum</span></mat-panel-title>
-          </mat-expansion-panel-header>
-          <ng-template matExpansionPanelContent>
-      
-            <!-- include here -->
-      
-          </ng-template>
-        </mat-expansion-panel>
         <mat-expansion-panel class="inner last">
-          <mat-expansion-panel-header>
-            <mat-panel-title><span>Lorem ipsum</span></mat-panel-title>
-          </mat-expansion-panel-header>
-          <ng-template matExpansionPanelContent>
-      
-            <!-- include here -->
-      
-          </ng-template>
-        </mat-expansion-panel>
-      </mat-accordion>
-    </ng-template>
-  </mat-expansion-panel>
-  
-  <!-- machine -->
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title><span>Machine</span></mat-panel-title>
-    </mat-expansion-panel-header>
-    <ng-template matExpansionPanelContent>
-      <mat-accordion displayMode="flat">
-        <mat-expansion-panel class="inner">
-          <mat-expansion-panel-header>
-            <mat-panel-title><span>Type</span></mat-panel-title>
-          </mat-expansion-panel-header>
-          <ng-template matExpansionPanelContent>
-      
-            <mat-action-list>
-              <button 
-                mat-list-item 
-                *ngFor="let item of pokedex"
-                (click)="go(item, 'pokedex')">
-                <mat-icon>arrow_right</mat-icon>
-                <span class="nav">{{ item?.name }}</span>
-              </button>
-            </mat-action-list>
-      
-          </ng-template>
-        </mat-expansion-panel>
-        <mat-expansion-panel class="inner">
-          <mat-expansion-panel-header>
-            <mat-panel-title><span>Lorem ipsum</span></mat-panel-title>
-          </mat-expansion-panel-header>
-          <ng-template matExpansionPanelContent>
-      
-            <!-- include here -->
-      
-          </ng-template>
-        </mat-expansion-panel>
-        <mat-expansion-panel class="inner last">
-          <mat-expansion-panel-header>
-            <mat-panel-title><span>Lorem ipsum</span></mat-panel-title>
-          </mat-expansion-panel-header>
-          <ng-template matExpansionPanelContent>
-      
-            <!-- include here -->
-      
-          </ng-template>
-        </mat-expansion-panel>
-      </mat-accordion>
-    </ng-template>
-  </mat-expansion-panel>
-
-  <!-- locations -->
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title><span>Locations</span></mat-panel-title>
-    </mat-expansion-panel-header>
-    <ng-template matExpansionPanelContent>
-      <mat-accordion displayMode="flat">
-        <mat-expansion-panel class="inner" hideToggle #location2 (click)="location2.close()">
-          <mat-expansion-panel-header>
-            <mat-panel-title><span>Regions</span></mat-panel-title>
-          </mat-expansion-panel-header>
-        </mat-expansion-panel>
-        <mat-expansion-panel class="inner" hideToggle #location1 (click)="location1.close()">
           <mat-expansion-panel-header>
             <mat-panel-title><span>Locations</span></mat-panel-title>
           </mat-expansion-panel-header>
-        </mat-expansion-panel>
-        <mat-expansion-panel class="inner" hideToggle #location3 (click)="location3.close()">
-          <mat-expansion-panel-header>
-            <mat-panel-title><span>Location areas</span></mat-panel-title>
-          </mat-expansion-panel-header>
-        </mat-expansion-panel>
-        <mat-expansion-panel class="inner last" hideToggle #location4 (click)="location4.close()">
-          <mat-expansion-panel-header>
-            <mat-panel-title><span>Pal park areas</span></mat-panel-title>
-          </mat-expansion-panel-header>
+          <ng-template matExpansionPanelContent>
+
+            <mat-action-list>
+              <button 
+                mat-list-item 
+                *ngFor="let item of locations"
+                (click)="go(item, 'location')">
+                <mat-icon>arrow_right</mat-icon>
+                <span class="nav">{{ item?.name }}</span>
+              </button>
+            </mat-action-list>
+
+          </ng-template>
         </mat-expansion-panel>
       </mat-accordion>
     </ng-template>

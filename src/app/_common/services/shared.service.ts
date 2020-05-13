@@ -228,6 +228,19 @@ export const type = [
   { key: 10002, name: "Shadow", color: { default: undefined, dark: undefined, light: undefined } }
 ];
 
+export const moves = [
+  { name: 'Physical' },
+  { name: 'Special' },
+  { name: 'Status' }
+];
+
+export const locations = [
+  { name: 'Regions' },
+  { name: 'Locations' },
+  { name: 'Location Areas' },
+  { name: 'Pal park areas' }
+]
+
 export const pokedex = [
   { key: 1, name: 'National Pokedex' }, 
   { key: 2, name: 'Kanto Pokedex' }, 
