@@ -127,7 +127,7 @@
               <button 
                 mat-list-item 
                 *ngFor="let item of moves"
-                (click)="go(item, 'moves')">
+                (click)="selection('move', item?.name)">
                 <mat-icon>arrow_right</mat-icon>
                 <span class="nav">{{ item?.name }}</span>
               </button>

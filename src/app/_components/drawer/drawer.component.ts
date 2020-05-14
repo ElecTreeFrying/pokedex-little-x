@@ -60,7 +60,7 @@ export class DrawerComponent implements OnInit {
   
   selection(parent: string, child: string) {
     
-    const id = -99;
+    const id = parent !== 'move' ? -99 : -1;
     this.shared.loading = false;
     this.shared.index = { value: 0, count: 0 };
     

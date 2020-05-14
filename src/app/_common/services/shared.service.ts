@@ -236,9 +236,9 @@ export const type = [
 ];
 
 export const moves = [
-  { name: 'Physical' },
-  { name: 'Special' },
-  { name: 'Status' }
+  { key: -1, name: 'Physical' },
+  { key: -1, name: 'Special' },
+  { key: -1, name: 'Status' }
 ];
 
 export const locations = [

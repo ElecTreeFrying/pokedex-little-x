@@ -2,16 +2,31 @@
 
 <div class="card-content">
   
-  <div matRipple *ngFor="let selection of selections">
+  <div matRipple *ngFor="let selection of selections | selection: type: loadAll">
     <mat-card (click)="go(selection, type)" [ngStyle]="{ 'background': type === 'type' ? selection.color.dark : '#4E1338' }">
       <mat-card-content>
     
-        <p>{{ selection?.name }}</p>
+        <div *ngIf="type.includes('move-'); then thenBlock else elseBlock"></div>
+        
+        <ng-template #thenBlock>
+          <p>{{ selection | selection: 'move-name' }}</p>
+        </ng-template>
+        
+        <ng-template #elseBlock>
+          <p>{{ selection?.name }}</p>
+        </ng-template>
     
+      </mat-card-content>
+    </mat-card>
+  </div>
+  
+  <div matRipple (click)="loadAll = true" *ngIf="type.includes('move-')">
+    <mat-card>
+      <mat-card-content class="load-all">
+        <mat-icon>add</mat-icon>
+        <span>Load all</span>
       </mat-card-content>
     </mat-card>
   </div>
 
 </div>
-
-

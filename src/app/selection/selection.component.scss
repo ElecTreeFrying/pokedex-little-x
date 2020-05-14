@@ -16,10 +16,31 @@
   .mat-card {
     width: 150px;
     height: 70px;
+    background: #4E1338;
     
     .mat-card-content {
       display: flex;
       height: 38px;
+    }
+
+    .load-all {
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-content: center;
+      align-items: center;
+
+      .mat-icon {
+        font-size: 2em;
+        transform: translateY(-3px);
+        margin-right: 8px;
+      }
+
+      span {
+        font-family: 'Poppins', 'Poppins-Regular';
+        font-size: 1.15em;
+      }
+
     }
 
     p {

@@ -14,6 +14,7 @@ export class SelectionComponent implements OnInit {
 
   selections: any;
   type: string;
+  loadAll: boolean;
 
   constructor(
     private router: Router,
@@ -28,11 +29,19 @@ export class SelectionComponent implements OnInit {
   }
   
   initialize() {
+    this.loadAll = false;
   }
   
   pageListener() {
 
     this.shared.routeChange.subscribe((res) => {     
+
+      if (res.id === -1) {
+        this.loadAll = false;
+        this.selections = this.shared.moves;
+        this.type = `move-${res.type}`;
+        return;
+      }
 
       this.selections = this.collection[res.type];
       this.type = res.type;
