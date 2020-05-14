@@ -118,7 +118,7 @@ export class GamesComponent implements OnInit, AfterViewInit, OnDestroy {
     sessionStorage.setItem('route', JSON.stringify(res));
     const route = res.type;
 
-    const isGames = route === 'pokedex' || route === 'generation' || route === 'version-group';
+    const isGames = route === 'pokedex' || route === 'generation' || route === 'version-group' || route === 'type';
     const isItems = route === 'items';
     const isCategory = route === 'category';
 
@@ -143,6 +143,8 @@ export class GamesComponent implements OnInit, AfterViewInit, OnDestroy {
       entries = this.shared.pokedex;
     } else if (res.type === 'generation') {
       entries = this.shared.generation;
+    } else if (res.type === 'type') {
+      entries = this.shared.pokemon;
     }
 
     if (!entries) {
@@ -202,6 +204,8 @@ export class GamesComponent implements OnInit, AfterViewInit, OnDestroy {
     
     if (res.type === 'generation') {
       this.entries = sortBy(entries.find(e => e['id'] === res.id).entries, [ 'id' ]);
+    } else if (res.type === 'type') {
+      this.entries = this.shared.keys.type_pokemon;
     } else {
       this.entries = entries.find(e => e['id'] === res.id).entries, [ 'id' ];
     }

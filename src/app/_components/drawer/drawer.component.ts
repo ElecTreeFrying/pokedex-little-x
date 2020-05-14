@@ -69,7 +69,9 @@ export class DrawerComponent implements OnInit {
       fragment: parent
     }).then(() => {
       
-      this.shared.updatedRouteChangeSelection = { id, type: child };
+      const data = { id, type: child };
+      this.shared.updatedRouteChangeSelection = data;
+      sessionStorage.setItem('route', JSON.stringify(data));
     });
   }
 

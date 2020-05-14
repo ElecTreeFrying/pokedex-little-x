@@ -3,7 +3,7 @@
 <div class="card-content">
   
   <div matRipple *ngFor="let selection of selections">
-    <mat-card (click)="go(selection, 'category')">
+    <mat-card (click)="go(selection, type)" [ngStyle]="{ 'background': type === 'type' ? selection.color.dark : '#4E1338' }">
       <mat-card-content>
     
         <p>{{ selection?.name }}</p>

@@ -318,6 +318,20 @@ export class PokeapiService {
     return entries.slice(this.shared.index.value, this.shared.index.value + defaultLength);
   }
 
+  typeData(id: number) {
+
+    const url = `https://pokeapi.co/api/v2/type/${id}/`;
+
+    return this.http.get(this.shared.toGithubRaw(url)).pipe(
+      map((e: any) => e.pokemon.map(c => c.pokemon)),
+      map((res) => {
+        this.shared.keys.type_pokemon = intersectionBy(
+          this.shared.pokemon, res, 'name'
+        );
+      })
+    );
+  }
+
   private clearCount() {
     if (this.shared.item_meta.ceil === this.shared.index.count) {
       this.count = 0;

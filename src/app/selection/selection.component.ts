@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { SharedService, categories } from '../_common/services/shared.service';
+import { PokeapiService } from '../_common/services/pokeapi.service';
+import { SharedService, categories, type } from '../_common/services/shared.service';
 
 
 @Component({
@@ -12,15 +13,30 @@ import { SharedService, categories } from '../_common/services/shared.service';
 export class SelectionComponent implements OnInit {
 
   selections: any;
+  type: string;
 
   constructor(
-    private router: Router, 
+    private router: Router,
+    private api: PokeapiService,
     private shared: SharedService
-  ) { 
-    this.selections = categories;
-  }
-
+  ) { }
+  
   ngOnInit(): void {
+
+    this.initialize();
+    this.pageListener();
+  }
+  
+  initialize() {
+  }
+  
+  pageListener() {
+
+    this.shared.routeChange.subscribe((res) => {     
+
+      this.selections = this.collection[res.type];
+      this.type = res.type;
+    });
   }
 
   go(selection: any, type: string) {
@@ -29,12 +45,38 @@ export class SelectionComponent implements OnInit {
 
     const id = selection.key;
 
+    if (type === 'type') return this.typeData(selection, type);
+
     this.router.navigate(['games'], {  
       queryParams: { name: selection.name, id },
       fragment: type
     }).then(() => {
       
       this.shared.updatedRouteChangeSelection = { id, type };
+    });
+  }
+
+  private get collection() {
+    return {
+      categories,
+      type: type.filter(e => e.key < 20)
+    }
+  }
+
+  typeData(selection: any, type: string) {
+
+    const id = selection.key;
+
+    this.api.typeData(+id).subscribe(() => {
+      
+      this.router.navigate(['games'], {  
+        queryParams: { name: selection.name, id },
+        fragment: type
+      }).then(() => {
+        
+        this.shared.updatedRouteChangeSelection = { id, type };
+      });
+    
     });
   }
 

@@ -63,7 +63,7 @@
           </ng-template>
         </mat-expansion-panel>
         <mat-expansion-panel class="inner last" hideToggle #types (click)="types.close()">
-          <mat-expansion-panel-header>
+          <mat-expansion-panel-header (click)="selection('pokemon', 'type')">
             <mat-panel-title><span>Pokémon types</span></mat-panel-title>
           </mat-expansion-panel-header>
         </mat-expansion-panel>
