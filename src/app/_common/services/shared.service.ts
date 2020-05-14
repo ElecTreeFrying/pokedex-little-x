@@ -25,7 +25,8 @@ export class SharedService {
   private selectedEntrySource = new BehaviorSubject(undefined);
   private loadingDetailsSource = new BehaviorSubject(false);
   private searchSource = new BehaviorSubject('-1');
-  private loadMorePositionSource = new BehaviorSubject(false);
+  private loadMorePositionSource = new BehaviorSubject(null);
+  private hideLoadMoreSource = new BehaviorSubject(null);
 
   loadedAll = this.loadedAllSource.asObservable();
   routeChange: Observable<any>;
@@ -36,6 +37,7 @@ export class SharedService {
   loadingDetails = this.loadingDetailsSource.asObservable();
   search = this.searchSource.asObservable();
   loadMorePosition = this.loadMorePositionSource.asObservable();
+  hideLoadMore = this.hideLoadMoreSource.asObservable();
 
   private _id: number;
   get id() { return this._id; }
@@ -179,6 +181,10 @@ export class SharedService {
 
   set updateLoadMorePositionSelection(data: boolean) {
     this.loadMorePositionSource.next(data);
+  }
+
+  set updateHideLoadMoreSelection(data: boolean) {
+    this.hideLoadMoreSource.next(data);
   }
 
 }

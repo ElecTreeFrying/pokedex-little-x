@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer2, ViewChild, ElementRef } from '@angular/core';
+
+import { SharedService } from '../../_common/services/shared.service';
+
 
 @Component({
   selector: 'app-app-initialization',
@@ -7,9 +10,39 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AppInitializationComponent implements OnInit {
 
-  constructor() { }
+  @ViewChild('content') content: ElementRef;
+
+  flag: number = 0;
+
+  constructor(
+    private render: Renderer2,
+    private shared: SharedService
+  ) { }
 
   ngOnInit(): void {
+
+    setTimeout(() => {
+      this.remove()
+    }, 2000);
+
+    this.shared.appInitialization.subscribe((res: number) => {
+
+      if (res !== 3) return
+      this.remove();
+    });
+
+  }
+
+  remove() {
+    if (!this.content) return;
+    this.render.addClass(this.content.nativeElement, 'loaded');
+  }
+  
+  end() {
+    this.flag++
+    if (this.flag === 2) {
+      this.shared.updateAppInitializationSelection = 4
+    }
   }
 
 }

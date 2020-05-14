@@ -1,4 +1,4 @@
-import { Component, ViewChild, OnInit, OnDestroy, ElementRef, ChangeDetectorRef, ViewEncapsulation } from '@angular/core';
+import { Component, ViewChild, OnInit, OnDestroy, Output, ElementRef, ChangeDetectorRef, ViewEncapsulation, EventEmitter } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 
@@ -17,6 +17,7 @@ import { SnotifyService } from '../_common/services/snotify.service';
 export class PokemonComponent implements OnInit, OnDestroy {
 
   @ViewChild('genus') genus: ElementRef;
+  @Output() loaded = new EventEmitter;
 
   pokemon: any;
   moves: any;
@@ -46,9 +47,12 @@ export class PokemonComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     
     this.initial();
-
+    
+    this.loaded.next(true)
+    
     this.subscriptions.push(this.api.pokemon.subscribe((pokemon: any) => {
       
+      this.loaded.next(false);
       this.pokemon = pokemon;
       
       const moves = this.api.moves(pokemon.moves);

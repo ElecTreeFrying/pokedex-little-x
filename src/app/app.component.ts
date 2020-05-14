@@ -13,6 +13,7 @@ import { AppInitializationComponent } from './_components/app-initialization/app
 import { SearchComponent } from './_components/search/search.component';
 
 import { SharedService } from './_common/services/shared.service';
+import { RouteService } from './_common/services/route.service';
 
 
 @Component({
@@ -40,7 +41,8 @@ export class AppComponent implements OnInit, AfterViewInit {
     private viewContainerRef: ViewContainerRef,
     private bottomSheet: MatBottomSheet,
     private cd: ChangeDetectorRef,
-    public shared: SharedService
+    public shared: SharedService,
+    public route: RouteService
   ) {}
 
   ngOnInit() {
@@ -95,12 +97,17 @@ export class AppComponent implements OnInit, AfterViewInit {
 
     this.shared.appInitialization.subscribe((res: number) => {
       res === 1 ? this.attachOverlay = true  : 
-      res === 2 ? this.attachOverlay = false : 0;
+      res === 2 ? this.shared.updateAppInitializationSelection = 3 :
+      res === 4 ? this.attachOverlay = false : 0;
     });
 
     this.shared.routeChange.subscribe((res: any) => {
       if (!res) return;
       this.simplebar.getScrollElement().scrollTop = 0;
+    });
+
+    this.shared.hideLoadMore.subscribe((res) => {
+      this.sidenavToggle(false);
     });
 
     this.details.openedChange.subscribe((res: boolean) => {
