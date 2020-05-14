@@ -62,7 +62,6 @@ export class DrawerComponent implements OnInit {
     
     const id = -99;
     this.shared.loading = false;
-    this.shared.updatedLoadedAllSelection = false;
     this.shared.index = { value: 0, count: 0 };
     
     this.router.navigate([ 'selection' ], {  

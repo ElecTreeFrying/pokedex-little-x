@@ -38,8 +38,6 @@ export class GamesComponent implements OnInit, AfterViewInit, OnDestroy {
       this.setupProcess = res;
       this.state = res;
     }));
-
-    // this.api.pokemon_();
   }
 
   ngAfterViewInit() {

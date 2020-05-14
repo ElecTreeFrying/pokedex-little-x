@@ -1,6 +1,7 @@
 import { OnInit, Directive, Input, Output, Renderer2, HostListener, EventEmitter, ChangeDetectorRef } from '@angular/core';
 
 import { SharedService } from '../services/shared.service';
+import { RouteService } from '../services/route.service';
 
 interface Variables {
   run: boolean;
@@ -26,7 +27,8 @@ export class TransitionEventDirective implements OnInit {
   constructor(
     private cd: ChangeDetectorRef,
     private render: Renderer2,
-    private shared: SharedService
+    private shared: SharedService,
+    private route: RouteService
   ) { }
   
   initialize() {
@@ -39,6 +41,22 @@ export class TransitionEventDirective implements OnInit {
       enter: false,
       leave: false
     };
+
+    this.render.addClass(this.transitionEvent, `close-right`);
+
+    this.shared.hideLoadMore.subscribe((res) => {
+
+      if (res !== true) return;
+      
+      setTimeout(() => {
+        this.buttonState(false);
+      }, 300);
+    });
+
+    this.route.showLoadMore.subscribe((res) => {
+
+      this.buttonState(res);
+    });
   }
   
   ngOnInit() {
@@ -46,6 +64,9 @@ export class TransitionEventDirective implements OnInit {
     this.initialize();
     
     this.shared.loadMorePosition.subscribe((res) => {
+
+      if (res === null) return
+
       this.state = res;
       this.to();
     });
@@ -58,7 +79,7 @@ export class TransitionEventDirective implements OnInit {
       const option = this.state ? 'left' : 'right';
       const suffix = this.isLoadAll ? '-refresh' : '';
 
-      this.render.removeClass(element, `${option}${suffix}`)
+      this.render.removeClass(element, `${option}${suffix}`);
 
       this.isLoadAll = res;
       this.to();
@@ -122,6 +143,22 @@ export class TransitionEventDirective implements OnInit {
   up() {
     this.isFired = true;
     this.trigger.next(true);
+  }
+
+  private buttonState(res: boolean) {
+    if (res) {
+
+      this.render.removeClass(this.transitionEvent, `close-right-animated`);
+      this.to();
+    } else {
+
+      const element = this.transitionEvent;
+      const option = this.state ? 'left' : 'right';
+      const suffix = this.isLoadAll ? '-refresh' : '';
+
+      this.render.removeClass(element, `${option}${suffix}`);
+      this.render.addClass(this.transitionEvent, `close-right-animated`);
+    }
   }
 
 }

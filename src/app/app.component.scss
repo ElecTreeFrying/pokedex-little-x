@@ -43,12 +43,24 @@
 
 .close-left {
   left: 0;
+  border-top-right-radius: 50px;
+  border-bottom-right-radius: 50px;
   transform: translateX(-221px);
 }
 
 .close-right {
   right: 0;
+  border-top-left-radius: 50px;
+  border-bottom-left-radius: 50px;
   transform: translateX(221px);
+}
+
+.close-right-animated {
+  right: 0;
+  border-top-left-radius: 50px;
+  border-bottom-left-radius: 50px;
+  transform: translateX(221px);
+  transition: all 0.5s ease;
 }
 
 .left {
