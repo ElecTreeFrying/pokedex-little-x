@@ -107,6 +107,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     });
 
     this.shared.hideLoadMore.subscribe((res) => {
+      this.bottomSheet.dismiss();
       this.sidenavToggle(false);
     });
 
@@ -190,6 +191,9 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   toggleEntries() {
+
+    this.bottomSheet.dismiss();
+
     if (this.shared.isLoadAll) {
       this.simplebar.getScrollElement().scrollTop = 0;
       this.shared.updatedLoadedAllSelection = true;

@@ -14,7 +14,6 @@ import { uniqBy, sortBy } from 'lodash';
 export class GamesComponent implements OnInit, AfterViewInit, OnDestroy {
 
   entries: any[];
-  _entries: any[];
   all: any[];
   route: any;
   state: any;
@@ -70,21 +69,34 @@ export class GamesComponent implements OnInit, AfterViewInit, OnDestroy {
       this.entries = uniqBy(this.entries.concat(
         this.api.nextEntries(this.all)
       ), 'name');
-      this._entries = this.entries;
 
       this.shared.loading = false;
       this.shared.updateIsLoadingSelection = false;
     }));
 
+    let normalState = [];
+
     this.subscriptions.push(this.shared.search.subscribe((search: string) => {
       
       if (search === '') {
-        this.entries = this._entries;
+        
+        if (normalState.length === 0) {
+          normalState = this.entries; }
+
+        this.entries = normalState;
         this.cd.detectChanges();
-      } else if (search !== '' && search !== '-1') {
-        this.entries = this._entries.filter(e => e.name.includes(search));
+      } 
+      
+      if (search !== '' && search !== '-1') {
+
+        this.entries = normalState.filter(e => e.name.includes(search));
         this.cd.detectChanges();
       }
+
+      if (search === '-1') {
+        normalState = [];
+      }
+
     }));
   }
 
@@ -201,7 +213,6 @@ export class GamesComponent implements OnInit, AfterViewInit, OnDestroy {
   private displayEntries() {
     this.all = this.entries;
     this.entries = this.entries.slice(0, this.shared.defaultLength);
-    this._entries = this.entries;
 
     const _length = this.all.length - 50;
 
