@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
@@ -21,6 +21,7 @@ export class SelectionComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[];
 
   constructor(
+    private cd: ChangeDetectorRef,
     private router: Router,
     private api: PokeapiService,
     private shared: SharedService
@@ -66,6 +67,21 @@ export class SelectionComponent implements OnInit, OnDestroy {
         sessionStorage.setItem('entries', JSON.stringify(this.selections));
         return;
       }
+      
+      if (res.id === -99 && res.type === 'berries') {
+
+        if (!this.shared.berries) {
+          const session = sessionStorage.getItem('entries');
+          this.selections = JSON.parse(session);
+          this.type = res.type;
+          return;
+        }
+
+        this.selections = this.shared.berries;
+        this.type = res.type;
+        sessionStorage.setItem('entries', JSON.stringify(this.selections));
+        return;
+      }
 
       this.selections = this.collection[res.type];
       this.type = res.type;
@@ -77,6 +93,7 @@ export class SelectionComponent implements OnInit, OnDestroy {
     if (!selection) return;
 
     if (type === 'type') return this.typeData(selection, type);
+    if (type === 'berries') return this.berryData(selection, type);
     if (this.type.includes('move-')) return this.selectionData(selection, type);
 
     this.gamesData(selection, type);
@@ -119,6 +136,9 @@ export class SelectionComponent implements OnInit, OnDestroy {
       });
     
     });
+  }
+
+  private berryData(selection: any, type: string) {
   }
 
   private selectionData(selection: any, type: string) {

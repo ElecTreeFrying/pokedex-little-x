@@ -43,7 +43,7 @@
 
     }
 
-    p {
+    .text {
       font-family: 'Poppins', 'Poppins-Regular';
       font-size: 1.15em;
       color: white;
@@ -51,5 +51,35 @@
       margin: auto;
     }
   }
+
+  .berry {
+    width: 250px;
+    height: 107px;
+    
+    .mat-card-content {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    p {
+      font-family: 'Poppins', 'Poppins-Regular';
+      font-size: 1.15em;
+      color: white;
+      margin: 0;
+
+      &:first-child {
+        font-size: 1.65em;
+        margin-bottom: 4px;
+      }
+    }
+
+    .mat-card-image {
+      width: 75px;
+      height: 75px;
+      margin-right: 0;
+    }
+
+  }
+
 }
 

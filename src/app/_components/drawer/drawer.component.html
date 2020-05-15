@@ -102,7 +102,7 @@
           </mat-expansion-panel-header>
         </mat-expansion-panel>
         <mat-expansion-panel class="inner last" hideToggle #berries (click)="berries.close()">
-          <mat-expansion-panel-header matRipple routerLInk="/">
+          <mat-expansion-panel-header (click)="selection('items', 'berries')">
             <mat-panel-title><span>Berries</span></mat-panel-title>
           </mat-expansion-panel-header>
         </mat-expansion-panel>

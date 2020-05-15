@@ -21,13 +21,13 @@
         
         <ng-template #elseBlock>
           <img *ngIf="route['isGames']"
-          mat-card-image 
-          offset="300"
-          defaultImage="assets/images/berry.png" 
-          errorImage="assets/images/berry.png" 
-          [lazyLoad]="entry?.byte64 | idToImage: 'byte64'" 
-          [alt]="entry?.name">
-        </ng-template>
+            mat-card-image 
+            offset="300"
+            defaultImage="assets/images/berry.png" 
+            errorImage="assets/images/berry.png" 
+            [lazyLoad]="entry?.byte64 | idToImage: 'byte64'" 
+            [alt]="entry?.name">
+          </ng-template>
 
         <mat-card-content>
           <p>{{ entry?.name | cardText }}</p>

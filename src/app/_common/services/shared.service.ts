@@ -60,6 +60,10 @@ export class SharedService {
   get generation() { return this._generation; }
   set generation(generation: any) { this._generation = generation; }
 
+  private _berries: any[];
+  get berries() { return this._berries; }
+  set berries(berries: any[]) { this._berries = berries; }
+
   private _moves: any[];
   get moves() { return this._moves; }
   set moves(moves: any) { this._moves = moves; }

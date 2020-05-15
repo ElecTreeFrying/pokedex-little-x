@@ -43,6 +43,7 @@ export class PokeapiService {
       this.shared.pokemon = res.pokemon;
       this.shared.pokedex = res.pokedex;
       this.shared.generation = res.generation;
+      this.shared.berries = res.berries;
       this.shared.item_attributes = res.item_attributes;
       this.shared.item_categories = res.item_categories;
       

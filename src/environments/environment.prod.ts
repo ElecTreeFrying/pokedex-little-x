@@ -11,7 +11,7 @@ export const environment = {
     measurementId: "G-R23GN3SHHX"
   },
   data: {
-    api: 'https://dl.dropboxusercontent.com/s/is00pz4v1ayz2nu/api.json?dl=0',
+    api: 'https://dl.dropboxusercontent.com/s/dzi90dcf6dvkqo7/api.json?dl=0',
     moves: 'https://dl.dropbox.com/s/ienyhx8owprhprq/moves.json?dl=0'
   }
 };
