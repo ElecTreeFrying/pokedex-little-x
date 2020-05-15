@@ -38,6 +38,8 @@ export class SelectionPipe implements PipeTransform {
           return move;
         });
       }
+    } else if (type.endsWith(' Region')) {
+      return option ? value.slice(0) : value.slice(0, 30);
     } else {
       return value;
     }

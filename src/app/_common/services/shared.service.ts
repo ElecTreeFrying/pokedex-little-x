@@ -66,7 +66,11 @@ export class SharedService {
 
   private _moves: any[];
   get moves() { return this._moves; }
-  set moves(moves: any) { this._moves = moves; }
+  set moves(moves: any[]) { this._moves = moves; }
+
+  private _regions: any;
+  get regions() { return this._regions; }
+  set regions(regions: any) { this._regions = regions; }
 
   private _keys: Key;
   get keys() { return this._keys; }
@@ -248,11 +252,14 @@ export const moves = [
   { key: -1, name: 'Status' }
 ];
 
-export const locations = [
-  { name: 'Regions' },
-  { name: 'Locations' },
-  { name: 'Location Areas' },
-  { name: 'Pal park areas' }
+export const region = [
+  { key: 1, name: 'Kanto Region' },
+  { key: 2, name: 'Johto Region' },
+  { key: 3, name: 'Hoenn Region' },
+  { key: 4, name: 'Sinnoh Region' },
+  { key: 5, name: 'Unova Region' },
+  { key: 6, name: 'Kalos Region' },
+  { key: 7, name: 'Alola Region' },
 ]
 
 export const pokedex = [

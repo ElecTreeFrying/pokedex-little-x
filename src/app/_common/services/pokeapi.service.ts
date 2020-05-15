@@ -44,6 +44,7 @@ export class PokeapiService {
       this.shared.pokedex = res.pokedex;
       this.shared.generation = res.generation;
       this.shared.berries = res.berries;
+      this.shared.regions = res.regions;
       this.shared.item_attributes = res.item_attributes;
       this.shared.item_categories = res.item_categories;
       
@@ -57,7 +58,7 @@ export class PokeapiService {
   }
 
   private loadMoves() {
-    this.http.get(environment.data.moves).subscribe((res) => {
+    this.http.get(environment.data.moves).subscribe((res: any) => {
     
       this.shared.updateAppInitializationSelection = 2;
       

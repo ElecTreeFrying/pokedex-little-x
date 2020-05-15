@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 
 import { PokeapiService } from '../../_common/services/pokeapi.service';
 import { SharedService, 
-  type, pokedex, generation, version_group, items, categories, moves, locations
+  type, pokedex, generation, version_group, items, categories, moves, region
 } from '../../_common/services/shared.service';
 
 
@@ -21,7 +21,7 @@ export class DrawerComponent implements OnInit {
   items: any;
   categories: any;
   moves: any;
-  locations: any;
+  region: any;
 
   constructor(
     private router: Router, 
@@ -37,7 +37,7 @@ export class DrawerComponent implements OnInit {
     this.items = items;
     this.categories = categories;
     this.moves = moves;
-    this.locations = locations;
+    this.region = region;
   }
 
   go(game: any, type: string) {
@@ -58,11 +58,20 @@ export class DrawerComponent implements OnInit {
     });
   }
   
-  selection(parent: string, child: string) {
+  selection(parent: string, child: any) {
     
-    const id = parent !== 'move' ? -99 : -1;
     this.shared.loading = false;
     this.shared.index = { value: 0, count: 0 };
+
+    if (parent === 'region') {
+      this.regionSelection(parent, child);
+    } else {
+      this.defaultSelection(parent, child);
+    }
+  }
+
+  defaultSelection(parent: string, child: any) {
+    const id = parent !== 'move' ? -99 : -1;
     
     this.router.navigate([ 'selection' ], {  
       queryParams: { name: child.toLowerCase() },
@@ -70,6 +79,20 @@ export class DrawerComponent implements OnInit {
     }).then(() => {
       
       const data = { id, type: child };
+      this.shared.updatedRouteChangeSelection = data;
+      sessionStorage.setItem('route', JSON.stringify(data));
+    });
+  }
+
+  regionSelection(parent: string, child: any) {
+    const id = child.key;
+    
+    this.router.navigate([ 'selection' ], {  
+      queryParams: { name: child.name.toLowerCase() },
+      fragment: parent.toLowerCase()
+    }).then(() => {
+      
+      const data = { id, type: child.name };
       this.shared.updatedRouteChangeSelection = data;
       sessionStorage.setItem('route', JSON.stringify(data));
     });

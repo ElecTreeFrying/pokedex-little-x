@@ -41,7 +41,7 @@ export class SelectionComponent implements OnInit, OnDestroy {
   
   initialize() {
     this.loadAll = false;
-    this.toggle = false
+    this.toggle = false;
 
     this.subscriptions = [];
   }
@@ -83,6 +83,22 @@ export class SelectionComponent implements OnInit, OnDestroy {
         return;
       }
 
+      if (res.type.endsWith(' Region')) {
+        this.loadAll = false;
+
+        if (!this.shared.regions) {
+          const session = sessionStorage.getItem('entries');
+          this.selections = JSON.parse(session);
+          this.type = res.type;
+          return;
+        }
+
+        this.selections = this.shared.regions.find(e => e.id === res.id).locations;
+        this.type = res.type;
+        sessionStorage.setItem('entries', JSON.stringify(this.selections));
+        return;
+      }
+
       this.selections = this.collection[res.type];
       this.type = res.type;
     }));
@@ -94,7 +110,10 @@ export class SelectionComponent implements OnInit, OnDestroy {
 
     if (type === 'type') return this.typeData(selection, type);
     if (type === 'berries') return this.berryData(selection, type);
-    if (this.type.includes('move-')) return this.selectionData(selection, type);
+    if (
+      this.type.includes('move-') ||
+      this.type.endsWith(' Region')
+    ) return this.selectionData(selection, type);
 
     this.gamesData(selection, type);
   }
@@ -141,10 +160,10 @@ export class SelectionComponent implements OnInit, OnDestroy {
   private berryData(selection: any, type: string) {
   }
 
-  private selectionData(selection: any, type: string) {
+  private selectionData(selection: any, type?: string) {
     
     this.shared.selectionData = selection;
-    this.shared.updateSelectedEntrySelection = this.toggle ? false : true;
+    // this.shared.updateSelectedEntrySelection = this.toggle ? false : true;
     this.toggle = this.toggle ? false : true;
     this.shared.id = -1;
   }
