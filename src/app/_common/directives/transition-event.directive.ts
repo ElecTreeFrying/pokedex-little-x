@@ -1,4 +1,4 @@
-import { OnInit, Directive, Input, Output, Renderer2, HostListener, EventEmitter, ChangeDetectorRef } from '@angular/core';
+import { OnInit, Directive, Input, Output, Renderer2, HostListener, EventEmitter } from '@angular/core';
 
 import { SharedService } from '../services/shared.service';
 import { RouteService } from '../services/route.service';
@@ -25,7 +25,6 @@ export class TransitionEventDirective implements OnInit {
   isLoadAll: boolean;
 
   constructor(
-    private cd: ChangeDetectorRef,
     private render: Renderer2,
     private shared: SharedService,
     private route: RouteService
@@ -73,7 +72,7 @@ export class TransitionEventDirective implements OnInit {
     
     this.shared.loadedAll.subscribe((res) => {
       
-      if (res === null) return
+      if (res === null) return;
       
       const element = this.transitionEvent;
       const option = this.state ? 'left' : 'right';
@@ -116,7 +115,7 @@ export class TransitionEventDirective implements OnInit {
   end(event: TransitionEvent) {
     
     if (event.propertyName !== 'transform') return;
-    if (!this.events.leave) return
+    if (!this.events.leave) return;
     
     this.events.end = true;
     this.events.run = false;

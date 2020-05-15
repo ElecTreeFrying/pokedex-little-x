@@ -50,8 +50,8 @@ export class DrawerComponent implements OnInit {
     this.shared.index = { value: 0, count: 0 };
     
     this.router.navigate(['games'], {  
-      queryParams: { name: game.name, id },
-      fragment: type
+      queryParams: { name: game.name.toLowerCase(), id },
+      fragment: type.toLowerCase()
     }).then(() => {
       
       this.shared.updatedRouteChangeSelection = { id, type };
@@ -65,8 +65,8 @@ export class DrawerComponent implements OnInit {
     this.shared.index = { value: 0, count: 0 };
     
     this.router.navigate([ 'selection' ], {  
-      queryParams: { name: child },
-      fragment: parent
+      queryParams: { name: child.toLowerCase() },
+      fragment: parent.toLowerCase()
     }).then(() => {
       
       const data = { id, type: child };

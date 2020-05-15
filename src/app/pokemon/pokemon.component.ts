@@ -48,7 +48,7 @@ export class PokemonComponent implements OnInit, OnDestroy {
     
     this.initial();
     
-    this.loaded.next(true)
+    this.loaded.next(true);
     
     this.subscriptions.push(this.api.pokemon.subscribe((pokemon: any) => {
       

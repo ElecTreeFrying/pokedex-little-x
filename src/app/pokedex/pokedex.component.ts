@@ -22,7 +22,7 @@ export class PokedexComponent implements OnInit {
   ngOnInit(): void {
     
     this.shared.routeChange.subscribe(() => {
-      this.pokemon = this.api.pokedex;
+      this.pokemon = this.api.pokemon;
       this.cd.detectChanges();
     });
   }

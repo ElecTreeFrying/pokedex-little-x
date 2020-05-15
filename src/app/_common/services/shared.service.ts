@@ -116,6 +116,17 @@ export class SharedService {
     return [ false, false, false ];
   }
 
+  toGithubRaw(url: string) {
+
+    const api = 'https://pokeapi.co/';
+    const git = 'https://raw.githubusercontent.com/PokeAPI/api-data/master/data/';
+
+    if (url.startsWith('/api')) {
+      return git + url.slice(1) + 'index.json';
+    }
+    
+    return url.replace(api, git) + 'index.json';
+  }
 
   private _repeat: any[];
   checkRepeat(res: any, object: string) {
@@ -128,18 +139,6 @@ export class SharedService {
     } else {
       return false;
     }
-  }
-
-  toGithubRaw(url: string) {
-
-    const api = 'https://pokeapi.co/';
-    const git = 'https://raw.githubusercontent.com/PokeAPI/api-data/master/data/';
-
-    if (url.startsWith('/api')) {
-      return git + url.slice(1) + 'index.json';
-    }
-    
-    return url.replace(api, git) + 'index.json';
   }
 
   set updatedLoadedAllSelection(data: boolean){

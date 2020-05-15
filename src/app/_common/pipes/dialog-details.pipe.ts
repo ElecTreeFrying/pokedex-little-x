@@ -44,7 +44,12 @@ export class DialogDetailsPipe implements PipeTransform {
     else if (type === 'entries-header-color') {
       if (value.hasOwnProperty('power')) {
         // move.component.html
-        return value.type.color.light;
+        if (value.type.hasOwnProperty('color')) {
+          return value.type.color.light;
+        } else {
+          const id = value.type.url.split('/').reverse()[1];
+          return TypeShared.find(e => e.key === +id).color.default;
+        }
       } else {
         return TypeShared.find(e => e.key === value.data.id).color.default;
       }
@@ -246,12 +251,12 @@ export class DialogDetailsPipe implements PipeTransform {
 
     else if (type === 'contest-effect-appeal') {
       const appeal = +value.contest_effect.data.appeal;
-      return appeal === 0 ? 'N/A' : `${appeal} pts.`;
+      return appeal === 0 ? '-' : `${appeal} pts.`;
     }
     
     else if (type === 'contest-effect-jam') {
       const jam = value.contest_effect.data.jam
-      return jam === 0 ? 'N/A' : `${jam} pts.`;
+      return jam === 0 ? '-' : `${jam} pts.`;
     }
 
     else if (type === 'contest-effect-effect') {
@@ -264,7 +269,7 @@ export class DialogDetailsPipe implements PipeTransform {
 
     else if (type === 'super-contest-effect-appeal') {
       const appeal = +value.super_contest_effect.data.appeal;
-      return appeal === 0 ? 'N/A' : `${appeal} pts.`;
+      return appeal === 0 ? '-' : `${appeal} pts.`;
     }
 
     else if (type === 'super-contest-effect-description') {
@@ -331,7 +336,7 @@ export class DialogDetailsPipe implements PipeTransform {
 
     else if (type === 'power') {
       return value.power === 0 || value.power == null
-        ? `N/A` : `${value.power} Atk.`;
+        ? `-` : `${value.power} Atk.`;
     }
 
     else if (type === 'pp') {
@@ -345,6 +350,7 @@ export class DialogDetailsPipe implements PipeTransform {
     }
 
     else if (type === 'ailment') {
+      if (!value.meta.ailment.data) return '-';
       return value.meta.ailment.data.names.find(e => e.language.name === 'en').name;
     }
 
@@ -353,13 +359,13 @@ export class DialogDetailsPipe implements PipeTransform {
     }
 
     else if (type === 'healing') {
-      if (+value.meta.healing === 0) { return 'N/A'; }
+      if (+value.meta.healing === 0) { return '-'; }
       return value.meta.healing + ' hp';
     }
 
     else if (type === 'drain') {
       return +value.meta.drain === 0
-        ? 'N/A'
+        ? '-'
         : +value.meta.drain < 0
           ? `${+value.meta.drain} hp`
           : `${+value.meta.drain} hp`;
@@ -370,26 +376,27 @@ export class DialogDetailsPipe implements PipeTransform {
     }
 
     else if (type === 'contest-type') {
-      if (!value.contest_type.data) { return 'N/A'; }
+      if (!value.contest_type.data) { return '-'; }
       return value.contest_type.data.names.find(e => e.language.name === 'en').name;
     }
 
     else if (type === 'effect-chance') {
       return value.effect_chance === 0 || value.effect_chance == null
-        ? 'N/A' : `${value.effect_chance}%`;
+        ? '-' : `${value.effect_chance}%`;
     }
 
     else if (type === 'flinch-chance') {
       return value.meta.flinch_chance === 0 || value.meta.flinch_chance == null
-        ? 'N/A' : `${value.meta.flinch_chance}%`;
+        ? '-' : `${value.meta.flinch_chance}%`;
     }
 
     else if (type === 'stat-chance') {
       return value.meta.stat_chance === 0 || value.meta.stat_chance == null
-        ? 'N/A' : `${value.meta.stat_chance}%`;
+        ? '-' : `${value.meta.stat_chance}%`;
     }
 
     else if (type === 'category') {
+      if (!value.meta.category.data) return '-';
       return value.meta.category.name.split('+').map(e => capitalize(e)).join(' + ');
     }
 
@@ -399,7 +406,7 @@ export class DialogDetailsPipe implements PipeTransform {
 
     else if (type.includes('ht-')) {
       type = type.replace('ht-', '');
-      return !value.meta[type] ? 'N/A' : value.meta[type];
+      return !value.meta[type] ? '-' : value.meta[type];
     }
 
   }
