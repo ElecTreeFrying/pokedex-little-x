@@ -41,6 +41,8 @@ export class GamesComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngAfterViewInit() {
 
+    this.shared.loading = false;
+
     this.subscriptions.push(this.shared.loadMore.subscribe((res) => {
 
       if (res === 0) return;
