@@ -109,10 +109,14 @@ export class SelectionComponent implements OnInit, OnDestroy {
     if (!selection) return;
 
     if (type === 'type') return this.typeData(selection, type);
-    if (type === 'berries') return this.berryData(selection, type);
     if (
-      this.type.includes('move-') ||
-      this.type.endsWith(' Region')
+      type === 'berries' || 
+      this.type.endsWith(' Region')) return this.berryData(selection, type);
+    if (
+      // type === 'berries' || 
+      // this.type.includes('move-') ||
+      // this.type.endsWith(' Region')
+      this.type.includes('move-')
     ) return this.selectionData(selection, type);
 
     this.gamesData(selection, type);
@@ -163,7 +167,7 @@ export class SelectionComponent implements OnInit, OnDestroy {
   private selectionData(selection: any, type?: string) {
     
     this.shared.selectionData = selection;
-    // this.shared.updateSelectedEntrySelection = this.toggle ? false : true;
+    this.shared.updateSelectedEntrySelection = this.toggle ? false : true;
     this.toggle = this.toggle ? false : true;
     this.shared.id = -1;
   }

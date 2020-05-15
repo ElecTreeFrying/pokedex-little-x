@@ -48,6 +48,7 @@ export class DrawerComponent implements OnInit {
     this.shared.loading = false;
     this.shared.updatedLoadedAllSelection = false;
     this.shared.index = { value: 0, count: 0 };
+    this.shared.selectionData = undefined;
     
     this.router.navigate(['games'], {  
       queryParams: { name: game.name.toLowerCase(), id },
@@ -62,6 +63,7 @@ export class DrawerComponent implements OnInit {
     
     this.shared.loading = false;
     this.shared.index = { value: 0, count: 0 };
+    this.shared.selectionData = undefined;
 
     if (parent === 'region') {
       this.regionSelection(parent, child);
