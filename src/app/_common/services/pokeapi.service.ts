@@ -90,7 +90,7 @@ export class PokeapiService {
 
   flatMove(res: any) {
 
-    const data: any = res;
+    const data: any = this.populateUndefinedMoves(res);
 
     data.contest_effect = this.addData(data.contest_effect);
     data.contest_type = this.addData(data.contest_type);
@@ -517,6 +517,12 @@ export class PokeapiService {
     } else {
       return object;
     }
+  }
+
+  private populateUndefinedMoves(move: any) {
+    move.meta.ailment = !move.meta.ailment.hasOwnProperty('ailment') ? {} : move.meta.ailment;
+    move.meta.category = !move.meta.ailment.hasOwnProperty('category') ? {} : move.meta.category;
+    return move;
   }
 
 }

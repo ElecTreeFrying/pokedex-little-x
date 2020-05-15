@@ -113,7 +113,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 
     this.details.openedChange.subscribe((res: boolean) => {
       
-      if (!res && this.shared.id) {
+      if (!res && this.shared.id && this.shared.selectionData) {
         this.drawer.close();
         this.details.open();
         this.sideDrawerState = { drawer: false, details: true };

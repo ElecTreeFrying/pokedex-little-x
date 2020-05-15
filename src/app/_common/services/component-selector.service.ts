@@ -7,12 +7,12 @@ import { ColorComponent } from '../../_components/dialogs/color/color.component'
 import { EggGroupsComponent } from '../../_components/dialogs/egg-groups/egg-groups.component';
 import { GrowthRateComponent } from '../../_components/dialogs/growth-rate/growth-rate.component';
 import { HabitatComponent } from '../../_components/dialogs/habitat/habitat.component';
-import { MoveComponent } from '../../_components/dialogs/move/move.component';
+import { SelectedMoveComponent } from '../../_components/dialogs/selected-move/selected-move.component';
 import { ShapeComponent } from '../../_components/dialogs/shape/shape.component';
 import { StatComponent } from '../../_components/dialogs/stat/stat.component';
 
 export const pokemonDialogComponents = [
-  SelectedPokemonComponent, TypeComponent, AbilityComponent, ColorComponent, EggGroupsComponent, GrowthRateComponent, HabitatComponent, MoveComponent, ShapeComponent, StatComponent
+  SelectedPokemonComponent, TypeComponent, AbilityComponent, ColorComponent, EggGroupsComponent, GrowthRateComponent, HabitatComponent, SelectedMoveComponent, ShapeComponent, StatComponent
 ];
 
 
@@ -31,7 +31,7 @@ export class ComponentSelectorService {
     { type: 'stat', component: StatComponent },
     { type: 'ability', component: AbilityComponent },
     { type: 'pokemon', component: SelectedPokemonComponent },
-    { type: 'move', component: MoveComponent }
+    { type: 'move', component: SelectedMoveComponent }
   ]
 
   constructor() { }

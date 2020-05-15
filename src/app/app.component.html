@@ -42,8 +42,9 @@
       <mat-spinner></mat-spinner>
     </div>
 
-    <app-pokemon *ngIf="isShowDetails" (loaded)="attachOverlay = $event"></app-pokemon>
-    
+    <app-pokemon *ngIf="isShowDetails && !(route.isGamesRoute|async)" (loaded)="attachOverlay = $event"></app-pokemon>
+    <app-move *ngIf="isShowDetails && (route.isGamesRoute|async)" (loaded)="attachOverlay = $event"></app-move>
+
   </mat-sidenav>
 
   <mat-sidenav-content keyboard (toggle)="sidenavToggle($event)">

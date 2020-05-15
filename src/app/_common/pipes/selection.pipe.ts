@@ -1,5 +1,8 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
+import { type as TypeShared } from '../services/shared.service';
+
+
 @Pipe({
   name: 'selection'
 })
@@ -14,11 +17,18 @@ export class SelectionPipe implements PipeTransform {
     }
 
     if (type.includes('move-')) {
-      type = type.replace('move-', '').toLowerCase();
       if (option) {
-        return value.filter(e => e.damage_class.name === type).slice(0);
+        return value.slice(0).map((move) => {
+          const id = +move.type.url.split('/').reverse()[1];
+          move.color = TypeShared.find(e => e.key === id).color
+          return move;
+        });
       } else {
-        return value.filter(e => e.damage_class.name === type).slice(0, 30);
+        return value.slice(0, 30).map((move) => {
+          const id = +move.type.url.split('/').reverse()[1];
+          move.color = TypeShared.find(e => e.key === id).color
+          return move;
+        });
       }
     } else {
       return value;

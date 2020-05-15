@@ -6,11 +6,11 @@ import { SharedService } from '../../../_common/services/shared.service';
 
 
 @Component({
-  selector: 'app-move',
-  templateUrl: './move.component.html',
-  styleUrls: ['./move.component.scss']
+  selector: 'app-selected-move-',
+  templateUrl: './selected-move.component.html',
+  styleUrls: ['./selected-move.component.scss']
 })
-export class MoveComponent implements OnInit, OnDestroy {
+export class SelectedMoveComponent implements OnInit, OnDestroy {
 
   isLoading: boolean;
   data: any;
@@ -20,7 +20,7 @@ export class MoveComponent implements OnInit, OnDestroy {
   constructor(
     @Inject(MAT_DIALOG_DATA) public response: any,
     public cd: ChangeDetectorRef,
-    public ref: MatDialogRef<MoveComponent>,
+    public ref: MatDialogRef<SelectedMoveComponent>,
     public dialog: MatDialog,
     private api: PokeapiService,
     private shared: SharedService

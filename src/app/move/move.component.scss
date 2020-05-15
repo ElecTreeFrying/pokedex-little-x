@@ -1,0 +1,196 @@
+
+.spinner {
+  overflow: hidden;
+  display: flex;
+  padding: 96px 0;
+  overflow: hidden;
+
+  .mat-spinner {
+    margin: auto;
+  }
+}
+
+.spinner-message {
+  display: flex;
+  overflow: hidden;
+
+  p {
+    font-family: 'VT323', monospace;
+    margin: auto;
+    font-size: 2em;
+  }
+}
+
+.poke-tooltip {
+  background-color: #4E1338;
+}
+
+.content {
+  font-family: 'VT323', monospace;
+  
+  .heading {
+    padding: 32px;
+    display: flex;
+    flex-flow: column wrap;
+  
+    .text-head {
+      display: flex;
+
+      .type {
+        font-size: 2.6em;
+        margin: 0 16px 0 0;
+        transform: translateY(4px);
+      }
+
+      .mat-chip-list .mat-chip {
+        cursor: pointer;
+      }
+  
+      .mat-chip-list .mat-chip span {
+        font-family: Roboto, "Helvetica Neue", sans-serif;
+        font-size: 1.5em;
+        padding: 0 4px;
+      }
+    }
+
+    .text-descriptions {
+
+      .head {
+        font-size: 2em;
+        margin-top: 40px;
+        letter-spacing: 1.5px;
+      }
+
+      .short {
+        margin-top: 20px;
+      }
+
+      .description {
+        font-size: 1.5em;
+        letter-spacing: 1px;
+        margin: 0;
+      }
+    }
+  }
+  
+  .mat-divider {
+    margin: 0 16px;
+  }
+}
+
+.details {
+  padding: 32px;
+
+  .detail {
+    border: 1.5px solid violet;
+    font-size: 1.5em;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+    
+    .key {
+      background: violet;
+      padding: 8px 12px;
+      display: flex;
+      justify-content: space-between;
+      cursor: pointer;
+    }
+    
+    .value {
+      padding: 8px 12px;
+
+      .description {
+        display: block;
+        margin-bottom: 8px;
+      }
+
+      .mat-divider {
+        margin: 0 0 8px 0;
+      }
+
+      .mat-chip {
+        cursor: pointer;
+      }
+
+      .mat-chip span {
+        font-size: 21px;
+      }
+    }
+
+    .information, .contest-effect {
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: space-between;
+      width: inherit;
+  
+      .tiny {
+        width: 90px;
+        font-size: 21px;
+        text-align: center;
+        cursor: pointer;
+      }
+
+      .small {
+        width: 130px;
+        font-size: 21px;
+        text-align: center;
+        cursor: pointer;
+      }
+      
+      .medium {
+        width: 200px;
+        font-size: 21px;
+        text-align: center;
+        cursor: pointer;
+      }
+
+      .large {
+        width: 409px;
+        font-size: 21px;
+        text-align: center;
+        cursor: pointer;
+      }
+
+      .large .inner-key,
+      .large .inner-value {
+        text-align: left;
+      }
+    }
+  }
+
+  .inner-detail {
+    border: 1.5px solid orange;
+    margin: 8px 0;
+    
+    .inner-key {
+      background: orange;
+      padding: 8px 12px;
+
+      .mat-divider {
+        margin: 8px 0;
+      }
+    }
+
+    .expansion {
+      display: flex;
+      justify-content: space-between;
+      cursor: pointer;
+      height: 36px;
+    }
+    
+    .inner-value {
+      padding: 8px 12px;
+    }
+  }
+}
+
+.credits {
+  margin: 64px 0 32px 0;
+
+  .app, .developer {
+    font-family: 'Cairo', 'Cairo-SemiBold';
+    font-size: 21px;
+    text-align: center;
+    letter-spacing: 4px;
+    margin: 4px 0;
+  }
+}

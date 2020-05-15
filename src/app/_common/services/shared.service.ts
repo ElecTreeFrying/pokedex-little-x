@@ -100,6 +100,10 @@ export class SharedService {
   get isLoadAll() { return this._isLoadAll; }
   set isLoadAll(isLoadAll: boolean) { this._isLoadAll = isLoadAll; }
 
+  private _selectionData: any;
+  get selectionData() { return this._selectionData; }
+  set selectionData(selectionData: boolean) { this._selectionData = selectionData; }
+
   constructor() {
     const routeSession = sessionStorage.getItem('route');
     this.routeChangeSource = new BehaviorSubject(JSON.parse(routeSession));
