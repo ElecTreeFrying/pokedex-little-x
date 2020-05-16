@@ -111,15 +111,10 @@ export class SelectionComponent implements OnInit, OnDestroy {
     if (!selection) return;
 
     if (type === 'type') return this.typeData(selection, type);
-    if (
-      type === 'berries' || 
-      this.type.endsWith(' Region')) return this.berryData(selection, type);
-    if (
-      // type === 'berries' || 
-      // this.type.includes('move-') ||
-      // this.type.endsWith(' Region')
-      this.type.includes('move-')
-    ) return this.selectionData(selection, type);
+    if (type === 'berries') return this.berryData(selection, type);
+    if (this.type.endsWith(' Region')) return this.locationData(selection, type);
+    if (this.type.includes('move-')
+    ) return this.moveData(selection, type);
 
     this.gamesData(selection, type);
   }
@@ -164,9 +159,24 @@ export class SelectionComponent implements OnInit, OnDestroy {
   }
 
   private berryData(selection: any, type: string) {
+    this.shared.selectionData = selection;
+    this.shared.updateSelectedEntrySelection = this.toggle ? false : true;
+    this.toggle = this.toggle ? false : true;
+    this.shared.id = -1;
+
+    this.shared.sidenavContent('Berry');
   }
 
-  private selectionData(selection: any, type?: string) {
+  private locationData(selection: any, type: string) {
+    this.shared.selectionData = selection;
+    this.shared.updateSelectedEntrySelection = this.toggle ? false : true;
+    this.toggle = this.toggle ? false : true;
+    this.shared.id = -1;
+
+    this.shared.sidenavContent('Location');
+  }
+
+  private moveData(selection: any, type?: string) {
     
     this.shared.selectionData = selection;
     this.shared.updateSelectedEntrySelection = this.toggle ? false : true;

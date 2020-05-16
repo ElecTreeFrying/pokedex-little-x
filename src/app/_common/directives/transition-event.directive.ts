@@ -64,7 +64,7 @@ export class TransitionEventDirective implements OnInit {
     
     this.shared.loadMorePosition.subscribe((res) => {
 
-      if (this.shared.selectionData) return;
+      if (this.shared.selectionData || !this.shared.allowLoadMore) return;
 
       if (res === null) return;
 

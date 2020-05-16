@@ -122,6 +122,10 @@ export class SharedService {
   get selectionData() { return this._selectionData; }
   set selectionData(selectionData: boolean) { this._selectionData = selectionData; }
 
+  private _allowLoadMore: any;
+  get allowLoadMore() { return this._allowLoadMore; }
+  set allowLoadMore(allowLoadMore: boolean) { this._allowLoadMore = allowLoadMore; }
+
   constructor() {
     const routeSession = sessionStorage.getItem('route');
     this.routeChangeSource = new BehaviorSubject(JSON.parse(routeSession));
@@ -161,6 +165,7 @@ export class SharedService {
   sidenavContent(selection: string) {
     this.cleanSidenavContent();
     this[`updateIs${selection}SelectedSelection`] = true;
+    this.allowLoadMore = selection === 'Pokemon' || selection === 'Item';
   }
 
   private _repeat: any[];

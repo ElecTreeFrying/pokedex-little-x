@@ -112,13 +112,20 @@ export class GamesComponent implements OnInit, AfterViewInit, OnDestroy {
 
   select(entry: any) {
 
-    if (this.route['isItems'] || this.route['isCategory']) return;
+    if (this.route['isItems'] || this.route['isCategory']) {
+      this.shared.updateSelectedEntrySelection = this.toggle ? false : true;
+      this.toggle = this.toggle ? false : true;
+      this.shared.id = entry.id;
+  
+      this.shared.sidenavContent('Item');
+    } else {
+      this.shared.updateSelectedEntrySelection = this.toggle ? false : true;
+      this.toggle = this.toggle ? false : true;
+      this.shared.id = entry.id;
+  
+      this.shared.sidenavContent('Pokemon');
+    }
 
-    this.shared.updateSelectedEntrySelection = this.toggle ? false : true;
-    this.toggle = this.toggle ? false : true;
-    this.shared.id = entry.id;
-
-    this.shared.sidenavContent('Pokemon');
   }
 
   set setupProcess(res: any) {

@@ -50,8 +50,4 @@ export class RouteService {
     );
   }
 
-  get isGamesRoute() {
-    return this.shared.hideLoadMore;
-  }
-
 }
