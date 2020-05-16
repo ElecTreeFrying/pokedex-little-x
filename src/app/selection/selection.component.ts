@@ -48,9 +48,10 @@ export class SelectionComponent implements OnInit, OnDestroy {
   
   pageListener() {
 
-    this.shared.loading = null;
-
     this.subscriptions.push(this.shared.routeChange.subscribe((res) => {     
+
+      this.shared.loading = null;
+      this.shared.updateIsLoadingSelection = false;
 
       if (res.id === -1) {
         this.loadAll = false;
