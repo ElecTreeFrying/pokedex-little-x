@@ -213,7 +213,7 @@ export class GamesComponent implements OnInit, AfterViewInit, OnDestroy {
     } else if (res.type === 'type') {
       this.entries = this.shared.keys.type_pokemon;
     } else {
-      this.entries = entries.find(e => e['id'] === res.id).entries, [ 'id' ];
+      this.entries = entries.find(e => e['id'] === res.id).entries;
     }
 
     this.displayEntries();
