@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, Output, EventEmitter } from '@angular/core';
+import { Subscription } from 'rxjs';
 
 import { PokeapiService } from '../_common/services/pokeapi.service';
 import { SharedService } from '../_common/services/shared.service';
@@ -17,6 +18,7 @@ export class MoveComponent implements OnInit, OnDestroy {
   data: any;
 
   sections: any[];
+  subscriptions: Subscription[]
 
   constructor(
     private cd: ChangeDetectorRef,
@@ -28,10 +30,13 @@ export class MoveComponent implements OnInit, OnDestroy {
 
     this.isLoading = true;
     this.sections = [ false, false, false, false, false, false, false, false ];
+    this.subscriptions = [];
     
     this.loaded.next(true);
 
-    this.api.flatMove(this.shared.selectionData).subscribe((res) => {
+    if (!this.shared.selectionData) return;
+
+    this.subscriptions.push(this.api.flatMove(this.shared.selectionData).subscribe((res) => {
 
       this.loaded.next(false);
 
@@ -42,11 +47,14 @@ export class MoveComponent implements OnInit, OnDestroy {
 
       this.shared.selectionData = undefined;
 
-    });
+    }));
   }
 
   ngOnDestroy() {
     this.shared.dialogIsOpened = false;
+    this.subscriptions.forEach((subscription: Subscription) => {
+      subscription.unsubscribe();
+    });
   }
 
 }
