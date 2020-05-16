@@ -31,6 +31,9 @@ import { TypeColorPipeModule } from '../modules/type-color-pipe.module';
 import { DrawerComponent } from '../../_components/drawer/drawer.component';
 import { PokemonComponent } from '../../pokemon/pokemon.component';
 import { MoveComponent } from '../../move/move.component';
+import { ItemComponent } from '../../item/item.component';
+import { BerryComponent } from '../../berry/berry.component';
+import { LocationComponent } from '../../location/location.component';
 import { LoadingComponent } from '../../_components/loading/loading.component';
 
 import { NormalizePipe } from '../pipes/normalize.pipe';
@@ -46,6 +49,9 @@ import { pokemonDialogComponents } from '../services/component-selector.service'
     DrawerComponent,      // components
     PokemonComponent,
     MoveComponent,
+    ItemComponent,
+    BerryComponent,
+    LocationComponent,
     LoadingComponent,
     NormalizePipe,        // pipes
     KeyboardDirective,    // directives
@@ -93,6 +99,9 @@ import { pokemonDialogComponents } from '../services/component-selector.service'
     DrawerComponent,       // components
     PokemonComponent,
     MoveComponent,
+    ItemComponent,
+    BerryComponent,
+    LocationComponent,
     LoadingComponent,
     NormalizePipe,         // pipes
     KeyboardDirective,     // directives

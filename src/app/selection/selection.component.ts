@@ -172,6 +172,8 @@ export class SelectionComponent implements OnInit, OnDestroy {
     this.shared.updateSelectedEntrySelection = this.toggle ? false : true;
     this.toggle = this.toggle ? false : true;
     this.shared.id = -1;
+
+    this.shared.sidenavContent('Move');
   }
 
 }

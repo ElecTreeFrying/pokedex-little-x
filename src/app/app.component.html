@@ -42,8 +42,11 @@
       <mat-spinner></mat-spinner>
     </div>
 
-    <app-pokemon *ngIf="isShowDetails && !(route.isGamesRoute|async)" (loaded)="attachOverlay = $event"></app-pokemon>
-    <app-move *ngIf="isShowDetails && (route.isGamesRoute|async)" (loaded)="attachOverlay = $event"></app-move>
+    <app-pokemon *ngIf="isShowDetails && (shared.isPokemonSelected|async)" (loaded)="attachOverlay = $event"></app-pokemon>
+    <app-move *ngIf="isShowDetails && (shared.isMoveSelected|async)" (loaded)="attachOverlay = $event"></app-move>
+    <app-item *ngIf="isShowDetails && (shared.isItemSelected|async)" (loaded)="attachOverlay = $event"></app-item>
+    <app-berry *ngIf="isShowDetails && (shared.isBerrySelected|async)" (loaded)="attachOverlay = $event"></app-berry>
+    <app-location *ngIf="isShowDetails && (shared.isLocationSelected|async)" (loaded)="attachOverlay = $event"></app-location>
 
   </mat-sidenav>
 

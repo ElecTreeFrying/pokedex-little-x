@@ -28,6 +28,11 @@ export class SharedService {
   private searchSource = new BehaviorSubject('-1');
   private loadMorePositionSource = new BehaviorSubject(null);
   private hideLoadMoreSource = new BehaviorSubject(null);
+  private isPokemonSelectedSource = new BehaviorSubject(false);
+  private isItemSelectedSource = new BehaviorSubject(false);
+  private isBerrySelectedSource = new BehaviorSubject(false);
+  private isMoveSelectedSource = new BehaviorSubject(false);
+  private isLocationSelectedSource = new BehaviorSubject(false);
 
   loadedAll = this.loadedAllSource.asObservable();
   routeChange: Observable<any>;
@@ -39,6 +44,11 @@ export class SharedService {
   search = this.searchSource.asObservable();
   loadMorePosition = this.loadMorePositionSource.asObservable();
   hideLoadMore = this.hideLoadMoreSource.asObservable();
+  isPokemonSelected = this.isPokemonSelectedSource.asObservable();
+  isItemSelected = this.isItemSelectedSource.asObservable();
+  isBerrySelected = this.isBerrySelectedSource.asObservable();
+  isMoveSelected = this.isMoveSelectedSource.asObservable();
+  isLocationSelected = this.isLocationSelectedSource.asObservable();
 
   private _id: number;
   get id() { return this._id; }
@@ -140,6 +150,19 @@ export class SharedService {
     return url.replace(api, git) + 'index.json';
   }
 
+  private cleanSidenavContent() {
+    this.updateIsPokemonSelectedSelection = false;
+    this.updateIsItemSelectedSelection = false;
+    this.updateIsBerrySelectedSelection = false;
+    this.updateIsMoveSelectedSelection = false;
+    this.updateIsLocationSelectedSelection = false;
+  }
+
+  sidenavContent(selection: string) {
+    this.cleanSidenavContent();
+    this[`updateIs${selection}SelectedSelection`] = true;
+  }
+
   private _repeat: any[];
   checkRepeat(res: any, object: string) {
     this._repeat.unshift({
@@ -197,6 +220,26 @@ export class SharedService {
 
   set updateHideLoadMoreSelection(data: boolean) {
     this.hideLoadMoreSource.next(data);
+  }
+
+  set updateIsPokemonSelectedSelection(data: boolean) {
+    this.isPokemonSelectedSource.next(data);
+  }
+
+  set updateIsItemSelectedSelection(data: boolean) {
+    this.isItemSelectedSource.next(data);
+  }
+
+  set updateIsBerrySelectedSelection(data: boolean) {
+    this.isBerrySelectedSource.next(data);
+  }
+
+  set updateIsMoveSelectedSelection(data: boolean) {
+    this.isMoveSelectedSource.next(data);
+  }
+
+  set updateIsLocationSelectedSelection(data: boolean) {
+    this.isLocationSelectedSource.next(data);
   }
 
 }
