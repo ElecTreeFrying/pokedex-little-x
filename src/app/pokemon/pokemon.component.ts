@@ -62,6 +62,7 @@ export class PokemonComponent implements OnInit, OnDestroy {
       this.moves.status = moves.filter(e => e['damage_class']['name'] === 'status');
       
       this.displayToView();
+      this.shared.id = undefined;
 
     }));
   }

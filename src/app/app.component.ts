@@ -117,7 +117,13 @@ export class AppComponent implements OnInit, AfterViewInit {
         this.drawer.close();
         this.details.open();
         this.sideDrawerState = { drawer: false, details: true };
+        return;
       }
+
+      if (!res && (!this.shared.id || !this.shared.selectionData)) {
+        this.sidenavToggle(false);
+      }
+
     });
 
     this.shared.selectedEntry.subscribe((res) => {

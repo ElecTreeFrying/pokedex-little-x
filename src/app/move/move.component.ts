@@ -39,6 +39,9 @@ export class MoveComponent implements OnInit, OnDestroy {
       this.cd.detectChanges();
 
       this.isLoading = false;
+
+      this.shared.selectionData = undefined;
+
     });
   }
 

@@ -21,7 +21,6 @@ export class SelectedPokemonComponent implements OnInit, OnDestroy {
   isLoading: boolean;
   sections: any[];
   subSections: any[];
-  oldID: number;
 
   subscriptions: Subscription[];
 
@@ -39,7 +38,6 @@ export class SelectedPokemonComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     this.sections = this.shared.sections;
     this.subSections = this.shared.subSections;
-    this.oldID = this.shared.id;
     this.subscriptions = [];
   }
 
@@ -65,7 +63,6 @@ export class SelectedPokemonComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.shared.id = this.oldID;
     this.shared.dialogIsOpened = false;
     this.subscriptions.forEach((subscription: Subscription) => {
       subscription.unsubscribe();
