@@ -5,7 +5,6 @@
 .firebase
 .firebaserc
 *.spec.ts
-/src/assets/*.json
 notes.md
 
 # environments
