@@ -1,4 +1,4 @@
-import { Component, ViewChild, OnInit, OnDestroy, Output, ElementRef, ChangeDetectorRef, ViewEncapsulation, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnDestroy, Output, ChangeDetectorRef, ViewEncapsulation, EventEmitter } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 
@@ -16,7 +16,6 @@ import { SnotifyService } from '../_common/services/snotify.service';
 })
 export class PokemonComponent implements OnInit, OnDestroy {
 
-  @ViewChild('genus') genus: ElementRef;
   @Output() loaded = new EventEmitter;
 
   pokemon: any;

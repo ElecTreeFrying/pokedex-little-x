@@ -120,7 +120,7 @@ export class SharedService {
 
   private _selectionData: any;
   get selectionData() { return this._selectionData; }
-  set selectionData(selectionData: boolean) { this._selectionData = selectionData; }
+  set selectionData(selectionData: any) { this._selectionData = selectionData; }
 
   private _allowLoadMore: any;
   get allowLoadMore() { return this._allowLoadMore; }
@@ -130,8 +130,6 @@ export class SharedService {
     const routeSession = sessionStorage.getItem('route');
     this.routeChangeSource = new BehaviorSubject(JSON.parse(routeSession));
     this.routeChange = this.routeChangeSource.asObservable();
-
-    this._repeat = [];
   }
 
   get sections() {
@@ -166,19 +164,6 @@ export class SharedService {
     this.cleanSidenavContent();
     this[`updateIs${selection}SelectedSelection`] = true;
     this.allowLoadMore = selection === 'Pokemon' || selection === 'Item';
-  }
-
-  private _repeat: any[];
-  checkRepeat(res: any, object: string) {
-    this._repeat.unshift({
-      res, object
-    });
-    const array = this._repeat.filter(e => e.object === object).slice(0, 2);
-    if (array.length === 2) {
-      return array[1].res === array[0].res;
-    } else {
-      return false;
-    }
   }
 
   set updatedLoadedAllSelection(data: boolean){
