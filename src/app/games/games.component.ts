@@ -115,7 +115,7 @@ export class GamesComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.route['isItems'] || this.route['isCategory']) {
       this.shared.updateSelectedEntrySelection = this.toggle ? false : true;
       this.toggle = this.toggle ? false : true;
-      this.shared.id = entry.id;
+      this.shared.selectionData = entry;
   
       this.shared.sidenavContent('Item');
     } else {
