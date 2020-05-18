@@ -58,7 +58,7 @@
       </div>
       <div class="value information" *ngIf="sections[2]">
 
-        <div matRipple class="inner-detail medium mat-elevation-z3">
+        <div matRipple matTooltip="The price of this item in stores" matTooltipClass="poke-tooltip" class="inner-detail medium mat-elevation-z3">
           <div class="inner-key">
             <span>Cost</span>
           </div>
@@ -67,7 +67,8 @@
           </div>
         </div>
 
-        <div matRipple class="inner-detail medium mat-elevation-z3">
+        <div matRipple matTooltip="	
+        The power of the move Fling when used with this item" matTooltipClass="poke-tooltip" class="inner-detail medium mat-elevation-z3">
           <div class="inner-key">
             <span>Fling power</span>
           </div>
@@ -89,7 +90,7 @@
         <p *ngIf="(item | itemDetails: 'item-abilities').length === 0">
           No data...
         </p>
-        <div matRipple class="inner-detail mat-elevation-z3" *ngFor="let attribute of item | itemDetails: 'item-abilities'">
+        <div class="inner-detail mat-elevation-z3" *ngFor="let attribute of item | itemDetails: 'item-abilities'">
           <div class="inner-key">
             <span>{{ attribute?.name }}</span>
           </div>
@@ -117,7 +118,8 @@
           matRipple
           matTooltip="select pokémon" 
           matTooltipClass="poke-tooltip" 
-          *ngFor="let entry of item | itemDetails: 'item-held-pokemon'">
+          *ngFor="let entry of item | itemDetails: 'item-held-pokemon'"
+          (click)="showDetails(entry?.id, 'pokemon')">
           <div class="inner-key">
             <span>{{ entry?.display }}</span>
           </div>
