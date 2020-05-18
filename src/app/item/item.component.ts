@@ -1,23 +1,28 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnDestroy, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
 import { Subscription } from 'rxjs';
 
-import { PokeapiService } from '../_common/services/pokeapi.service';
+import { PokeapiItemService } from '../_common/services/pokeapi-item.service';
 import { SharedService } from '../_common/services/shared.service';
 
 
 @Component({
   selector: 'app-item',
   templateUrl: './item.component.html',
-  styleUrls: ['./item.component.scss']
+  styleUrls: ['./item.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
-export class ItemComponent implements OnInit {
+export class ItemComponent implements OnInit, OnDestroy {
 
   @Output() loaded = new EventEmitter;
 
+  item: any;
+  sections: boolean[];
+  isLoading: boolean;
+  
   subscriptions: Subscription[];
 
   constructor(
-    private api: PokeapiService,
+    public api: PokeapiItemService,
     private shared: SharedService
   ) { }
 
@@ -25,15 +30,30 @@ export class ItemComponent implements OnInit {
 
     this.initialize();
 
-    this.loaded.next(true);
-    this.shared.id = undefined;
+    this.sections = [ true, true, true, false, false, true, false ];
 
-    setTimeout(() => {
+    this.loaded.next(true);
+    this.api.selection = this.shared.selectionData;
+
+    this.subscriptions.push(this.api.item.subscribe((item: any) => {
+
       this.loaded.next(false);
+      this.item = item;
+      
+      this.isLoading = false;
+      this.shared.selectionData = undefined;
+    }));
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach((subscription: Subscription) => {
+      subscription.unsubscribe();
     });
   }
 
   initialize() {
+    this.isLoading = true;
+
     this.subscriptions = [];
   }
 
