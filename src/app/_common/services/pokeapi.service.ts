@@ -31,40 +31,40 @@ export class PokeapiService {
     shared.defaultLength = 50;
     shared.index = { value: 0, count: 0 };
     
-    this.loadAPI();
-    this.loadMoves();
+    this.loadCDN();
   }
 
-  private loadAPI() {
-    this.http.get(environment.data.api).subscribe((res: any) => {
+  private loadCDN() {
 
-      this.shared.updateAppInitializationSelection = 2;
-
-      this.shared.pokemon = res.pokemon;
-      this.shared.pokedex = res.pokedex;
-      this.shared.generation = res.generation;
-      this.shared.berries = res.berries;
-      this.shared.regions = res.regions;
-      this.shared.item_attributes = res.item_attributes;
-      this.shared.item_categories = res.item_categories;
+    forkJoin(...environment.data.map(e => this.http.get(e)))
+      .pipe(
+        map(res => ({ 
+          ...res.find(e => e.hasOwnProperty('pokedex')), 
+          ...res.find(e => e.hasOwnProperty('berries')), 
+          moves: res.find(e => e.length)
+        }))
+      )
+      .subscribe((res) => {
       
-      this.shared.keys = {
-        types: res.keys.types,
-        move_damage_class: res.keys.move_damage_class,
-        no_habitat: intersectionBy(res.pokemon, res.keys.no_habitat, 'id'),
-        pokemon_moves: []
-      };
-    });
-  }
+        this.shared.pokemon = res.pokemon;
+        this.shared.pokedex = res.pokedex;
+        this.shared.generation = res.generation;
+        this.shared.moves = res.moves;
+        this.shared.berries = res.berries;
+        this.shared.regions = res.regions;
+        this.shared.item_attributes = res.item_attributes;
+        this.shared.item_categories = res.item_categories;
+        
+        this.shared.keys = {
+          types: res.keys.types,
+          move_damage_class: res.keys.move_damage_class,
+          no_habitat: intersectionBy(res.pokemon, res.keys.no_habitat, 'id'),
+          pokemon_moves: []
+        };
 
-  private loadMoves() {
-    this.http.get(environment.data.moves).subscribe((res: any) => {
-    
-      this.shared.updateAppInitializationSelection = 2;
+        this.shared.updateAppInitializationSelection = 2;
       
-      this.shared.moves = res;
-    
-    });
+      });
   }
 
   moves(moves: any) {

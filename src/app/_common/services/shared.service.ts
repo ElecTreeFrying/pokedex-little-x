@@ -189,14 +189,8 @@ export class SharedService {
     this.routeChangeSource.next(data);
   }
 
-  appInitializationCounter: number = 0;
   set updateAppInitializationSelection(data: number) {
-    if (data === 2) {
-      this.appInitializationCounter++;
-      this.appInitializationCounter === 2 ? this.appInitializationSource.next(data) : 0;
-    } else {
-      this.appInitializationSource.next(data);
-    }
+    this.appInitializationSource.next(data);
   }
 
   set updateLoadMoreSelection(data: number) {

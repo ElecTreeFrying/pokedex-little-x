@@ -2,22 +2,31 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+const cdn = {
+  cloudinary: 'https://res.cloudinary.com/electreefrying/raw/upload',
+  dropbox: 'https://dl.dropboxusercontent.com/s'
+};
+
 export const environment = {
   production: false,
-  firebaseConfig: {
-    apiKey: "AIzaSyCxIWgC8yOkjS5r5cNX2khngrrBdbkHrog",
-    authDomain: "pokedex-little.firebaseapp.com",
-    databaseURL: "https://pokedex-little.firebaseio.com",
-    projectId: "pokedex-little",
-    storageBucket: "pokedex-little.appspot.com",
-    messagingSenderId: "695077639923",
-    appId: "1:695077639923:web:5d512d2739e432958b4986",
-    measurementId: "G-R23GN3SHHX"
-  },
-  data: {
-    api: 'https://dl.dropboxusercontent.com/s/dzi90dcf6dvkqo7/api.json?dl=0',
-    moves: 'https://dl.dropbox.com/s/ienyhx8owprhprq/moves.json?dl=0'
-  }
+  data: [
+    `${cdn.cloudinary}/v1589699496/pokedex-little/pokemon.json`,
+    `${cdn.cloudinary}/v1589697366/pokedex-little/moves.json`,
+    `${cdn.cloudinary}/v1589699499/pokedex-little/others.json`
+  ],
+  dropbox_data: [
+    `${cdn.dropbox}/dzi90dcf6dvkqo7/api.json`,
+    `${cdn.dropbox}/ienyhx8owprhprq/moves.json`
+  ],
+  offline_data: [
+    'assets/pokemon.json',
+    'assets/moves.json',
+    'assets/others.json',
+  ],
+  offline_dropbox_data: [
+    'assets/api/api.json',
+    'assets/api/moves.json'
+  ]
 };
 
 /*

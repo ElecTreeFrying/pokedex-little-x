@@ -96,7 +96,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.cd.detectChanges();
 
     this.shared.appInitialization.subscribe((res: number) => {
-      res === 1 ? this.attachOverlay = true  : 
+      res === 1 ? this.attachOverlay = true : 
       res === 2 ? this.shared.updateAppInitializationSelection = 3 :
       res === 4 ? this.attachOverlay = false : 0;
     });

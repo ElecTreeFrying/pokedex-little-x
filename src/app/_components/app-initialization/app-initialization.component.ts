@@ -21,18 +21,13 @@ export class AppInitializationComponent implements OnInit {
 
   ngOnInit(): void {
 
-    setTimeout(() => {
-      this.remove()
-    }, 2000);
-
     this.shared.appInitialization.subscribe((res: number) => {
 
-      if (res !== 3) return
+      if (res !== 3) return;
       this.remove();
     });
-
   }
-
+  
   remove() {
     if (!this.content) return;
     this.render.addClass(this.content.nativeElement, 'loaded');
@@ -41,7 +36,7 @@ export class AppInitializationComponent implements OnInit {
   end() {
     this.flag++
     if (this.flag === 2) {
-      this.shared.updateAppInitializationSelection = 4
+      this.shared.updateAppInitializationSelection = 4;
     }
   }
 
