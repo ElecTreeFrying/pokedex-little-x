@@ -57,20 +57,19 @@ export class ItemDetailsPipe implements PipeTransform {
     else if (option === 'item-held-pokemon') {
       return value.held_by_pokemon.map(e => e.pokemon).map((pokemon, i) => {
         pokemon.id = +pokemon.url.split('/').reverse()[1];
-        pokemon.display = capitalize(pokemon.name.split('-').join(' '));
+        pokemon.display = pokemon.name.split('-').map(e => capitalize(e)).join(' ');
         return { ...pokemon, data: value.held_by_pokemon[i] };
       });
     }
 
     else if (option === 'item-held-pokemon-sprite') {
-      console.log(value);
       if (value.id <= 807) {
         const url = 'https://raw.githubusercontent.com/ElecTreeFrying/assets/master/pokemon';
         return `${url}/${value.id}.png`;
       } else if (value.id <= 10090 && value.id > 807) {
         return value.sprites.front_default;
       } else if (value.id >= 10091) {
-        const id = +value.species.url.split('/').reverse()[1];
+        const id = +value.data.data.species.url.split('/').reverse()[1];
         const name = value.name.split('-').slice(1).join('-')
         const url = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon';
         return `${url}/${id}-${name}.png`;
@@ -90,12 +89,12 @@ export class ItemDetailsPipe implements PipeTransform {
 
     else if (option === 'item-cost') {
       const falsy = value.cost === 0 || value.cost === undefined || value.cost === null;
-      return !falsy ? `$${value.cost}` : 'N/A';
+      return !falsy ? `$${value.cost}` : '-';
     }
 
     else if (option === 'item-fling-power') {
       const falsy = value.fling_power === 0 || value.fling_power === undefined || value.fling_power === null;
-      return !falsy ? `${value.fling_power} pts.` : 'N/A';
+      return !falsy ? `${value.fling_power} pts.` : '-';
     }
 
     else if (option === 'item-abilities') {

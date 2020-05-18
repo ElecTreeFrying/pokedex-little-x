@@ -1,8 +1,11 @@
 import { Component, OnInit, OnDestroy, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
+
 
 import { PokeapiItemService } from '../_common/services/pokeapi-item.service';
 import { SharedService } from '../_common/services/shared.service';
+import { ComponentSelectorService } from '../_common/services/component-selector.service';
 
 
 @Component({
@@ -22,8 +25,10 @@ export class ItemComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[];
 
   constructor(
+    private dialog: MatDialog,
     public api: PokeapiItemService,
-    private shared: SharedService
+    private shared: SharedService,
+    private componentSelector: ComponentSelectorService
   ) { }
 
   ngOnInit(): void {
@@ -55,6 +60,26 @@ export class ItemComponent implements OnInit, OnDestroy {
     this.isLoading = true;
 
     this.subscriptions = [];
+  }
+
+  showDetails(data: any, type: string) {
+
+    this.shared.dialogIsOpened = true;
+
+    const component = this.componentSelector.dialogComponent({ data, type });
+
+    const isPanel = type === 'move' || type === 'pokemon' || type ==='stat';
+
+    const ref = this.dialog.open(component, {
+      id: type,
+      closeOnNavigation: true,
+      autoFocus: false,
+      data: { data, entry: this.item },
+      minHeight: '90vh',
+      maxHeight: '90vh',
+      minWidth: isPanel ? '500px' : '90vw',
+      maxWidth: isPanel ? '500px' : '90vw',
+    });
   }
 
 }
