@@ -40,7 +40,7 @@ export class ItemComponent implements OnInit, OnDestroy {
     this.loaded.next(true);
     this.api.selection = this.shared.selectionData;
 
-    this.subscriptions.push(this.api.item.subscribe((item: any) => {
+    this.subscriptions.push(this.api.item().subscribe((item: any) => {
 
       this.loaded.next(false);
       this.item = item;

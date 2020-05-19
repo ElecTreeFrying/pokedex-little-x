@@ -1,40 +1,79 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 
-import { PokeapiService } from '../_common/services/pokeapi.service';
+import { PokeapiBerryService } from '../_common/services/pokeapi-berry.service';
 import { SharedService } from '../_common/services/shared.service';
+import { ComponentSelectorService } from '../_common/services/component-selector.service';
 
 
 @Component({
   selector: 'app-berry',
   templateUrl: './berry.component.html',
-  styleUrls: ['./berry.component.scss']
+  styleUrls: ['./berry.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class BerryComponent implements OnInit {
 
   @Output() loaded = new EventEmitter;
 
+  berry: any;
+  sections: boolean[];
+  isLoading: boolean;
+
   subscriptions: Subscription[];
 
   constructor(
-    private api: PokeapiService,
-    private shared: SharedService
+    private dialog: MatDialog,
+    public api: PokeapiBerryService,
+    private shared: SharedService,
+    private componentSelector: ComponentSelectorService
   ) { }
 
   ngOnInit(): void {
 
     this.initialize();
 
-    this.loaded.next(true);
-    this.shared.selectionData = undefined;
+    this.sections = [ true, true, true, true, false, false, true, false ];
 
-    setTimeout(() => {
+    this.loaded.next(true);
+    this.api.selection = this.shared.selectionData;
+
+    this.subscriptions.push(this.api.berry.subscribe((berry: any) => {
+
+      // console.log(berry);
+
       this.loaded.next(false);
-    });
+      this.berry = berry;
+      
+      this.isLoading = false;
+      this.shared.selectionData = undefined;
+    }));
   }
 
   initialize() {
+    this.isLoading = true;
     this.subscriptions = [];
+  }
+
+  showDetails(data: any, type: string) {
+
+    this.shared.dialogIsOpened = true;
+
+    const component = this.componentSelector.dialogComponent({ data, type });
+
+    const isPanel = type === 'move' || type === 'pokemon' || type ==='stat';
+
+    const ref = this.dialog.open(component, {
+      id: type,
+      closeOnNavigation: true,
+      autoFocus: false,
+      data: { data, entry: this.berry },
+      minHeight: '90vh',
+      maxHeight: '90vh',
+      minWidth: isPanel ? '500px' : '90vw',
+      maxWidth: isPanel ? '500px' : '90vw',
+    });
   }
 
 }

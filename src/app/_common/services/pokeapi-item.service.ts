@@ -27,9 +27,8 @@ export class PokeapiItemService {
     }
   }
 
-  get item() {
+  item(id: number = this.shared.selectionData.key) {
 
-    const id = this.shared.selectionData.key;
     const url = `https://pokeapi.co/api/v2/item/${id}/`;
     const git = this.shared.toGithubRaw(url);
     

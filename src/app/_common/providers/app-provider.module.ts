@@ -38,6 +38,7 @@ import { LoadingComponent } from '../../_components/loading/loading.component';
 
 import { NormalizePipe } from '../pipes/normalize.pipe';
 import { ItemDetailsPipe } from '../pipes/item-details.pipe';
+import { BerryDetailsPipe } from '../pipes/berry-details.pipe';
 
 import { KeyboardDirective } from '../directives/keyboard.directive';
 import { TransitionEventDirective } from '../directives/transition-event.directive';
@@ -56,6 +57,7 @@ import { pokemonDialogComponents } from '../services/component-selector.service'
     LoadingComponent,
     NormalizePipe,        // pipes
     ItemDetailsPipe,
+    BerryDetailsPipe,
     KeyboardDirective,    // directives
     TransitionEventDirective
   ],

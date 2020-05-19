@@ -1,1 +1,255 @@
-<p>berry works!</p>
+
+<div class="spinner" *ngIf="isLoading">
+  <mat-spinner></mat-spinner>
+</div>
+
+<div class="spinner-message" *ngIf="isLoading">
+  <p>Please wait...</p>
+</div>
+
+<div class="content" *ngIf="!isLoading">
+  
+  <div class="heading">
+    <div class="text">
+      <p class="number">Item no. {{ berry.item.data?.id }}</p>
+      <p class="name">{{ berry.item.data | itemDetails: 'item-name' }}</p>
+      <p class="category">{{ berry.item.data | itemDetails: 'item-category' }}</p>
+    </div>
+    <div class="image">
+      <img 
+        defaultImage="assets/images/berry-resize.png" 
+        errorImage="assets/images/berry-resize.png" 
+        [lazyLoad]="api?.data?.base64" 
+        [alt]="api?.data?.name">
+    </div>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <div class="details">
+
+    <div class="detail mat-elevation-z5">
+      <div class="key" (click)="sections[0] = sections[0] ? false : true" [matTooltip]="sections[0] ? 'Collapse' : 'Expand description'" matTooltipClass="poke-tooltip">
+        <span>Description</span>
+        <mat-icon *ngIf="!sections[0]">keyboard_arrow_down</mat-icon>
+        <mat-icon *ngIf="sections[0]">keyboard_arrow_up</mat-icon>
+      </div>
+      <div class="value" *ngIf="sections[0]">
+        <span>{{ berry.item.data | itemDetails: 'item-description' }}</span>
+      </div>
+    </div>
+
+    <div class="detail mat-elevation-z5">
+      <div class="key" (click)="sections[1] = sections[1] ? false : true" [matTooltip]="sections[1] ? 'Collapse' : 'Expand effect'" matTooltipClass="poke-tooltip">
+        <span>Effect</span>
+        <mat-icon *ngIf="!sections[1]">keyboard_arrow_down</mat-icon>
+        <mat-icon *ngIf="sections[1]">keyboard_arrow_up</mat-icon>
+      </div>
+      <div class="value" *ngIf="sections[1]">
+        <span>{{ berry.item.data | itemDetails: 'item-effect' }}</span>
+      </div>
+    </div>
+
+    <div class="detail mat-elevation-z5">
+      <div class="key" (click)="sections[2] = sections[2] ? false : true" [matTooltip]="sections[2] ? 'Collapse' : 'Expand information'" matTooltipClass="poke-tooltip">
+        <span>Information</span>
+        <mat-icon *ngIf="!sections[2]">keyboard_arrow_down</mat-icon>
+        <mat-icon *ngIf="sections[2]">keyboard_arrow_up</mat-icon>
+      </div>
+      <div class="value information" *ngIf="sections[2]">
+
+        <div matRipple matTooltip="The price of this item in stores" matTooltipClass="poke-tooltip" class="inner-detail medium mat-elevation-z3">
+          <div class="inner-key">
+            <span>Cost</span>
+          </div>
+          <div class="inner-value">
+            <span>{{ berry.item.data | itemDetails: 'item-cost' }}</span>
+          </div>
+        </div>
+
+        <div matRipple matTooltip="	
+        The power of the move Fling when used with this item" matTooltipClass="poke-tooltip" class="inner-detail medium mat-elevation-z3">
+          <div class="inner-key">
+            <span>Fling power</span>
+          </div>
+          <div class="inner-value">
+            <span>{{ berry.item.data | itemDetails: 'item-fling-power' }}</span>
+          </div>
+        </div>
+
+        <div matRipple matTooltip="The firmness of this berry, used in making Poké blocks or Poffins" matTooltipClass="poke-tooltip" class="inner-detail medium mat-elevation-z3">
+          <div class="inner-key">
+            <span>Firmness</span>
+          </div>
+          <div class="inner-value">
+            <span>{{ berry | berryDetails: 'berry-firmness' }}</span>
+          </div>
+        </div>
+
+        <div matRipple matTooltip="The size of this Berry, in millimeters" matTooltipClass="poke-tooltip" class="inner-detail medium mat-elevation-z3">
+          <div class="inner-key">
+            <span>Size</span>
+          </div>
+          <div class="inner-value">
+            <span>{{ berry | berryDetails: 'berry-size' }}</span>
+          </div>
+        </div>
+
+        <div matRipple matTooltip="Time it takes the tree to grow one stage, in hours. Berry trees go through four of these growth stages before they can be picked" matTooltipClass="poke-tooltip" class="inner-detail medium mat-elevation-z3">
+          <div class="inner-key">
+            <span>Growth time</span>
+          </div>
+          <div class="inner-value">
+            <span>{{ berry | berryDetails: 'berry-growth-time' }}</span>
+          </div>
+        </div>
+
+        <div matRipple matTooltip="The maximum number of these berries that can grow on one tree in Generation IV" matTooltipClass="poke-tooltip" class="inner-detail medium mat-elevation-z3">
+          <div class="inner-key">
+            <span>Max harvest</span>
+          </div>
+          <div class="inner-value">
+            <span>{{ berry | berryDetails: 'berry-max-harvest' }}</span>
+          </div>
+        </div>
+
+        <div matRipple matTooltip="The speed at which this Berry dries out the soil as it grows. A higher rate means the soil dries more quickly" matTooltipClass="poke-tooltip" class="inner-detail medium mat-elevation-z3">
+          <div class="inner-key">
+            <span>Soil dryness</span>
+          </div>
+          <div class="inner-value">
+            <span>{{ berry | berryDetails: 'berry-soil-dryness' }}</span>
+          </div>
+        </div>
+
+        <div matRipple matTooltip="The smoothness of this Berry, used in making Poké blocks or Poffins" matTooltipClass="poke-tooltip" class="inner-detail medium mat-elevation-z3">
+          <div class="inner-key">
+            <span>Smoothness</span>
+          </div>
+          <div class="inner-value">
+            <span>{{ berry | berryDetails: 'berry-smoothness' }}</span>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+
+    <div class="detail mat-elevation-z5">
+      <div class="key" (click)="sections[3] = sections[3] ? false : true" [matTooltip]="sections[3] ? 'Collapse' : 'Expand flavors'" matTooltipClass="poke-tooltip">
+        <span>Flavors</span>
+        <mat-icon *ngIf="!sections[3]">keyboard_arrow_down</mat-icon>
+        <mat-icon *ngIf="sections[3]">keyboard_arrow_up</mat-icon>
+      </div>
+      <div class="value" *ngIf="sections[3]">
+        <div matRipple class="flavor" *ngFor="let stat of berry | berryDetails: 'berry-flavors'" matTooltip="show more details" matTooltipClass="poke-tooltip">
+          <p>{{ stat?.name }}:</p>
+          <mat-progress-bar [value]="stat?.potency" [matTooltip]="stat?.base_potency" matTooltipClass="poke-tooltip"></mat-progress-bar>
+        </div>
+      </div>
+    </div>
+
+    <div class="detail mat-elevation-z5">
+      <div class="key" (click)="sections[4] = sections[4] ? false : true" [matTooltip]="sections[4] ? 'Collapse' : 'Expand attributes'" matTooltipClass="poke-tooltip">
+        <span>Attributes</span>
+        <mat-icon *ngIf="!sections[4]">keyboard_arrow_down</mat-icon>
+        <mat-icon *ngIf="sections[4]">keyboard_arrow_up</mat-icon>
+      </div>
+      <div class="value" *ngIf="sections[4]">
+        <p *ngIf="(berry.item.data | itemDetails: 'item-abilities').length === 0">
+          No data...
+        </p>
+        <div class="inner-detail mat-elevation-z3" *ngFor="let attribute of berry.item.data | itemDetails: 'item-abilities'">
+          <div class="inner-key">
+            <span>{{ attribute?.name }}</span>
+          </div>
+          <div class="inner-value">
+            <span>{{ attribute?.description }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="detail mat-elevation-z5">
+      <div class="key" (click)="sections[5] = sections[5] ? false : true" [matTooltip]="sections[5] ? 'Collapse' : 'Expand held by pokemon'" matTooltipClass="poke-tooltip">
+        <span>Held by pokemon</span>
+        <mat-icon *ngIf="!sections[5]">keyboard_arrow_down</mat-icon>
+        <mat-icon *ngIf="sections[5]">keyboard_arrow_up</mat-icon>
+      </div>
+      <div class="value" *ngIf="(berry.item.data | itemDetails: 'item-held-pokemon').length === 0 && sections[5]">
+        <p style="margin-bottom: -8px;">
+          No data...
+        </p>
+      </div>
+      <div class="value held-by-pokemon" *ngIf="sections[5]">
+        <div 
+          class="inner-detail mat-elevation-z3" 
+          matRipple
+          matTooltip="select pokémon" 
+          matTooltipClass="poke-tooltip" 
+          *ngFor="let entry of berry.item.data | itemDetails: 'item-held-pokemon'"
+          (click)="showDetails(entry?.id, 'pokemon')">
+          <div class="inner-key">
+            <span>{{ entry?.display }}</span>
+          </div>
+          <div class="inner-value">
+            <img 
+              defaultImage="assets/images/berry-resize.png" 
+              errorImage="assets/images/berry-resize.png" 
+              [lazyLoad]="entry | itemDetails: 'item-held-pokemon-sprite'" 
+              [alt]="entry?.name">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="detail mat-elevation-z5">
+      <div class="key" (click)="sections[6] = sections[6] ? false : true" [matTooltip]="sections[6] ? 'Collapse' : 'Expand game indices'" matTooltipClass="poke-tooltip">
+        <span>Game indices</span>
+        <mat-icon *ngIf="!sections[6]">keyboard_arrow_down</mat-icon>
+        <mat-icon *ngIf="sections[6]">keyboard_arrow_up</mat-icon>
+      </div>
+      <div class="value" *ngIf="sections[6]">
+        <span class="description">A list of game indices relevant to this item by generation.</span>
+        <mat-divider></mat-divider>
+        <div class="inner-detail version-entries mat-elevation-z3" *ngFor="let entry of berry.item.data | itemDetails: 'item-game-index'">
+          <div class="inner-key">
+            <span>{{ entry?.gen }}</span>
+          </div>
+          <div class="inner-value">
+            <span>{{ entry?.index }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="detail mat-elevation-z5">
+      <div class="key" (click)="sections[7] = sections[7] ? false : true" [matTooltip]="sections[7] ? 'Collapse' : 'Expand machines'" matTooltipClass="poke-tooltip">
+        <span>Machines</span>
+        <mat-icon *ngIf="!sections[7]">keyboard_arrow_down</mat-icon>
+        <mat-icon *ngIf="sections[7]">keyboard_arrow_up</mat-icon>
+      </div>
+      <div class="value" *ngIf="sections[7]">
+        <span class="description">A list of game indices relevant to this item by generation.</span>
+        <mat-divider></mat-divider>
+        <p *ngIf="(berry.item.data | itemDetails: 'item-machines').length === 0">
+          No data...
+        </p>
+        <div class="inner-detail mat-elevation-z3" *ngFor="let entry of berry.item.data | itemDetails: 'item-machines'">
+          <div class="inner-key">
+            <span>{{ entry?.version_group }}</span>
+          </div>
+          <div class="inner-value">
+            <span>{{ entry?.item }} - {{ entry?.move_name }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="credits">
+      <p class="app">Pokédex Little</p>
+      <p class="developer">by ElecTreeFrying</p>
+    </div>
+
+  </div>
+
+</div>
