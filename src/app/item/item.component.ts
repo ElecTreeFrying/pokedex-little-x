@@ -58,7 +58,6 @@ export class ItemComponent implements OnInit, OnDestroy {
 
   initialize() {
     this.isLoading = true;
-
     this.subscriptions = [];
   }
 

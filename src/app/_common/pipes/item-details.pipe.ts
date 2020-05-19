@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { capitalize, intersectionBy } from 'lodash';
+import { capitalize } from 'lodash';
 
 import { SharedService, version_group } from '../services/shared.service';
 

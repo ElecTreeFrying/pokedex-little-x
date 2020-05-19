@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-
-import { SharedService } from './shared.service';
 import { map, exhaustMap, switchMap, mergeMap, toArray } from 'rxjs/operators';
 import { of, forkJoin } from 'rxjs';
+
+import { SharedService } from './shared.service';
 
 
 @Injectable({
