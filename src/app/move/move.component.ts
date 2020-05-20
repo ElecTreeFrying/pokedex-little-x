@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { PokeapiService } from '../_common/services/pokeapi.service';
@@ -8,7 +8,8 @@ import { SharedService } from '../_common/services/shared.service';
 @Component({
   selector: 'app-move',
   templateUrl: './move.component.html',
-  styleUrls: ['./move.component.scss']
+  styleUrls: ['./move.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class MoveComponent implements OnInit, OnDestroy {
 

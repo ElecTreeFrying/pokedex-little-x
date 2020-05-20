@@ -191,7 +191,7 @@ export class PokeapiService {
 
   flatStat(stat: any) {
 
-    return this.http.get(stat.stat.url).pipe(
+    return this.http.get(this.shared.toGithubRaw(stat.stat.url)).pipe(
       map((res: any) => {
 
         if (!res.move_damage_class) {

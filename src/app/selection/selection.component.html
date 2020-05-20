@@ -37,7 +37,7 @@
         <div *ngIf="type.includes('move-'); then thenBlock else elseBlock"></div>
         
         <ng-template #thenBlock>
-          <p class="text">{{ selection | selection: 'move-name' }}</p>
+          <p class="text m-auto">{{ selection | selection: 'move-name' }}</p>
         </ng-template>
         
         <ng-template #elseBlock>
