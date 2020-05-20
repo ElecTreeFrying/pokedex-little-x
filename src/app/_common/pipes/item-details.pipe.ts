@@ -97,7 +97,7 @@ export class ItemDetailsPipe implements PipeTransform {
       return !falsy ? `${value.fling_power} pts.` : '-';
     }
 
-    else if (option === 'item-abilities') {
+    else if (option === 'item-attribute') {
       return value.attributes.map((attribute: any) => {
         
         const data: any = {};

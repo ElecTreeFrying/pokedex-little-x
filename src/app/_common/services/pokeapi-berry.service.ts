@@ -24,7 +24,7 @@ export class PokeapiBerryService {
 
   get data() {
     return {
-      base64: `data:image/png;base64,${this.selection.byte64}`,
+      base64: `data:image/png;base64,${this.selection.byte64.replace('data:image/png;base64,', '')}`,
       name: `${this.selection.name} Berry`
     }
   }

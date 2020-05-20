@@ -35,7 +35,7 @@ export class ItemComponent implements OnInit, OnDestroy {
 
     this.initialize();
 
-    this.sections = [ true, true, true, false, false, true, false ];
+    this.sections = [ true, true, true, true, false, true, false ];
 
     this.loaded.next(true);
     this.api.selection = this.shared.selectionData;

@@ -142,6 +142,10 @@
   .inner-detail {
     border: 1.5px solid orange;
     margin: 8px 0;
+
+    &.attribute {
+      cursor: pointer;
+    }
     
     .inner-key {
       background: orange;

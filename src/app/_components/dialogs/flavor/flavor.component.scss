@@ -1,0 +1,149 @@
+
+.poke-tooltip {
+  background-color: #4E1338;
+}
+
+.content {
+  margin: -24px;
+  display: flex;
+  height: 90vh;
+  width: 90vw;
+  overflow: hidden;
+}
+
+.entries {
+  background-color: #340522;
+  color: white;
+
+  width: calc(100% - 500px);
+  padding: 0 0 24px 0;
+
+  .card-header {
+    background-color: #340522;
+    padding: 20px 28px;
+    display: flex;
+    flex-flow: row wrap;
+    width: 100%;
+    position: fixed;
+    width: calc(90vw - 500px);
+    z-index: 1000;
+    height: 73px;
+
+    p {
+      font-size: 2em;
+      font-family: Roboto, "Helvetica Neue", sans-serif;
+      color: white;
+      margin: 0 20px 0 0;
+      transform: translateY(6px);
+    }
+  }
+
+  .card-container {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    padding-top: 73px + 8px;
+    $measure: 30px;
+    margin-top: $measure;
+    margin-bottom: $measure;
+  
+    .mat-ripple {
+      margin: 8px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .mat-card {
+      background: #4E1338;
+      width: 220px;
+      height: 107px;
+      
+      .mat-card-content {
+        display: flex;
+        justify-content: space-between;
+        height: 38px;
+      }
+
+      p {
+        font-family: 'Poppins', 'Poppins-Regular';
+        font-size: 1.15em;
+        color: white;
+        margin: 0;
+  
+        &:first-child {
+          font-size: 1.65em;
+          margin-bottom: 4px;
+        }
+      }
+  
+      .mat-card-image {
+        width: auto;
+        height: 75px;
+        margin-right: 0;
+      }
+    }
+  }
+}
+
+.information {
+  width: 500px;
+  font-family: 'VT323', monospace;
+  
+  .close {
+    position: fixed;
+    z-index: 1000;
+    width: 500px;
+    display: flex;
+
+    .mat-icon-button {
+      margin-left: auto;
+    }
+  }
+
+  .heading {
+    padding: 32px;
+    display: flex;
+    flex-flow: column wrap;
+  
+    .text-head {
+      display: flex;
+
+      .type {
+        font-size: 2.6em;
+        margin: 0 16px 0 0;
+        transform: translateY(4px);
+      }
+    }
+
+    .text-descriptions {
+      transform: translateY(8px);
+
+      .head {
+        font-size: 2em;
+        margin-top: 20px;
+      }
+    }
+  }
+  
+  .mat-divider {
+    margin: 0 16px;
+  }
+}
+
+.details {
+  padding: 32px;
+  height: calc(90vh - 96px);
+  display: flex;
+
+  .credits {
+    margin: auto auto 32px auto;
+  
+    .app, .developer {
+      font-family: 'Cairo', 'Cairo-SemiBold';
+      font-size: 21px;
+      text-align: center;
+      letter-spacing: 4px;
+      margin: 4px 0;
+    }
+  }
+}

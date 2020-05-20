@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, OnDestroy, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 
@@ -13,7 +13,7 @@ import { ComponentSelectorService } from '../_common/services/component-selector
   styleUrls: ['./berry.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class BerryComponent implements OnInit {
+export class BerryComponent implements OnInit, OnDestroy {
 
   @Output() loaded = new EventEmitter;
 
@@ -34,14 +34,12 @@ export class BerryComponent implements OnInit {
 
     this.initialize();
 
-    this.sections = [ true, true, true, true, false, false, true, false ];
+    this.sections = [ true, true, true, true, true, false, true, false ];
 
     this.loaded.next(true);
     this.api.selection = this.shared.selectionData;
 
     this.subscriptions.push(this.api.berry.subscribe((berry: any) => {
-
-      // console.log(berry);
 
       this.loaded.next(false);
       this.berry = berry;
@@ -49,6 +47,12 @@ export class BerryComponent implements OnInit {
       this.isLoading = false;
       this.shared.selectionData = undefined;
     }));
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach((subscription: Subscription) => {
+      subscription.unsubscribe();
+    });
   }
 
   initialize() {

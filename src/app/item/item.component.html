@@ -87,10 +87,10 @@
         <mat-icon *ngIf="sections[3]">keyboard_arrow_up</mat-icon>
       </div>
       <div class="value" *ngIf="sections[3]">
-        <p *ngIf="(item | itemDetails: 'item-abilities').length === 0">
+        <p *ngIf="(item | itemDetails: 'item-attribute').length === 0">
           No data...
         </p>
-        <div class="inner-detail mat-elevation-z3" *ngFor="let attribute of item | itemDetails: 'item-abilities'">
+        <div matRipple class="inner-detail ability mat-elevation-z3" *ngFor="let attribute of item | itemDetails: 'item-attribute'" (click)="showDetails(attribute?.data, 'attribute')">
           <div class="inner-key">
             <span>{{ attribute?.name }}</span>
           </div>

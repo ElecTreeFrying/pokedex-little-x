@@ -160,29 +160,28 @@ export class SelectionComponent implements OnInit, OnDestroy {
   }
 
   private berryData(selection: any, type: string) {
+    this.shared.id = undefined;
     this.shared.selectionData = selection;
     this.shared.updateSelectedEntrySelection = this.toggle ? false : true;
     this.toggle = this.toggle ? false : true;
-    this.shared.id = -1;
-
+    
     this.shared.sidenavContent('Berry');
   }
 
   private locationData(selection: any, type: string) {
+    this.shared.id = undefined;
     this.shared.selectionData = selection;
     this.shared.updateSelectedEntrySelection = this.toggle ? false : true;
     this.toggle = this.toggle ? false : true;
-    this.shared.id = -1;
-
+    
     this.shared.sidenavContent('Location');
   }
-
+  
   private moveData(selection: any, type?: string) {
-    
+    this.shared.id = undefined;
     this.shared.selectionData = selection;
     this.shared.updateSelectedEntrySelection = this.toggle ? false : true;
     this.toggle = this.toggle ? false : true;
-    this.shared.id = -1;
 
     this.shared.sidenavContent('Move');
   }

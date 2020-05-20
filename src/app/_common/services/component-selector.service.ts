@@ -10,9 +10,13 @@ import { HabitatComponent } from '../../_components/dialogs/habitat/habitat.comp
 import { SelectedMoveComponent } from '../../_components/dialogs/selected-move/selected-move.component';
 import { ShapeComponent } from '../../_components/dialogs/shape/shape.component';
 import { StatComponent } from '../../_components/dialogs/stat/stat.component';
+import { FirmnessComponent } from '../../_components/dialogs/firmness/firmness.component';
+import { FlavorComponent } from '../../_components/dialogs/flavor/flavor.component';
+import { AttributeComponent } from '../../_components/dialogs/attribute/attribute.component';
 
 export const pokemonDialogComponents = [
-  SelectedPokemonComponent, TypeComponent, AbilityComponent, ColorComponent, EggGroupsComponent, GrowthRateComponent, HabitatComponent, SelectedMoveComponent, ShapeComponent, StatComponent
+  SelectedPokemonComponent, TypeComponent, AbilityComponent, ColorComponent, EggGroupsComponent, GrowthRateComponent, HabitatComponent, SelectedMoveComponent, ShapeComponent, StatComponent,
+  AttributeComponent, FirmnessComponent, FlavorComponent
 ];
 
 
@@ -31,7 +35,10 @@ export class ComponentSelectorService {
     { type: 'stat', component: StatComponent },
     { type: 'ability', component: AbilityComponent },
     { type: 'pokemon', component: SelectedPokemonComponent },
-    { type: 'move', component: SelectedMoveComponent }
+    { type: 'move', component: SelectedMoveComponent },
+    { type: 'firmness', component: FirmnessComponent },
+    { type: 'flavor', component: FlavorComponent },
+    { type: 'attribute', component: AttributeComponent }
   ]
 
   constructor() { }

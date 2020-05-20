@@ -181,6 +181,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   sidenavToggle(event: boolean) {
 
     this.shared.id = undefined;
+    this.shared.selectionData = undefined;
     const drawer = this.sideDrawerState.drawer;
 
     if (event) {

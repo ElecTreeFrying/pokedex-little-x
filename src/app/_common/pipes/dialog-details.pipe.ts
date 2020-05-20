@@ -332,6 +332,65 @@ export class DialogDetailsPipe implements PipeTransform {
       });
     }
 
+    else if (type === 'attribute-name') {
+      return value.data.data.names.find(e => e.language.name === 'en').name;
+    }
+
+    else if (type === 'attribute=description') {
+      return value.data.data.descriptions.find(e => e.language.name === 'en').description;
+    }
+
+    else if (type === 'attribute-items') {
+
+      const allItems = this.shared.item_attributes[0].entries;
+
+      return intersectionBy(allItems, value.data.data.items, 'name').map((item: any) => {
+        item.display = capitalize(item.name.split('-').join(' '));
+        item.byte64 = `data:image/png;base64,${item.byte64.replace('data:image/png;base64,', '')}`;
+        return item;
+      });
+    }
+
+    else if (type === 'firmness-name') {
+      return value.data.names.find(e => e.language.name === 'en').name;
+    }
+
+    else if (type === 'firmness-berries') {
+
+      const berries = value.data.berries.map((berry) => {
+        berry.name = `${berry.name}-berry`.replace('-berry-berry', '-berry');
+        return berry;
+      });
+
+      return intersectionBy(this.shared.berries, berries, 'name').map((berry) => {
+        berry.display = capitalize(berry.name.replace('-berry', ''));
+        berry.byte64 = `data:image/png;base64,${berry.byte64.replace('data:image/png;base64,', '')}`;
+        return berry;
+      });
+    }
+
+    else if (type === 'flavor-name') {
+      return value.data.names.find(e => e.language.name === 'en').name;
+    }
+
+    else if (type === 'flavor-contest-type') {
+      return capitalize(value.data.contest_type.name);
+    }
+
+    else if (type === 'flavor-berries') {
+
+      const berries = value.data.berries.map((berry) => {
+        berry.name = `${berry.berry.name}-berry`.replace('-berry-berry', '-berry');
+        return berry;
+      });
+
+      return intersectionBy(this.shared.berries, berries, 'name').map((berry) => {
+        berry.display = capitalize(berry.name.replace('-berry', ''));
+        berry.byte64 = `data:image/png;base64,${berry.byte64.replace('data:image/png;base64,', '')}`;
+        return berry;
+      });
+    }
+
     // Moves information
 
     else if (type === 'power') {

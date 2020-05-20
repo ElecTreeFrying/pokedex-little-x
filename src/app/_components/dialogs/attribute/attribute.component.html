@@ -1,0 +1,75 @@
+
+<div class="content">
+  
+  <div class="entries" data-simplebar>
+    <div class="card-header mat-elevation-z5">
+      <p>Berry entries</p>
+    </div>
+    <div class="card-container">
+
+      <div matRipple *ngFor="let entry of data | dialogDetails: 'attribute-items' | dialogDetails: 'slice': num">
+        <mat-card>
+  
+          <div class="image">
+            <img 
+              mat-card-image 
+              offset="300"
+              defaultImage="assets/images/berry.png" 
+              errorImage="assets/images/berry.png" 
+              [lazyLoad]="entry?.byte64" 
+              [alt]="entry?.name">
+          </div>
+  
+          <mat-card-content class="text-container">
+            <p>{{ entry?.display }}</p>
+          </mat-card-content>
+        </mat-card>
+      </div>
+      <div matRipple *ngIf="num !== 0" (click)="num = 0">
+        <mat-card>
+          <mat-card-content class="load-more-icon">
+            <mat-icon>add</mat-icon>
+          </mat-card-content>
+          <mat-card-content class="text-container">
+            <p>Load all</p>
+          </mat-card-content>
+        </mat-card>
+      </div>
+
+    </div>
+  </div>
+  
+  <div class="information" data-simplebar>
+
+    <div class="close">
+      <button mat-icon-button (click)="ref.close(null)">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+
+    <div class="heading">
+
+      <div class="text-head">
+        <p class="type">Attribute: {{ data | dialogDetails: 'attribute-name' }}</p>
+      </div>
+
+      <div class="text-descriptions">
+        <p class="head"><strong>Description:</strong></p>
+        <p class="description">{{ data | dialogDetails: 'attribute=description' }}</p>
+      </div>
+
+    </div>
+
+    <div class="details">
+  
+      <div class="credits">
+        <p class="app">Pokédex Little</p>
+        <p class="developer">by ElecTreeFrying</p>
+      </div>
+
+    </div>
+  
+  </div>
+  
+</div>
+
