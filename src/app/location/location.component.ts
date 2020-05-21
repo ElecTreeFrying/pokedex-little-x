@@ -18,6 +18,7 @@ export class LocationComponent implements OnInit, OnDestroy {
   @Output() loaded = new EventEmitter;
 
   location: any;
+  sections: any[];
   isLoading: boolean;
 
   subscriptions: Subscription[];
@@ -32,6 +33,8 @@ export class LocationComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
 
     this.initialize();
+
+    this.sections = [ true ];
 
     this.loaded.next(true);
 
