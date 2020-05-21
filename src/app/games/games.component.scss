@@ -9,7 +9,13 @@
     border-radius: 4px;
     cursor: pointer;
 
+    .text-container {
+      height: 40px;
+      display: flex;
+    }
+
     p {
+      margin: auto;
       font-family: 'Poppins', 'Poppins-Regular';
       font-size: 1.15em;
       text-align: center;
@@ -19,6 +25,7 @@
   .mat-card {
     width: 150px;
     height: 202px;
+    height: 222px;
     background-color: #4E1338;
     color: white;
 
