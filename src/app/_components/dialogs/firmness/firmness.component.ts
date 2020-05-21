@@ -18,7 +18,6 @@ export class FirmnessComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    console.log(this.data.data);
   }
 
   ngOnDestroy() {
