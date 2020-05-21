@@ -36,16 +36,12 @@ export class PokeapiService {
 
   private loadCDN() {
 
-    forkJoin(...environment.data.map(e => this.http.get(e)))
+    forkJoin({ ...environment.data.map(e => this.http.get(e)) })
       .pipe(
-        map(res => ({ 
-          ...res.find(e => e.hasOwnProperty('pokedex')), 
-          ...res.find(e => e.hasOwnProperty('berries')), 
-          moves: res.find(e => e.length)
-        }))
+        map(res => ({ ...res['0'], ...res['2'], moves: res['1'] }))
       )
       .subscribe((res) => {
-      
+
         this.shared.pokemon = res.pokemon;
         this.shared.pokedex = res.pokedex;
         this.shared.generation = res.generation;
