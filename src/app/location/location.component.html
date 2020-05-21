@@ -22,12 +22,15 @@
   <div class="details">
 
     <div class="detail mat-elevation-z5">
-      <div class="key" (click)="true" [matTooltip]="true ? 'Collapse' : 'Expand description'" matTooltipClass="poke-tooltip">
+      <div class="key" (click)="sections[0] = sections[0] ? false : true" [matTooltip]="sections[0] ? 'Collapse' : 'Expand description'" matTooltipClass="poke-tooltip">
         <span>Location areas</span>
-        <mat-icon *ngIf="!true">keyboard_arrow_down</mat-icon>
-        <mat-icon *ngIf="true">keyboard_arrow_up</mat-icon>
+        <mat-icon *ngIf="!sections[0]">keyboard_arrow_down</mat-icon>
+        <mat-icon *ngIf="sections[0]">keyboard_arrow_up</mat-icon>
       </div>
-      <div class="value" *ngIf="true">
+      <div class="value" *ngIf="sections[0]">
+        <span *ngIf="(location | locationDetails: 'location-areas').length === 0">
+          No data...
+        </span>
         <div matRipple class="area" *ngFor="let area of location | locationDetails: 'location-areas': (location | locationDetails: 'location-name')" matTooltip="show more details" matTooltipClass="poke-tooltip" (click)="showDetails(area?.data, 'location-area')">
           <p>{{ area?.display }}</p>
         </div>
