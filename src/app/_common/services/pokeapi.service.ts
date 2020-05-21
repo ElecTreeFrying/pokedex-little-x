@@ -59,6 +59,7 @@ export class PokeapiService {
           types: res.keys.types,
           move_damage_class: res.keys.move_damage_class,
           no_habitat: intersectionBy(res.pokemon, res.keys.no_habitat, 'id'),
+          encounter_method: res.keys.encounter_method,
           pokemon_moves: []
         };
 

@@ -7,6 +7,7 @@ interface Key {
   types: any[];
   move_damage_class: any[];
   no_habitat: any[];
+  encounter_method: any[];
   natures?: any[];
   characteristics?: any[];
   pokemon_moves?: any[];

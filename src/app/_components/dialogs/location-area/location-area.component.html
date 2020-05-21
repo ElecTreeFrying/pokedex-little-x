@@ -1,0 +1,142 @@
+
+<div class="content">
+  
+  <div class="information" data-simplebar>
+
+    <div class="close">
+      <button mat-icon-button (click)="ref.close(null)">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+
+    <div class="heading">
+
+      <div class="text-head">
+        <p class="type">{{ data | dialogDetails: 'location-area-name' }}</p>
+      </div>
+
+    </div>
+  
+    <mat-divider></mat-divider>
+
+    <div class="details">
+
+      <div class="detail mat-elevation-z5">
+        <div class="key" (click)="sections[0] = sections[0] ? false : true" [matTooltip]="sections[0] ? 'Collapse' : 'Expand encounter method rates'" matTooltipClass="poke-tooltip">
+          <span>Encounter method rates</span>
+          <mat-icon *ngIf="!sections[0]">keyboard_arrow_down</mat-icon>
+          <mat-icon *ngIf="sections[0]">keyboard_arrow_up</mat-icon>
+        </div>
+        <div class="value" *ngIf="sections[0]">
+          <span class="description">A list of methods in which Pokémon may be encountered in this area and how likely the method will occur depending on the version of the game.</span>
+          <mat-divider></mat-divider>
+          <span *ngIf="data.data.encounter_method_rates">
+            No data...
+          </span>
+          <div class="inner-detail mat-elevation-z3" *ngFor="let encounter of data | dialogDetails: 'location-area-encounter-methods'">
+            <div class="inner-key">
+              <span>Encounter method: {{ encounter?.method }}</span>
+            </div>
+            <div class="inner-value">
+              <p>{{ encounter?.method_description }}</p>
+              <mat-divider></mat-divider>
+
+              <div class="inner-detail version-details mat-elevation-z3" *ngFor="let detail of encounter?.version_details">
+                <div class="inner-key">
+                  <span>{{ detail?.version }}</span>
+                </div>
+                <div class="inner-value">
+                  <span>{{ detail?.rate }}% chance</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="detail mat-elevation-z5">
+        <div class="key" (click)="sections[1] = sections[1] ? false : true" [matTooltip]="sections[1] ? 'Collapse' : 'Expand pokemon encounters'" matTooltipClass="poke-tooltip">
+          <span>Pokemon encounters</span>
+          <mat-icon *ngIf="!sections[1]">keyboard_arrow_down</mat-icon>
+          <mat-icon *ngIf="sections[1]">keyboard_arrow_up</mat-icon>
+        </div>
+        <div class="value" *ngIf="sections[1]">
+          <span class="description">A list of Pokémon that can be encountered in this area along with version specific details about the encounter.</span>
+          <mat-divider></mat-divider>
+          <span *ngIf="data.data.pokemon_encounters.length === 0">
+            No data...
+          </span>
+          <div class="inner-detail mat-elevation-z3" *ngFor="let pokemon of data | dialogDetails: 'location-area-pokemon-encounters'">
+            <div class="inner-key" (click)="pokemon.state = pokemon.state ? false : true">
+              <span>{{ pokemon?.display }}</span>
+              <mat-icon *ngIf="!pokemon.state">keyboard_arrow_down</mat-icon>
+              <mat-icon *ngIf="pokemon.state">keyboard_arrow_up</mat-icon>
+            </div>
+            <div class="inner-value encounter" *ngIf="pokemon.state">
+              <img 
+                offset="300"
+                width="100" height="100"
+                defaultImage="assets/images/berry.png" 
+                errorImage="assets/images/berry.png" 
+                [lazyLoad]="'data:image/png;base64,' + pokemon?.image" 
+                [alt]="pokemon?.name">
+              <div class="info">
+                <div class="inner-detail mat-elevation-z3" *ngFor="let detail of pokemon?.version_details">
+                  <div class="inner-key" (click)="detail.state = detail.state ? false : true">
+                    <span>{{ detail?.version }}</span>
+                    <mat-icon *ngIf="!detail.state">keyboard_arrow_down</mat-icon>
+                    <mat-icon *ngIf="detail.state">keyboard_arrow_up</mat-icon>
+                  </div>
+                  <div class="inner-value" *ngIf="detail.state">
+                    <div class="detail inner-inner mat-elevation-z3" *ngFor="let encounter of detail?.encounter_details">
+                      <div class="key" (click)="encounter.state = encounter.state ? false : true">
+                        <span>{{ encounter?.method?.data.name }}</span>
+                        <mat-icon *ngIf="!encounter.state">keyboard_arrow_down</mat-icon>
+                        <mat-icon *ngIf="encounter.state">keyboard_arrow_up</mat-icon>
+                      </div>
+                      <div class="value" *ngIf="encounter.state">
+                        <div class="inner-detail small mat-elevation-z3">
+                          <div class="inner-key">
+                            <span>Chance</span>
+                          </div>
+                          <div class="inner-value">
+                            <span>{{ encounter?.chance }}%</span>
+                          </div>
+                        </div>
+                        <div class="inner-detail small mat-elevation-z3">
+                          <div class="inner-key">
+                            <span>Max</span>
+                          </div>
+                          <div class="inner-value">
+                            <span>Lv {{ encounter?.max_level }}</span>
+                          </div>
+                        </div>
+                        <div class="inner-detail small mat-elevation-z3">
+                          <div class="inner-key">
+                            <span>Min</span>
+                          </div>
+                          <div class="inner-value">
+                            <span>Lv {{ encounter?.min_level }}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="credits">
+        <p class="app">Pokédex Little</p>
+        <p class="developer">by ElecTreeFrying</p>
+      </div>
+
+    </div>
+
+  </div>
+  
+</div>

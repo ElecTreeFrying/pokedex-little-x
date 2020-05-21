@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { intersectionBy, capitalize, sortBy } from 'lodash';
+import { intersectionBy, capitalize, sortBy, uniqBy } from 'lodash';
 
 import { SharedService, type as TypeShared, version_group, version } from '../services/shared.service';
 
@@ -390,6 +390,79 @@ export class DialogDetailsPipe implements PipeTransform {
         return berry;
       });
     }
+
+    else if (type === 'location-area-name') {
+
+      if (value.data.names.find(e => e.language.name === 'en').name === '') {
+        return value.entry.name;
+      }
+
+      return `${value.entry.name} - ${value.data.names.find(e => e.language.name === 'en').name}`;
+    }
+
+    else if (type === 'location-area-encounter-methods') {
+
+      if (value.data.encounter_method_rates.length === 0) return [];
+
+      if (value.data.encounter_method_rates[0].hasOwnProperty('method'))
+        return value.data.encounter_method_rates;
+
+      return value.data.encounter_method_rates.map((encounter) => {
+        
+        const id = +encounter.encounter_method.url.split('/').reverse()[1];
+        encounter.encounter_method.data 
+          = this.shared.keys.encounter_method.find(e => e.id === id);
+
+        encounter.method = capitalize(encounter.encounter_method.name.split('-').join(' '));
+        encounter.method_description = encounter.encounter_method.data.names.find(e => e.language.name === 'en').name;
+
+        encounter.version_details = encounter.version_details.map((item) => {
+          const id = +item.version.url.split('/').reverse()[1];
+          item.version = version.find(e => e.id === id).name.replace('Pokémon ', '').replace(' Version', '');
+          return item;
+        });
+
+        return encounter;
+      });
+    }
+    
+    else if (type === 'location-area-pokemon-encounters') {
+
+      if (value.data.pokemon_encounters.length === 0) return [];
+      
+      if (value.data.pokemon_encounters[0].hasOwnProperty('state'))
+        return value.data.pokemon_encounters;
+
+      return value.data.pokemon_encounters.map((encounter) => {
+        
+        const id = +encounter.pokemon.url.split('/').reverse()[1];
+        encounter.pokemon.data = this.shared.pokemon.find(e => e.id === id);
+        encounter.display = capitalize(encounter.pokemon.name.split('-').join(' '));
+        encounter.image = encounter.pokemon.data.byte64;
+        encounter.state = false;
+
+        encounter.version_details = encounter.version_details.map((detail) => {
+
+          const id = +detail.version.url.split('/').reverse()[1];
+          detail.version = version.find(e => e.id === id).name.replace('Pokémon ', '');
+          detail.state = false;
+
+          detail.encounter_details = detail.encounter_details.map((res) => {
+            const id = +res.method.url.split('/').reverse()[1];
+            res.method.data = this.shared.keys.encounter_method.find(e => e.id === id);
+            res.state = false;
+            return res;
+          });
+
+          detail.encounter_details = uniqBy(detail.encounter_details, 'max_level');
+          detail.encounter_details = sortBy(detail.encounter_details, 'max_level');
+
+          return detail;
+        });
+
+        return encounter;
+      });
+      }
 
     // Moves information
 
