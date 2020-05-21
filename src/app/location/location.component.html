@@ -1,1 +1,44 @@
-<p>location works!</p>
+
+<div class="spinner" *ngIf="isLoading">
+  <mat-spinner></mat-spinner>
+</div>
+
+<div class="spinner-message" *ngIf="isLoading">
+  <p>Please wait...</p>
+</div>
+
+<div class="content" *ngIf="!isLoading">
+  
+  <div class="heading">
+    <div class="text">
+      <p class="no">Location no. {{ location?.id }}</p>
+      <p class="name">{{ location | locationDetails: 'location-name' }}</p>
+      <p class="region">{{ location | locationDetails: 'location-region' }} Region</p>
+    </div>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <div class="details">
+
+    <div class="detail mat-elevation-z5">
+      <div class="key" (click)="true" [matTooltip]="true ? 'Collapse' : 'Expand description'" matTooltipClass="poke-tooltip">
+        <span>Location areas</span>
+        <mat-icon *ngIf="!true">keyboard_arrow_down</mat-icon>
+        <mat-icon *ngIf="true">keyboard_arrow_up</mat-icon>
+      </div>
+      <div class="value" *ngIf="true">
+        <div matRipple class="area" *ngFor="let area of location | locationDetails: 'location-areas': (location | locationDetails: 'location-name')" matTooltip="show more details" matTooltipClass="poke-tooltip" (click)="showDetails(area?.data, 'location-area')">
+          <p>{{ area?.display }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="credits">
+      <p class="app">Pokédex Little</p>
+      <p class="developer">by ElecTreeFrying</p>
+    </div>
+
+  </div>
+
+</div>
