@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Location } from "@angular/common";
 import { Router, NavigationStart } from '@angular/router';
 import { map, filter } from 'rxjs/operators';
 
@@ -15,6 +16,7 @@ export class RouteService {
   ]
 
   constructor(
+    private location: Location,
     private router: Router,
     private shared: SharedService
   ) { 
@@ -35,8 +37,16 @@ export class RouteService {
       } else {
         shared.updateHideLoadMoreSelection = false;
       }
-      
     });
+
+    this.location.subscribe((res) => {
+      this.navigation(res.url);
+    });
+  }
+
+  private navigation(res: any) {
+
+    // code here
   }
 
   get showLoadMore() {
