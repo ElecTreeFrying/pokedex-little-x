@@ -10,7 +10,7 @@ const cdn = {
 export const environment = {
   production: false,
   data: [
-    `${cdn.cloudinary}/v1589699496/pokedex-little/pokemon.json`,
+    `${cdn.cloudinary}/v1590154335/pokedex-little/pokemon.json`,
     `${cdn.cloudinary}/v1589697366/pokedex-little/moves.json`,
     `${cdn.cloudinary}/v1590042545/pokedex-little/others.json`
   ],
