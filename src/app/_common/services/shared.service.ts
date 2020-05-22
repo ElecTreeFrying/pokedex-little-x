@@ -291,20 +291,21 @@ export const region = [
 ]
 
 export const pokedex = [
-  { key: 1, name: 'National Pokedex' }, 
-  { key: 2, name: 'Kanto Pokedex' }, 
-  { key: 3, name: 'Original Johto Pokedex' }, 
-  { key: 4, name: 'Hoenn Pokedex' }, 
-  { key: 5, name: 'Original Sinnoh Pokedex' }, 
-  { key: 6, name: 'Extended Sinnoh Pokedex' }, 
-  { key: 7, name: 'Updated Johto Pokedex' }, 
-  { key: 8, name: 'Original Unova Pokedex' }, 
-  { key: 9, name: 'Updated Unova Pokedex' }, 
+  { key: 1, name: 'National Pokédex' }, 
+  { key: 2, name: 'Kanto Pokédex' }, 
+  { key: 3, name: 'Original Johto Pokédex' }, 
+  { key: 4, name: 'Hoenn Pokédex' }, 
+  { key: 5, name: 'Original Sinnoh Pokédex' }, 
+  { key: 6, name: 'Extended Sinnoh Pokédex' }, 
+  { key: 7, name: 'Updated Johto Pokédex' }, 
+  { key: 8, name: 'Original Unova Pokédex' }, 
+  { key: 9, name: 'Updated Unova Pokédex' }, 
   { key: 11, name: 'Conquest Gallery' }, 
-  { key: 12, name: 'Kalos Central Pokedex' }, 
-  { key: 13, name: 'Kalos Coastal Pokedex' }, 
-  { key: 14, name: 'Kalos Mountain Pokedex' }, 
-  { key: 15, name: 'Updated Hoenn Pokedex' }
+  { key: 12, name: 'Kalos Central Pokédex' }, 
+  { key: 13, name: 'Kalos Coastal Pokédex' }, 
+  { key: 14, name: 'Kalos Mountain Pokédex' }, 
+  { key: 15, name: 'Updated Hoenn Pokédex' },
+  { key: 0, name: 'All Pokémon' } 
 ];
 
 export const generation = [
