@@ -2,7 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { capitalize, sortBy, unionBy } from 'lodash';
 import { version, pokedex, type, stat } from '../services/shared.service';
 
-import { SharedService } from '../services/shared.service';
+import { SharedService, special_names } from '../services/shared.service';
 
 
 @Pipe({
@@ -19,7 +19,11 @@ export class PokemonDetailsPipe implements PipeTransform {
     if (!value) return;
 
     if (key === 'species-name') {
-      return value.species.data.names.find(e => e['language']['name'] === 'en').name;
+      if (!special_names.find(e => e.key === value.name)) {
+        return value.name.split('-').map(e => capitalize(e)).join(' ');
+      } else {
+        return special_names.find(e => e.key === value.name).name;
+      }
     }
 
     if (key === 'species-name-dialog') {

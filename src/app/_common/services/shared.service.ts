@@ -441,3 +441,16 @@ export const stat = [
   { id: 5, name: 'special-defense', max: 230 },
   { id: 6, name: 'speed', max: 180 }
 ];
+
+export const special_names = [
+  { name: 'Nidoran♀', key: 'nidoran-f' },
+  { name: 'Nidoran♂', key: 'nidoran-m' },
+  { name: 'Mr. Mime', key: 'mr-mime' },
+  { name: 'Mime Jr.', key: 'mime-jr' },
+  { name: 'Ho-Oh', key: 'ho-oh' },
+  { name: 'Jangmo-o', key: 'jangmo-o' },
+  { name: 'Hakamo-o', key: 'hakamo-o' },
+  { name: 'Kommo-o', key: 'kommo-o' },
+  { name: 'Oricorio Pom-Pom', key: 'oricorio-pom-pom' },
+  { name: 'Kommo-o Totem', key: 'kommo-o-totem' },
+];
