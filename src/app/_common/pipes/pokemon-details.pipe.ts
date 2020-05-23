@@ -236,13 +236,10 @@ export class PokemonDetailsPipe implements PipeTransform {
     }
 
     else if (key === 'moves') {
-
-      if (value.filter(e => e.hasOwnProperty('color')).length > 0) {
-        return value;
-      }
-
       return value
         .map((move: any) => { 
+
+          if (!move.type.hasOwnProperty('url')) return move;
 
           const id = +move.type.url.split('/').reverse()[1]
           
