@@ -31,7 +31,7 @@
         width="256"
         defaultImage="assets/images/berry-resize.png" 
         errorImage="assets/images/berry-resize.png" 
-        [lazyLoad]="pokemon | pokemonDetails: 'species-no' | idToImage: 'etf_assets'" 
+        [lazyLoad]="pokemon | idToImage: 'etf_assets_filename'" 
         [alt]="pokemon?.name">
     </div>
   </div>

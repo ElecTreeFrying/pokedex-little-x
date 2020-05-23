@@ -55,6 +55,10 @@ export class SharedService {
   get id() { return this._id; }
   set id(id: number) { this._id = id; }
 
+  private _filename: string;
+  get filename() { return this._filename; }
+  set filename(filename: string) { this._filename = filename; }
+
   private _index: { value: number, count: number };
   get index() { return this._index; }
   set index(index: { value: number, count: number }) { this._index = index; }

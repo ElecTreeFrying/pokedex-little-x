@@ -183,17 +183,12 @@ export class PokemonDetailsPipe implements PipeTransform {
     }
 
     else if (key === 'species-variation-sprite') {
-      if (value.id <= 807) {
-        const url = 'https://raw.githubusercontent.com/ElecTreeFrying/assets/master/pokemon';
-        return `${url}/${value.id}.png`;
-      } else if (value.id <= 10090 && value.id > 807) {
-        return value.sprites.front_default;
-      } else if (value.id >= 10091) {
-        const id = +value.species.url.split('/').reverse()[1];
-        const name = value.name.split('-').slice(1).join('-')
-        const url = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon';
-        return `${url}/${id}-${name}.png`;
-      }
+
+      const id = +value.species.url.split('/').reverse()[1];
+      const base_name = value.species.name;
+      const filename = `${id}${value.name.replace(base_name, '')}.png`
+
+      return `https://res.cloudinary.com/electreefrying/image/upload/v1590217728/pokedex-little/pokemon_extended/${filename}`;
     }
 
     else if (key === 'sprites') {
