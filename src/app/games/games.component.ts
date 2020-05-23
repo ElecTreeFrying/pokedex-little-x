@@ -247,6 +247,10 @@ export class GamesComponent implements OnInit, AfterViewInit, OnDestroy {
       ceil: Math.ceil(_length/20) + 1,
       floor: Math.floor(this.all.length/this.shared.defaultLength)*this.shared.defaultLength
     };
+
+    if (this.all.length < this.shared.defaultLength) {
+      this.shared.updateHideLoadMoreSelection = true;
+    }
   }
 
   trackByID(index: number, item: any) {

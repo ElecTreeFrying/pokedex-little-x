@@ -45,17 +45,24 @@ export class TransitionEventDirective implements OnInit {
 
     this.shared.hideLoadMore.subscribe((res) => {
 
-      if (res !== true) return;
-      
       setTimeout(() => {
+        if (res !== true) return;
         this.buttonState(false);
       }, 300);
     });
 
     this.route.showLoadMore.subscribe((res) => {
 
-      this.buttonState(res);
+      setTimeout(() => {
+        if (this.shared.item_meta.floor === 0) return;
+        this.buttonState(res);
+      }, 300);
     });
+  }
+
+  get isInvalid() {
+    const type = JSON.parse(sessionStorage.getItem('route')).type;
+    return type === 'berries';
   }
   
   ngOnInit() {
@@ -64,7 +71,7 @@ export class TransitionEventDirective implements OnInit {
     
     this.shared.loadMorePosition.subscribe((res) => {
 
-      if (this.shared.selectionData || !this.shared.allowLoadMore) return;
+      if (this.isInvalid || !this.shared.allowLoadMore) return;
 
       if (res === null) return;
 
