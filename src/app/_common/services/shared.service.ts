@@ -131,6 +131,10 @@ export class SharedService {
   get allowLoadMore() { return this._allowLoadMore; }
   set allowLoadMore(allowLoadMore: boolean) { this._allowLoadMore = allowLoadMore; }
 
+  private _initializationComplete: any;
+  get initializationComplete() { return this._initializationComplete; }
+  set initializationComplete(initializationComplete: boolean) { this._initializationComplete = initializationComplete; }
+
   constructor() {
     const routeSession = sessionStorage.getItem('route');
     this.routeChangeSource = new BehaviorSubject(JSON.parse(routeSession));

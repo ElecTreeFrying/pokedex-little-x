@@ -31,8 +31,12 @@ export class KeyboardDirective {
     }
   }
   
-  @HostListener('window:keydown')
-  down() {
+  @HostListener('window:keydown', ['$event'])
+  down(event: KeyboardEvent) {
+
+    if (event.code === 'Escape' && this.shared.initializationComplete) {
+      this.shared.updateAppInitializationSelection = 4;
+    }
 
     if (this.shared.dialogIsOpened) {
       this.isPressed = true;
