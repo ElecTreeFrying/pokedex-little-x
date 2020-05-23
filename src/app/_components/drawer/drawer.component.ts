@@ -90,7 +90,7 @@ export class DrawerComponent implements OnInit {
     const id = child.key;
     
     this.router.navigate([ 'selection' ], {  
-      queryParams: { name: child.name.toLowerCase() },
+      queryParams: { name: child.name.toLowerCase(), id },
       fragment: parent.toLowerCase()
     }).then(() => {
       
