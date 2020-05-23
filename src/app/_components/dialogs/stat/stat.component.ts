@@ -28,7 +28,7 @@ export class StatComponent implements OnInit {
   ngOnInit(): void {
 
     this.isLoading = true;
-    this.sections = [ true, true, true ]
+    this.sections = [ false, false, true ]
     
     this.api.load_natures_characteristics().subscribe(() => this.setStat());
   }
