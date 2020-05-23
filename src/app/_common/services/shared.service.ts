@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-
 import { BehaviorSubject, Observable } from 'rxjs';
 
 
@@ -12,7 +11,7 @@ interface Key {
   characteristics?: any[];
   pokemon_moves?: any[];
   type_pokemon?: any[];
-}
+};
 
 @Injectable({
   providedIn: 'root'

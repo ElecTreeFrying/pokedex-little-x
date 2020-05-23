@@ -52,7 +52,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
 
-    this.routerStyle = this.routerStyleProcess();
+    this.routerStyle = this.routerStyleProcess;
 
     this.simplebar = new SimpleBar(this.drawerContent.nativeElement);
     
@@ -248,7 +248,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.cd.detectChanges();
   }
   
-  private routerStyleProcess() {
+  private get routerStyleProcess() {
     const toolbarHeight = this.toolbar._elementRef.nativeElement.clientHeight;
     return { 
       'height': `calc(100vh - ${toolbarHeight}px)`, 
