@@ -195,28 +195,35 @@ export class DialogDetailsPipe implements PipeTransform {
     }
 
     else if (type === 'stat-characteristics') {
-      return value.data.characteristics.map((characteristic: any) => {
+
+      const characteristics = value.data.characteristics
+
+      if (!characteristics || characteristics.length || !value.data.hasOwnProperty('characteristics')) return [];
+
+      return characteristics.map((characteristic: any) => {
         return characteristic.data.descriptions.find(e => e.language.name === 'en').description;
       })
     }
 
     else if (type === 'damage-class-name') {
-      return capitalize(
-        value.damage_class.data.names.find(e => e['language']['name'] === 'en').name
-      );
+      const data = value?.damage_class?.data?.names?.find(e => e?.language?.name === 'en')?.name;
+      return capitalize(data ? data : '-');
     }
 
     else if (type === 'damage-class-description') {
-      const description = value.damage_class.data.descriptions.find(e => e['language']['name'] === 'en').description;
-      return description.endsWith('.') ? description : `${description}.`;
+      const description = value?.damage_class?.data?.descriptions?.find(e => e?.language?.name === 'en').description;
+      const data = description.endsWith('.') ? description : `${description}.`;
+      return data ? data : '-';
     }
-
+    
     else if (type === 'target-name') {
-      return value.target.data.names.find(e => e['language']['name'] === 'en').name;
+      const data = value?.target?.data?.names?.find(e => e?.language?.name === 'en')?.name;
+      return data ? data : '-';
     }
-
+    
     else if (type === 'target-description') {
-      return value.target.data.descriptions.find(e => e['language']['name'] === 'en').description;
+      const data = value?.target?.data?.descriptions?.find(e => e?.language?.name === 'en')?.description;
+      return data ? data : '-';
     }
 
     else if (type === 'machines') {
@@ -238,42 +245,55 @@ export class DialogDetailsPipe implements PipeTransform {
     }
 
     else if (type === 'contest-typpe-name') {
-      return value.contest_type.data.names.find(e => e['language']['name'] === 'en').name;
+      const data = value?.contest_type?.data?.names?.find(e => e?.language?.name === 'en')?.name;
+      return data ? data : '-';
     }
-
+    
     else if (type === 'contest-typpe-color') {
-      return value.contest_type.data.names.find(e => e['language']['name'] === 'en').color;
+      const data = value?.contest_type?.data?.names?.find(e => e?.language?.name === 'en')?.color;
+      return data ? data : '-';
     }
 
     else if (type === 'contest-typpe-berry-flavor') {
-      return capitalize(value.contest_type.data.berry_flavor.name.split('-').join(' '));
+      const data = value?.contest_type?.data?.berry_flavor?.name?.split('-')?.join(' ');
+      return capitalize(data ? data : '-');
     }
 
     else if (type === 'contest-effect-appeal') {
-      const appeal = +value.contest_effect.data.appeal;
+      const data = value?.contest_effect?.data?.appeal;
+      if (!data) return '-';
+      const appeal = +data;
       return appeal === 0 ? '-' : `${appeal} pts.`;
     }
     
     else if (type === 'contest-effect-jam') {
-      const jam = value.contest_effect.data.jam
+      const data = value?.contest_effect?.data?.jam;
+      if (!data) return '-';
+      const jam = +data;
       return jam === 0 ? '-' : `${jam} pts.`;
     }
 
     else if (type === 'contest-effect-effect') {
-      return value.contest_effect.data.effect_entries.find(e => e['language']['name'] === 'en').effect;
+      const data = value?.contest_effect?.data?.effect_entries?.find(e => e?.language?.name === 'en')?.effect;
+      return data ? data : '-';
     }
     
     else if (type === 'contest-effect-description') {
-      return value.contest_effect.data.flavor_text_entries.find(e => e['language']['name'] === 'en').flavor_text;
+      const data = value?.contest_effect?.data?.flavor_text_entries?.find(e => e?.language?.name === 'en')?.flavor_text;
+      return data ? data : '-';
     }
 
     else if (type === 'super-contest-effect-appeal') {
-      const appeal = +value.super_contest_effect.data.appeal;
+      const data = value?.super_contest_effect?.data?.appeal;
+      if (!data) return '-';
+      const appeal = +data;
       return appeal === 0 ? '-' : `${appeal} pts.`;
     }
-
+    
     else if (type === 'super-contest-effect-description') {
-      return value.super_contest_effect.data.flavor_text_entries.find(e => e['language']['name'] === 'en').flavor_text;
+      const data = value?.super_contest_effect?.data?.flavor_text_entries?.find(e => e?.language?.name === 'en')?.flavor_text;
+      if (!data) return '-';
+      return data ? data : '-';
     }
 
     else if (type === 'contest-combo-normal-after') {

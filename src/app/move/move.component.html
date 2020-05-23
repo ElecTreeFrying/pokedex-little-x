@@ -479,6 +479,9 @@
         <mat-icon *ngIf="sections[8]">keyboard_arrow_up</mat-icon>
       </div>
       <div class="value" *ngIf="sections[8]">
+        <p *ngIf="(data | dialogDetails: 'move-text-entries').length === 0">
+          No data...
+        </p>
         <div class="inner-detail mat-elevation-z3" *ngFor="let entries of data | dialogDetails: 'move-text-entries'">
           <div class="inner-key">
             <span>{{ entries?.label }}</span>

@@ -160,7 +160,10 @@
               <span>Characteristic</span>
             </div>
             <div class="inner-value">
-              <mat-chip-list>
+              <p *ngIf="(data | dialogDetails: 'stat-characteristics').length === 0">
+                No data...
+              </p>
+              <mat-chip-list *ngIf="(data | dialogDetails: 'stat-characteristics').length > 0">
                 <mat-chip 
                   class="mat-elevation-z3"
                   *ngFor="let characteristic of data | dialogDetails: 'stat-characteristics'">
