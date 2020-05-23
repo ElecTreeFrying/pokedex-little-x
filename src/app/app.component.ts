@@ -66,6 +66,8 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.isShowDetails = false;
     this.sideDrawerState = { drawer: true, details: false };
     this.toolbarHeight = 0;
+
+    this.shared.initializationComplete = false;
   }
 
   scrollListener() {
@@ -95,10 +97,15 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.toolbarHeight = this.toolbar._elementRef.nativeElement.clientHeight;
     this.cd.detectChanges();
 
+    const complete = () => {
+      this.attachOverlay = false
+      this.shared.initializationComplete = true;      
+    }
+
     this.shared.appInitialization.subscribe((res: number) => {
       res === 1 ? this.attachOverlay = true : 
       res === 2 ? this.shared.updateAppInitializationSelection = 3 :
-      res === 4 ? this.attachOverlay = false : 0;
+      res === 4 ? complete() : 0;
     });
 
     this.shared.routeChange.subscribe((res: any) => {
