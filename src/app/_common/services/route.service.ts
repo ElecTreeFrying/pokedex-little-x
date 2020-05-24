@@ -61,11 +61,13 @@ export class RouteService {
     const isPokemon = type === 'pokedex' || type === 'generation' || type === 'version-group' || type === 'type';
     const isSelection = name === 'type' || name === 'categories';
     
-    if (isPokemon) {
+    if (isPokemon || type === 'machine') {
 
       const id = +split[0].split('&')[1].split('=')[1];
       this.shared.updatedRouteChangeSelection = { type, id };
-    } else if (isSelection) {
+    } 
+    
+    if (isSelection) {
       
       this.shared.updatedRouteChangeSelection = { type: name };
     }  

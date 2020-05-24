@@ -16,7 +16,6 @@ export class SelectionComponent implements OnInit, OnDestroy {
   selections: any;
   all: any;
   type: string;
-  loadAll: boolean;
   toggle: boolean;
 
   subscriptions: Subscription[];
@@ -42,7 +41,6 @@ export class SelectionComponent implements OnInit, OnDestroy {
   
   initialize() {
     this.selections = [];
-    this.loadAll = false;
     this.toggle = false;
 
     this.subscriptions = [];
@@ -53,12 +51,10 @@ export class SelectionComponent implements OnInit, OnDestroy {
     this.subscriptions.push(this.shared.routeChange.subscribe((res) => {     
 
       this.selections = [];
-      this.loadAll = false;
       this.shared.loading = null;
       this.shared.updateIsLoadingSelection = false;
 
       if (res.id === -1) {
-        this.loadAll = false;
 
         if (!this.shared.moves) {
           this.type = `move-${res.type}`;
@@ -90,10 +86,28 @@ export class SelectionComponent implements OnInit, OnDestroy {
         this.view = data;
         sessionStorage.setItem('entries', JSON.stringify(data));
         return;
+      } 
+
+      if (res.type === 'machine') {
+       
+        if (!this.shared.regions) {
+          const session = sessionStorage.getItem('entries');
+          this.type = res.type;
+          this.view = JSON.parse(session);
+          return;
+        }
+
+        const data = this.shared.keys.machines.filter((machine) => {
+          const id = +machine.version_group.url.split('/').reverse()[1];
+          return id === res.id;
+        });
+        this.type = res.type;
+        this.view = data;
+        sessionStorage.setItem('entries', JSON.stringify(data));
+        return;
       }
 
       if (res.type.endsWith(' Region')) {
-        this.loadAll = false;
 
         if (!this.shared.regions) {
           const session = sessionStorage.getItem('entries');
@@ -102,7 +116,7 @@ export class SelectionComponent implements OnInit, OnDestroy {
           return;
         }
 
-        const data = this.shared.regions.find(e => e.id === res.id).locations
+        const data = this.shared.regions.find(e => e.id === res.id).locations;
         this.type = res.type;
         this.view = data;
         sessionStorage.setItem('entries', JSON.stringify(data));
@@ -120,9 +134,9 @@ export class SelectionComponent implements OnInit, OnDestroy {
 
     if (type === 'type') return this.typeData(selection, type);
     if (type === 'berries') return this.berryData(selection, type);
+    if (type === 'machine') return;
     if (this.type.endsWith(' Region')) return this.locationData(selection, type);
-    if (this.type.includes('move-')
-    ) return this.moveData(selection, type);
+    if (this.type.includes('move-')) return this.moveData(selection, type);
 
     this.gamesData(selection, type);
   }

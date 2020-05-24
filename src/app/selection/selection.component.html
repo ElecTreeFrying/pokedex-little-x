@@ -25,19 +25,20 @@
   
   <div matRipple *ngFor="let selection of selections | selection: type">
     <mat-card (click)="go(selection, type)" [ngStyle]="{ 'background': type === 'type' || type.includes('move-') ? selection.color.dark : '#4E1338' }">
-      <mat-card-content>
+      <mat-card-content [ngStyle]="{ 'flex-direction': type === 'machine' ? 'column' : 'row' }">
         <div *ngIf="type.includes('move-'); then thenBlock else elseBlock"></div>
         <ng-template #thenBlock>
           <p class="text m-auto">{{ selection | selection: 'move-name' }}</p>
         </ng-template>
         <ng-template #elseBlock>
           <p class="text">{{ selection?.name }}</p>
+          <p class="text" *ngIf="type === 'machine'">{{ selection?.meta }}</p>
         </ng-template>
       </mat-card-content>
     </mat-card>
   </div>
 
-  <div matRipple (click)="loadAll = true" *ngIf="(type.includes('move-') || type.endsWith(' Region') || type === 'categories') && !(shared.loadingCards|async)">
+  <div matRipple (click)="selections = all" *ngIf="(type.includes('move-') || type.endsWith(' Region') || type === 'categories' || type === 'machine') && (!(shared.loadingCards|async) && selections.length === 30) && (selections.length !== all.length)">
     <mat-card>
       <mat-card-content class="load-all">
         <mat-icon>add</mat-icon>

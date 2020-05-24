@@ -31,8 +31,15 @@ export class SelectionPipe implements PipeTransform {
         move.color = TypeShared.find(e => e.key === id).color;
         return move;
       });
+    }
 
-    } 
+    else if (type === 'machine') {
+      return value.map((machine) => {
+        machine.name = machine.item.name.toUpperCase();
+        machine.meta = capitalize(machine.move.name.split('-').join(' '));
+        return machine
+      });
+    }
     
     return value;
 

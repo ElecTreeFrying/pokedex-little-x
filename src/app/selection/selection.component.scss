@@ -20,7 +20,11 @@
     
     .mat-card-content {
       display: flex;
+      justify-content: center;
+      align-content: center;
       height: 38px;
+      padding-top: 0;
+      padding-bottom: 0;
     }
 
     .load-all {

@@ -18,6 +18,7 @@ export class DrawerComponent implements OnInit {
   pokedex: any;
   generation: any;
   versionGroup: any;
+  machineVersionGroup: any;
   items: any;
   categories: any;
   moves: any;
@@ -33,6 +34,7 @@ export class DrawerComponent implements OnInit {
     this.types = type.filter(e => e.key <= 18);
     this.pokedex = pokedex;
     this.generation = generation;
+    this.machineVersionGroup = version_group;
     this.versionGroup = version_group.filter(e => e.key !== 0);
     this.items = items;
     this.categories = categories;
@@ -68,6 +70,8 @@ export class DrawerComponent implements OnInit {
 
     if (parent === 'region') {
       this.regionSelection(parent, child);
+    } else if (parent === 'machine') {
+      this.machineSelection(parent, child)
     } else {
       this.defaultSelection(parent, child);
     }
@@ -82,6 +86,19 @@ export class DrawerComponent implements OnInit {
     }).then(() => {
       
       const data = { id, type: child };
+      this.shared.updatedRouteChangeSelection = data;
+      sessionStorage.setItem('route', JSON.stringify(data));
+    });
+  }
+
+  machineSelection(parent: string, child: any) {
+
+    this.router.navigate([ 'selection' ], {  
+      queryParams: { name: child.name.toLowerCase(), id: child.id },
+      fragment: parent.toLowerCase()
+    }).then(() => {
+      
+      const data = { id: child.id, type: parent };
       this.shared.updatedRouteChangeSelection = data;
       sessionStorage.setItem('route', JSON.stringify(data));
     });
