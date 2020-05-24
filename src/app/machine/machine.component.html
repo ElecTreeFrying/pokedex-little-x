@@ -1,0 +1,46 @@
+
+<div class="spinner" *ngIf="isLoading">
+  <mat-spinner></mat-spinner>
+</div>
+
+<div class="spinner-message" *ngIf="isLoading">
+  <p>Please wait...</p>
+</div>
+
+<div class="content" *ngIf="!isLoading">
+  
+  <div class="heading">
+    <div class="text">
+      <p class="no">Machine no. {{ machine.data?.id }}</p>
+      <p class="name">{{ machine.data?.name }}</p>
+      <p class="region">{{ machine.data?.meta }}</p>
+    </div>
+    <div class="image">
+      <img
+        width="100"
+        defaultImage="assets/images/berry-resize.png" 
+        errorImage="assets/images/berry-resize.png" 
+        [lazyLoad]="machine?.itemSelection?.byte64 | idToImage: 'byte64'" 
+        [alt]="machine.data?.name">
+    </div>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <div class="details">
+
+    <div class="selections">
+
+      <div matRipple class="selection mat-elevation-z5" (click)="showDetails(machine.itemSelection, 'item')">Item details</div>
+      <div matRipple class="selection mat-elevation-z5" (click)="showDetails(machine.move, 'move')">Move details</div>
+
+    </div>
+
+    <div class="credits">
+      <p class="app">Pokédex Little</p>
+      <p class="developer">by ElecTreeFrying</p>
+    </div>
+
+  </div>
+
+</div>

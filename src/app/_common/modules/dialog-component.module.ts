@@ -15,6 +15,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { LazyLoadImageModule } from 'ng-lazyload-image';
 import { DialogDetailsPipeModule } from './dialog-details-pipe.module';
 import { PokemonDetailsPipeModule } from './pokemon-details-pipe.module';
+import { ItemDetailsPipeModule } from './item-details-pipe.module';
 import { TypeColorPipeModule } from './type-color-pipe.module';
 import { IdToImagePipeModule } from './id-to-image-pipe.module';
 
@@ -41,6 +42,7 @@ import { pokemonDialogComponents } from '../services/component-selector.service'
     
     DialogDetailsPipeModule,
     PokemonDetailsPipeModule,
+    ItemDetailsPipeModule,
     TypeColorPipeModule,
     IdToImagePipeModule
   ],

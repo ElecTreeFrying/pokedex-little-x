@@ -25,19 +25,20 @@ import { DialogComponentModule } from '../modules/dialog-component.module';
 import { SearchComponentModule } from '../modules/search-component.module';
 import { IdToImagePipeModule } from '../modules/id-to-image-pipe.module';
 import { PokemonDetailsPipeModule } from '../modules/pokemon-details-pipe.module';
+import { ItemDetailsPipeModule } from '../modules/item-details-pipe.module';
 import { DialogDetailsPipeModule } from '../modules/dialog-details-pipe.module';
 import { TypeColorPipeModule } from '../modules/type-color-pipe.module';
 
 import { DrawerComponent } from '../../_components/drawer/drawer.component';
 import { PokemonComponent } from '../../pokemon/pokemon.component';
-import { MoveComponent } from '../../move/move.component';
 import { ItemComponent } from '../../item/item.component';
 import { BerryComponent } from '../../berry/berry.component';
+import { MoveComponent } from '../../move/move.component';
+import { MachineComponent } from 'src/app/machine/machine.component';
 import { LocationComponent } from '../../location/location.component';
 import { LoadingComponent } from '../../_components/loading/loading.component';
 
 import { NormalizePipe } from '../pipes/normalize.pipe';
-import { ItemDetailsPipe } from '../pipes/item-details.pipe';
 import { BerryDetailsPipe } from '../pipes/berry-details.pipe';
 import { LocationDetailsPipe } from '../pipes/location-details.pipe';
 
@@ -51,13 +52,13 @@ import { pokemonDialogComponents } from '../services/component-selector.service'
   declarations: [
     DrawerComponent,      // components
     PokemonComponent,
-    MoveComponent,
     ItemComponent,
     BerryComponent,
+    MoveComponent,
+    MachineComponent,
     LocationComponent,
     LoadingComponent,
     NormalizePipe,        // pipes
-    ItemDetailsPipe,
     BerryDetailsPipe,
     LocationDetailsPipe,
     KeyboardDirective,    // directives
@@ -83,6 +84,7 @@ import { pokemonDialogComponents } from '../services/component-selector.service'
     DialogComponentModule,// import components
     IdToImagePipeModule,  // import declarations
     PokemonDetailsPipeModule,
+    ItemDetailsPipeModule,
     DialogDetailsPipeModule,
     TypeColorPipeModule,
     LazyLoadImageModule   // third party modules
@@ -105,9 +107,10 @@ import { pokemonDialogComponents } from '../services/component-selector.service'
 
     DrawerComponent,       // components
     PokemonComponent,
-    MoveComponent,
     ItemComponent,
     BerryComponent,
+    MoveComponent,
+    MachineComponent,
     LocationComponent,
     LoadingComponent,
     NormalizePipe,         // pipes

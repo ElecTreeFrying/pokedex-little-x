@@ -57,7 +57,8 @@ export class PokeapiService {
           no_habitat: intersectionBy(res.pokemon, res.keys.no_habitat, 'id'),
           encounter_method: res.keys.encounter_method,
           pokemon_moves: [],
-          machines: res.keys.machines
+          machines: res.keys.machines,
+          machines_data: res.keys.machines_data
         };
 
         this.shared.updateAppInitializationSelection = 2;

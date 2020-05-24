@@ -14,11 +14,12 @@ import { FirmnessComponent } from '../../_components/dialogs/firmness/firmness.c
 import { FlavorComponent } from '../../_components/dialogs/flavor/flavor.component';
 import { AttributeComponent } from '../../_components/dialogs/attribute/attribute.component';
 import { LocationAreaComponent } from '../../_components/dialogs/location-area/location-area.component';
+import { SelectedItemComponent } from '../../_components/dialogs/selected-item/selected-item.component';
 
 export const pokemonDialogComponents = [
   SelectedPokemonComponent, TypeComponent, AbilityComponent, ColorComponent, EggGroupsComponent, GrowthRateComponent, HabitatComponent, SelectedMoveComponent, ShapeComponent, StatComponent,
   AttributeComponent, FirmnessComponent, FlavorComponent,
-  LocationAreaComponent
+  LocationAreaComponent, SelectedItemComponent
 ];
 
 
@@ -41,7 +42,8 @@ export class ComponentSelectorService {
     { type: 'firmness', component: FirmnessComponent },
     { type: 'flavor', component: FlavorComponent },
     { type: 'attribute', component: AttributeComponent },
-    { type: 'location-area', component: LocationAreaComponent }
+    { type: 'location-area', component: LocationAreaComponent },
+    { type: 'item', component: SelectedItemComponent }
   ];
 
   constructor() { }

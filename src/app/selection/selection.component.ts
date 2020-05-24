@@ -134,7 +134,7 @@ export class SelectionComponent implements OnInit, OnDestroy {
 
     if (type === 'type') return this.typeData(selection, type);
     if (type === 'berries') return this.berryData(selection, type);
-    if (type === 'machine') return;
+    if (type === 'machine') return this.machineData(selection, type);
     if (this.type.endsWith(' Region')) return this.locationData(selection, type);
     if (this.type.includes('move-')) return this.moveData(selection, type);
 
@@ -212,6 +212,15 @@ export class SelectionComponent implements OnInit, OnDestroy {
     this.toggle = this.toggle ? false : true;
     
     this.shared.sidenavContent('Location');
+  }
+
+  private machineData(selection: any, type: string) {
+    this.shared.id = undefined;
+    this.shared.selectionData = selection;
+    this.shared.updateSelectedEntrySelection = this.toggle ? false : true;
+    this.toggle = this.toggle ? false : true;
+    
+    this.shared.sidenavContent('Machine');
   }
   
   private moveData(selection: any, type?: string) {

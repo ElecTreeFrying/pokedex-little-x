@@ -12,7 +12,7 @@ export const environment = {
   data: [
     `${cdn.cloudinary}/v1590214556/pokedex-little/pokemon.json`,
     `${cdn.cloudinary}/v1589697366/pokedex-little/moves.json`,
-    `${cdn.cloudinary}/v1590310570/pokedex-little/others.json`
+    `${cdn.cloudinary}/v1590325946/pokedex-little/others.json`
   ],
   dropbox_data: [
     `${cdn.dropbox}/dzi90dcf6dvkqo7/api.json`,

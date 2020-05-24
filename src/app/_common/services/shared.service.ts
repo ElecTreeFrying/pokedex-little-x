@@ -8,6 +8,7 @@ interface Key {
   no_habitat: any[];
   encounter_method: any[];
   machines: any[];
+  machines_data: any[];
   natures?: any[];
   characteristics?: any[];
   pokemon_moves?: any[];
@@ -32,6 +33,7 @@ export class SharedService {
   private isPokemonSelectedSource = new BehaviorSubject(false);
   private isItemSelectedSource = new BehaviorSubject(false);
   private isBerrySelectedSource = new BehaviorSubject(false);
+  private isMachineSelectedSource = new BehaviorSubject(false);
   private isMoveSelectedSource = new BehaviorSubject(false);
   private isLocationSelectedSource = new BehaviorSubject(false);
   private loadingCardsSource = new BehaviorSubject(false);
@@ -49,6 +51,7 @@ export class SharedService {
   isPokemonSelected = this.isPokemonSelectedSource.asObservable();
   isItemSelected = this.isItemSelectedSource.asObservable();
   isBerrySelected = this.isBerrySelectedSource.asObservable();
+  isMachineSelected = this.isMachineSelectedSource.asObservable();
   isMoveSelected = this.isMoveSelectedSource.asObservable();
   isLocationSelected = this.isLocationSelectedSource.asObservable();
   loadingCards = this.loadingCardsSource.asObservable();
@@ -167,6 +170,7 @@ export class SharedService {
     this.updateIsPokemonSelectedSelection = false;
     this.updateIsItemSelectedSelection = false;
     this.updateIsBerrySelectedSelection = false;
+    this.updateIsMachineSelectedSelection = false;
     this.updateIsMoveSelectedSelection = false;
     this.updateIsLocationSelectedSelection = false;
   }
@@ -227,6 +231,10 @@ export class SharedService {
 
   set updateIsBerrySelectedSelection(data: boolean) {
     this.isBerrySelectedSource.next(data);
+  }
+
+  set updateIsMachineSelectedSelection(data: boolean) {
+    this.isMachineSelectedSource.next(data);
   }
 
   set updateIsMoveSelectedSelection(data: boolean) {

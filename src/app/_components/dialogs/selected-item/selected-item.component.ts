@@ -1,6 +1,8 @@
-import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { Subscription } from 'rxjs';
 
+import { PokeapiItemService } from '../../../_common/services/pokeapi-item.service';
 import { SharedService } from '../../../_common/services/shared.service';
 
 
@@ -11,18 +13,44 @@ import { SharedService } from '../../../_common/services/shared.service';
 })
 export class SelectedItemComponent implements OnInit, OnDestroy {
 
+  item: any;
+  sections: boolean[];
+  isLoading: boolean;
+  
+  subscriptions: Subscription[];
+
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: any,
-    public ref: MatDialogRef<SelectedItemComponent>,
-    public dialog: MatDialog,
+    private dialog: MatDialog,
+    public api: PokeapiItemService,
     private shared: SharedService
   ) { }
 
   ngOnInit(): void {
+
+    this.initialize();
+
+    this.sections = [ true, true, true, true, false, true, false ];
+
+    this.api.selection = this.shared.selectionData;
+
+    this.subscriptions.push(this.api.item().subscribe((item: any) => {
+
+      this.item = item;
+      
+      this.isLoading = false;
+      this.shared.selectionData = undefined;
+    }));
   }
 
   ngOnDestroy() {
-    this.shared.dialogIsOpened = false;
+    this.subscriptions.forEach((subscription: Subscription) => {
+      subscription.unsubscribe();
+    });
+  }
+
+  initialize() {
+    this.isLoading = true;
+    this.subscriptions = [];
   }
 
 }
