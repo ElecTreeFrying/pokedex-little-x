@@ -70,8 +70,9 @@ export class SelectionComponent implements OnInit, OnDestroy {
         
         this.type = `move-${res.type}`;
         const filter = this.type.replace('move-', '').toLowerCase();
-        this.view = this.shared.moves.filter(e => e.damage_class.name === filter);
-        sessionStorage.setItem('entries', JSON.stringify(this.selections));
+        const data = this.shared.moves.filter(e => e.damage_class.name === filter);
+        this.view = data;
+        sessionStorage.setItem('entries', JSON.stringify(data));
         return;
       }
       
@@ -79,14 +80,15 @@ export class SelectionComponent implements OnInit, OnDestroy {
 
         if (!this.shared.berries) {
           const session = sessionStorage.getItem('entries');
-          this.selections = JSON.parse(session);
           this.type = res.type;
+          this.view = JSON.parse(session);
           return;
         }
 
-        this.selections = this.shared.berries;
+        const data = this.shared.berries
         this.type = res.type;
-        sessionStorage.setItem('entries', JSON.stringify(this.selections));
+        this.view = data;
+        sessionStorage.setItem('entries', JSON.stringify(data));
         return;
       }
 
@@ -95,19 +97,20 @@ export class SelectionComponent implements OnInit, OnDestroy {
 
         if (!this.shared.regions) {
           const session = sessionStorage.getItem('entries');
-          this.view = JSON.parse(session);
           this.type = res.type;
+          this.view = JSON.parse(session);
           return;
         }
 
-        this.view = this.shared.regions.find(e => e.id === res.id).locations;
+        const data = this.shared.regions.find(e => e.id === res.id).locations
         this.type = res.type;
-        sessionStorage.setItem('entries', JSON.stringify(this.selections));
+        this.view = data;
+        sessionStorage.setItem('entries', JSON.stringify(data));
         return;
       }
 
-      this.view = this.collection[res.type];
       this.type = res.type;
+      this.view = this.collection[res.type];
     }));
   }
 
@@ -167,12 +170,14 @@ export class SelectionComponent implements OnInit, OnDestroy {
 
     this.all = selection;
 
-    setTimeout(() => (this.selections = this.all.slice(0, 10)), 250);
+    setTimeout(() => 
+      (this.selections = this.all.slice(0, this.type !== 'berries' ? 10 : 20)), 250);
 
-    setTimeout(() => (this.selections = this.all.slice(0, 20)), 500);
+    setTimeout(() => 
+      (this.selections = this.all.slice(0, this.type !== 'berries' ? 20 : 45)), 500);
     
     setTimeout(() => {
-      this.selections = this.all.slice(0, 30);
+      this.selections = this.all.slice(0, this.type !== 'berries' ? 30 : 64);
       this.shared.updateLoadingCardsSelection = false;
     }, 750);
   }
