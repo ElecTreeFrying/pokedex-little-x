@@ -474,6 +474,7 @@ export const special_names = [
   { name: 'Jangmo-o', key: 'jangmo-o' },
   { name: 'Hakamo-o', key: 'hakamo-o' },
   { name: 'Kommo-o', key: 'kommo-o' },
+  { name: 'Type: Null', key: 'type-null' },
   { name: 'Oricorio Pom-Pom', key: 'oricorio-pom-pom' },
   { name: 'Kommo-o Totem', key: 'kommo-o-totem' },
 ];
