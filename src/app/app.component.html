@@ -18,6 +18,8 @@
 
 </mat-toolbar>
 
+<mat-progress-bar mode="indeterminate" *ngIf="(shared.loadingCards | async)"></mat-progress-bar>
+
 <mat-sidenav-container>
 
   <mat-sidenav class="mat-elevation-z10" position="start" mode="side" data-simplebar opened #drawer>

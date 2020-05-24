@@ -23,7 +23,7 @@
 
 <div class="card-content" *ngIf="type !== 'berries'">
   
-  <div matRipple *ngFor="let selection of selections | selection: type: loadAll">
+  <div matRipple *ngFor="let selection of selections | selection: type">
     <mat-card (click)="go(selection, type)" [ngStyle]="{ 'background': type === 'type' || type.includes('move-') ? selection.color.dark : '#4E1338' }">
       <mat-card-content>
         <div *ngIf="type.includes('move-'); then thenBlock else elseBlock"></div>
@@ -37,7 +37,7 @@
     </mat-card>
   </div>
 
-  <div matRipple (click)="loadAll = true" *ngIf="(type.includes('move-') || type.endsWith(' Region'))&& (selections | selection: type: loadAll)?.length < 31">
+  <div matRipple (click)="loadAll = true" *ngIf="(type.includes('move-') || type.endsWith(' Region') || type === 'categories') && !(shared.loadingCards|async)">
     <mat-card>
       <mat-card-content class="load-all">
         <mat-icon>add</mat-icon>

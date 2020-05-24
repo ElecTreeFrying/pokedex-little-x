@@ -64,6 +64,7 @@ export class DrawerComponent implements OnInit {
     this.shared.loading = false;
     this.shared.index = { value: 0, count: 0 };
     this.shared.selectionData = undefined;
+    setTimeout(() => (this.shared.updateLoadingCardsSelection = true));
 
     if (parent === 'region') {
       this.regionSelection(parent, child);

@@ -96,6 +96,7 @@ import { pokemonDialogComponents } from '../services/component-selector.service'
     MatIconModule,
     MatProgressSpinnerModule,
     MatRippleModule,
+    MatProgressBarModule,
     AppInitializationComponentModule,   // export components
     DialogComponentModule,              // export declarations
     SearchComponentModule,

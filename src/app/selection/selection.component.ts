@@ -14,6 +14,7 @@ import { SharedService, categories, type } from '../_common/services/shared.serv
 export class SelectionComponent implements OnInit, OnDestroy {
 
   selections: any;
+  all: any;
   type: string;
   loadAll: boolean;
   toggle: boolean;
@@ -24,7 +25,7 @@ export class SelectionComponent implements OnInit, OnDestroy {
     private cd: ChangeDetectorRef,
     private router: Router,
     private api: PokeapiService,
-    private shared: SharedService
+    public shared: SharedService
   ) { }
   
   ngOnInit(): void {
@@ -40,6 +41,7 @@ export class SelectionComponent implements OnInit, OnDestroy {
   }
   
   initialize() {
+    this.selections = [];
     this.loadAll = false;
     this.toggle = false;
 
@@ -50,6 +52,8 @@ export class SelectionComponent implements OnInit, OnDestroy {
 
     this.subscriptions.push(this.shared.routeChange.subscribe((res) => {     
 
+      this.selections = [];
+      this.loadAll = false;
       this.shared.loading = null;
       this.shared.updateIsLoadingSelection = false;
 
@@ -60,13 +64,13 @@ export class SelectionComponent implements OnInit, OnDestroy {
           this.type = `move-${res.type}`;
           const session = sessionStorage.getItem('entries');
           const filter = this.type.replace('move-', '').toLowerCase();
-          this.selections = JSON.parse(session).filter(e => e.damage_class.name === filter);
+          this.view = JSON.parse(session).filter(e => e.damage_class.name === filter);
           return;
         }
         
         this.type = `move-${res.type}`;
         const filter = this.type.replace('move-', '').toLowerCase();
-        this.selections = this.shared.moves.filter(e => e.damage_class.name === filter);
+        this.view = this.shared.moves.filter(e => e.damage_class.name === filter);
         sessionStorage.setItem('entries', JSON.stringify(this.selections));
         return;
       }
@@ -91,18 +95,18 @@ export class SelectionComponent implements OnInit, OnDestroy {
 
         if (!this.shared.regions) {
           const session = sessionStorage.getItem('entries');
-          this.selections = JSON.parse(session);
+          this.view = JSON.parse(session);
           this.type = res.type;
           return;
         }
 
-        this.selections = this.shared.regions.find(e => e.id === res.id).locations;
+        this.view = this.shared.regions.find(e => e.id === res.id).locations;
         this.type = res.type;
         sessionStorage.setItem('entries', JSON.stringify(this.selections));
         return;
       }
 
-      this.selections = this.collection[res.type];
+      this.view = this.collection[res.type];
       this.type = res.type;
     }));
   }
@@ -157,6 +161,20 @@ export class SelectionComponent implements OnInit, OnDestroy {
       });
     
     });
+  }
+
+  set view(selection: any[]) {
+
+    this.all = selection;
+
+    setTimeout(() => (this.selections = this.all.slice(0, 10)), 250);
+
+    setTimeout(() => (this.selections = this.all.slice(0, 20)), 500);
+    
+    setTimeout(() => {
+      this.selections = this.all.slice(0, 30);
+      this.shared.updateLoadingCardsSelection = false;
+    }, 750);
   }
 
   private berryData(selection: any, type: string) {

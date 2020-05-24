@@ -223,13 +223,11 @@ export class GamesComponent implements OnInit, AfterViewInit, OnDestroy {
     } else if (res.type === 'type') {
       this.entries = this.shared.keys.type_pokemon;
     } else {
-
       if (res.type === 'pokedex' && res.id === 0) {
         this.entries = this.shared.pokemon;
-        return;
+      } else {
+        this.entries = entries.find(e => e['id'] === res.id).entries;
       }
-
-      this.entries = entries.find(e => e['id'] === res.id).entries;
     }
 
     this.displayEntries();
@@ -238,7 +236,8 @@ export class GamesComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private displayEntries() {
     this.all = this.entries;
-    this.entries = this.entries.slice(0, this.shared.defaultLength);
+
+    this.loadInitialCards();
 
     const _length = this.all.length - 50;
 
@@ -251,6 +250,24 @@ export class GamesComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.all.length < this.shared.defaultLength) {
       this.shared.updateHideLoadMoreSelection = true;
     }
+  }
+
+  private loadInitialCards() {
+    
+    this.entries = [];
+
+    setTimeout(() => (this.shared.updateLoadingCardsSelection = true));
+    
+    setTimeout(() => (this.entries = this.all.slice(0, 15)), 250);
+    
+    setTimeout(() => (this.entries = this.all.slice(0, 30)), 500);
+    
+    setTimeout(() => {
+      
+      this.entries = this.all.slice(0, this.shared.defaultLength);
+      this.shared.updateLoadingCardsSelection = false;
+
+    }, 750);
   }
 
   trackByID(index: number, item: any) {

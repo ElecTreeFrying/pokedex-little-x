@@ -149,6 +149,11 @@
   }
 }
 
+.mat-progress-bar {
+  position: absolute;
+  z-index: 5000;
+}
+
 .mat-sidenav-container {
   background-color: #340522;
   color: white;

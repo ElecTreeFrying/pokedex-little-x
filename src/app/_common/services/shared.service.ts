@@ -33,6 +33,7 @@ export class SharedService {
   private isBerrySelectedSource = new BehaviorSubject(false);
   private isMoveSelectedSource = new BehaviorSubject(false);
   private isLocationSelectedSource = new BehaviorSubject(false);
+  private loadingCardsSource = new BehaviorSubject(false);
 
   loadedAll = this.loadedAllSource.asObservable();
   routeChange: Observable<any>;
@@ -49,6 +50,7 @@ export class SharedService {
   isBerrySelected = this.isBerrySelectedSource.asObservable();
   isMoveSelected = this.isMoveSelectedSource.asObservable();
   isLocationSelected = this.isLocationSelectedSource.asObservable();
+  loadingCards = this.loadingCardsSource.asObservable();
 
   private _id: number;
   get id() { return this._id; }
@@ -232,6 +234,10 @@ export class SharedService {
 
   set updateIsLocationSelectedSelection(data: boolean) {
     this.isLocationSelectedSource.next(data);
+  }
+
+  set updateLoadingCardsSelection(data: boolean) {
+    this.loadingCardsSource.next(data);
   }
 
 }
