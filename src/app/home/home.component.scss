@@ -1,8 +1,9 @@
 
 .card-content {
   display: flex;
-  flex-flow: row wrap;
-  justify-content: center;
+  flex-flow: column wrap;
+  align-content: center;
+  height: 300px;
 
   .mat-card {
     background-color: #4E1338;

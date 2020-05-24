@@ -242,19 +242,19 @@ export const home = [
     description: 'Explore pokémon entries per Pokedex, Generation & Version groups, pokémon details and many more.'
   }, { 
     name: 'Items', 
-    description: 'Item listings per Item Attribute and Category.' 
+    description: 'Select and explore items in the world of pokémon, organized by their attributes and categories.' 
   }, { 
     name: 'Berries', 
-    description: 'Berries' 
+    description: 'List of berries in all pokémon generations, complete with useful berry details and flavor stats.' 
   }, { 
     name: 'Moves', 
-    description: 'Moves' 
+    description: 'Explore all pokémon moves categorized by damage class, complete with move information contest details and many more.' 
   }, { 
-    name: 'Machine', 
-    description: 'Machine' 
+    name: 'Machines', 
+    description: 'List of all machines' 
   }, { 
-    name: 'Location', 
-    description: 'Location' 
+    name: 'Region', 
+    description: 'Explore all the locations of each regions the world of pokémon, pokémon encounter methods and pokémon encounters.' 
   }
 ];
 
