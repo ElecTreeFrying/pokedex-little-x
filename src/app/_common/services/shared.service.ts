@@ -257,7 +257,7 @@ export const home = [
     description: 'Explore all pokémon moves categorized by damage class, complete with move information contest details and many more.' 
   }, { 
     name: 'Machines', 
-    description: 'List of all machines' 
+    description: 'List of machines in all pokémon generations, complete with item and move information.' 
   }, { 
     name: 'Region', 
     description: 'Explore all the locations of each regions the world of pokémon, pokémon encounter methods and pokémon encounters.' 
