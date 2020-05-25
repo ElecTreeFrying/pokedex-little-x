@@ -76,6 +76,12 @@ export class GamesComponent implements OnInit, AfterViewInit, OnDestroy {
 
       this.shared.loading = false;
       this.shared.updateIsLoadingSelection = false;
+
+      if (this.entries.length === this.all.length) {
+        this.shared.updatedLoadedAllSelection = true;
+      } else {
+        this.shared.updatedLoadedAllSelection = false;
+      }
     }));
 
     let normalState = [];
@@ -266,6 +272,10 @@ export class GamesComponent implements OnInit, AfterViewInit, OnDestroy {
       
       this.entries = this.all.slice(0, this.shared.defaultLength);
       this.shared.updateLoadingCardsSelection = false;
+
+      if (!this.shared.isLoadAll) return;
+
+      this.shared.updateHideLoadMoreSelection = this.all.length < this.shared.defaultLength;
 
     }, 750);
   }

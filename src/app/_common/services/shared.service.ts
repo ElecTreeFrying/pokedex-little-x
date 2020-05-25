@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
-
 interface Key { 
   types: any[];
   move_damage_class: any[];
@@ -14,6 +13,7 @@ interface Key {
   pokemon_moves?: any[];
   type_pokemon?: any[];
 };
+
 
 @Injectable({
   providedIn: 'root'

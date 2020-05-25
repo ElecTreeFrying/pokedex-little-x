@@ -1,7 +1,7 @@
 import { OnInit, Directive, Input, Output, Renderer2, HostListener, EventEmitter } from '@angular/core';
 
 import { SharedService } from '../services/shared.service';
-import { RouteService } from '../services/route.service';
+import { filter, map } from 'rxjs/operators';
 
 interface Variables {
   run: boolean;
@@ -22,92 +22,104 @@ export class TransitionEventDirective implements OnInit {
   events: Variables;
   isFired: boolean;
   state: boolean;
-  isLoadAll: boolean;
+  isRefresh: boolean;
 
   constructor(
     private render: Renderer2,
-    private shared: SharedService,
-    private route: RouteService
+    private shared: SharedService
   ) { }
   
   initialize() {
     this.isFired = false;
-    this.state = false;
-    this.isLoadAll = false
+    this.state = true;
+    this.isRefresh = false;
     this.events = {
       run: false,
       end: false,
       enter: false,
       leave: false
     };
-
-    this.render.addClass(this.transitionEvent, `close-right`);
-
-    this.shared.hideLoadMore.subscribe((res) => {
-
-      setTimeout(() => {
-        if (res !== true) return;
-        this.buttonState(false);
-      }, 300);
-    });
-
-    this.route.showLoadMore.subscribe((res) => {
-
-      setTimeout(() => {
-        if (this.shared.item_meta.floor === 0) return;
-        this.buttonState(res);
-      }, 300);
-    });
-  }
-
-  get isInvalid() {
-    const type = JSON.parse(sessionStorage.getItem('route')).type;
-    return type === 'berries';
   }
   
   ngOnInit() {
     
     this.initialize();
-    
-    this.shared.loadMorePosition.subscribe((res) => {
+    this.slideOpen(this.position);
 
-      if (this.isInvalid || !this.shared.allowLoadMore) return;
+    this.shared.hideLoadMore.subscribe((res) => {
 
       if (res === null) return;
 
-      this.state = res;
-      this.to();
+      res 
+        ? this.slideClose(this.position)
+        : this.slideOpen(this.position);
+      
+    });
+
+    this.shared.loadMorePosition.subscribe((res) => {
+
+      if (res === null) return;
+
+      this.state = !res;
+      this.slideOpen(this.position);
+
     });
     
     this.shared.loadedAll.subscribe((res) => {
-      
+
       if (res === null) return;
+      this.isRefresh = res; 
       
-      const element = this.transitionEvent;
-      const option = this.state ? 'left' : 'right';
-      const suffix = this.isLoadAll ? '-refresh' : '';
+      if (res) {
+        this.slideOpen(this.position);
+      }
+ 
+    });
 
-      this.render.removeClass(element, `${option}${suffix}`);
+    this.shared.loadMore.pipe( 
+      filter(e => e === -7 || e === -8),
+      map(e => e === -7 ? true : e === -8 ? false : null),
+      filter(e => e !== null) 
+    ).subscribe((res: any) => {
+      
+      res
+        ? this.slideClose(this.position)
+        : this.slideOpen(this.position);
 
-      this.isLoadAll = res;
-      this.to();
     });
   }
 
-  to() {
-    const posDefault = this.state ? 'left' : 'right';
-    const posInverted = this.state ? 'right' : 'left';
-    const suffix = this.isLoadAll ? '-refresh' : '';
-
+  reset() {
     const element = this.transitionEvent;
-
-    this.render.removeClass(element, `${posInverted}${suffix}`)
-    this.render.addClass(element, `close-${posDefault}${suffix}`);
-    
+    this.render.removeClass(element, 'close-left-animated');
+    this.render.removeClass(element, 'close-right-animated');
+    this.render.removeClass(element, 'close-left');
+    this.render.removeClass(element, 'close-right');
+    this.render.removeClass(element, 'left');
+    this.render.removeClass(element, 'right');
+    this.render.removeClass(element, 'left-refresh');
+    this.render.removeClass(element, 'right-refresh');
+  }
+  
+  slideOpen(position: string) {
+    this.reset();
+    const element = this.transitionEvent;
+    const refresh = this.isRefresh ? '-refresh' : '';
+    this.render.addClass(element, `close-${position}${refresh}`);
     setTimeout(() => {
-      this.render.removeClass(element, `close-${posDefault}${suffix}`);
-      this.render.addClass(element, `${posDefault}${suffix}`);
+      this.render.removeClass(element, `close-${position}${refresh}`);
+      this.render.addClass(element, `${position}${refresh}`);
     }, 150);
+  }
+  
+  slideClose(position: string) {
+    this.reset();
+    const element = this.transitionEvent;
+    this.render.addClass(element, `close-${position}-animated`);
+  }
+
+  private get position() {
+    return this.state ? 'right' : 'left';
   }
     
   @HostListener('transitionrun', ['$event'])
@@ -132,7 +144,9 @@ export class TransitionEventDirective implements OnInit {
     if (!this.isFired) return;
     
     this.isFired = false;
-    this.trigger.next(false);
+
+    // if (this.isRefresh) return;
+    // this.trigger.next(false);
   }
 
   @HostListener('mouseenter')
@@ -150,23 +164,9 @@ export class TransitionEventDirective implements OnInit {
   @HostListener('mouseup')
   up() {
     this.isFired = true;
-    this.trigger.next(true);
-  }
-
-  private buttonState(res: boolean) {
-    if (res) {
-
-      this.render.removeClass(this.transitionEvent, `close-right-animated`);
-      this.to();
-    } else {
-
-      const element = this.transitionEvent;
-      const option = this.state ? 'left' : 'right';
-      const suffix = this.isLoadAll ? '-refresh' : '';
-
-      this.render.removeClass(element, `${option}${suffix}`);
-      this.render.addClass(this.transitionEvent, `close-right-animated`);
-    }
+    
+    // if (this.isRefresh) return;
+    // this.trigger.next(true);
   }
 
 }

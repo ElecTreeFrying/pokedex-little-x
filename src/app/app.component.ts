@@ -210,14 +210,21 @@ export class AppComponent implements OnInit, AfterViewInit {
 
     if (this.shared.isLoadAll) {
       this.simplebar.getScrollElement().scrollTop = 0;
-      this.shared.updatedLoadedAllSelection = true;
+      this.shared.updateHideLoadMoreSelection = true;
       this.shared.updateLoadMoreSelection = -1;
       this.shared.isLoadAll = false;
+      setTimeout(() => {
+        this.shared.updatedLoadedAllSelection = true;
+      }, 150);
     } else {
       this.simplebar.getScrollElement().scrollTop = 0;
-      this.shared.updatedLoadedAllSelection = false;
+      this.shared.updateHideLoadMoreSelection = true;
       this.shared.updateLoadMoreSelection = -2;
       this.shared.isLoadAll = true;
+      setTimeout(() => {
+        this.shared.updatedLoadedAllSelection = false;
+        this.shared.updateLoadMoreSelection = -8;
+      }, 150);
     }
   }
 
