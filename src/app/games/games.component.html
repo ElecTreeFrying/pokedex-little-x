@@ -5,7 +5,8 @@
     <div matRipple *ngFor="let entry of entries; let i = index; trackBy: trackByID">
 
       <div class="entry-number" *ngIf="!(route['isItems'] || route['isCategory'])">
-        <span>#{{ i + 1 }}</span>
+        <span *ngIf="!route['entry_sort_id']">#{{ i + 1 }}</span>
+        <span *ngIf="route['entry_sort_id']">#{{ entry?.id }}</span>
       </div>
 
       <mat-card (click)="select(entry)">
