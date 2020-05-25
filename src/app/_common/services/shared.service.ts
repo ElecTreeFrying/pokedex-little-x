@@ -132,13 +132,17 @@ export class SharedService {
   get selectionData() { return this._selectionData; }
   set selectionData(selectionData: any) { this._selectionData = selectionData; }
 
-  private _allowLoadMore: any;
+  private _allowLoadMore: boolean;
   get allowLoadMore() { return this._allowLoadMore; }
   set allowLoadMore(allowLoadMore: boolean) { this._allowLoadMore = allowLoadMore; }
 
-  private _initializationComplete: any;
+  private _initializationComplete: boolean;
   get initializationComplete() { return this._initializationComplete; }
   set initializationComplete(initializationComplete: boolean) { this._initializationComplete = initializationComplete; }
+
+  private _isConquestGallery: boolean;
+  get isConquestGallery() { return this._isConquestGallery; }
+  set isConquestGallery(isConquestGallery: boolean) { this._isConquestGallery = isConquestGallery; }
 
   constructor() {
     const routeSession = sessionStorage.getItem('route');

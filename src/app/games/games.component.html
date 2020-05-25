@@ -26,13 +26,22 @@
         </ng-template>
         
         <ng-template #elseBlock>
-          <img *ngIf="route['isGames']"
+          <img *ngIf="!route['conquest_gallery']"
             mat-card-image 
             offset="300"
             defaultImage="assets/images/berry.png" 
             errorImage="assets/images/berry.png" 
             [lazyLoad]="entry?.byte64 | idToImage: 'byte64'" 
             [alt]="entry?.name">
+          <div class="conquest-gallery" *ngIf="route['conquest_gallery']">
+            <img 
+              mat-card-image 
+              offset="300"
+              defaultImage="assets/images/berry.png" 
+              errorImage="assets/images/berry.png" 
+              [lazyLoad]="entry | idToImage: 'conquest-gallery'" 
+              [alt]="entry?.name">
+          </div>
           </ng-template>
 
         <mat-card-content class="text-container">

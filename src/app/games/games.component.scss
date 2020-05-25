@@ -53,6 +53,18 @@
       }
     }
 
+    .conquest-gallery {
+      margin: 0 -16px;
+      width: 150px;
+      height: 150px;
+      display: flex;
+
+      img {
+        margin: auto;
+        width: 120px;
+      }
+    }
+
     .load-more {
       height: calc(100% - 36px);
 
