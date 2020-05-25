@@ -19,6 +19,7 @@ export class RouteService {
   ) { 
     
     location.subscribe((res) => {
+      shared.isLoadAll = true;
       this.navigation(res.url);
     });
 
@@ -26,14 +27,16 @@ export class RouteService {
       filter(e => e instanceof NavigationStart),
       map((e: any) => e.url)
     ).subscribe((url: string) => {
+      
+      shared.isLoadAll = true;
     
-      shared.updatedLoadedAllSelection = false;
-
       const games = url.startsWith('/games');
       const pokemon_or_items = url.endsWith('#pokedex') || url.endsWith('#generation') || url.endsWith('#version-group') || url.endsWith('#type') || url.endsWith('#items') || url.endsWith('#categories');
 
       if (!(games && pokemon_or_items)) {
         shared.updateHideLoadMoreSelection = true;
+      } else {
+        shared.updateHideLoadMoreSelection = false;
       }
     
     });
