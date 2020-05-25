@@ -21,12 +21,12 @@ export class IdToImagePipe implements PipeTransform {
     } 
 
     if (type === 'conquest-gallery') {
-      return `https://res.cloudinary.com/electreefrying/image/upload/v1590407467/conquest-gallery-pokemon-images/${value.filename}`;
+      return `https://res.cloudinary.com/electreefrying/image/upload/v1590416403/pokedex-little/conquest_library/${value.filename}`;
     } 
     
     else if (type === 'etf_assets_filename') {
       if (this.shared.isConquestGallery) {
-        return `https://res.cloudinary.com/electreefrying/image/upload/v1590407467/conquest-gallery-pokemon-images/${this.shared.filename}`;
+        return `https://res.cloudinary.com/electreefrying/image/upload/v1590416403/pokedex-little/conquest_library/${this.shared.filename}`;
       } else {
         return `https://res.cloudinary.com/electreefrying/image/upload/v1590217728/pokedex-little/pokemon_extended/${this.shared.filename}`;
       }
