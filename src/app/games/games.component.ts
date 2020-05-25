@@ -144,7 +144,7 @@ export class GamesComponent implements OnInit, AfterViewInit, OnDestroy {
     const isItems = route === 'items';
     const isCategory = route === 'category';
 
-    this.route['entry_sort_id'] = res.id === 0 || res.id === 1 || res.id === 11;
+    this.route['entry_sort_id'] = res.id === 0 || res.id === 1 || res.id === 11 || res.type === 'type';
     this.route['conquest_gallery'] = res.id === 11;
     this.route['isGames'] = isGames;
     this.route['isItems'] = isItems;
@@ -231,7 +231,15 @@ export class GamesComponent implements OnInit, AfterViewInit, OnDestroy {
     if (res.type === 'generation') {
       this.entries = sortBy(entries.find(e => e['id'] === res.id).entries, [ 'id' ]);
     } else if (res.type === 'type') {
-      this.entries = this.shared.keys.type_pokemon;
+      if (!res.hasOwnProperty('id')) return;
+      this.subscriptions.push(this.api.typeData(res.id).subscribe(() => {
+        
+        this.entries = this.shared.keys.type_pokemon;
+
+        this.displayEntries();
+        sessionStorage.setItem('entries', JSON.stringify(this.all));
+      }));
+      return;
     } else {
       if (res.type === 'pokedex' && res.id === 0) {
         this.entries = this.shared.pokemon;
@@ -245,6 +253,9 @@ export class GamesComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private displayEntries() {
+
+    if (!this.entries) return;
+
     this.all = this.entries;
 
     this.loadInitialCards();

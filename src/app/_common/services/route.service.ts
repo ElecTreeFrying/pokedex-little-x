@@ -41,6 +41,8 @@ export class RouteService {
 
   private navigation(res: any) {
 
+    this.shared.updateLoadingCardsSelection = true;
+
     res = res.slice(1).split('?');
 
     const route = res[0];
@@ -48,38 +50,59 @@ export class RouteService {
     if (!res[1]) return;
 
     const split = res[1].split('#');
-    const type = split[1];
+    let type = split[1];
     
     const name = decodeURI(split[0].split('&')[0].split('=')[1]);
 
     const isPokemon = type === 'pokedex' || type === 'generation' || type === 'version-group' || type === 'type';
-    const isSelection = name === 'type' || name === 'categories';
+    
+    const isItem = type === 'items' || type === 'categories';
+    
+    const isSelection = 
+      (name === 'type' && type === 'pokemon') || 
+      (name === 'categories' && type === 'items');
+    
     
     if (isPokemon || type === 'machine') {
-
+      
       const id = +split[0].split('&')[1].split('=')[1];
       this.shared.updatedRouteChangeSelection = { type, id };
+      return;
     } 
     
     if (isSelection) {
       
       this.shared.updatedRouteChangeSelection = { type: name };
-    }  
+      return;
+    }
     
+    if (isItem && name !== 'berries') {
+      
+      const id = +split[0].split('&')[1].split('=')[1];
+      
+      type = type === 'categories' ? 'category' : type;
+      this.shared.updatedRouteChangeSelection = { type, id };
+      
+      return;
+    }
+
     if (type === 'move') {
       
       this.shared.updatedRouteChangeSelection = { type: name, id: -1 };
+      return;
     } else if (type === 'region') {
       
       const id = +split[0].split('&')[1].split('=')[1];
       const type = name.split(' ').map(e => capitalize(e)).join(' ');
-
+      
       this.shared.updatedRouteChangeSelection = { type, id };
+      return;
     }
-
+    
     if (name === 'berries') {
       
       this.shared.updatedRouteChangeSelection = { type: name, id: -99 };
+      return;
     }
   }
 

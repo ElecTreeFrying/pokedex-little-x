@@ -223,20 +223,18 @@ export class SelectionComponent implements OnInit, OnDestroy {
 
     const id = selection.key;
 
-    this.api.typeData(+id).subscribe(() => {
+    this.router.navigate(['games'], {  
+      queryParams: { name: selection.name, id },
+      fragment: type
+    }).then(() => {
       
-      this.router.navigate(['games'], {  
-        queryParams: { name: selection.name, id },
-        fragment: type
-      }).then(() => {
-        
-        this.shared.updatedRouteChangeSelection = { id, type };
-      });
-    
+      this.shared.updatedRouteChangeSelection = { id, type };
     });
   }
 
   set view(selection: any[]) {
+
+    if (!selection) return;
 
     this.all = selection;
 
