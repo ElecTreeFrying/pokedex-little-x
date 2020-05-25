@@ -44,7 +44,7 @@ export class TransitionEventDirective implements OnInit {
   ngOnInit() {
     
     this.initialize();
-    this.slideOpen(this.position);
+    this.slideClose(this.position);
 
     this.shared.hideLoadMore.subscribe((res) => {
 
