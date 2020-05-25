@@ -2,7 +2,7 @@
 <div class="wrap">
 
   <div class="card-content">
-    <div matRipple *ngFor="let entry of entries; let i = index; trackBy: trackByID">
+    <div matRipple class="mat-elevation-z5" *ngFor="let entry of entries; let i = index; trackBy: trackByID">
 
       <div class="entry-number" *ngIf="!(route['isItems'] || route['isCategory'])">
         <span *ngIf="!route['entry_sort_id']">#{{ i + 1 }}</span>
