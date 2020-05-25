@@ -17,6 +17,7 @@ export class SelectionComponent implements OnInit, OnDestroy {
   all: any;
   type: string;
   toggle: boolean;
+  isLoadedAll: boolean;
 
   subscriptions: Subscription[];
 
@@ -42,15 +43,17 @@ export class SelectionComponent implements OnInit, OnDestroy {
   initialize() {
     this.selections = [];
     this.toggle = false;
-
+    this.isLoadedAll = false;
+    
     this.subscriptions = [];
   }
   
   pageListener() {
-
+    
     this.subscriptions.push(this.shared.routeChange.subscribe((res) => {     
-
+      
       this.selections = [];
+      this.isLoadedAll = false;
       this.shared.loading = null;
       this.shared.updateIsLoadingSelection = false;
 
@@ -126,6 +129,59 @@ export class SelectionComponent implements OnInit, OnDestroy {
       this.type = res.type;
       this.view = this.collection[res.type];
     }));
+
+    let normalState = [];
+
+    this.subscriptions.push(this.shared.search.subscribe((search: string) => {
+      
+      if (search === '') {
+        
+        if (normalState.length === 0) {
+          normalState = this.selections; }
+
+        this.selections = normalState;
+        this.cd.detectChanges();
+      } 
+      
+      if (search !== '' && search !== '-1') {
+
+        if (this.type === 'berries') {
+          this.selections = normalState.filter(
+            (e) => e.filename.replace('.png', '').split('-').join(' ').includes(search)
+          );
+        }
+
+        else if (this.type.includes('move-')) {
+          this.selections = normalState.filter(
+            (e) => e.name.split('-').includes(search)
+          );
+        }
+
+        else if (this.type === 'machine') {
+          this.selections = normalState.filter((e) => {
+            const item = `${e.item.name} ${e.move.name.split('-')}`;
+            return item.includes(search);
+          });
+        }
+
+        else if (this.type.includes(' Region') || this.type === 'categories' || this.type === 'type') {
+          this.selections = normalState.filter(
+            (e) => e.name.toLowerCase().includes(search)
+          );
+        }
+
+      }
+
+      if (search === '-1') {
+        normalState = [];
+      }
+
+    }));
+  }
+
+  loadAllSelections() {
+    this.isLoadedAll = true;
+    this.selections = this.all;
   }
 
   go(selection: any, type: string) {

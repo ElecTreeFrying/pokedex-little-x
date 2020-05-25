@@ -38,7 +38,7 @@
     </mat-card>
   </div>
 
-  <div matRipple (click)="selections = all" *ngIf="(type.includes('move-') || type.endsWith(' Region') || type === 'categories' || type === 'machine') && (!(shared.loadingCards|async) && selections.length === 30) && (selections.length !== all.length)">
+  <div matRipple (click)="loadAllSelections()" *ngIf="(type.includes('move-') || type.endsWith(' Region') || type === 'categories' || type === 'machine') && (!(shared.loadingCards|async) && selections.length === 30) && (selections.length !== all.length)">
     <mat-card>
       <mat-card-content class="load-all">
         <mat-icon>add</mat-icon>
