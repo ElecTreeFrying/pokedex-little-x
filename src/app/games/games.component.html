@@ -2,7 +2,12 @@
 <div class="wrap">
 
   <div class="card-content">
-    <div matRipple *ngFor="let entry of entries; trackBy: trackByID">
+    <div matRipple *ngFor="let entry of entries; let i = index; trackBy: trackByID">
+
+      <div class="entry-number" *ngIf="!(route['isItems'] || route['isCategory'])">
+        <span>#{{ i + 1 }}</span>
+      </div>
+
       <mat-card (click)="select(entry)">
 
         <div *ngIf="route['isItems'] || route['isCategory']; then thenBlock else elseBlock"></div>

@@ -2,12 +2,23 @@
 .card-content {
   display: flex;
   flex-flow: row wrap;
+
   justify-content: center;
 
   .mat-ripple {
     margin: 8px;
     border-radius: 4px;
     cursor: pointer;
+
+    .entry-number {
+      position: absolute;
+      z-index: 100;
+      margin: 8px 0 0 10px;
+
+      span {
+        font-size: 1.2em;
+      }
+    }
 
     .text-container {
       height: 40px;
