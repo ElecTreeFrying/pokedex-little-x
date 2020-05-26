@@ -107,6 +107,7 @@ export class TransitionEventDirective implements OnInit {
     const refresh = this.isRefresh ? '-refresh' : '';
     this.render.addClass(element, `close-${position}${refresh}`);
     setTimeout(() => {
+      this.reset();
       this.render.removeClass(element, `close-${position}${refresh}`);
       this.render.addClass(element, `${position}${refresh}`);
     }, 150);
