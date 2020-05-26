@@ -1,4 +1,13 @@
 
+.wrap {
+  min-height: calc(100vh - 64px - 170px - 60px);
+}
+
+.footer {
+  position: static;
+  bottom: 0;
+}
+
 .card-content {
   display: flex;
   flex-flow: row wrap;

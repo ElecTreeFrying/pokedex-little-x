@@ -72,7 +72,7 @@ export class GamesComponent implements OnInit, AfterViewInit, OnDestroy {
       this.shared.updateLoadMoreSelection = 0;
       
       this.entries = uniqBy(this.entries.concat(
-        this.api.nextEntries(this.all)
+        this.api.nextEntries(this.all.slice(50))
       ), 'name');
 
       this.shared.loading = false;
@@ -261,7 +261,7 @@ export class GamesComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.loadInitialCards();
 
-    const _length = this.all.length - 50;
+    const _length = this.all.length - 50 - 40;
 
     this.shared.item_meta = {
       // ceil: Math.ceil(this.all.length/this.shared.defaultLength),

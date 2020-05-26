@@ -18,7 +18,7 @@
 
 </mat-toolbar>
 
-<mat-progress-bar mode="indeterminate" *ngIf="(shared.loadingCards | async)"></mat-progress-bar>
+<mat-progress-bar mode="indeterminate" *ngIf="(shared.loadingCards | async) || (shared.isLoading | async)"></mat-progress-bar>
 
 <mat-sidenav-container>
 
@@ -57,7 +57,9 @@
     
     <div id="router" [ngStyle]="routerStyle" data-simplebar #drawerContent>
       <router-outlet></router-outlet>
-      <div class="loading" *ngIf="shared?.isLoading | async">
+      <!-- <div class="loading" *ngIf="shared?.isLoading | async"> -->
+      <!-- <div class="loading" *ngIf="true"> -->
+      <div class="loading" *ngIf="false">
         <app-loading (opened)="loadingIsOpened($event)"></app-loading>
       </div>
     </div>

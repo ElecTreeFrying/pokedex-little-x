@@ -1,16 +1,24 @@
 
-<div class="card-content">
+<div class="wrap">
   
-  <div matRipple *ngFor="let item of selection">
-    <mat-card>
-
-      <mat-card-title>{{ item?.name }}</mat-card-title>
-
-      <mat-card-content>
-        <p>{{ item?.description }}</p>
-      </mat-card-content>
-
-    </mat-card>
+  <div class="card-content">
+    
+    <div matRipple *ngFor="let item of selection">
+      <mat-card>
+  
+        <mat-card-title>{{ item?.name }}</mat-card-title>
+  
+        <mat-card-content>
+          <p>{{ item?.description }}</p>
+        </mat-card-content>
+  
+      </mat-card>
+    </div>
+  
   </div>
 
+</div>
+
+<div class="footer">
+  <app-footer></app-footer>
 </div>
