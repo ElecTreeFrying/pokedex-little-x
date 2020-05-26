@@ -37,6 +37,7 @@ export class SharedService {
   private isMoveSelectedSource = new BehaviorSubject(false);
   private isLocationSelectedSource = new BehaviorSubject(false);
   private loadingCardsSource = new BehaviorSubject(false);
+  private hideSearchSource = new BehaviorSubject(null);
 
   loadedAll = this.loadedAllSource.asObservable();
   routeChange: Observable<any>;
@@ -55,6 +56,7 @@ export class SharedService {
   isMoveSelected = this.isMoveSelectedSource.asObservable();
   isLocationSelected = this.isLocationSelectedSource.asObservable();
   loadingCards = this.loadingCardsSource.asObservable();
+  hideSearch = this.hideSearchSource.asObservable();
 
   private _id: number;
   get id() { return this._id; }
@@ -251,6 +253,10 @@ export class SharedService {
 
   set updateLoadingCardsSelection(data: boolean) {
     this.loadingCardsSource.next(data);
+  }
+
+  set updateHideSearchSelection(data: boolean) {
+    this.hideSearchSource.next(data);
   }
 
 }

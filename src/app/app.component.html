@@ -12,7 +12,7 @@
   <button mat-button class="option" routerLink="/" (click)="sidenavToggle(false)">About</button>
   <button mat-button class="option" routerLink="/" (click)="sidenavToggle(false)">Search</button>
 
-  <button mat-icon-button (click)="openSearch()">
+  <button mat-icon-button (click)="openSearch()" *ngIf="!(shared.hideSearch|async)">
     <mat-icon>search</mat-icon>
   </button>
 

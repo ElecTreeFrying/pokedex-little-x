@@ -18,17 +18,19 @@ export class RouteService {
     private shared: SharedService
   ) { 
     
-    location.subscribe((res) => {
+    this.location.subscribe((res) => {
       this.navigationTask();
       this.navigation(res.url);
+      this.routeConfig(res.url);
     });
 
-    router.events.pipe(
+    this.router.events.pipe(
       filter(e => e instanceof NavigationStart),
       map((e: any) => e.url)
     ).subscribe((url: string) => {
       
       this.navigationTask();
+      this.routeConfig(url);
     
       const games = url.startsWith('/games');
       const pokemon_or_items = url.endsWith('#pokedex') || url.endsWith('#generation') || url.endsWith('#version-group') || url.endsWith('#type') || url.endsWith('#items') || url.endsWith('#categories');
@@ -49,6 +51,17 @@ export class RouteService {
     setTimeout(() => {
       this.shared.updateIsLoadingSelection = false;
     }, 150);
+  }
+
+  private routeConfig(url: string) {
+
+    if (url === '/') {
+      sessionStorage.removeItem('entries');
+      sessionStorage.setItem('route', JSON.stringify({ id: 0, type: 'default' }));
+      this.shared.updateHideSearchSelection = true;
+    } else {
+      this.shared.updateHideSearchSelection = false;
+    }
   }
 
   private navigation(res: any) {
