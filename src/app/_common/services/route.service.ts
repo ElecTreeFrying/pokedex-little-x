@@ -19,7 +19,7 @@ export class RouteService {
   ) { 
     
     location.subscribe((res) => {
-      shared.isLoadAll = true;
+      this.navigationTask();
       this.navigation(res.url);
     });
 
@@ -28,7 +28,7 @@ export class RouteService {
       map((e: any) => e.url)
     ).subscribe((url: string) => {
       
-      shared.isLoadAll = true;
+      this.navigationTask();
     
       const games = url.startsWith('/games');
       const pokemon_or_items = url.endsWith('#pokedex') || url.endsWith('#generation') || url.endsWith('#version-group') || url.endsWith('#type') || url.endsWith('#items') || url.endsWith('#categories');
@@ -40,6 +40,15 @@ export class RouteService {
       }
     
     });
+  }
+
+  private navigationTask() {
+    this.shared.isLoadAll = true;
+    this.shared.loading = false;
+    this.shared.updateLoadingCardsSelection = false;
+    setTimeout(() => {
+      this.shared.updateIsLoadingSelection = false;
+    }, 150);
   }
 
   private navigation(res: any) {

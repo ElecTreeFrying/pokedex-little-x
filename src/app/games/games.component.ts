@@ -29,6 +29,7 @@ export class GamesComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit(): void {
     
+    this.entries = [];
     this.route = {};
     this.toggle = false;
     this.subscriptions = [];
