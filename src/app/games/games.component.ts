@@ -114,7 +114,7 @@ export class GamesComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnDestroy() {
     this.subscriptions.forEach((subscription) => {
       subscription.unsubscribe();
-    })
+    });
   }
 
   select(entry: any) {

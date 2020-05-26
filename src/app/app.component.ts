@@ -83,7 +83,6 @@ export class AppComponent implements OnInit, AfterViewInit {
       if (this.shared.bottomSheetIsOpened || this.shared.loading === null) return;
 
       if (scrollValue >= maxScroll && !full && !this.shared.loading) {
-        console.log('maxie max');
         this.shared.loading = true;
         this.shared.updateIsLoadingSelection = true;
         setTimeout(() => {
