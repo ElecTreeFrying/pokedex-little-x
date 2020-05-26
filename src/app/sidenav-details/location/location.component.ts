@@ -1,30 +1,31 @@
 import { Component, OnInit, OnDestroy, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
-import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
+import { Subscription } from 'rxjs';
 
-import { PokeapiMachineService } from '../_common/services/pokeapi-machine.service';
-import { SharedService } from '../_common/services/shared.service';
-import { ComponentSelectorService } from '../_common/services/component-selector.service';
+import { PokeapiLocationService } from '../../_common/services/pokeapi-location.service';
+import { SharedService } from '../../_common/services/shared.service';
+import { ComponentSelectorService } from '../../_common/services/component-selector.service';
 
 
 @Component({
-  selector: 'app-machine',
-  templateUrl: './machine.component.html',
-  styleUrls: ['./machine.component.scss'],
+  selector: 'app-location',
+  templateUrl: './location.component.html',
+  styleUrls: ['./location.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class MachineComponent implements OnInit, OnDestroy {
+export class LocationComponent implements OnInit, OnDestroy {
 
   @Output() loaded = new EventEmitter;
-  
-  machine: any;
+
+  location: any;
+  sections: any[];
   isLoading: boolean;
 
   subscriptions: Subscription[];
 
   constructor(
     private dialog: MatDialog,
-    private api: PokeapiMachineService,
+    private api: PokeapiLocationService,
     private shared: SharedService,
     private componentSelector: ComponentSelectorService
   ) { }
@@ -33,15 +34,15 @@ export class MachineComponent implements OnInit, OnDestroy {
 
     this.initialize();
 
+    this.sections = [ true ];
+
     this.loaded.next(true);
 
-    this.machine = this.shared.selectionData;
-
-    this.api.machine.subscribe((machine) => {
+    this.api.location.subscribe((location) => {
     
       this.loaded.next(false);
-      this.machine = machine;
-
+      this.location = location;
+  
       this.isLoading = false;
       this.shared.selectionData = undefined;
     });
@@ -60,23 +61,21 @@ export class MachineComponent implements OnInit, OnDestroy {
 
   showDetails(data: any, type: string) {
 
-    if (type === 'item') {
-      this.shared.selectionData = data;
-    }
-
     this.shared.dialogIsOpened = true;
 
     const component = this.componentSelector.dialogComponent({ data, type });
+
+    const isPanel = type === 'move' || type === 'pokemon' || type ==='stat' || 'location-area';
 
     const ref = this.dialog.open(component, {
       id: type,
       closeOnNavigation: true,
       autoFocus: false,
-      data: { data, entry: this.machine },
+      data: { data, entry: this.location },
       minHeight: '90vh',
       maxHeight: '90vh',
-      minWidth: '500px',
-      maxWidth: '500px'
+      minWidth: isPanel ? '500px' : '90vw',
+      maxWidth: isPanel ? '500px' : '90vw',
     });
   }
 

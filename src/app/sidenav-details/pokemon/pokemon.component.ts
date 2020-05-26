@@ -2,10 +2,10 @@ import { Component, OnInit, OnDestroy, Output, ChangeDetectorRef, ViewEncapsulat
 import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 
-import { PokeapiService } from '../_common/services/pokeapi.service';
-import { SharedService } from '../_common/services/shared.service';
-import { ComponentSelectorService } from '../_common/services/component-selector.service';
-import { SnotifyService } from '../_common/services/snotify.service';
+import { PokeapiService } from '../../_common/services/pokeapi.service';
+import { SharedService } from '../../_common/services/shared.service';
+import { ComponentSelectorService } from '../../_common/services/component-selector.service';
+import { SnotifyService } from '../../_common/services/snotify.service';
 
 
 @Component({

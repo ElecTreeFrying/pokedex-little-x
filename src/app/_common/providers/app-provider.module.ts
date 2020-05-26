@@ -30,12 +30,12 @@ import { DialogDetailsPipeModule } from '../modules/dialog-details-pipe.module';
 import { TypeColorPipeModule } from '../modules/type-color-pipe.module';
 
 import { DrawerComponent } from '../../_components/drawer/drawer.component';
-import { PokemonComponent } from '../../pokemon/pokemon.component';
-import { ItemComponent } from '../../item/item.component';
-import { BerryComponent } from '../../berry/berry.component';
-import { MoveComponent } from '../../move/move.component';
-import { MachineComponent } from 'src/app/machine/machine.component';
-import { LocationComponent } from '../../location/location.component';
+import { PokemonComponent } from '../../sidenav-details/pokemon/pokemon.component';
+import { ItemComponent } from '../../sidenav-details/item/item.component';
+import { BerryComponent } from '../../sidenav-details/berry/berry.component';
+import { MoveComponent } from '../../sidenav-details/move/move.component';
+import { MachineComponent } from 'src/app/sidenav-details/machine/machine.component';
+import { LocationComponent } from '../../sidenav-details/location/location.component';
 import { LoadingComponent } from '../../_components/loading/loading.component';
 
 import { NormalizePipe } from '../pipes/normalize.pipe';

@@ -337,7 +337,7 @@ export const pokedex = [
   { key: 13, name: 'Kalos Coastal Pokédex' }, 
   { key: 14, name: 'Kalos Mountain Pokédex' }, 
   { key: 15, name: 'Updated Hoenn Pokédex' },
-  { key: 0, name: 'All Pokémon' } 
+  { key: 0, name: 'All Pokémon' }
 ];
 
 export const generation = [

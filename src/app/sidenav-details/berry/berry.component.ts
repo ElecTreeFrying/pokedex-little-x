@@ -2,9 +2,9 @@ import { Component, OnInit, OnDestroy, Output, EventEmitter, ViewEncapsulation }
 import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 
-import { PokeapiBerryService } from '../_common/services/pokeapi-berry.service';
-import { SharedService } from '../_common/services/shared.service';
-import { ComponentSelectorService } from '../_common/services/component-selector.service';
+import { PokeapiBerryService } from '../../_common/services/pokeapi-berry.service';
+import { SharedService } from '../../_common/services/shared.service';
+import { ComponentSelectorService } from '../../_common/services/component-selector.service';
 
 
 @Component({
