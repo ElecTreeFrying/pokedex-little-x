@@ -1,0 +1,28 @@
+
+.content {
+  display: flex;
+  width: 100%;
+  min-height: calc(100vh - 64px - 170px - 60px);
+
+  .assets {
+    margin: auto;
+    display: flex;
+    align-content: flex-start;
+    transform: translateY(-80px);
+  }
+
+  .pikachu {
+    width: 300px;
+  }
+
+  .in-progress {
+    margin: auto;
+    width: 500px;
+    transform: translate(-35px, 40px);
+  }
+}
+
+.footer {
+  position: static;
+  bottom: 0;
+}
