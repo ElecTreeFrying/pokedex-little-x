@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { filter } from 'rxjs/operators';
 
 interface Key { 
   types: any[];
@@ -38,6 +39,7 @@ export class SharedService {
   private isLocationSelectedSource = new BehaviorSubject(false);
   private loadingCardsSource = new BehaviorSubject(false);
   private hideSearchSource = new BehaviorSubject(null);
+  private isSearchSource = new BehaviorSubject(null);
 
   loadedAll = this.loadedAllSource.asObservable();
   routeChange: Observable<any>;
@@ -57,6 +59,7 @@ export class SharedService {
   isLocationSelected = this.isLocationSelectedSource.asObservable();
   loadingCards = this.loadingCardsSource.asObservable();
   hideSearch = this.hideSearchSource.asObservable();
+  isSearch = this.isSearchSource.asObservable().pipe( filter(e => e !== null) );
 
   private _id: number;
   get id() { return this._id; }
@@ -257,6 +260,10 @@ export class SharedService {
 
   set updateHideSearchSelection(data: boolean) {
     this.hideSearchSource.next(data);
+  }
+
+  set updateIsSearchSelection(data: boolean) {
+    this.isSearchSource.next(data);
   }
 
 }

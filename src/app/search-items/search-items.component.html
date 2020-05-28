@@ -1,0 +1,32 @@
+
+<div class="wrap">
+  
+  <div class="navigation">
+    <app-search-options [option]="selected"></app-search-options>
+  </div>
+
+  <div class="content">
+    
+    <div class="buttons">
+
+      <button mat-raised-button (click)="selectDisplay(0);selected=0;" #pokemon_selection>Pokémon</button>
+      <button mat-raised-button (click)="selectDisplay(1);selected=1;" #items_selection>Items</button>
+      <button mat-raised-button (click)="selectDisplay(2);selected=2;" #moves_selection>Moves</button>
+      
+    </div>
+
+    <div class="search-items-container">
+
+      <mat-card class="search-items-content">
+        <mat-card-content>
+
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A quasi minima distinctio voluptatibus cupiditate. Adipisci placeat inventore, modi qui eaque necessitatibus quibusdam, facilis facere doloribus dolorem quam dolorum aspernatur quia.</p>
+
+        </mat-card-content>
+      </mat-card>
+
+    </div>
+
+  </div>
+
+</div>

@@ -26,6 +26,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   @ViewChild('toolbar') private toolbar: MatToolbar;
   @ViewChild('drawerContent') private drawerContent: ElementRef;
   @ViewChild('drawer') private drawer: MatSidenav;
+  @ViewChild('search') private search: MatSidenav;
   @ViewChild('details') private details: MatSidenav;
 
   overlayRef: OverlayRef;
@@ -119,7 +120,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     });
 
     this.details.openedChange.subscribe((res: boolean) => {
-      
+
       if (!res && (this.shared.id || this.shared.selectionData)) {
         this.drawer.close();
         this.details.open();
@@ -154,6 +155,19 @@ export class AppComponent implements OnInit, AfterViewInit {
 
       this.cd.detectChanges();
     });
+
+    this.shared.isSearch.subscribe((res) => {
+    
+      if (!res) return;
+
+      setTimeout(() => {
+        this.drawer.close();
+        this.details.close();
+        this.sideDrawerState = { drawer: false, details: false };
+      }, 150);
+      
+    });
+
   }
 
   private _bottomSheetRef: MatBottomSheetRef<SearchComponent>;

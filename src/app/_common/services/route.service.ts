@@ -5,12 +5,15 @@ import { map, filter } from 'rxjs/operators';
 import { capitalize } from 'lodash';
 
 import { SharedService } from './shared.service';
+import { Observable } from 'rxjs';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class RouteService {
+
+  private _url: string;
 
   constructor(
     private location: Location,
@@ -29,6 +32,8 @@ export class RouteService {
       map((e: any) => e.url)
     ).subscribe((url: string) => {
       
+      this._url = url;
+
       this.navigationTask();
       this.routeConfig(url);
     
@@ -59,6 +64,12 @@ export class RouteService {
       sessionStorage.removeItem('entries');
       sessionStorage.setItem('route', JSON.stringify({ id: 0, type: 'default' }));
       this.shared.updateHideSearchSelection = true;
+      this.shared.updateHideLoadMoreSelection = true;
+    } else if (url.startsWith('/search')) {
+      sessionStorage.removeItem('entries');
+      sessionStorage.setItem('route', JSON.stringify({ id: 0, type: 'search' }));
+      this.shared.updateHideSearchSelection = true;
+      this.shared.updateHideLoadMoreSelection = true;
     } else {
       this.shared.updateHideSearchSelection = false;
     }
