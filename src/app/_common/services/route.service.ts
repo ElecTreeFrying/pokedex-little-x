@@ -5,7 +5,6 @@ import { map, filter } from 'rxjs/operators';
 import { capitalize } from 'lodash';
 
 import { SharedService } from './shared.service';
-import { Observable } from 'rxjs';
 
 
 @Injectable({
@@ -45,7 +44,6 @@ export class RouteService {
       } else {
         shared.updateHideLoadMoreSelection = false;
       }
-    
     });
   }
 
@@ -58,18 +56,23 @@ export class RouteService {
     }, 150);
   }
 
+  private defaultConfig (type: string) {
+
+    sessionStorage.removeItem('entries');
+    sessionStorage.setItem('route', JSON.stringify({ id: 0, type }));
+    
+    this.shared.updateHideSearchSelection = true;
+    this.shared.updateHideLoadMoreSelection = true;
+  }
+
   private routeConfig(url: string) {
 
     if (url === '/') {
-      sessionStorage.removeItem('entries');
-      sessionStorage.setItem('route', JSON.stringify({ id: 0, type: 'default' }));
-      this.shared.updateHideSearchSelection = true;
-      this.shared.updateHideLoadMoreSelection = true;
+      this.defaultConfig('default');
     } else if (url.startsWith('/search')) {
-      sessionStorage.removeItem('entries');
-      sessionStorage.setItem('route', JSON.stringify({ id: 0, type: 'search' }));
-      this.shared.updateHideSearchSelection = true;
-      this.shared.updateHideLoadMoreSelection = true;
+      this.defaultConfig('search');
+    } else if (url.startsWith('/explore')) {
+      this.defaultConfig('explore');
     } else {
       this.shared.updateHideSearchSelection = false;
     }
