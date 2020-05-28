@@ -8,7 +8,7 @@
 notes.md
 
 # environments
-src/environments/**
+/src/environments/**
 
 # compiled output
 /dist
