@@ -1,4 +1,4 @@
-import { Component, Renderer2, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, Renderer2, OnInit, OnDestroy, AfterViewInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { MatButton } from '@angular/material/button';
 
 import { SharedService } from '../_common/services/shared.service';
@@ -10,7 +10,7 @@ import { SearchItemService } from '../_common/services/search-item.service';
   templateUrl: './search-items.component.html',
   styleUrls: ['./search-items.component.scss']
 })
-export class SearchItemsComponent implements OnInit, OnDestroy {
+export class SearchItemsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild('pokemon_selection') pokemon_selection: MatButton;
   @ViewChild('moves_selection') moves_selection: MatButton;
@@ -18,16 +18,24 @@ export class SearchItemsComponent implements OnInit, OnDestroy {
   @ViewChild('berries_selection') berries_selection: MatButton;
 
   selected: number;
+  wrapStyle: any;
 
   constructor(
     private render: Renderer2,
+    private cd: ChangeDetectorRef,
     private api: SearchItemService,
     private shared: SharedService
   ) { }
 
   ngOnInit(): void {
-    
+
     this.initialize();
+    this.selectedView();
+  }
+  
+  ngAfterViewInit() {
+    
+    this.wrapStyle = this.wrapStyleProcess;
   }
   
   ngOnDestroy() {
@@ -37,17 +45,36 @@ export class SearchItemsComponent implements OnInit, OnDestroy {
   }
 
   initialize() {
-    this.selected = 0;
+    this.wrapStyle = {};
 
     setTimeout(() => {
-      this.render.addClass(this.pokemon_selection._elementRef.nativeElement, 'selected');
       this.shared.updateIsSearchSelection = true;
     });
   }
 
+  selectedView() {
+
+    const session = JSON.parse(sessionStorage.getItem('route'));
+    
+    if (session.type !== 'search') return this.selectDisplay(0);
+
+    this.selected = session.id;
+    this.cd.detectChanges();
+    
+    this.selectDisplay(this.selected);
+  }
+  
+  writeSelectedView(option: number) {
+    
+    this.selected = option;
+    this.cd.detectChanges();
+    
+    sessionStorage.setItem('route', JSON.stringify({ id: option, type: 'search' }));
+  }
+
   selectDisplay(option: number) {
 
-    this.selected = option;
+    this.writeSelectedView(option);
 
     const buttons = [ 
       this.pokemon_selection._elementRef.nativeElement, 
@@ -60,9 +87,15 @@ export class SearchItemsComponent implements OnInit, OnDestroy {
 
     buttons.splice(option, 1);
     
-    buttons.forEach((e) => {
-      this.render.removeClass(e, 'selected');
-    });
+    buttons.forEach((e) => this.render.removeClass(e, 'selected'));
+  }
+    
+  private get wrapStyleProcess() {
+    const toolbarHeight = this.shared.toolbarHeight;
+    return { 
+      'height': `auto`, 
+      'min-height': `calc(100vh - ${toolbarHeight}px)` 
+    }
   }
 
 }

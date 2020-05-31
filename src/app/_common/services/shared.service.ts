@@ -117,6 +117,10 @@ export class SharedService {
   get item_meta() { return this._item_meta ? this._item_meta : { ceil: 0, floor: 0 }; }
   set item_meta(item_meta: { ceil: number, floor: number }) { this._item_meta = item_meta; }
 
+  private _toolbarHeight: any;
+  get toolbarHeight() { return this._toolbarHeight; }
+  set toolbarHeight(toolbarHeight: any) { this._toolbarHeight = toolbarHeight; }
+
   private _loading: boolean;
   get loading() { return this._loading; }
   set loading(loading: boolean) { this._loading = loading; }

@@ -56,13 +56,15 @@ export class RouteService {
     }, 150);
   }
 
-  private defaultConfig (type: string) {
+  private defaultConfig(type: string) {
+
+    this.shared.updateHideSearchSelection = true;
+    this.shared.updateHideLoadMoreSelection = true;
+
+    if (type === 'search') return;
 
     sessionStorage.removeItem('entries');
     sessionStorage.setItem('route', JSON.stringify({ id: 0, type }));
-    
-    this.shared.updateHideSearchSelection = true;
-    this.shared.updateHideLoadMoreSelection = true;
   }
 
   private routeConfig(url: string) {

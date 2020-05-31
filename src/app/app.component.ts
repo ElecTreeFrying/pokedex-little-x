@@ -271,6 +271,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   
   private get routerStyleProcess() {
     const toolbarHeight = this.toolbar._elementRef.nativeElement.clientHeight;
+    this.shared.toolbarHeight = toolbarHeight;
     return { 
       'height': `calc(100vh - ${toolbarHeight}px)`, 
       'max-height': `calc(100vh - ${toolbarHeight}px)`, 

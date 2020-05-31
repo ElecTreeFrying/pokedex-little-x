@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDividerModule } from '@angular/material/divider';
 
 import { SearchOptionsComponent } from '../../_components/search-options/search-options.component';
 import { SearchOptionPokemonComponent, } from '../../_components/search-option-pokemon/search-option-pokemon.component';
@@ -15,6 +16,7 @@ import { SearchOptionBerriesComponent, } from '../../_components/search-option-b
   imports: [
     CommonModule,
     MatExpansionModule,
+    MatDividerModule,
   ],
   exports: [
     MatCardModule,
