@@ -12,9 +12,10 @@ import { SearchItemService } from '../_common/services/search-item.service';
 })
 export class SearchItemsComponent implements OnInit, OnDestroy {
 
-  @ViewChild('pokemon_selection') pokemon_selection: MatButton
-  @ViewChild('items_selection') items_selection: MatButton
-  @ViewChild('moves_selection') moves_selection: MatButton
+  @ViewChild('pokemon_selection') pokemon_selection: MatButton;
+  @ViewChild('moves_selection') moves_selection: MatButton;
+  @ViewChild('items_selection') items_selection: MatButton;
+  @ViewChild('berries_selection') berries_selection: MatButton;
 
   selected: number;
 
@@ -46,7 +47,14 @@ export class SearchItemsComponent implements OnInit, OnDestroy {
 
   selectDisplay(option: number) {
 
-    const buttons = [ this.pokemon_selection._elementRef.nativeElement, this.items_selection._elementRef.nativeElement, this.moves_selection._elementRef.nativeElement ];
+    this.selected = option;
+
+    const buttons = [ 
+      this.pokemon_selection._elementRef.nativeElement, 
+      this.moves_selection._elementRef.nativeElement,
+      this.items_selection._elementRef.nativeElement, 
+      this.berries_selection._elementRef.nativeElement
+    ];
 
     this.render.addClass(buttons[option], 'selected');
 

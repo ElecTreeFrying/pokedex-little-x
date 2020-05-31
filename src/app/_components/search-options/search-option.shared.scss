@@ -1,0 +1,40 @@
+
+.mat-expansion-panel {
+  background-color: violet;
+  color: black;
+  
+  ::ng-deep .mat-expansion-indicator:after {
+    color: black;
+  }
+  
+  .mat-icon {
+    color: white;
+    margin: 0 8px 0 16px;
+  }
+  
+  span {
+    color: black;
+    font-size: 17px;
+    
+    &.nav {
+      font-size: 15px;
+    }
+  }
+}
+
+.inner {
+  margin: 0 -24px;
+ 
+  &.last {
+    margin-bottom: -16px;
+  }
+
+  .mat-expansion-panel-header {
+    padding: 0 36px;
+  }
+
+  .mat-action-list {
+    margin: 0 -24px;
+    padding-top: 8px;
+  }
+}

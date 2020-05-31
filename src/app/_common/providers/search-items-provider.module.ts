@@ -5,6 +5,10 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 
 import { SearchOptionsComponent } from '../../_components/search-options/search-options.component';
+import { SearchOptionPokemonComponent, } from '../../_components/search-option-pokemon/search-option-pokemon.component';
+import { SearchOptionMovesComponent, } from '../../_components/search-option-moves/search-option-moves.component';
+import { SearchOptionItemsComponent, } from '../../_components/search-option-items/search-option-items.component';
+import { SearchOptionBerriesComponent, } from '../../_components/search-option-berries/search-option-berries.component';
 
 
 @NgModule({
@@ -13,12 +17,20 @@ import { SearchOptionsComponent } from '../../_components/search-options/search-
     MatExpansionModule,
   ],
   exports: [
-    SearchOptionsComponent,
     MatCardModule,
     MatButtonModule,
+    SearchOptionsComponent,
+    SearchOptionPokemonComponent,
+    SearchOptionMovesComponent,
+    SearchOptionItemsComponent,
+    SearchOptionBerriesComponent,
   ],
   declarations: [
-    SearchOptionsComponent
+    SearchOptionsComponent,
+    SearchOptionPokemonComponent,
+    SearchOptionMovesComponent,
+    SearchOptionItemsComponent,
+    SearchOptionBerriesComponent,
   ]
 })
 export class SearchItemsProviderModule { }
