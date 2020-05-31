@@ -5,6 +5,7 @@
 .firebase
 .firebaserc
 *.spec.ts
+firebase-debug.log
 notes.md
 
 # environments
