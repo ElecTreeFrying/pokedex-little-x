@@ -19,7 +19,7 @@ export class KeyboardDirective {
   @HostListener('window:keyup', ['$event'])
   up(event: KeyboardEvent) {
     
-    if (this.isPressed || this.shared.bottomSheetIsOpened) return;
+    if (this.isPressed || this.shared.bottomSheetIsOpened || this.shared.isSearchRoute) return;
     this.isPressed = true;
 
     if (event.code === 'KeyA') {

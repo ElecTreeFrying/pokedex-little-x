@@ -1,8 +1,10 @@
 import { Component, Renderer2, OnInit, OnDestroy, AfterViewInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { MatButton } from '@angular/material/button';
+import { MatDialog } from '@angular/material/dialog';
 
 import { SharedService } from '../_common/services/shared.service';
 import { SearchItemService } from '../_common/services/search-item.service';
+import { ComponentSelectorService } from '../_common/services/component-selector.service';
 
 
 @Component({
@@ -18,13 +20,17 @@ export class SearchItemsComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('berries_selection') berries_selection: MatButton;
 
   selected: number;
+  entries: any[];
   wrapStyle: any;
+  searchItemContentStyle: any;
 
   constructor(
     private render: Renderer2,
     private cd: ChangeDetectorRef,
+    private dialog: MatDialog,
     private api: SearchItemService,
-    private shared: SharedService
+    private shared: SharedService,
+    private componentSelector: ComponentSelectorService
   ) { }
 
   ngOnInit(): void {
@@ -36,6 +42,7 @@ export class SearchItemsComponent implements OnInit, AfterViewInit, OnDestroy {
   ngAfterViewInit() {
     
     this.wrapStyle = this.wrapStyleProcess;
+    this.searchItemContentStyle = this.searchItemContentStyleProcess;
   }
   
   ngOnDestroy() {
@@ -45,7 +52,9 @@ export class SearchItemsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   initialize() {
+    this.entries = [];
     this.wrapStyle = {};
+    this.searchItemContentStyle = {};
 
     setTimeout(() => {
       this.shared.updateIsSearchSelection = true;
@@ -74,6 +83,15 @@ export class SearchItemsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   selectDisplay(option: number) {
 
+    this.entries = [];
+    this.shared.updateAppInitializationSelection = 3;
+
+    if (option < 2) {
+      this.shared.updateOptionLoadedSelection = true;
+    } else {
+      this.searchItemContentStyle = this.searchItemContentStyleProcess;
+    }
+
     this.writeSelectedView(option);
 
     const buttons = [ 
@@ -89,12 +107,36 @@ export class SearchItemsComponent implements OnInit, AfterViewInit, OnDestroy {
     
     buttons.forEach((e) => this.render.removeClass(e, 'selected'));
   }
+
+  selectEntry(data: any) {
+
+    this.shared.dialogIsOpened = true;
+
+    const component = this.componentSelector.dialogComponent({ data, type: 'pokemon' });
+
+    const ref = this.dialog.open(component, {
+      id: 'pokemon',
+      closeOnNavigation: true,
+      autoFocus: false,
+      data: { data, entry: null },
+      minHeight: '90vh',
+      maxHeight: '90vh',
+      minWidth: '500px',
+      maxWidth: '500px',
+    });
+  }
     
   private get wrapStyleProcess() {
     const toolbarHeight = this.shared.toolbarHeight;
     return { 
-      'height': `auto`, 
-      'min-height': `calc(100vh - ${toolbarHeight}px)` 
+      'min-height': `calc(100vh - ${toolbarHeight}px)`,
+    }
+  }
+
+  private get searchItemContentStyleProcess() {
+    const toolbarHeight = this.shared.toolbarHeight;
+    return {
+      'min-height': `calc(100vh - 60px - 46px - ${toolbarHeight}px)`,
     }
   }
 

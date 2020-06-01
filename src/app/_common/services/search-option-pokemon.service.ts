@@ -43,7 +43,27 @@ export class SearchOptionPokemonService {
     return result.pipe(
       exhaustMap((e: any) => e.results.map(e => this.http.get(e.url))),
       concatMap((e: any) => e),
-      map((e: any) => e.name.replace('-', ' ')),
+      map((e: any) => {
+        
+        if (e.hasOwnProperty('pokemon')) {
+          e.pokemon_species = e.pokemon.map(e => e.pokemon);
+          delete e.pokemon;
+        }
+
+        e.pokemon_species = e.pokemon_species.map((e) => {
+          e.id = +e.url.split('/').reverse()[1];
+          delete e.url;
+          return e;
+        });
+
+        e.pokemon_species = intersectionBy(this.shared.pokemon, e.pokemon_species, 'id');
+
+        return {
+          id: e.id,
+          name: e.name.split('-').join(' '),
+          data: e
+        };
+      }),
       toArray(),
     )
   }

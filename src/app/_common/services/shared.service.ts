@@ -40,6 +40,7 @@ export class SharedService {
   private loadingCardsSource = new BehaviorSubject(false);
   private hideSearchSource = new BehaviorSubject(null);
   private isSearchSource = new BehaviorSubject(null);
+  private optionLoadedSource = new BehaviorSubject(null);
 
   loadedAll = this.loadedAllSource.asObservable();
   routeChange: Observable<any>;
@@ -60,6 +61,7 @@ export class SharedService {
   loadingCards = this.loadingCardsSource.asObservable();
   hideSearch = this.hideSearchSource.asObservable();
   isSearch = this.isSearchSource.asObservable().pipe( filter(e => e !== null) );
+  optionLoaded = this.optionLoadedSource.asObservable().pipe( filter(e => e) );
 
   private _id: number;
   get id() { return this._id; }
@@ -152,6 +154,10 @@ export class SharedService {
   private _isConquestGallery: boolean;
   get isConquestGallery() { return this._isConquestGallery; }
   set isConquestGallery(isConquestGallery: boolean) { this._isConquestGallery = isConquestGallery; }
+
+  private _isSearchRoute: boolean;
+  get isSearchRoute() { return this._isSearchRoute; }
+  set isSearchRoute(isSearchRoute: boolean) { this._isSearchRoute = isSearchRoute; }
 
   constructor() {
     const routeSession = sessionStorage.getItem('route');
@@ -268,6 +274,10 @@ export class SharedService {
 
   set updateIsSearchSelection(data: boolean) {
     this.isSearchSource.next(data);
+  }
+
+  set updateOptionLoadedSelection(data: boolean) {
+    this.optionLoadedSource.next(data);
   }
 
 }

@@ -1,4 +1,12 @@
 
+.loading-progress {
+  display: flex;
+
+  .mat-spinner {
+    margin: 0 auto 12px auto;
+  }
+}
+
 .mat-expansion-panel {
   background-color: violet;
   color: black;
@@ -19,6 +27,18 @@
     &.nav {
       font-size: 15px;
     }
+  }
+
+  p {
+    font-size: 14px;
+    text-align: center;
+  }
+
+  .mat-form-field,
+  .mat-button,
+  .mat-raised-button,
+  .mat-stroked-button {
+    width: 100%;
   }
 }
 

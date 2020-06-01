@@ -30,7 +30,7 @@ export class RouteService {
       filter(e => e instanceof NavigationStart),
       map((e: any) => e.url)
     ).subscribe((url: string) => {
-      
+
       this._url = url;
 
       this.navigationTask();
@@ -59,9 +59,10 @@ export class RouteService {
   private defaultConfig(type: string) {
 
     this.shared.updateHideSearchSelection = true;
-    this.shared.updateHideLoadMoreSelection = true;
 
-    if (type === 'search') return;
+    if (type === 'search' || type === 'explore') return;
+
+    this.shared.updateHideLoadMoreSelection = true;
 
     sessionStorage.removeItem('entries');
     sessionStorage.setItem('route', JSON.stringify({ id: 0, type }));

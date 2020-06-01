@@ -1,7 +1,7 @@
 
-<div [ngSwitch]="option">
+<div [ngSwitch]="option" #accordion>
 
-  <app-search-option-pokemon *ngSwitchCase="0">
+  <app-search-option-pokemon (entries)="entries.next($event)" *ngSwitchCase="0">
   </app-search-option-pokemon>
 
   <app-search-option-moves *ngSwitchCase="1">

@@ -6,23 +6,18 @@ import { MatIconModule } from '@angular/material/icon';
 import { FooterComponentModule } from '../modules/footer-component.module';
 
 import { IdToImagePipeModule } from '../modules/id-to-image-pipe.module';
-
-import { CardTextPipe } from '../pipes/card-text.pipe';
+import { CardTextPipeModule } from '../modules/card-text-pipe.module';
 
 
 @NgModule({
-  declarations: [
-    CardTextPipe,
-  ],
   exports: [
     LazyLoadImageModule,
     MatCardModule,
     MatRippleModule,
     MatIconModule,
     IdToImagePipeModule,
-    FooterComponentModule,
-    
-    CardTextPipe,
+    CardTextPipeModule,
+    FooterComponentModule
   ]
 })
 export class GamesProviderModule { }

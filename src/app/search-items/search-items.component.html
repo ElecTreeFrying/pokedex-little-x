@@ -2,7 +2,7 @@
 <div class="wrap" [ngStyle]="wrapStyle">
   
   <div class="navigation">
-    <app-search-options [option]="selected"></app-search-options>
+    <app-search-options [option]="selected" (entries)="entries = $event" (calculatedHeight)="searchItemContentStyle = { 'min-height': $event + 'px' }"></app-search-options>
   </div>
 
   <div class="content">
@@ -18,10 +18,25 @@
 
     <div class="search-items-container">
 
-      <mat-card class="search-items-content">
-        <mat-card-content>
+      <mat-card class="search-items-content" [ngStyle]="searchItemContentStyle">
+        <mat-card-content *ngIf="entries.length === 0">
 
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A quasi minima distinctio voluptatibus cupiditate. Adipisci placeat inventore, modi qui eaque necessitatibus quibusdam, facilis facere doloribus dolorem quam dolorum aspernatur quia.</p>
+          <p class="no-data">Select an option to display {{ selected | search: 'selection-display' }}.</p>
+
+        </mat-card-content>
+        <mat-card-content class="entries">
+
+          <div matRipple class="entry" *ngFor="let entry of entries" (click)="selectEntry(entry.id)">
+            
+            <img [src]="entry.byte64 | idToImage: 'byte64'" [alt]="entry.name">
+            <div class="text-content">
+              <div class="text">
+                <p>#{{ entry.id }}</p>
+                <p>{{ entry.name | cardText }}</p>
+              </div>
+            </div>
+
+          </div>
 
         </mat-card-content>
       </mat-card>

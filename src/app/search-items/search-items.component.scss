@@ -5,7 +5,7 @@
   margin: -30px;
   padding: 30px;
   width: 100vw;
-  min-height: 100vh;
+  max-height: 100%;
   
   .navigation {
     flex: 1 1 calc(100vw - (100vw - 350px));
@@ -51,5 +51,50 @@
 .search-items-content {
   border-top-right-radius: 0;
   border: 2px solid orange;
+
+  .no-data {
+    font-family: 'VT323', monospace;
+    font-size: 2em;
+  }
+}
+
+.entries {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+
+  .entry {
+    margin: 8px;
+    padding: 8px;
+    width: 136px;
+    border-radius: 4px;
+    cursor: pointer;
+    border: 1px solid white;
+
+    &:hover {
+      border: 1px solid orange;
+    }
+
+    img {
+      width: 120px;
+    }
+
+    p {
+      font-family: 'Coda', cursive;
+      font-weight: 700;
+      font-size: 17px;
+      text-align: center;
+      margin: 0;
+    }
+
+    .text-content {
+      height: 60px;
+      display: flex;
+
+      .text {
+        margin: auto;
+      }
+    }
+  }
 }
 
