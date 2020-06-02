@@ -33,7 +33,7 @@ export class SearchOptionPokemonComponent implements OnInit, OnDestroy {
 
     this.subscriptions.push(this.shared.appInitialization.subscribe((res) => {
 
-      if (res === 1 || res !== 3) return;
+      if (!(!!this.shared.keys && res === 3)) return;
 
       this.pageListeners();
       
@@ -48,35 +48,52 @@ export class SearchOptionPokemonComponent implements OnInit, OnDestroy {
   
   initialize() {
 
+    this.shared.isSearchRoute = true;
+    
     const loading = [ 'loading...' ];
 
-    this.shared.isSearchRoute = true;
-
-    this.input = '';
-
     this.selections = {
-      ability: loading, color: loading, eggGroup: loading, 
-      growthRate: loading, habitat: loading, shape: loading, type: loading
+      selectionList_1: {
+        ability: loading, color: loading, eggGroup: loading, 
+        growthRate: loading, habitat: loading, shape: loading, type: loading
+      }, 
+      selectionList_2: {}
     };
 
     this._selections = [];
 
-    this.options = [ 
-      { option: 'ability', display: 'Ability', placeholder: 'ability' },
-      { option: 'color', display: 'Color', placeholder: 'color' },
-      { option: 'eggGroup', display: 'Egg group', placeholder: 'egg group' },
-      { option: 'growthRate', display: 'Growth rate', placeholder: 'growth rate' },
-      { option: 'habitat', display: 'Habitat', placeholder: 'habitat' },
-      { option: 'shape', display: 'Shape', placeholder: 'shape' },
-      { option: 'type', display: 'Type', placeholder: 'type' }
-    ];
+    this.options = {
+      selectionList_1: [ 
+        { option: 'ability', display: 'Ability', placeholder: 'ability' },
+        { option: 'color', display: 'Color', placeholder: 'color' },
+        { option: 'eggGroup', display: 'Egg group', placeholder: 'egg group' },
+        { option: 'growthRate', display: 'Growth rate', placeholder: 'growth rate' },
+        { option: 'habitat', display: 'Habitat', placeholder: 'habitat' },
+        { option: 'shape', display: 'Shape', placeholder: 'shape' },
+        { option: 'type', display: 'Type', placeholder: 'type' }
+      ],
+      selectionList_2: [
+        { option: 'formsSwitchable', display: 'Forms switchable', description: 'Whether or not this pokémon has multiple forms and can switch between them.' },
+        { option: 'hasGenderDifferences', display: 'Has gender differences', description: 'Whether or not this pokémon can have different genders.' },
+        { option: 'isBaby', display: 'Is baby', description: 'Whether or not this is a baby pokémon.' },
+        { option: 'isDefault', display: 'Is default', description: 'Set for exactly one pokémon used as the default for each species.' },
+        { option: 'isMega', display: 'Is mega', description: 'Whether or not this form requires mega evolution.' },
+      ]
+    };
 
     this.option = {
       selectionList_1: {
-        state: false,
+        state: false, input: '',
         selections: {
           ability: true, color: true, eggGroup: true, 
           growthRate: true, habitat: true, shape: true, type: true
+        }
+      },
+      selectionList_2: {
+        state: false, input: '',
+        selections: {
+          isBaby: true, isMega: true, isDefault: true,
+          formsSwitchable: true, hasGenderDifferences: true
         }
       }
     };
@@ -93,35 +110,49 @@ export class SearchOptionPokemonComponent implements OnInit, OnDestroy {
 
       if (!this.shared.isSearchRoute) return;
 
-      this.options.forEach((item) => {
-        this.selections[item.option] = res[item.option];
+      this.options.selectionList_1.forEach((item: any) => {
+        this.selections.selectionList_1[item.option] = res[item.option];
       });
     }));
+
+    this.option.selectionList_2.state = true;
+    this.shared.updateOptionLoadedSelection = true;
+    this.selections.selectionList_2 = this.api.selectionList_2;
+
+    // 2
+
   }
 
-  modelChanged(model: string, type: string) {
+  modelChanged(model: string, group: string, type: string) {
 
     const _model = model.toLowerCase();
 
     const filtered = (selection: any[]) => selection.filter(e => e.name.includes(_model));
 
     if (model === null) {
-      this.selections[type] = this._selections;
+      this.selections[group][type] = this._selections;
     } else {
-      this.selections[type] = filtered(this._selections);
+      this.selections[group][type] = filtered(this._selections);
     }
   }
 
-  focus(option: string) {
+  selectionChange(model: string, group: string, type: string) {
 
-    if (this.input.length > 0) return;
+    const entries = this.selections[group][type][model];
 
-    const current = this.selections[option];
+    this.entries.next(entries);
+  }
 
-    const filtered = (selection: any[]) => selection.filter(e => e.name.includes(this.input));
+  focus(group: string, option: string) {
+
+    if (this.option[group].input.length > 0) return;
+
+    const current = this.selections[group][option];
+
+    const filtered = (selection: any[]) => selection.filter(e => e.name.includes(this.option[group].input));
     
-    if (this.input.length > 0) {
-      this.selections[option] = filtered(current);
+    if (this.option[group].input.length > 0) {
+      this.selections[group][option] = filtered(current);
     }
 
     this._selections = current;
@@ -129,7 +160,7 @@ export class SearchOptionPokemonComponent implements OnInit, OnDestroy {
 
   enter(option: string) {
 
-    const selected = this.selections[option].find(e => e.name === this.input);
+    const selected = this.selections[option].find(e => e.name === this.option.selectionList_1.input);
 
     const entries = selected.data.pokemon_species;
 
@@ -138,7 +169,7 @@ export class SearchOptionPokemonComponent implements OnInit, OnDestroy {
 
   toggle(state: boolean, group: string, option: string) {
 
-    this.input = '';
+    this.option[group].input = '';
 
     if (state) {
 

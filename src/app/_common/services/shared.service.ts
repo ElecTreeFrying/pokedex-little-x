@@ -9,6 +9,9 @@ interface Key {
   encounter_method: any[];
   machines: any[];
   machines_data: any[];
+  pokemon_search: {
+    true_false: any
+  };
   natures?: any[];
   characteristics?: any[];
   pokemon_moves?: any[];

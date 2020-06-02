@@ -58,7 +58,10 @@ export class PokeapiService {
           encounter_method: res.keys.encounter_method,
           pokemon_moves: [],
           machines: res.keys.machines,
-          machines_data: res.keys.machines_data
+          machines_data: res.keys.machines_data,
+          pokemon_search: {
+            true_false: res.keys.true_false
+          }
         };
 
         this.shared.updateAppInitializationSelection = 2;

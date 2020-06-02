@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map, exhaustMap, mergeMap, toArray, concatMap } from 'rxjs/operators';
+import { Observable, forkJoin } from 'rxjs';
+import { map, exhaustMap, toArray, concatMap } from 'rxjs/operators';
 import { intersectionBy } from 'lodash';
 
 import { SharedService } from './shared.service';
-import { Observable, forkJoin } from 'rxjs';
 
 
 @Injectable({
@@ -29,17 +29,44 @@ export class SearchOptionPokemonService {
 
   get selectionList_1() {
     return forkJoin({
-      ability: this._returnResults(this.http.get(this.url.ability)),
-      color: this._returnResults(this.http.get(this.url.color)),
-      eggGroup: this._returnResults(this.http.get(this.url.eggGroup)),
-      growthRate: this._returnResults(this.http.get(this.url.growthRate)),
-      habitat: this._returnResults(this.http.get(this.url.habitat)),
-      shape: this._returnResults(this.http.get(this.url.shape)),
-      type: this._returnResults(this.http.get(this.url.type))
+      ability: this._returnResults_1(this.http.get(this.url.ability)),
+      color: this._returnResults_1(this.http.get(this.url.color)),
+      eggGroup: this._returnResults_1(this.http.get(this.url.eggGroup)),
+      growthRate: this._returnResults_1(this.http.get(this.url.growthRate)),
+      habitat: this._returnResults_1(this.http.get(this.url.habitat)),
+      shape: this._returnResults_1(this.http.get(this.url.shape)),
+      type: this._returnResults_1(this.http.get(this.url.type))
     });
   }
 
-  private _returnResults(result: Observable<any>) {
+  get selectionList_2() {
+    const data = this.shared.keys.pokemon_search.true_false;
+
+    return {
+      isBaby: {
+        0: intersectionBy(this.shared.pokemon, data.filter(e => !e.is_baby), 'id'),
+        1: intersectionBy(this.shared.pokemon, data.filter(e => e.is_baby), 'id')
+      },
+      isDefault: {
+        0: intersectionBy(this.shared.pokemon, data.filter(e => !e.is_default), 'id'),
+        1: intersectionBy(this.shared.pokemon, data.filter(e => e.is_default), 'id')
+      },
+      isMega: {
+        0: intersectionBy(this.shared.pokemon, data.filter(e => !e.is_mega), 'id'),
+        1: intersectionBy(this.shared.pokemon, data.filter(e => e.is_mega), 'id')
+      },
+      formsSwitchable: {
+        0: intersectionBy(this.shared.pokemon, data.filter(e => !e.forms_switchable), 'id'),
+        1: intersectionBy(this.shared.pokemon, data.filter(e => e.forms_switchable), 'id')
+      },
+      hasGenderDifferences: {
+        0: intersectionBy(this.shared.pokemon, data.filter(e => !e.has_gender_differences), 'id'),
+        1: intersectionBy(this.shared.pokemon, data.filter(e => e.has_gender_differences), 'id')
+      }
+    };
+  }
+
+  private _returnResults_1(result: Observable<any>) {
     return result.pipe(
       exhaustMap((e: any) => e.results.map(e => this.http.get(e.url))),
       concatMap((e: any) => e),

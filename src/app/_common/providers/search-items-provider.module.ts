@@ -11,6 +11,8 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatRippleModule } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSelectModule } from '@angular/material/select';
+import { MatIconModule } from '@angular/material/icon';
 
 import { IdToImagePipeModule } from '../modules/id-to-image-pipe.module';
 import { CardTextPipeModule } from '../modules/card-text-pipe.module';
@@ -34,7 +36,9 @@ import { SearchPipe } from '../pipes/search.pipe';
     MatInputModule,
     MatFormFieldModule,
     MatAutocompleteModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatSelectModule,
+    MatIconModule,
   ],
   exports: [
     MatCardModule,

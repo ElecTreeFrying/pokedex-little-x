@@ -7,20 +7,35 @@
 
 <mat-accordion displayMode="flat" *ngIf="option.selectionList_1.state">
 
-  <mat-expansion-panel *ngFor="let item of options" (opened)="toggle(true, 'selectionList_1', item?.option)" (closed)="toggle(false, 'selectionList_1', item?.option)">
+  <mat-expansion-panel 
+    *ngFor="let item of options.selectionList_1" 
+    (opened)="toggle(true, 'selectionList_1', item?.option)" 
+    (closed)="toggle(false, 'selectionList_1', item?.option)">
     <mat-expansion-panel-header>
       <mat-panel-title><span>{{ item.display }}</span></mat-panel-title>
     </mat-expansion-panel-header>
     <ng-template matExpansionPanelContent>
 
       <mat-form-field appearance="outline" *ngIf="option.selectionList_1.selections[item.option]">
-        <input [placeholder]="'Select ' + item.placeholder" matInput [matAutocomplete]="auto" [(ngModel)]="input" (ngModelChange)="modelChanged($event, item.option)" (keydown.enter)="enter(item.option)">
-        <mat-autocomplete #auto="matAutocomplete" (opened)="focus(item.option)" (closed)="selections[item.option] = _selections">
-          <mat-option *ngFor="let x of selections[item.option]" [value]="x.name" (click)="entries.next(x.data.pokemon_species)">{{ x.name }}</mat-option>
+        <input 
+          matInput 
+          [placeholder]="'Select ' + item.placeholder" 
+          [matAutocomplete]="auto" 
+          [(ngModel)]="option.selectionList_1.input" 
+          (ngModelChange)="modelChanged($event, 'selectionList_1', item.option)" 
+          (keydown.enter)="enter(item.option)">
+        <mat-autocomplete 
+          #auto="matAutocomplete" 
+          (opened)="focus('selectionList_1', item.option)" 
+          (closed)="selections.selectionList_1[item.option] = _selections">
+          <mat-option 
+            *ngFor="let x of selections.selectionList_1[item.option]" 
+            [value]="x.name" 
+            (click)="entries.next(x.data.pokemon_species)">{{ x.name }}</mat-option>
         </mat-autocomplete>
       </mat-form-field>
 
-      <p *ngIf="!option.selectionList_1.selections[item.option]">Please wait...</p>
+      <p class="loading"*ngIf="!option.selectionList_1.selections[item.option]">Please wait...</p>
 
     </ng-template>
   </mat-expansion-panel>
@@ -29,42 +44,39 @@
 
 <mat-divider></mat-divider>
 
-<mat-accordion displayMode="flat">
-  <mat-expansion-panel>
+<div class="loading-progress" *ngIf="!option.selectionList_2.state">
+
+  <mat-spinner></mat-spinner>
+
+</div>
+
+<mat-accordion displayMode="flat" *ngIf="option.selectionList_2.state">
+  
+  <mat-expansion-panel 
+    *ngFor="let item of options.selectionList_2"
+    (opened)="toggle(true, 'selectionList_2', item?.option)" 
+    (closed)="toggle(false, 'selectionList_2', item?.option)">
     <mat-expansion-panel-header>
-      <mat-panel-title><span>Forms switchable</span></mat-panel-title>
+      <mat-panel-title><span>{{ item.display }}</span></mat-panel-title>
     </mat-expansion-panel-header>
     <ng-template matExpansionPanelContent>
+
+      <p>{{ item.description }}</p>
+
+      <mat-form-field appearance="outline" *ngIf="option.selectionList_2.selections[item.option]">
+        <mat-label>Select</mat-label>
+        <mat-select [(ngModel)]="option.selectionList_2.input" (valueChange)="selectionChange($event, 'selectionList_2', item.option)">
+          <mat-option value="1">true</mat-option>
+          <mat-option value="0">false</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <p class="loading"*ngIf="!option.selectionList_2.selections[item.option]">Please wait...</p>
+
+
     </ng-template>
   </mat-expansion-panel>
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title><span>Has gender differences</span></mat-panel-title>
-    </mat-expansion-panel-header>
-    <ng-template matExpansionPanelContent>
-    </ng-template>
-  </mat-expansion-panel>
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title><span>Is baby</span></mat-panel-title>
-    </mat-expansion-panel-header>
-    <ng-template matExpansionPanelContent>
-    </ng-template>
-  </mat-expansion-panel>
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title><span>Is default</span></mat-panel-title>
-    </mat-expansion-panel-header>
-    <ng-template matExpansionPanelContent>
-    </ng-template>
-  </mat-expansion-panel>
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title><span>Is mega</span></mat-panel-title>
-    </mat-expansion-panel-header>
-    <ng-template matExpansionPanelContent>
-    </ng-template>
-  </mat-expansion-panel>
+
 </mat-accordion>
 
 <mat-divider></mat-divider>
