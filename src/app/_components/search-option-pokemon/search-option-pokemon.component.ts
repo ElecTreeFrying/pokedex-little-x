@@ -13,11 +13,11 @@ import { SharedService } from '../../_common/services/shared.service';
 export class SearchOptionPokemonComponent implements OnInit, OnDestroy {
 
   @Output() entries = new EventEmitter();
+  @Output() refreshed = new EventEmitter();
 
-  input: string;
   selections: any;
   _selections: any[];
-  options: any[];
+  options: any;
   option: any;
 
   subscriptions: Subscription[];

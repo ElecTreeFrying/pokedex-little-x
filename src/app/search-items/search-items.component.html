@@ -2,7 +2,7 @@
 <div class="wrap" [ngStyle]="wrapStyle">
   
   <div class="navigation">
-    <app-search-options [option]="selected" (entries)="entries = $event" (calculatedHeight)="searchItemContentStyle = { 'min-height': $event + 'px' }"></app-search-options>
+    <app-search-options [option]="selected" (entries)="entries = $event" (refreshed)="refresh()" (calculatedHeight)="searchItemContentStyle = { 'min-height': $event + 'px' }"></app-search-options>
   </div>
 
   <div class="content">

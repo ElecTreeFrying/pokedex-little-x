@@ -61,6 +61,12 @@ export class SearchItemsComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
+  refresh() {
+
+    this.entries = [];
+    this.shared.updateOptionLoadedSelection = true;
+  }
+
   selectedView() {
 
     const session = JSON.parse(sessionStorage.getItem('route'));

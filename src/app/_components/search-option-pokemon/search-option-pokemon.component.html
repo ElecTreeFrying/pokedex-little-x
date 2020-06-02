@@ -1,4 +1,11 @@
 
+<button mat-raised-button class="refresh" (click)="refreshed.next(true)">
+  <span>Refresh</span>
+  <mat-icon>refresh</mat-icon>
+</button>
+
+<mat-divider></mat-divider>
+
 <div class="loading-progress" *ngIf="!option.selectionList_1.state">
 
   <mat-spinner></mat-spinner>

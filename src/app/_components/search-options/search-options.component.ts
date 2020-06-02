@@ -14,6 +14,7 @@ export class SearchOptionsComponent implements OnInit, OnDestroy, AfterViewInit 
   @Input() option: number;
 
   @Output() entries = new EventEmitter();
+  @Output() refreshed = new EventEmitter();
   @Output() calculatedHeight = new EventEmitter();
 
   @ViewChild('accordion') accordion: ElementRef;
