@@ -23,6 +23,7 @@ import { SearchOptionMovesComponent, } from '../../_components/search-option-mov
 import { SearchOptionItemsComponent, } from '../../_components/search-option-items/search-option-items.component';
 import { SearchOptionBerriesComponent, } from '../../_components/search-option-berries/search-option-berries.component';
 import { pokemonDialogComponents } from '../services/component-selector.service';
+import { MinMaxValidatorDirective } from '../directives/validators.directive';
 import { SearchPipe } from '../pipes/search.pipe';
 
 
@@ -63,6 +64,7 @@ import { SearchPipe } from '../pipes/search.pipe';
     SearchOptionMovesComponent,
     SearchOptionItemsComponent,
     SearchOptionBerriesComponent,
+    MinMaxValidatorDirective,
     SearchPipe,
   ]
 })

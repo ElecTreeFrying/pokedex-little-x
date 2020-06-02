@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, forkJoin } from 'rxjs';
 import { map, exhaustMap, toArray, concatMap } from 'rxjs/operators';
-import { intersectionBy } from 'lodash';
+import { intersectionBy, snakeCase } from 'lodash';
 
 import { SharedService } from './shared.service';
 
@@ -64,6 +64,50 @@ export class SearchOptionPokemonService {
         1: intersectionBy(this.shared.pokemon, data.filter(e => e.has_gender_differences), 'id')
       }
     };
+  }
+
+  get selectionList_3() {
+    const data = this.shared.keys.pokemon_search.number
+
+    return {
+      baseExperience: {
+        meta: { min: data.meta.min.base_experience, max: data.meta.max.base_experience },
+        data: data.data
+      },
+      baseHappiness: {
+        meta: { min: data.meta.min.base_happiness, max: data.meta.max.base_happiness },
+        data: data.data
+      },
+      captureRate: {
+        meta: { min: data.meta.min.capture_rate, max: data.meta.max.capture_rate },
+        data: data.data
+      },
+      hatchCounter: {
+        meta: { min: data.meta.min.hatch_counter, max: data.meta.max.hatch_counter },
+        data: data.data
+      },
+      height: {
+        meta: { min: data.meta.min.height, max: data.meta.max.height },
+        data: data.data
+      },
+      pokemonNo: {
+        meta: { min: data.meta.min.order, max: data.meta.max.order },
+        data: data.data
+      },
+      weight: {
+        meta: { min: data.meta.min.weight, max: data.meta.max.weight },
+        data: data.data
+      },
+    };
+  }
+
+  filteredNumberEntries(num: number, type: string) {
+
+    type = type === 'pokemonNo' ? 'order' : snakeCase(type);
+
+    const all: any[] = this.shared.keys.pokemon_search.number.data;
+
+    return intersectionBy(this.shared.pokemon, all.filter(e => e[type] === num), 'id');
   }
 
   private _returnResults_1(result: Observable<any>) {

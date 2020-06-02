@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 
 import { SearchOptionPokemonService } from '../../_common/services/search-option-pokemon.service';
 import { SharedService } from '../../_common/services/shared.service';
+import { NgModel } from '@angular/forms';
 
 
 @Component({
@@ -57,7 +58,8 @@ export class SearchOptionPokemonComponent implements OnInit, OnDestroy {
         ability: loading, color: loading, eggGroup: loading, 
         growthRate: loading, habitat: loading, shape: loading, type: loading
       }, 
-      selectionList_2: {}
+      selectionList_2: {},
+      selectionList_3: {}
     };
 
     this._selections = [];
@@ -78,6 +80,15 @@ export class SearchOptionPokemonComponent implements OnInit, OnDestroy {
         { option: 'isBaby', display: 'Is baby', description: 'Whether or not this is a baby pokémon.' },
         { option: 'isDefault', display: 'Is default', description: 'Set for exactly one pokémon used as the default for each species.' },
         { option: 'isMega', display: 'Is mega', description: 'Whether or not this form requires mega evolution.' },
+      ],
+      selectionList_3: [
+        { option: 'baseExperience', display: 'Base experience', description: 'The base experience gained for defeating this pokémon.' },
+        { option: 'baseHappiness', display: 'Base happiness', description: 'The happiness when caught by a normal pokéball; up to 255. The higher the number, the happier the pokémon.' },
+        { option: 'captureRate', display: 'Capture rate', description: 'The base capture rate; up to 255. The higher the number, the easier the catch.' },
+        { option: 'hatchCounter', display: 'Hatch counter', description: `Initial hatch counter: one must walk 255 × (hatch_counter + 1) steps before this Pokémon's egg hatches, unless utilizing bonuses like Flame Body's.` },
+        { option: 'height', display: 'Height', description: 'The height of this pokémon.' },
+        { option: 'pokemonNo', display: 'Pokémon no.', description: 'The identifier for this pokémon resource.' },
+        { option: 'weight', display: 'Weight', description: 'The mass of this pokémon.' },
       ]
     };
 
@@ -94,6 +105,13 @@ export class SearchOptionPokemonComponent implements OnInit, OnDestroy {
         selections: {
           isBaby: true, isMega: true, isDefault: true,
           formsSwitchable: true, hasGenderDifferences: true
+        }
+      },
+      selectionList_3: {
+        state: false, input: '', invalid: true,
+        selections: {
+          baseExperience: true, baseHappiness: true, captureRate: true, 
+          hatchCounter: true, height: true, pokemonNo: true, weight: true, 
         }
       }
     };
@@ -119,11 +137,19 @@ export class SearchOptionPokemonComponent implements OnInit, OnDestroy {
     this.shared.updateOptionLoadedSelection = true;
     this.selections.selectionList_2 = this.api.selectionList_2;
 
+    this.option.selectionList_3.state = true;
+    this.shared.updateOptionLoadedSelection = true;
+    this.selections.selectionList_3 = this.api.selectionList_3;
+
     // 2
 
   }
 
-  modelChanged(model: string, group: string, type: string) {
+  modelChangedSelection(model: string, group: string, type: string, others?: NgModel) {
+
+    if (group === 'selectionList_3') {
+      return this.option.selectionList_3.invalid = others.invalid;
+    }
 
     const _model = model.toLowerCase();
 
@@ -134,6 +160,15 @@ export class SearchOptionPokemonComponent implements OnInit, OnDestroy {
     } else {
       this.selections[group][type] = filtered(this._selections);
     }
+  }
+
+  searchNumber(type: string, input: NgModel) {
+
+    if (input.invalid) return;
+    
+    this.entries.next(
+      this.api.filteredNumberEntries(+input.value, type)
+    )
   }
 
   selectionChange(model: string, group: string, type: string) {

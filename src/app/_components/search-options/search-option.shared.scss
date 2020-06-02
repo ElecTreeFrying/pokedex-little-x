@@ -50,10 +50,13 @@
   }
 
   .mat-form-field,
-  .mat-button,
-  .mat-raised-button,
-  .mat-stroked-button {
+  .mat-button {
     width: 100%;
+  }
+
+  .text-below {
+    display: flex;
+    justify-content: space-between;
   }
 }
 

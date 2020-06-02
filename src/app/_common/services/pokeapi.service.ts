@@ -60,7 +60,8 @@ export class PokeapiService {
           machines: res.keys.machines,
           machines_data: res.keys.machines_data,
           pokemon_search: {
-            true_false: res.keys.true_false
+            true_false: res.keys.pokemon_search.true_false,
+            number: res.keys.pokemon_search.number
           }
         };
 
