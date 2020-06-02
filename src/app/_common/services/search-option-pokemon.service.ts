@@ -27,6 +27,10 @@ export class SearchOptionPokemonService {
     private shared: SharedService
   ) { }
 
+  private _cached_sl1: any;
+  set cached_sl1(res: any) { this._cached_sl1 = res; }
+  get cached_sl1() { return this._cached_sl1; }
+
   get selectionList_1() {
     return forkJoin({
       ability: this._returnResults_1(this.http.get(this.url.ability)),
