@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, forkJoin } from 'rxjs';
-import { map, exhaustMap, toArray, concatMap } from 'rxjs/operators';
+import { map, toArray, mergeMap, exhaustMap } from 'rxjs/operators';
 import { intersectionBy, snakeCase } from 'lodash';
 
 import { SharedService } from './shared.service';
@@ -117,7 +117,7 @@ export class SearchOptionPokemonService {
   private _returnResults_1(result: Observable<any>) {
     return result.pipe(
       exhaustMap((e: any) => e.results.map(e => this.http.get(e.url))),
-      concatMap((e: any) => e),
+      mergeMap((e: any) => e),
       map((e: any) => {
         
         if (e.hasOwnProperty('pokemon')) {
