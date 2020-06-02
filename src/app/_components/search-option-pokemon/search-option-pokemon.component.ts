@@ -51,13 +51,8 @@ export class SearchOptionPokemonComponent implements OnInit, OnDestroy {
 
     this.shared.isSearchRoute = true;
     
-    const loading = [ 'loading...' ];
-
     this.selections = {
-      selectionList_1: {
-        ability: loading, color: loading, eggGroup: loading, 
-        growthRate: loading, habitat: loading, shape: loading, type: loading
-      }, 
+      selectionList_1: {},
       selectionList_2: {},
       selectionList_3: {}
     };
