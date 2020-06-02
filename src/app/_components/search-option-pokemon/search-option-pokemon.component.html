@@ -94,8 +94,6 @@
 
 </div>
 
-<mat-divider></mat-divider>
-
 <mat-accordion displayMode="flat" *ngIf="option.selectionList_3.state">
 
   <mat-expansion-panel 
@@ -126,8 +124,8 @@
           (keydown.enter)="searchNumber(item.option, numberModel)">
       </mat-form-field>
 
-      <div class="text-below">
-        <p *ngIf="option.selectionList_3.selections[item.option]">Press enter to search</p>
+      <div class="text-below" *ngIf="option.selectionList_3.selections[item.option]">
+        <p>Press enter to search</p>
         <p><strong>{{ option.selectionList_3.input | search: 'spn-input-display': option.selectionList_3.invalid: item.option }}</strong></p>
       </div>
 
