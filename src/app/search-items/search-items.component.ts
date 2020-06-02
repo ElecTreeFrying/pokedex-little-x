@@ -114,6 +114,11 @@ export class SearchItemsComponent implements OnInit, AfterViewInit, OnDestroy {
     buttons.forEach((e) => this.render.removeClass(e, 'selected'));
   }
 
+  postEntries(entries: any[]) {
+    this.entries = entries;
+    this.shared.updateOptionLoadedSelection = true;
+  }
+
   selectEntry(data: any) {
 
     this.shared.dialogIsOpened = true;
