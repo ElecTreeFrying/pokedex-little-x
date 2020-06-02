@@ -30,7 +30,7 @@
           [matAutocomplete]="auto" 
           [(ngModel)]="option.selectionList_1.input" 
           (ngModelChange)="modelChangedSelection($event, 'selectionList_1', item.option)" 
-          (keydown.enter)="enter(item.option)">
+          (keydown.enter)="enter('selectionList_1', item.option)">
         <mat-autocomplete 
           #auto="matAutocomplete" 
           (opened)="focus('selectionList_1', item.option)" 

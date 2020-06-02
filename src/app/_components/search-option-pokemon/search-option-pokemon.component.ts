@@ -201,9 +201,9 @@ export class SearchOptionPokemonComponent implements OnInit, OnDestroy {
     this._selections = current;
   }
 
-  enter(option: string) {
+  enter(group: string, type: string) {
 
-    const selected = this.selections[option].find(e => e.name === this.option.selectionList_1.input);
+    const selected = this.selections[group][type].find(e => e.name === this.option[group].input);
 
     const entries = selected.data.pokemon_species;
 
