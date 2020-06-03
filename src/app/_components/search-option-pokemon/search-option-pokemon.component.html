@@ -105,7 +105,7 @@
     </mat-expansion-panel-header>
     <ng-template matExpansionPanelContent>
 
-      <p>{{ item.description }}</p>
+      <p *ngIf="option.selectionList_3.selections[item.option]">{{ item.description }}</p>
 
       <mat-form-field appearance="outline" *ngIf="option.selectionList_3.selections[item.option]">
         <mat-label>{{ selections.selectionList_3[item.option] | search: 'spn-placeholder' }}</mat-label>
@@ -191,7 +191,13 @@
 
 <mat-divider></mat-divider>
 
-<mat-accordion displayMode="flat">
+<div class="loading-progress" *ngIf="!option.selectionList_5.state">
+
+  <mat-spinner></mat-spinner>
+
+</div>
+
+<mat-accordion displayMode="flat" *ngIf="option.selectionList_5.state">
   <mat-expansion-panel>
     <mat-expansion-panel-header>
       <mat-panel-title><span>Pokemon forms</span></mat-panel-title>
@@ -210,7 +216,13 @@
 
 <mat-divider></mat-divider>
 
-<mat-accordion displayMode="flat">
+<div class="loading-progress" *ngIf="!option.selectionList_6.state">
+
+  <mat-spinner></mat-spinner>
+
+</div>
+
+<mat-accordion displayMode="flat" *ngIf="option.selectionList_6.state">
   <mat-expansion-panel>
     <mat-expansion-panel-header>
       <mat-panel-title><span>Pokedex numbers</span></mat-panel-title>

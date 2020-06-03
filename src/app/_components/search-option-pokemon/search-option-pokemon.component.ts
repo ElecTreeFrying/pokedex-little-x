@@ -95,25 +95,35 @@ export class SearchOptionPokemonComponent implements OnInit, OnDestroy {
       selectionList_1: {
         state: false, input: '',
         selections: {
-          ability: true, color: true, eggGroup: true, 
-          growthRate: true, habitat: true, shape: true, type: true
+          ability: false, color: false, eggGroup: false, 
+          growthRate: false, habitat: false, shape: false, type: false
         }
       },
       selectionList_2: {
         state: false, input: '',
         selections: {
-          isBaby: true, isMega: true, isDefault: true,
-          formsSwitchable: true, hasGenderDifferences: true
+          isBaby: false, isMega: false, isDefault: false,
+          formsSwitchable: false, hasGenderDifferences: false
         }
       },
       selectionList_3: {
         state: false, input: '', invalid: true,
         selections: {
-          baseExperience: true, baseHappiness: true, captureRate: true, 
-          hatchCounter: true, height: true, pokemonNo: true, weight: true, 
+          baseExperience: false, baseHappiness: false, captureRate: false, 
+          hatchCounter: false, height: false, pokemonNo: false, weight: false, 
         }
       },
       selectionList_4: {
+        state: false, input: '', invalid: true,
+        selections: {
+          moves: false
+        }
+      },
+      selectionList_5: {
+        state: false, input: '', invalid: true,
+        selections: {}
+      },
+      selectionList_6: {
         state: false, input: '', invalid: true,
         selections: {}
       }
@@ -135,12 +145,6 @@ export class SearchOptionPokemonComponent implements OnInit, OnDestroy {
       });
     };
 
-    const sl4 = () => {
-      this.option.selectionList_4.state = true;
-      this.shared.updateOptionLoadedSelection = true;
-      this.selections.selectionList_4 = this.api.selectionList_4;
-    };
-
     if (!this.api.cached_sl1) {
       this.api.selectionList_1.subscribe((res) => {
         sl1(res);
@@ -149,6 +153,20 @@ export class SearchOptionPokemonComponent implements OnInit, OnDestroy {
     } else {
       sl1(this.api.cached_sl1);
     }
+
+    this.option.selectionList_2.state = true
+    this.shared.updateOptionLoadedSelection = true;
+    this.selections.selectionList_2 = this.api.selectionList_2;
+
+    this.option.selectionList_3.state = true;
+    this.shared.updateOptionLoadedSelection = true;
+    this.selections.selectionList_3 = this.api.selectionList_3;
+
+    const sl4 = () => {
+      this.option.selectionList_4.state = true;
+      this.shared.updateOptionLoadedSelection = true;
+      this.selections.selectionList_4 = this.api.selectionList_4;
+    };
 
     if (!this.api.cached_sl4) {
       this.api.loadedPokemonEntries.subscribe((res) => {
@@ -159,15 +177,13 @@ export class SearchOptionPokemonComponent implements OnInit, OnDestroy {
       });
     } else { sl4(); }
 
-    this.option.selectionList_2.state = true;
+    this.option.selectionList_5.state = true;
     this.shared.updateOptionLoadedSelection = true;
-    this.selections.selectionList_2 = this.api.selectionList_2;
+    // this.selections.selectionList_5 = this.api.selectionList_5;
 
-    this.option.selectionList_3.state = true;
+    this.option.selectionList_6.state = true;
     this.shared.updateOptionLoadedSelection = true;
-    this.selections.selectionList_3 = this.api.selectionList_3;
-
-    // 2
+    // this.selections.selectionList_6 = this.api.selectionList_6;
 
   }
 
@@ -266,8 +282,6 @@ export class SearchOptionPokemonComponent implements OnInit, OnDestroy {
     this.option[group].input = '';
 
     if (state) {
-
-      this.option[group].selections[option] = false;
       
       setTimeout(() => 
         this.option[group].selections[option] = state, 250
