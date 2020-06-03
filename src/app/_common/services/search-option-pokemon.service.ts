@@ -31,6 +31,10 @@ export class SearchOptionPokemonService {
   set cached_sl1(res: any) { this._cached_sl1 = res; }
   get cached_sl1() { return this._cached_sl1; }
 
+  private _cached_sl4: any;
+  set cached_sl4(res: any) { this._cached_sl4 = res; }
+  get cached_sl4() { return this._cached_sl4; }
+
   get selectionList_1() {
     return forkJoin({
       ability: this._returnResults_1(this.http.get(this.url.ability)),
@@ -40,7 +44,12 @@ export class SearchOptionPokemonService {
       habitat: this._returnResults_1(this.http.get(this.url.habitat)),
       shape: this._returnResults_1(this.http.get(this.url.shape)),
       type: this._returnResults_1(this.http.get(this.url.type))
-    });
+    }).pipe(
+      map((data) => {
+        this.cached_sl1 = data;
+        return data;
+      })
+    );
   }
 
   get selectionList_2() {

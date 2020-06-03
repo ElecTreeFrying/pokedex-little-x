@@ -133,16 +133,31 @@ export class SearchOptionPokemonComponent implements OnInit, OnDestroy {
       this.options.selectionList_1.forEach((item: any) => {
         this.selections.selectionList_1[item.option] = res[item.option];
       });
-    }
+    };
+
+    const sl4 = () => {
+      this.option.selectionList_4.state = true;
+      this.shared.updateOptionLoadedSelection = true;
+      this.selections.selectionList_4 = this.api.selectionList_4;
+    };
 
     if (!this.api.cached_sl1) {
-      this.subscriptions.push(this.api.selectionList_1.subscribe((res) => {
+      this.api.selectionList_1.subscribe((res) => {
         sl1(res);
         this.api.cached_sl1 = res;
-      }));
+      });
     } else {
       sl1(this.api.cached_sl1);
     }
+
+    if (!this.api.cached_sl4) {
+      this.api.loadedPokemonEntries.subscribe((res) => {
+
+        this.api.cached_sl4 = res;
+
+        sl4();
+      });
+    } else { sl4(); }
 
     this.option.selectionList_2.state = true;
     this.shared.updateOptionLoadedSelection = true;
