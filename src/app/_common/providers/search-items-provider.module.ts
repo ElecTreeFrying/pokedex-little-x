@@ -48,6 +48,7 @@ import { SearchPipe } from '../pipes/search.pipe';
     MatDialogModule,
     IdToImagePipeModule,
     CardTextPipeModule,
+    MatProgressSpinnerModule,
     SearchOptionsComponent,
     SearchOptionPokemonComponent,
     SearchOptionMovesComponent,

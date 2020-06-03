@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, forkJoin } from 'rxjs';
 import { map, toArray, mergeMap, exhaustMap } from 'rxjs/operators';
-import { intersectionBy, snakeCase } from 'lodash';
+import { intersectionBy, sortBy, snakeCase } from 'lodash';
 
 import { SharedService } from './shared.service';
 
@@ -105,6 +105,39 @@ export class SearchOptionPokemonService {
     };
   }
 
+  get selectionList_4() {
+
+    let moves = this.shared.moves.map((e) => {
+
+      if (!e.damage_class.hasOwnProperty('name')) {
+        return e;
+      }
+
+      e.damage_class = e.damage_class.name;
+      e.type = e.type.name;
+      return e;
+    });
+
+    moves = sortBy(moves, [ 'damage_class', 'type' ]);
+
+    moves = [
+      {
+        name: 'physical',
+        moves: moves.filter(e => e.damage_class === 'physical')
+      },
+      {
+        name: 'special',
+        moves: moves.filter(e => e.damage_class === 'special')
+      },
+      {
+        name: 'status',
+        moves: moves.filter(e => e.damage_class === 'status')
+      }
+    ];
+
+    return { moves };
+  }
+
   filteredNumberEntries(num: number, type: string) {
 
     type = type === 'pokemonNo' ? 'order' : snakeCase(type);
@@ -113,6 +146,31 @@ export class SearchOptionPokemonService {
 
     return intersectionBy(this.shared.pokemon, all.filter(e => e[type] === num), 'id');
   }
+
+  get loadedPokemonEntries() {
+
+    // const url = this.shared.toGithubRaw('https://pokeapi.co/api/v2/pokemon/');
+    const url = 'https://pokeapi.co/api/v2/pokemon?offset=0&limit=964/';
+
+    return this.http.get(url).pipe(
+      // exhaustMap((e: any) => e.results.map(e => this.http.get(this.shared.toGithubRaw(e.url)))),
+      exhaustMap((e: any) => e.results.map(e => this.http.get(e.url))),
+      mergeMap((e: any) => e),
+      toArray(),
+      map((data) => {
+        this.cached_sl4 = data;
+        return data;
+      })
+    );
+  } 
+
+  filteredPokemonEntries(move: string) {
+    return intersectionBy(
+      this.shared.pokemon,
+      this.cached_sl4.filter((e: any) => !!e.moves.find(c => c.move.name === move)),
+      'id'
+    )
+  } 
 
   private _returnResults_1(result: Observable<any>) {
     return result.pipe(

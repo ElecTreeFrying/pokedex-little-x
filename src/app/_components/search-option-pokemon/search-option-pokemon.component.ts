@@ -18,6 +18,7 @@ export class SearchOptionPokemonComponent implements OnInit, OnDestroy {
 
   selections: any;
   _selections: any[];
+  _selections_deep: any;
   options: any;
   option: any;
 
@@ -54,10 +55,12 @@ export class SearchOptionPokemonComponent implements OnInit, OnDestroy {
     this.selections = {
       selectionList_1: {},
       selectionList_2: {},
-      selectionList_3: {}
+      selectionList_3: {},
+      selectionList_4: []
     };
 
     this._selections = [];
+    this._selections_deep = {};
 
     this.options = {
       selectionList_1: [ 
@@ -84,7 +87,8 @@ export class SearchOptionPokemonComponent implements OnInit, OnDestroy {
         { option: 'height', display: 'Height', description: 'The height of this pokémon.' },
         { option: 'pokemonNo', display: 'Pokémon no.', description: 'The identifier for this pokémon resource.' },
         { option: 'weight', display: 'Weight', description: 'The mass of this pokémon.' },
-      ]
+      ],
+      selectionList_4: []
     };
 
     this.option = {
@@ -108,6 +112,10 @@ export class SearchOptionPokemonComponent implements OnInit, OnDestroy {
           baseExperience: true, baseHappiness: true, captureRate: true, 
           hatchCounter: true, height: true, pokemonNo: true, weight: true, 
         }
+      },
+      selectionList_4: {
+        state: false, input: '', invalid: true,
+        selections: {}
       }
     };
 
@@ -161,17 +169,17 @@ export class SearchOptionPokemonComponent implements OnInit, OnDestroy {
     if (model === null) {
       this.selections[group][type] = this._selections;
     } else {
-      this.selections[group][type] = filtered(this._selections);
+      setTimeout(() => {
+
+        this.selections[group][type] = group !== 'selectionList_4'
+          ? filtered(this._selections)
+          : this._selections.map((group) => {
+              group.moves = this._selections_deep[group.name].filter(e => e.name.includes(_model.split(' ').join('-')));
+              return group;
+            }).filter((group) => group.moves.length > 0);
+
+      }, 150);
     }
-  }
-
-  searchNumber(type: string, input: NgModel) {
-
-    if (input.invalid) return;
-    
-    this.entries.next(
-      this.api.filteredNumberEntries(+input.value, type)
-    )
   }
 
   selectionChange(model: string, group: string, type: string) {
@@ -186,14 +194,31 @@ export class SearchOptionPokemonComponent implements OnInit, OnDestroy {
     if (this.option[group].input.length > 0) return;
 
     const current = this.selections[group][option];
+    const groups: any = {};
+    
+    if (group === 'selectionList_4') {
+      current.forEach((e: any) => {
+        groups[e.name] = e.moves
+      });
+    }
+
 
     const filtered = (selection: any[]) => selection.filter(e => e.name.includes(this.option[group].input));
     
     if (this.option[group].input.length > 0) {
-      this.selections[group][option] = filtered(current);
+      this.selections[group][option] = group !== 'selectionList_4'
+        ? filtered(current)
+        : current.map((group) => {
+            group.moves = groups[group.name].filter(e => e.name.includes(this.option[group].input));
+            return group;
+          });
     }
 
     this._selections = current;
+
+    if (group === 'selectionList_4') {
+      this._selections_deep = groups;
+    }
   }
 
   enter(group: string, type: string) {
@@ -203,6 +228,22 @@ export class SearchOptionPokemonComponent implements OnInit, OnDestroy {
     const entries = selected.data.pokemon_species;
 
     this.entries.next(entries);
+  }
+
+  searchNumber(type: string, input: NgModel) {
+
+    if (input.invalid) return;
+    
+    this.entries.next(
+      this.api.filteredNumberEntries(+input.value, type)
+    )
+  }
+
+  searchMove(model: string) {
+
+    this.entries.next(
+      this.api.filteredPokemonEntries(model)
+    )
   }
 
   toggle(state: boolean, group: string, option: string) {

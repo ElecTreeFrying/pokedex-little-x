@@ -138,14 +138,55 @@
 
 <mat-divider></mat-divider>
 
-<mat-accordion displayMode="flat">
-  <mat-expansion-panel>
+<div class="loading-progress" *ngIf="!option.selectionList_4.state">
+
+  <mat-spinner></mat-spinner>
+
+</div>
+
+<mat-accordion displayMode="flat" *ngIf="option.selectionList_4.state">
+  
+  <mat-expansion-panel
+    (opened)="toggle(true, 'selectionList_4', 'moves')" 
+    (closed)="toggle(false, 'selectionList_4', 'moves')">
     <mat-expansion-panel-header>
       <mat-panel-title><span>Moves</span></mat-panel-title>
     </mat-expansion-panel-header>
     <ng-template matExpansionPanelContent>
+
+      <mat-form-field appearance="outline" *ngIf="option.selectionList_4.selections['moves']">
+        <input 
+          matInput 
+          placeholder="Select" 
+          [matAutocomplete]="autoMove" 
+          [(ngModel)]="option.selectionList_4.input"
+          (ngModelChange)="modelChangedSelection($event, 'selectionList_4', 'moves')">
+        <mat-autocomplete 
+          #autoMove="matAutocomplete"
+          (opened)="focus('selectionList_4', 'moves')" 
+          (closed)="selections.selectionList_1['moves'] = _selections">
+
+            <mat-optgroup 
+              *ngFor="let group of selections.selectionList_4['moves']" 
+              [label]="group.name">
+              <mat-option 
+                *ngFor="let move of group.moves" 
+                [value]="move | search: 'spn-move-name'" 
+                (click)="searchMove(move.name)">
+                <span [ngStyle]="{ 'color': move.type | search: 'type-color' }"><strong>({{ move.type }})</strong></span> {{ move | search: 'spn-move-name' }}
+              </mat-option>
+            </mat-optgroup>
+
+        </mat-autocomplete>
+      </mat-form-field>
+
+      <p *ngIf="option.selectionList_4.selections['moves']">Press enter to search</p>
+
+      <p class="loading"*ngIf="!option.selectionList_4.selections['moves']">Please wait...</p>
+
     </ng-template>
   </mat-expansion-panel>
+
 </mat-accordion>
 
 <mat-divider></mat-divider>
