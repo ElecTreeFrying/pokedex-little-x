@@ -16,6 +16,7 @@ export class ExploreComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     setTimeout(() => {
+      this.shared.updateIsLoadingSelection = false;
       this.shared.updateIsSearchSelection = true;
     });
   }

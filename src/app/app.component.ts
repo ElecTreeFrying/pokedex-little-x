@@ -1,4 +1,5 @@
 import { Component, OnInit, AfterViewInit, ViewChild, ViewContainerRef, ElementRef, ChangeDetectorRef } from '@angular/core';
+import { Router } from '@angular/router';
 import { MatToolbar } from '@angular/material/toolbar';
 import { MatSidenav } from '@angular/material/sidenav';
 import { MatBottomSheet, MatBottomSheetRef } from '@angular/material/bottom-sheet';
@@ -38,6 +39,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   toolbarHeight: number;
 
   constructor(
+    private router: Router, 
     private overlay: Overlay,
     private viewContainerRef: ViewContainerRef,
     private bottomSheet: MatBottomSheet,
@@ -129,8 +131,7 @@ export class AppComponent implements OnInit, AfterViewInit {
           this.sidenavToggle(true);
         }, 350);
       }
-      
-    
+
     });
 
     this.details.openedChange.subscribe((res: boolean) => {
@@ -281,6 +282,29 @@ export class AppComponent implements OnInit, AfterViewInit {
   toggleDetails(option: boolean) {
     this.isShowDetails = option;
     this.cd.detectChanges();
+  }
+
+  routeTo(route: string) {
+    this.shared.updateNavigationStateSelection = route === null;
+    this.shared.updateIsLoadingSelection = true;
+    
+    if (route === null) {
+      return this.router.navigate([ '/' ]).then(() => {
+        this.shared.updateIsLoadingSelection = false;
+      });
+    }
+
+    if (this.router.url.includes('search') || this.router.url.includes('explore')) {
+      return this.router.navigate([ '/', route ]);
+    }
+
+    const $ = this.drawer.openedChange.subscribe((res: boolean) => {
+      if (res) return;
+      
+      this.router.navigate([ '/', route ]);
+
+      $.unsubscribe();
+    });
   }
   
   private get routerStyleProcess() {

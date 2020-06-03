@@ -72,13 +72,10 @@ export class RouteService {
 
     if (url === '/') {
       this.defaultConfig('default');
-      this.shared.updateNavigationStateSelection = true;
     } else if (url.startsWith('/search')) {
       this.defaultConfig('search');
-      this.shared.updateNavigationStateSelection = false;
     } else if (url.startsWith('/explore')) {
       this.defaultConfig('explore');
-      this.shared.updateNavigationStateSelection = false;
     } else {
       this.shared.updateHideSearchSelection = false;
     }
