@@ -19,12 +19,17 @@
     <div class="search-items-container">
 
       <mat-card class="search-items-content" [ngStyle]="searchItemContentStyle">
-        <mat-card-content *ngIf="entries.length === 0">
+        <mat-card-content class="loading-entries" *ngIf="entries === null">
+
+          <mat-spinner></mat-spinner>
+
+        </mat-card-content>
+        <mat-card-content *ngIf="entries !== null && entries?.length === 0">
 
           <p class="no-data">Select an option to display {{ selected | search: 'selection-display' }}.</p>
 
         </mat-card-content>
-        <mat-card-content class="entries">
+        <mat-card-content class="entries" *ngIf="entries !== null">
 
           <div matRipple class="entry" *ngFor="let entry of entries" (click)="selectEntry(entry.id)">
             
