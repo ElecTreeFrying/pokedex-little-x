@@ -45,6 +45,7 @@ export class SharedService {
   private hideSearchSource = new BehaviorSubject(null);
   private isSearchSource = new BehaviorSubject(null);
   private optionLoadedSource = new BehaviorSubject(null);
+  private navigationStateSource = new BehaviorSubject(null);
 
   loadedAll = this.loadedAllSource.asObservable();
   routeChange: Observable<any>;
@@ -66,6 +67,7 @@ export class SharedService {
   hideSearch = this.hideSearchSource.asObservable();
   isSearch = this.isSearchSource.asObservable().pipe( filter(e => e !== null) );
   optionLoaded = this.optionLoadedSource.asObservable().pipe( filter(e => e) );
+  navigationState = this.navigationStateSource.asObservable().pipe( filter(e => e !== null) );
 
   private _id: number;
   get id() { return this._id; }
@@ -282,6 +284,10 @@ export class SharedService {
 
   set updateOptionLoadedSelection(data: boolean) {
     this.optionLoadedSource.next(data);
+  }
+
+  set updateNavigationStateSelection(data: boolean) {
+    this.navigationStateSource.next(data);
   }
 
 }

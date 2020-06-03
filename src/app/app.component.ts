@@ -115,8 +115,22 @@ export class AppComponent implements OnInit, AfterViewInit {
     });
 
     this.shared.hideLoadMore.subscribe((res) => {
+      if (res === null) return;
       this.bottomSheet.dismiss();
-      this.sidenavToggle(false);
+    });
+
+    this.shared.navigationState.subscribe((res) => {
+    
+      if (res) {
+        setTimeout(() => this.sidenavToggle(false), 350);
+      } else {
+        setTimeout(() => {
+          if (!this.drawer.opened) return;
+          this.sidenavToggle(true);
+        }, 350);
+      }
+      
+    
     });
 
     this.details.openedChange.subscribe((res: boolean) => {
