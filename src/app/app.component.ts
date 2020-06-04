@@ -295,13 +295,17 @@ export class AppComponent implements OnInit, AfterViewInit {
     }
 
     if (this.router.url.includes('search') || this.router.url.includes('explore')) {
-      return this.router.navigate([ '/', route ]);
+      return this.router.navigate([ '/', route ]).then(() => {
+        this.shared.updateIsLoadingSelection = false;
+      });
     }
 
     const $ = this.drawer.openedChange.subscribe((res: boolean) => {
       if (res) return;
       
-      this.router.navigate([ '/', route ]);
+      this.router.navigate([ '/', route ]).then(() => {
+        this.shared.updateIsLoadingSelection = false;
+      });
 
       $.unsubscribe();
     });
