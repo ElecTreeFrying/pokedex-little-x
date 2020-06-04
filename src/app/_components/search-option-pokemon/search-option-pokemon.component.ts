@@ -56,7 +56,8 @@ export class SearchOptionPokemonComponent implements OnInit, OnDestroy {
       selectionList_1: {},
       selectionList_2: {},
       selectionList_3: {},
-      selectionList_4: []
+      selectionList_4: [],
+      selectionList_5: []
     };
 
     this._selections = [];
@@ -88,7 +89,11 @@ export class SearchOptionPokemonComponent implements OnInit, OnDestroy {
         { option: 'pokemonNo', display: 'Pokémon no.', description: 'The identifier for this pokémon resource.' },
         { option: 'weight', display: 'Weight', description: 'The mass of this pokémon.' },
       ],
-      selectionList_4: []
+      selectionList_4: [],
+      selectionList_5: [
+        { option: 'forms', display: 'Pokémon forms', description: `Some pokémon have the ability to take on different forms. At times, these differences are purely cosmetic and have no bearing on the difference in the Pokémon's stats from another; however, several Pokémon differ in stats (other than HP), type, and Ability depending on their form.` },
+        { option: 'pal_park', display: 'Pal park encounters', description: `Areas used for grouping pokémon encounters in Pal Park. They're like habitats that are specific to Pal Park.` },
+      ]
     };
 
     this.option = {
@@ -121,7 +126,9 @@ export class SearchOptionPokemonComponent implements OnInit, OnDestroy {
       },
       selectionList_5: {
         state: false, input: '', invalid: true,
-        selections: {}
+        selections: {
+          forms: false, pal_park: false
+        }
       },
       selectionList_6: {
         state: false, input: '', invalid: true,
@@ -138,8 +145,6 @@ export class SearchOptionPokemonComponent implements OnInit, OnDestroy {
       this.option.selectionList_1.state = true;
       this.shared.updateOptionLoadedSelection = true;
 
-      if (!this.shared.isSearchRoute) return;
-
       this.options.selectionList_1.forEach((item: any) => {
         this.selections.selectionList_1[item.option] = res[item.option];
       });
@@ -147,8 +152,8 @@ export class SearchOptionPokemonComponent implements OnInit, OnDestroy {
 
     if (!this.api.cached_sl1) {
       this.api.selectionList_1.subscribe((res) => {
-        sl1(res);
         this.api.cached_sl1 = res;
+        sl1(res);
       });
     } else {
       sl1(this.api.cached_sl1);
@@ -169,17 +174,24 @@ export class SearchOptionPokemonComponent implements OnInit, OnDestroy {
     };
 
     if (!this.api.cached_sl4) {
-      this.api.loadedPokemonEntries.subscribe((res) => {
-
-        this.api.cached_sl4 = res;
-
-        sl4();
-      });
+      // this.api.loadedPokemonEntries.subscribe((res) => {
+      //   this.api.cached_sl4 = res;
+      //   sl4();
+      // });
     } else { sl4(); }
 
-    this.option.selectionList_5.state = true;
-    this.shared.updateOptionLoadedSelection = true;
-    // this.selections.selectionList_5 = this.api.selectionList_5;
+    const sl5 = (res: any) => {
+      this.option.selectionList_5.state = true;
+      this.shared.updateOptionLoadedSelection = true;
+      this.selections.selectionList_5 = res;
+    };
+
+    if (!this.api.cached_sl5) {
+      // this.api.selectionList_5.subscribe((res) => {
+      //   this.api.cached_sl5 = res;
+      //   sl5(res);
+      // });
+    } else { sl5(this.api.cached_sl5); }
 
     this.option.selectionList_6.state = true;
     this.shared.updateOptionLoadedSelection = true;
@@ -205,7 +217,9 @@ export class SearchOptionPokemonComponent implements OnInit, OnDestroy {
         this.selections[group][type] = group !== 'selectionList_4'
           ? filtered(this._selections)
           : this._selections.map((group) => {
-              group.moves = this._selections_deep[group.name].filter(e => e.name.includes(_model.split(' ').join('-')));
+              group.moves = this._selections_deep[group.name].filter(e => 
+                e.name.includes(_model.split(' ').join('-'))
+              );
               return group;
             }).filter((group) => group.moves.length > 0);
 
@@ -256,7 +270,15 @@ export class SearchOptionPokemonComponent implements OnInit, OnDestroy {
 
     const selected = this.selections[group][type].find(e => e.name === this.option[group].input);
 
-    const entries = selected.data.pokemon_species;
+    let entries = null;
+    
+    if (type === 'forms') {
+      entries = selected.forms;
+    } else if (type === 'pal_park') {
+      entries = selected.encounters;
+    } else {
+      entries = selected.data.pokemon_species;
+    }
 
     this.entries.next(entries);
   }
@@ -289,6 +311,8 @@ export class SearchOptionPokemonComponent implements OnInit, OnDestroy {
       
     } else {
       this.option[group].selections[option] = state;
+      this.selections[group][option] = this._selections;
+      this._selections = [];
     }
   }
 

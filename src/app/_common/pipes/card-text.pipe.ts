@@ -14,7 +14,7 @@ export class CardTextPipe implements PipeTransform {
     if (!value) return;
 
     if (!special_names.find(e => e.key === value)) {
-      return value.split('-').map(e => capitalize(e)).join(' ');
+      return value.split('-').map(e => capitalize(e)).join(' ').split(' ').map(e => capitalize(e)).join(' ');
     } else {
       return special_names.find(e => e.key === value).name;
     }

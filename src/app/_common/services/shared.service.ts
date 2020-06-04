@@ -11,7 +11,9 @@ interface Key {
   machines_data: any[];
   pokemon_search: {
     true_false: any,
-    number: any
+    number: any,
+    forms: any,
+    pal_park: any
   };
   natures?: any[];
   characteristics?: any[];

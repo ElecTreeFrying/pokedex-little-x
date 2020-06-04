@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, forkJoin } from 'rxjs';
+import { Observable, forkJoin, of } from 'rxjs';
 import { map, toArray, mergeMap, exhaustMap } from 'rxjs/operators';
 import { intersectionBy, sortBy, snakeCase } from 'lodash';
 
@@ -34,6 +34,10 @@ export class SearchOptionPokemonService {
   private _cached_sl4: any;
   set cached_sl4(res: any) { this._cached_sl4 = res; }
   get cached_sl4() { return this._cached_sl4; }
+
+  private _cached_sl5: any;
+  set cached_sl5(res: any) { this._cached_sl5 = res; }
+  get cached_sl5() { return this._cached_sl5; }
 
   get selectionList_1() {
     return forkJoin({
@@ -147,6 +151,13 @@ export class SearchOptionPokemonService {
     return { moves };
   }
 
+  get selectionList_5() {
+    return forkJoin({
+      forms: this.forms,
+      pal_park: this.palParkAreas
+    })
+  }
+
   filteredNumberEntries(num: number, type: string) {
 
     type = type === 'pokemonNo' ? 'order' : snakeCase(type);
@@ -210,5 +221,107 @@ export class SearchOptionPokemonService {
     )
   }
 
+  private get forms() {
+    const data = this.shared.keys.pokemon_search.forms;
+
+    const forms = sortBy(intersectionBy(
+      this.shared.pokemon, data, 'id'
+    ).map((entry: any) => 
+      ({ ...entry, ...data.find(e => e.id === entry.id) })
+    ), [ 'name' ]);
+
+    const toDataURL = (url, callback) => {
+      var xhr = new XMLHttpRequest();
+      xhr.onload = function() {
+        var reader = new FileReader();
+        reader.onloadend = function() {
+          callback(reader.result);
+        }
+        reader.readAsDataURL(xhr.response);
+      };
+      xhr.open('GET', url);
+      xhr.responseType = 'blob';
+      xhr.send();
+    }
+
+    const toBase64 = (url: string) => (new Observable((subscriber) => {
+      toDataURL(url, (e) => {
+        subscriber.next(e);
+        subscriber.complete();
+      });
+    }));
+
+    return of(forms).pipe(
+      mergeMap((e: any) => e),
+      mergeMap((e: any) => {
+        const forms = of(e.forms).pipe(
+          mergeMap((e: any) => e),
+          mergeMap((e: any) => {
+
+            const dummy_image = 'assets/images/berry.png';
+
+            const front_default = e.sprites.front_default 
+              ? toBase64(e.sprites.front_default) 
+              : toBase64(dummy_image);
+            // const back_default = e.sprites.back_default 
+            //   ? toBase64(e.sprites.back_default) 
+            //   : toBase64(dummy_image);
+            // const front_shiny = e.sprites.front_shiny 
+            //   ? toBase64(e.sprites.front_shiny) 
+            //   : toBase64(dummy_image);
+            // const back_shiny = e.sprites.back_shiny 
+            //   ? toBase64(e.sprites.back_shiny) 
+            //   : toBase64(dummy_image);
+
+            return forkJoin({
+              // front_default, back_default, front_shiny, back_shiny, data: of(e)
+              front_default, data: of(e)
+            }).pipe(
+              map((e) => {
+                e.data.sprites.front_default = e.front_default;
+                // e.data.sprites.back_default = e.back_default;
+                // e.data.sprites.front_shiny = e.front_shiny;
+                // e.data.sprites.back_shiny = e.back_shiny;
+                return { ...e.data }
+              })    
+            )
+          }),
+          map((e) => {
+            const data: any = {};
+            data.byte64 = e.sprites.front_default;
+            data.filename = null;
+            data.entry_number = e.pokemon;
+            data.id = e.pokemon;
+            data.name = e.name;
+            data.data = e;
+            return data;
+          }),
+          toArray()
+        );
+
+        return forkJoin({ forms, data: of(e) }).pipe(
+          map((e) => {
+            e.data.forms = e.forms
+            return { ...e.data };
+          })
+        );
+      }),
+      toArray()
+    );
+  }
+
+  get palParkAreas() {
+
+    const pal_park = this.shared.keys.pokemon_search.pal_park.map((entry: any) => {
+      
+      entry.encounters = intersectionBy(this.shared.pokemon, entry.encounters, 'id').map((encounter: any) => {
+        return { ...encounter, ...entry.encounters.find(e => e.id === encounter.id) };
+      })
+
+      return entry;
+    });
+
+    return of(pal_park);
+  }
 
 }

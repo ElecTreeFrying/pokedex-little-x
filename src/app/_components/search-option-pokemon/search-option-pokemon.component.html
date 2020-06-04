@@ -198,20 +198,44 @@
 </div>
 
 <mat-accordion displayMode="flat" *ngIf="option.selectionList_5.state">
-  <mat-expansion-panel>
+  
+  <mat-expansion-panel
+    *ngFor="let item of options.selectionList_5"
+    (opened)="toggle(true, 'selectionList_5', item.option)" 
+    (closed)="toggle(false, 'selectionList_5', item.option)">
     <mat-expansion-panel-header>
-      <mat-panel-title><span>Pokemon forms</span></mat-panel-title>
+      <mat-panel-title><span>{{ item.display }}</span></mat-panel-title>
     </mat-expansion-panel-header>
     <ng-template matExpansionPanelContent>
+
+      <p *ngIf="option.selectionList_5.selections[item.option]">{{ item.description }}</p>
+
+      <mat-form-field appearance="outline" *ngIf="option.selectionList_5.selections[item.option]">
+        <input 
+          matInput 
+          placeholder="Select" 
+          [matAutocomplete]="auto" 
+          [(ngModel)]="option.selectionList_5.input" 
+          (ngModelChange)="modelChangedSelection($event, 'selectionList_5', item.option)" 
+          (keydown.enter)="enter('selectionList_5', item.option)">
+        <mat-autocomplete 
+          #auto="matAutocomplete" 
+          (opened)="focus('selectionList_5', item.option)" 
+          (closed)="selections.selectionList_5[item.option] = _selections">
+          <mat-option 
+            *ngFor="let x of selections.selectionList_5[item.option]" 
+            [value]="x.name" 
+            (click)="entries.next(item.option === 'forms' ? x.forms : x.encounters)">{{ x.name | titlecase }}</mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+
+      <p *ngIf="option.selectionList_5.selections[item.option]">Press enter to search</p>
+
+      <p class="loading"*ngIf="!option.selectionList_5.selections[item.option]">Please wait...</p>
+
     </ng-template>
   </mat-expansion-panel>
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title><span>Pal park encounters</span></mat-panel-title>
-    </mat-expansion-panel-header>
-    <ng-template matExpansionPanelContent>
-    </ng-template>
-  </mat-expansion-panel>
+
 </mat-accordion>
 
 <mat-divider></mat-divider>
