@@ -57,7 +57,8 @@ export class SearchOptionPokemonComponent implements OnInit, OnDestroy {
       selectionList_2: {},
       selectionList_3: {},
       selectionList_4: [],
-      selectionList_5: []
+      selectionList_5: {},
+      selectionList_6: {},
     };
 
     this._selections = [];
@@ -93,6 +94,10 @@ export class SearchOptionPokemonComponent implements OnInit, OnDestroy {
       selectionList_5: [
         { option: 'forms', display: 'Pokémon forms', description: `Some pokémon have the ability to take on different forms. At times, these differences are purely cosmetic and have no bearing on the difference in the Pokémon's stats from another; however, several Pokémon differ in stats (other than HP), type, and Ability depending on their form.` },
         { option: 'pal_park', display: 'Pal park encounters', description: `Areas used for grouping pokémon encounters in Pal Park. They're like habitats that are specific to Pal Park.` },
+      ],
+      selectionList_6: [
+        { option: 'pokedex', display: 'Pokédex numbers', label1: 'Select pokédex', label2: 'Enter pokédex number' },
+        { option: 'stats', display: 'Stats', label1: 'Select stat', label2: 'Enter base stat' }
       ]
     };
 
@@ -131,8 +136,10 @@ export class SearchOptionPokemonComponent implements OnInit, OnDestroy {
         }
       },
       selectionList_6: {
-        state: false, input: '', invalid: true,
-        selections: {}
+        state: false, input1: '', input2: '', invalid: true,
+        selections: {
+          stats: false, pokedex: false
+        }
       }
     };
 
@@ -195,14 +202,17 @@ export class SearchOptionPokemonComponent implements OnInit, OnDestroy {
 
     this.option.selectionList_6.state = true;
     this.shared.updateOptionLoadedSelection = true;
-    // this.selections.selectionList_6 = this.api.selectionList_6;
+    this.selections.selectionList_6 = this.api.selectionList_6;
 
   }
 
   modelChangedSelection(model: string, group: string, type: string, others?: NgModel) {
 
-    if (group === 'selectionList_3') {
-      return this.option.selectionList_3.invalid = others.invalid;
+    if (group === 'selectionList_3' || group === 'selectionList_6') {
+
+      this.option[group].invalid = others.invalid;
+
+      return this.option[group].invalid = others.invalid;
     }
 
     const _model = model.toLowerCase();
@@ -247,7 +257,6 @@ export class SearchOptionPokemonComponent implements OnInit, OnDestroy {
       });
     }
 
-
     const filtered = (selection: any[]) => selection.filter(e => e.name.includes(this.option[group].input));
     
     if (this.option[group].input.length > 0) {
@@ -283,13 +292,19 @@ export class SearchOptionPokemonComponent implements OnInit, OnDestroy {
     this.entries.next(entries);
   }
 
-  searchNumber(type: string, input: NgModel) {
+  searchNumber(group: string, type: string, item: string, input: NgModel) {
 
     if (input.invalid) return;
     
-    this.entries.next(
-      this.api.filteredNumberEntries(+input.value, type)
-    )
+    let entries = null;
+
+    if (group === 'selectionList_3') {
+      entries = this.api.filteredNumberEntries(+input.value, type);
+    } else if (group === 'selectionList_6') {
+      entries = this.api.filteredLastNumberEntries(+input.value, type, item);
+    }
+    
+    this.entries.next(entries);
   }
 
   searchMove(model: string) {
@@ -302,6 +317,8 @@ export class SearchOptionPokemonComponent implements OnInit, OnDestroy {
   toggle(state: boolean, group: string, option: string) {
 
     this.option[group].input = '';
+    this.option[group].input1 = '';
+    this.option[group].input2 = '';
 
     if (state) {
       
@@ -310,7 +327,11 @@ export class SearchOptionPokemonComponent implements OnInit, OnDestroy {
       );
       
     } else {
+
       this.option[group].selections[option] = state;
+
+      if (group === 'selectionList_6') return;
+
       this.selections[group][option] = this._selections;
       this._selections = [];
     }

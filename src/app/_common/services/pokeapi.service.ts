@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map, mergeMap, exhaustMap, toArray } from 'rxjs/operators'
+import { map, mergeMap, exhaustMap, toArray, switchMap } from 'rxjs/operators'
 import { of, merge, forkJoin } from 'rxjs';
 import { intersectionBy, sortBy } from 'lodash';
 
@@ -63,7 +63,8 @@ export class PokeapiService {
             true_false: res.keys.pokemon_search.true_false,
             number: res.keys.pokemon_search.number,
             forms: res.keys.pokemon_search.forms,
-            pal_park: res.keys.pokemon_search.pal_park
+            pal_park: res.keys.pokemon_search.pal_park,
+            last: res.keys.pokemon_search.last
           }
         };
 

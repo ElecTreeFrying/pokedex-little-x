@@ -13,7 +13,8 @@ interface Key {
     true_false: any,
     number: any,
     forms: any,
-    pal_park: any
+    pal_park: any,
+    last: any
   };
   natures?: any[];
   characteristics?: any[];

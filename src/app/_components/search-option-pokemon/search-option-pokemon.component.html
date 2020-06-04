@@ -121,7 +121,7 @@
           [type]="item.option"
           [(ngModel)]="option.selectionList_3.input"
           (ngModelChange)="modelChangedSelection($event, 'selectionList_3', item.option, numberModel)" 
-          (keydown.enter)="searchNumber(item.option, numberModel)">
+          (keydown.enter)="searchNumber('selectionList_3', item.option, '', numberModel)">
       </mat-form-field>
 
       <div class="text-below" *ngIf="option.selectionList_3.selections[item.option]">
@@ -247,18 +247,49 @@
 </div>
 
 <mat-accordion displayMode="flat" *ngIf="option.selectionList_6.state">
-  <mat-expansion-panel>
+
+  <mat-expansion-panel
+    *ngFor="let item of options.selectionList_6"
+    (opened)="toggle(true, 'selectionList_6', item.option)" 
+    (closed)="toggle(false, 'selectionList_6', item.option)">
     <mat-expansion-panel-header>
-      <mat-panel-title><span>Pokédex numbers</span></mat-panel-title>
+      <mat-panel-title><span>{{ item.display }}</span></mat-panel-title>
     </mat-expansion-panel-header>
     <ng-template matExpansionPanelContent>
+
+      <mat-form-field appearance="outline" *ngIf="option.selectionList_6.selections[item.option]">
+        <mat-label>{{ item.label1 }}</mat-label>
+        <mat-select [(ngModel)]="option.selectionList_6.input1">
+          <mat-option *ngFor="let item of selections.selectionList_6[item.option]" [value]="item | lowercase | search: 'spn-selectionList_6'">{{ item }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" *ngIf="option.selectionList_6.selections[item.option]">
+
+        <mat-label *ngIf="option.selectionList_6.input1 === ''">-</mat-label>
+        <mat-label *ngIf="option.selectionList_6.input1 !== ''">{{ '(' + selections.selectionList_6?.meta[item.option][option.selectionList_6.input1]?.min }}{{ ' - *' + selections.selectionList_6?.meta[item.option][option.selectionList_6.input1]?.max + ')' }}</mat-label>
+
+        <input 
+          #lastModel="ngModel"
+          matInput
+          type="number"
+          autocomplete="off"
+          minMaxValidator 
+          [min-]="selections.selectionList_6?.meta[item.option][option.selectionList_6.input1]?.min" 
+          [max-]="selections.selectionList_6?.meta[item.option][option.selectionList_6.input1]?.max"
+          [type]="item.option"
+          [disabled]="option.selectionList_6.input1 === ''"
+          [(ngModel)]="option.selectionList_6.input2"
+          (ngModelChange)="modelChangedSelection($event, 'selectionList_6', item.option, lastModel)" 
+          (keydown.enter)="searchNumber('selectionList_6', item.option, option.selectionList_6.input1, lastModel)">
+      </mat-form-field>
+
+      <p *ngIf="option.selectionList_6.selections[item.option]">Press enter to search</p>
+
+      <p class="loading"*ngIf="!option.selectionList_6.selections[item.option]">Please wait...</p>
+
     </ng-template>
   </mat-expansion-panel>
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title><span>Stats</span></mat-panel-title>
-    </mat-expansion-panel-header>
-    <ng-template matExpansionPanelContent>
-    </ng-template>
-  </mat-expansion-panel>
+
 </mat-accordion>
+

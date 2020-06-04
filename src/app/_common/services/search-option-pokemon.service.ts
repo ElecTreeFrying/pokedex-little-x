@@ -4,7 +4,7 @@ import { Observable, forkJoin, of } from 'rxjs';
 import { map, toArray, mergeMap, exhaustMap } from 'rxjs/operators';
 import { intersectionBy, sortBy, snakeCase } from 'lodash';
 
-import { SharedService } from './shared.service';
+import { SharedService, pokedex } from './shared.service';
 
 
 @Injectable({
@@ -158,6 +158,42 @@ export class SearchOptionPokemonService {
     })
   }
 
+  get selectionList_6() {
+
+    const stats = [ 'HP', 'Speed', 'Attack', 'Defense', 'Special attack', 'Special defense' ];
+    const _pokedex = pokedex.filter(e => e.key !== 0 && e.key !== 11).map(e => e.name.replace(' Pokédex', ''));
+
+    return {
+      data: this.shared.keys.pokemon_search.last,
+      stats, pokedex: _pokedex,
+      meta: {
+        pokedex: {
+          national: { min: 1, max: 721 },
+          kanto: { min: 1, max: 151 },
+          'original-johto': { min: 1, max: 215 },
+          hoenn: { min: 1, max: 202 },
+          'original-sinnoh': { min: 1, max: 151 },
+          'extended-sinnoh': { min: 1, max: 210 },
+          'updated-johto': { min: 1, max: 256 },
+          'original-unova': { min: 0, max: 156 },
+          'updated-unova': { min: 0, max: 301 },
+          'kalos-central': { min: 1, max: 150 },
+          'kalos-coastal': { min: 1, max: 153 },
+          'kalos-mountain': { min: 0, max: 0 },
+          'updated-hoenn': { min: 0, max: 0 },
+        },
+        stats: {
+          hp: { min: 1, max: 255 },
+          speed: { min: 5, max: 180 },
+          attack: { min: 5, max: 190 },
+          defense: { min: 5, max: 230 },
+          'special-attack': { min: 10, max: 194 },
+          'special-defense': { min: 20, max: 230 }
+        }
+      }
+    };
+  }
+
   filteredNumberEntries(num: number, type: string) {
 
     type = type === 'pokemonNo' ? 'order' : snakeCase(type);
@@ -165,6 +201,20 @@ export class SearchOptionPokemonService {
     const all: any[] = this.shared.keys.pokemon_search.number.data;
 
     return intersectionBy(this.shared.pokemon, all.filter(e => e[type] === num), 'id');
+  }
+
+  filteredLastNumberEntries(num: number, type: string, item: string) {
+
+    const data = this.shared.keys.pokemon_search.last.filter((res: any) => {
+      if (type === 'stats') {
+        return res.s.find(e => e.s === item).bn === num;
+      } else if (type === 'pokedex') {
+        const search = res.pn.find(e => e.p === item);
+        return search ? search.en === num : undefined;
+      }
+    });
+
+    return intersectionBy(this.shared.pokemon, data, 'id');
   }
 
   get loadedPokemonEntries() {

@@ -65,6 +65,10 @@ export class SearchPipe implements PipeTransform {
       return value.name.split('-').join(' ');
     }
 
+    if (option === 'spn-selectionList_6') {
+      return value.split(' ').join('-');
+    }
+
   }
 
 }
