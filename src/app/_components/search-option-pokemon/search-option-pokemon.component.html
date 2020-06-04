@@ -68,7 +68,7 @@
     </mat-expansion-panel-header>
     <ng-template matExpansionPanelContent>
 
-      <p>{{ item.description }}</p>
+      <p *ngIf="option.selectionList_2.selections[item.option]">{{ item.description }}</p>
 
       <mat-form-field appearance="outline" *ngIf="option.selectionList_2.selections[item.option]">
         <mat-label>Select</mat-label>
