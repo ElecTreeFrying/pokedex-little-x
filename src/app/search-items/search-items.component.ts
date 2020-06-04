@@ -56,7 +56,6 @@ export class SearchItemsComponent implements OnInit, AfterViewInit, OnDestroy {
     this.wrapStyle = {};
     this.searchItemContentStyle = {};
 
-    
     setTimeout(() => {
       this.shared.updateIsLoadingSelection = false;
       this.shared.updateIsSearchSelection = true;
