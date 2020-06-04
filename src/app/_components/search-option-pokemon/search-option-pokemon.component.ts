@@ -174,10 +174,10 @@ export class SearchOptionPokemonComponent implements OnInit, OnDestroy {
     };
 
     if (!this.api.cached_sl4) {
-      // this.api.loadedPokemonEntries.subscribe((res) => {
-      //   this.api.cached_sl4 = res;
-      //   sl4();
-      // });
+      this.api.loadedPokemonEntries.subscribe((res) => {
+        this.api.cached_sl4 = res;
+        sl4();
+      });
     } else { sl4(); }
 
     const sl5 = (res: any) => {
@@ -187,10 +187,10 @@ export class SearchOptionPokemonComponent implements OnInit, OnDestroy {
     };
 
     if (!this.api.cached_sl5) {
-      // this.api.selectionList_5.subscribe((res) => {
-      //   this.api.cached_sl5 = res;
-      //   sl5(res);
-      // });
+      this.api.selectionList_5.subscribe((res) => {
+        this.api.cached_sl5 = res;
+        sl5(res);
+      });
     } else { sl5(this.api.cached_sl5); }
 
     this.option.selectionList_6.state = true;
