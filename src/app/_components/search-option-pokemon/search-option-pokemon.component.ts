@@ -66,13 +66,13 @@ export class SearchOptionPokemonComponent implements OnInit, OnDestroy {
 
     this.options = {
       selectionList_1: [ 
-        { option: 'ability', display: 'Ability', placeholder: 'ability' },
-        { option: 'color', display: 'Color', placeholder: 'color' },
-        { option: 'eggGroup', display: 'Egg group', placeholder: 'egg group' },
-        { option: 'growthRate', display: 'Growth rate', placeholder: 'growth rate' },
-        { option: 'habitat', display: 'Habitat', placeholder: 'habitat' },
-        { option: 'shape', display: 'Shape', placeholder: 'shape' },
-        { option: 'type', display: 'Type', placeholder: 'type' }
+        { option: 'ability', display: 'Ability', placeholder: 'ability', description: 'Abilities provide passive effects for pokémon in battle or in the overworld. Pokémon have mutiple possible abilities but can have only one ability at a time.' },
+        { option: 'color', display: 'Color', placeholder: 'color', description: `Colors used for sorting pokémon in a pokédex. The color listed in the Pokédex is usually the color most apparent or covering each Pokémon's body. No orange category exists; Pokémon that are primarily orange are listed as red or brown.` },
+        { option: 'eggGroup', display: 'Egg group', placeholder: 'egg group', description: 'A list of egg groups this pokémon species is a member of.' },
+        { option: 'growthRate', display: 'Growth rate', placeholder: 'growth rate', description: 'Growth rates are the speed with which pokémon gain levels through experience.' },
+        { option: 'habitat', display: 'Habitat', placeholder: 'habitat', description: 'Habitats are generally different terrain pokémon can be found in but can also be areas designated for rare or legendary pokémon.' },
+        { option: 'shape', display: 'Shape', placeholder: 'shape', description: 'Shapes used for sorting pokémon in a pokédex.' },
+        { option: 'type', display: 'Type', placeholder: 'type', description: '	A list of details showing types this pokémon has' }
       ],
       selectionList_2: [
         { option: 'formsSwitchable', display: 'Forms switchable', description: 'Whether or not this pokémon has multiple forms and can switch between them.' },
@@ -96,8 +96,8 @@ export class SearchOptionPokemonComponent implements OnInit, OnDestroy {
         { option: 'pal_park', display: 'Pal park encounters', description: `Areas used for grouping pokémon encounters in Pal Park. They're like habitats that are specific to Pal Park.` },
       ],
       selectionList_6: [
-        { option: 'pokedex', display: 'Pokédex numbers', label1: 'Select pokédex', label2: 'Enter pokédex number' },
-        { option: 'stats', display: 'Stats', label1: 'Select stat', label2: 'Enter base stat' }
+        { option: 'pokedex', display: 'Pokédex numbers', label1: 'Select pokédex', label2: 'Enter pokédex number', description: 'A list of pokedexes and the indexes reserved within them for this pokémon species.' },
+        { option: 'stats', display: 'Stats', label1: 'Select stat', label2: 'Enter base stat', description: 'Stats determine certain aspects of battles. Each pokémon has a value for each stat which grows as they gain levels and can be altered momenarily by effects in battles.' }
       ]
     };
 

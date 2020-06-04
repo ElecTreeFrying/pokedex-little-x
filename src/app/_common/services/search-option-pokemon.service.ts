@@ -12,7 +12,7 @@ import { SharedService, pokedex } from './shared.service';
 })
 export class SearchOptionPokemonService {
 
-  url = {
+  private url = {
     ability: 'https://pokeapi.co/api/v2/ability/?offset=0&limit=293',
     color: 'https://pokeapi.co/api/v2/pokemon-color/',
     eggGroup: 'https://pokeapi.co/api/v2/egg-group/',

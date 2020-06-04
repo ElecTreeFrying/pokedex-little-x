@@ -23,6 +23,8 @@
     </mat-expansion-panel-header>
     <ng-template matExpansionPanelContent>
 
+      <p *ngIf="option.selectionList_1.selections[item.option]">{{ item.description }}</p>
+
       <mat-form-field appearance="outline" *ngIf="option.selectionList_1.selections[item.option]">
         <input 
           matInput 
@@ -41,6 +43,8 @@
             (click)="entries.next(x.data.pokemon_species)">{{ x.name }}</mat-option>
         </mat-autocomplete>
       </mat-form-field>
+
+      <p *ngIf="option.selectionList_1.selections[item.option]">Press enter to search</p>
 
       <p class="loading"*ngIf="!option.selectionList_1.selections[item.option]">Please wait...</p>
 
@@ -116,8 +120,8 @@
           type="number"
           autocomplete="off"
           minMaxValidator 
-          [min-]="selections.selectionList_3[item.option].meta.min" 
-          [max-]="selections.selectionList_3[item.option].meta.max"
+          [min-]="selections.selectionList_3[item.option].meta?.min" 
+          [max-]="selections.selectionList_3[item.option].meta?.max"
           [type]="item.option"
           [(ngModel)]="option.selectionList_3.input"
           (ngModelChange)="modelChangedSelection($event, 'selectionList_3', item.option, numberModel)" 
@@ -153,6 +157,8 @@
       <mat-panel-title><span>Moves</span></mat-panel-title>
     </mat-expansion-panel-header>
     <ng-template matExpansionPanelContent>
+
+      <p *ngIf="option.selectionList_4.selections['moves']">Moves are the skills of pokémon in battle. In battle, a Pokémon uses one move each turn. Some moves (including those learned by Hidden Machine) can be used outside of battle as well, usually for the purpose of removing obstacles or exploring new areas.</p>
 
       <mat-form-field appearance="outline" *ngIf="option.selectionList_4.selections['moves']">
         <input 
@@ -257,9 +263,11 @@
     </mat-expansion-panel-header>
     <ng-template matExpansionPanelContent>
 
+      <p *ngIf="option.selectionList_6.selections[item.option]">{{ item.description }}</p>
+
       <mat-form-field appearance="outline" *ngIf="option.selectionList_6.selections[item.option]">
         <mat-label>{{ item.label1 }}</mat-label>
-        <mat-select [(ngModel)]="option.selectionList_6.input1">
+        <mat-select [(ngModel)]="option.selectionList_6.input1" (selectionChange)="option.selectionList_6.input2 = ''">
           <mat-option *ngFor="let item of selections.selectionList_6[item.option]" [value]="item | lowercase | search: 'spn-selectionList_6'">{{ item }}</mat-option>
         </mat-select>
       </mat-form-field>
@@ -284,7 +292,7 @@
           (keydown.enter)="searchNumber('selectionList_6', item.option, option.selectionList_6.input1, lastModel)">
       </mat-form-field>
 
-      <p *ngIf="option.selectionList_6.selections[item.option]">Press enter to search</p>
+      <p *ngIf="option.selectionList_6.input1 !== ''">Press enter to search</p>
 
       <p class="loading"*ngIf="!option.selectionList_6.selections[item.option]">Please wait...</p>
 
