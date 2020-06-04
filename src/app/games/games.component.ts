@@ -105,6 +105,7 @@ export class GamesComponent implements OnInit, AfterViewInit, OnDestroy {
       }
 
       if (search === '-1') {
+        this.entries = normalState;
         normalState = [];
       }
 
