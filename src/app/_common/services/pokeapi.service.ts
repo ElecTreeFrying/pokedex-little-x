@@ -21,7 +21,7 @@ export class PokeapiService {
     private shared: SharedService
   ) { 
 
-    this.count = 0;
+    this.count = 3;
 
     shared.isLoadAll = true;
     shared.dialogIsOpened = false;
@@ -29,7 +29,7 @@ export class PokeapiService {
     shared.updateAppInitializationSelection = 1;
     shared.updateLoadMoreSelection = 0;
     shared.defaultLength = 50;
-    shared.index = { value: 0, count: 0 };
+    shared.index = { value: 30, count: 0 };
     
     this.loadCDN();
   }
@@ -342,7 +342,7 @@ export class PokeapiService {
 
   private clearCount() {
     if (this.shared.item_meta.ceil === this.shared.index.count) {
-      this.count = 0;
+      this.count = 3;
     }
   }
 

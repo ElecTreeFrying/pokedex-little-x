@@ -80,10 +80,11 @@ export class AppComponent implements OnInit, AfterViewInit {
       const target = <HTMLElement>response.target;
       const maxScroll = target.scrollHeight - target.clientHeight;
       let scrollValue = target.scrollTop;
+      const isInitial = (scrollValue === 0) && (maxScroll === 0)
   
       const full = this.shared.item_meta.ceil === this.shared.index.count;
       
-      if (this.shared.bottomSheetIsOpened || this.shared.loading === null) return;
+      if (this.shared.bottomSheetIsOpened || this.shared.loading === null || isInitial) return;
 
       if (scrollValue >= maxScroll && !full && !this.shared.loading) {
         this.shared.loading = true;

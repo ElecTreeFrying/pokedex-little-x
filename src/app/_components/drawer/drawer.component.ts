@@ -49,7 +49,7 @@ export class DrawerComponent implements OnInit {
     const id = game.key;
     this.shared.loading = false;
     this.shared.updatedLoadedAllSelection = false;
-    this.shared.index = { value: 0, count: 0 };
+    this.shared.index = { value: 30, count: 0 };
     this.shared.selectionData = undefined;
     
     this.router.navigate(['games'], {  
@@ -64,7 +64,7 @@ export class DrawerComponent implements OnInit {
   selection(parent: string, child: any) {
     
     this.shared.loading = false;
-    this.shared.index = { value: 0, count: 0 };
+    this.shared.index = { value: 30, count: 0 };
     this.shared.selectionData = undefined;
     setTimeout(() => (this.shared.updateLoadingCardsSelection = true));
 
