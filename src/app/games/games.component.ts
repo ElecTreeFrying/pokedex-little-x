@@ -263,9 +263,11 @@ export class GamesComponent implements OnInit, AfterViewInit, OnDestroy {
 
     const _length = this.all.length;
 
+    const buffer = _length > 70 ? 2 : 3;
+
     this.shared.item_meta = {
       // ceil: Math.ceil(this.all.length/this.shared.defaultLength),
-      ceil: Math.ceil(_length/20) + 1,
+      ceil: Math.ceil(_length/20) - buffer,
       floor: Math.floor(this.all.length/this.shared.defaultLength)*this.shared.defaultLength
     };
 

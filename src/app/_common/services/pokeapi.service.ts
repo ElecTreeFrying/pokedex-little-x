@@ -21,7 +21,7 @@ export class PokeapiService {
     private shared: SharedService
   ) { 
 
-    this.count = 3;
+    this.count = 0;
 
     shared.isLoadAll = true;
     shared.dialogIsOpened = false;
@@ -342,7 +342,7 @@ export class PokeapiService {
 
   private clearCount() {
     if (this.shared.item_meta.ceil === this.shared.index.count) {
-      this.count = 3;
+      this.count = 0;
     }
   }
 
