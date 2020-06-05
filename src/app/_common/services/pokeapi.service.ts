@@ -321,6 +321,8 @@ export class PokeapiService {
       count: ++this.count
     };
 
+    // console.log(this.shared.index.value, this.shared.index.value + defaultLength);
+
     this.clearCount();
 
     return entries.slice(this.shared.index.value, this.shared.index.value + defaultLength);

@@ -79,6 +79,7 @@ export class GamesComponent implements OnInit, AfterViewInit, OnDestroy {
       this.shared.updateIsLoadingSelection = false;
 
       if (this.entries.length === this.all.length) {
+        this.shared.loading = null;
         this.shared.updatedLoadedAllSelection = true;
       } else {
         this.shared.updatedLoadedAllSelection = false;
@@ -263,13 +264,16 @@ export class GamesComponent implements OnInit, AfterViewInit, OnDestroy {
 
     const _length = this.all.length;
 
-    const buffer = _length > 70 ? 2 : 3;
+    const ceil = Math.ceil(_length/20);
+    const floor = Math.floor(this.all.length/this.shared.defaultLength)*this.shared.defaultLength;
 
     this.shared.item_meta = {
       // ceil: Math.ceil(this.all.length/this.shared.defaultLength),
-      ceil: Math.ceil(_length/20) - buffer,
-      floor: Math.floor(this.all.length/this.shared.defaultLength)*this.shared.defaultLength
+      ceil: ceil - 2,
+      floor: floor
     };
+
+    // console.log(this.shared.item_meta, _length - floor);
 
     if (this.all.length < this.shared.defaultLength) {
       this.shared.updateHideLoadMoreSelection = true;
@@ -279,6 +283,11 @@ export class GamesComponent implements OnInit, AfterViewInit, OnDestroy {
   private loadInitialCards() {
     
     this.entries = [];
+
+    // console.clear();
+    // console.log(this.all);
+    // console.log(this.all[this.all.length - 1].name);
+
 
     setTimeout(() => (this.shared.updateLoadingCardsSelection = true));
     
@@ -291,9 +300,13 @@ export class GamesComponent implements OnInit, AfterViewInit, OnDestroy {
       this.entries = this.all.slice(0, this.shared.defaultLength);
       this.shared.updateLoadingCardsSelection = false;
 
+      // console.log(this.entries);
+
       if (!this.shared.isLoadAll) return;
 
       this.shared.updateHideLoadMoreSelection = this.all.length < this.shared.defaultLength;
+
+      this.shared.loading = this.all.length < this.shared.defaultLength ? null : false;
 
     }, 750);
   }

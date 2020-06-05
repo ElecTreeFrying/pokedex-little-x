@@ -29,6 +29,17 @@ export class KeyboardDirective {
     if (event.code === 'Escape') {
       this.toggle.next(false);
     }
+
+    if (event.code === 'KeyS') {
+      this.shared.updateScrollTestSelection = true;
+    }
+    
+    if (event.code === 'KeyD') {
+      this.shared.updateScrollTestSelection = false;
+    }
+
+
+
   }
   
   @HostListener('window:keydown', ['$event'])

@@ -184,6 +184,14 @@ export class AppComponent implements OnInit, AfterViewInit {
       
     });
 
+    this.shared.scrollTest.subscribe((res: any) => {
+
+      res = res ? 99999999999999999999999 : 0;
+      
+      this.simplebar.getScrollElement().scrollTop = res;
+      
+    });
+
   }
 
   private _bottomSheetRef: MatBottomSheetRef<SearchComponent>;
