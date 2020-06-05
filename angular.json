@@ -138,7 +138,7 @@
         "deploy": {
           "builder": "@netlify-builder/deploy:deploy",
           "options": {
-            "outputPath": "dist/pokedex-little-netlify",
+            "outputPath": "dist/pokedex-little",
             "netlifyToken": "96052bda9c0e06fef65e8d8a810ae83e1b516f1599090466cf9fd3b13e54329b",
             "siteId": "48281d5b-1740-411e-8359-281741ff466c"
           }
