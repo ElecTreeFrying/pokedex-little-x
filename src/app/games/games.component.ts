@@ -147,7 +147,7 @@ export class GamesComponent implements OnInit, AfterViewInit, OnDestroy {
     const isItems = route === 'items';
     const isCategory = route === 'category';
 
-    this.route['conquest_gallery'] = res.id === 11;
+    this.route['conquest_gallery'] = res.id === 11 && res.type === 'pokedex';
     this.route['isGames'] = isGames;
     this.route['isItems'] = isItems;
     this.route['isCategory'] = isCategory;
