@@ -8,8 +8,13 @@ import { FooterComponentModule } from '../modules/footer-component.module';
 import { IdToImagePipeModule } from '../modules/id-to-image-pipe.module';
 import { CardTextPipeModule } from '../modules/card-text-pipe.module';
 
+import { HeaderAnimateDirective } from '../directives/header-animate.directive';
+
 
 @NgModule({
+  declarations: [
+    HeaderAnimateDirective
+  ],
   exports: [
     LazyLoadImageModule,
     MatCardModule,
@@ -17,7 +22,8 @@ import { CardTextPipeModule } from '../modules/card-text-pipe.module';
     MatIconModule,
     IdToImagePipeModule,
     CardTextPipeModule,
-    FooterComponentModule
+    FooterComponentModule,
+    HeaderAnimateDirective
   ]
 })
 export class GamesProviderModule { }

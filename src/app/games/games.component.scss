@@ -1,6 +1,45 @@
 
+
 .wrap {
-  min-height: calc(100vh - 64px - 170px - 60px);
+  min-height: calc(100vh - 64px - 170px - 60px + 30px);
+
+  .header-content {
+    background-color: #530034;
+    margin: -30px -45px 30px -45px;
+    height: 150px;
+    padding: 50px;
+    position: sticky;
+    z-index: 100;
+    top: 0;
+
+    p {
+      font-family: 'Cairo', 'Cairo-SemiBold';
+    }
+
+    &.expanded {
+      transition: 0.3s ease all;
+
+      p {
+        font-size: 3em;
+        color: white;
+        transition: 0.3s ease all;
+      }
+    }
+    
+    &.collapsed {
+      height: 55px;
+      display: flex;
+      transition: 0.3s ease all;
+      padding: 0;
+      
+      p {
+        font-size: 1.7em;
+        color: white;
+        margin: auto 0 auto 24px;
+        transition: 0.3s ease all;
+      }
+    }
+  }
 }
 
 .footer {

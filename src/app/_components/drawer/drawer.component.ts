@@ -57,7 +57,18 @@ export class DrawerComponent implements OnInit {
       fragment: type.toLowerCase()
     }).then(() => {
       
-      this.shared.updatedRouteChangeSelection = { id, type };
+      let header = null;
+
+      if (type === 'version-group') {
+        header = game.display;
+      } else {
+        header = game.name;
+      }
+
+      this.shared.updateHeaderTextSelection = header;
+      this.shared.updateScrollValueSelection = 100;
+
+      this.shared.updatedRouteChangeSelection = { id, type, header };
     });
   }
   

@@ -1,6 +1,13 @@
 
 <div class="wrap">
 
+  <div class="header-content mat-elevation-z5 expanded" headerAnimate [el]="headerContent" #headerContent>
+    
+    <p *ngIf="!(shared.headerText | async)">Lorem</p>
+    <p>{{ shared.headerText | async }}</p>
+
+  </div>
+
   <div class="card-content">
     <div matRipple class="mat-elevation-z5" *ngFor="let entry of entries; let i = index; trackBy: trackByID">
 

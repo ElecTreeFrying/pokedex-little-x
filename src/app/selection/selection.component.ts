@@ -215,7 +215,12 @@ export class SelectionComponent implements OnInit, OnDestroy {
       
       type = type === 'categories' ? 'category' : type;
 
-      this.shared.updatedRouteChangeSelection = { id, type };
+      const header = selection.name;
+
+      this.shared.updateHeaderTextSelection = header;
+      this.shared.updateScrollValueSelection = 100;
+
+      this.shared.updatedRouteChangeSelection = { id, type, header };
     });
   }
 
@@ -227,8 +232,13 @@ export class SelectionComponent implements OnInit, OnDestroy {
       queryParams: { name: selection.name, id },
       fragment: type
     }).then(() => {
-      
-      this.shared.updatedRouteChangeSelection = { id, type };
+
+      const header = `${selection.name} type Pokémon`;
+
+      this.shared.updateHeaderTextSelection = header;
+      this.shared.updateScrollValueSelection = 100;
+
+      this.shared.updatedRouteChangeSelection = { id, type, header };
     });
   }
 

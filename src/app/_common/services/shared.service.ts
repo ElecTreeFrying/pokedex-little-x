@@ -49,6 +49,8 @@ export class SharedService {
   private isSearchSource = new BehaviorSubject(null);
   private optionLoadedSource = new BehaviorSubject(null);
   private navigationStateSource = new BehaviorSubject(null);
+  private scrollValueSource = new BehaviorSubject(null);
+  private headerTextSource = new BehaviorSubject(null);
   private scrollTestSource = new BehaviorSubject(null);
 
   loadedAll = this.loadedAllSource.asObservable();
@@ -72,6 +74,8 @@ export class SharedService {
   isSearch = this.isSearchSource.asObservable().pipe( filter(e => e !== null) );
   optionLoaded = this.optionLoadedSource.asObservable().pipe( filter(e => e) );
   navigationState = this.navigationStateSource.asObservable().pipe( filter(e => e !== null) );
+  scrollValue = this.scrollValueSource.asObservable().pipe( filter(e => e !== null) );
+  headerText = this.headerTextSource.asObservable();
   scrollTest = this.scrollTestSource.asObservable().pipe( filter(e => e !== null) );
 
   private _id: number;
@@ -299,6 +303,14 @@ export class SharedService {
     this.scrollTestSource.next(data);
   }
 
+  set updateHeaderTextSelection(data: string) {
+    this.headerTextSource.next(data);
+  }
+
+  set updateScrollValueSelection(data: number) {
+    this.scrollValueSource.next(data);
+  }
+
 }
 
 export const home = [
@@ -377,6 +389,18 @@ export const pokedex = [
   { key: 13, name: 'Kalos Coastal Pokédex' }, 
   { key: 14, name: 'Kalos Mountain Pokédex' }, 
   { key: 15, name: 'Updated Hoenn Pokédex' },
+  
+  // { key: 16, name: "Original Alola" },
+  // { key: 17, name: "Original Melemele" },
+  // { key: 18, name: "Original Akala" },
+  // { key: 19, name: "Original Ulaula" },
+  // { key: 20, name: "Original Poni" },
+  // { key: 21, name: "Updated Alola" },
+  // { key: 22, name: "Updated Melemele" },
+  // { key: 23, name: "Updated Akala" },
+  // { key: 24, name: "Updated Ulaula" },
+  // { key: 25, name: "Updated Poni" },
+
   { key: 0, name: 'All Pokémon' }
 ];
 
@@ -424,26 +448,26 @@ export const version = [
 ];
 
 export const version_group = [
-  { key: 2, id: 1, name: 'Red, Blue' },
-  { key: 2, id: 2, name: 'Yellow' },
-  { key: 3, id: 3, name: 'Gold, Silver' },
-  { key: 3, id: 4, name: 'Crystal' },
-  { key: 4, id: 5, name: 'Ruby, Sapphire' },
-  { key: 4, id: 6, name: 'Emerald' },
-  { key: 2, id: 7, name: 'Firered, Leafgreen' },
-  { key: 5, id: 8, name: 'Diamond, Pearl' },
-  { key: 6, id: 9, name: 'Platinum' },
-  { key: 7, id: 10, name: 'Heartgold, Soulsilver' },
-  { key: 8, id: 11, name: 'Black, White' },
+  { key: 2, id: 1, name: 'Red, Blue', display: 'Pokémon Red & Blue' },
+  { key: 2, id: 2, name: 'Yellow', display: 'Pokémon Yellow' },
+  { key: 3, id: 3, name: 'Gold, Silver', display: 'Pokémon Gold & Silver' },
+  { key: 3, id: 4, name: 'Crystal', display: 'Pokémon Crystal' },
+  { key: 4, id: 5, name: 'Ruby, Sapphire', display: 'Pokémon Ruby & Sapphire' },
+  { key: 4, id: 6, name: 'Emerald', display: 'Pokémon Emerald' },
+  { key: 2, id: 7, name: 'FireRed, LeafGreen', display: 'Pokémon FireRed & LeafGreen' },
+  { key: 5, id: 8, name: 'Diamond, Pearl', display: 'Pokémon Diamond & Pearl' },
+  { key: 6, id: 9, name: 'Platinum', display: 'Pokémon Platinum' },
+  { key: 7, id: 10, name: 'HeartGold, SoulSilver', display: 'Pokémon HeartGold & SoulSilver' },
+  { key: 8, id: 11, name: 'Black, White', display: 'Pokémon Black & White' },
   
-  { key: 0, id: 12, name: 'Colosseum' },
-  { key: 0, id: 13, name: 'XD' },
-  { key: 0, id: 17, name: 'Sum, Moon' },
-  { key: 0, id: 18, name: 'Ultra Sun, Ultra Moon' },
+  { key: 0, id: 12, name: 'Colosseum', display: 'Pokémon Colosseum' },
+  { key: 0, id: 13, name: 'XD', display: 'Pokémon XD' },
+  { key: 0, id: 17, name: 'Sum, Moon', display: 'Pokémon Sun & Moon' },
+  { key: 0, id: 18, name: 'Ultra Sun, Ultra Moon', display: 'Pokémon Ultra Sun & Ultra Moon' },
 
-  { key: 9, id: 14, name: 'Black 2, White 2' },
-  { key: -1, id: 15, name: 'X, Y' },
-  { key: 15, id: 16, name: 'Omega Ruby, Alpha Sapphire' }
+  { key: 9, id: 14, name: 'Black 2, White 2', display: 'Pokémon Black 2 & White 2' },
+  { key: -1, id: 15, name: 'X, Y', display: 'Pokémon X & Y' },
+  { key: 15, id: 16, name: 'Omega Ruby, Alpha Sapphire', display: 'Pokémon Omega Ruby & Alpha Sapphire' }
 ];
 
 export const items = [

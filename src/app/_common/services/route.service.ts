@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Location } from "@angular/common";
 import { Router, NavigationStart } from '@angular/router';
-import { map, filter } from 'rxjs/operators';
+import { map, filter, delay } from 'rxjs/operators';
 import { capitalize } from 'lodash';
 
-import { SharedService } from './shared.service';
+import { SharedService, pokedex, version_group, generation, type as SharedType } from './shared.service';
 
 
 @Injectable({
@@ -108,14 +108,13 @@ export class RouteService {
     if (isPokemon || type === 'machine') {
       
       const id = +split[0].split('&')[1].split('=')[1];
-      this.shared.updatedRouteChangeSelection = { type, id };
-      return;
+      return this.updateHeaderText(split, type, name);
     } 
     
     if (isSelection) {
       
       this.shared.updatedRouteChangeSelection = { type: name };
-      return;
+      return this.updateHeaderText(split, type, name);
     }
     
     if (isItem && name !== 'berries') {
@@ -123,28 +122,79 @@ export class RouteService {
       const id = +split[0].split('&')[1].split('=')[1];
       
       type = type === 'categories' ? 'category' : type;
-      this.shared.updatedRouteChangeSelection = { type, id };
-      
-      return;
+      return this.updateHeaderText(split, type, name);
     }
 
     if (type === 'move') {
       
-      this.shared.updatedRouteChangeSelection = { type: name, id: -1 };
-      return;
+      return this.shared.updatedRouteChangeSelection = { type: name, id: -1 };
     } else if (type === 'region') {
       
       const id = +split[0].split('&')[1].split('=')[1];
       const type = name.split(' ').map(e => capitalize(e)).join(' ');
       
-      this.shared.updatedRouteChangeSelection = { type, id };
-      return;
+      return this.shared.updatedRouteChangeSelection = { type, id };
     }
     
     if (name === 'berries') {
       
-      this.shared.updatedRouteChangeSelection = { type: name, id: -99 };
-      return;
+      return this.shared.updatedRouteChangeSelection = { type: name, id: -99 };
+    }
+  }
+
+  private updateHeaderText(split: string, type: string, name: string) {
+
+    const data = JSON.parse(sessionStorage.getItem('route'));
+
+    if (type === 'pokedex') {
+      
+      const id = +split[0].split('&')[1].split('=')[1];
+      const header = pokedex.find(e => e.key === id).name;
+      this.shared.updateHeaderTextSelection = header;
+
+      this.shared.updatedRouteChangeSelection = { type, id, header };
+      
+    } else if (type === 'generation') {
+      
+      const id = +split[0].split('&')[1].split('=')[1];
+      const header = generation.find(e => e.key === id).name;
+      this.shared.updateHeaderTextSelection = header;
+
+      this.shared.updatedRouteChangeSelection = { type, id, header };
+      
+    } else if (type === 'version-group') {
+      
+      const id = +split[0].split('&')[1].split('=')[1];
+      const header = version_group.find(e => e.name.toLowerCase() === name).display;
+      this.shared.updateHeaderTextSelection = header;
+
+      this.shared.updatedRouteChangeSelection = { type, id, header };
+      
+    } else if (type === 'type') {
+      
+      const id = +split[0].split('&')[1].split('=')[1];
+      const header = `${SharedType.find(e => e.key === id).name} type Pokémon`;
+      this.shared.updateHeaderTextSelection = header;
+
+      this.shared.updatedRouteChangeSelection = { type, id, header };
+      
+    } else if (type === 'generation') {
+      
+      const id = +split[0].split('&')[1].split('=')[1];
+      const header = generation.find(e => e.key === id).name;
+      this.shared.updateHeaderTextSelection = header;
+
+      this.shared.updatedRouteChangeSelection = { type, id, header };
+      
+    }
+    
+    if ((type === 'items' && name !== 'categories') || type === 'category') {
+    
+      const id = +split[0].split('&')[1].split('=')[1];
+      const header = capitalize(name);
+      this.shared.updateHeaderTextSelection = header;
+      this.shared.updatedRouteChangeSelection = { type, id, header };
+
     }
   }
 

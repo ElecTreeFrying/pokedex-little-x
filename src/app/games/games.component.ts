@@ -37,6 +37,7 @@ export class GamesComponent implements OnInit, AfterViewInit, OnDestroy {
     this.subscriptions.push(this.shared.routeChange.subscribe((res) => {
       this.setupProcess = res;
       this.state = res;
+      this.shared.updateHeaderTextSelection = res.header;
     }));
   }
 
