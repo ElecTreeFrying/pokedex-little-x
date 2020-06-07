@@ -1,10 +1,13 @@
 import { Component, Renderer2, OnInit, OnDestroy, AfterViewInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { MatButton } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
+import { Subscription } from 'rxjs';
+
 
 import { SharedService } from '../_common/services/shared.service';
 import { SearchItemService } from '../_common/services/search-item.service';
 import { ComponentSelectorService } from '../_common/services/component-selector.service';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
 
 
 @Component({
@@ -24,10 +27,13 @@ export class SearchItemsComponent implements OnInit, AfterViewInit, OnDestroy {
   wrapStyle: any;
   searchItemContentStyle: any;
 
+  subscriptions: Subscription[];
+
   constructor(
     private render: Renderer2,
     private cd: ChangeDetectorRef,
     private dialog: MatDialog,
+    private bottomSheet: MatBottomSheet, 
     private api: SearchItemService,
     private shared: SharedService,
     private componentSelector: ComponentSelectorService
@@ -42,6 +48,32 @@ export class SearchItemsComponent implements OnInit, AfterViewInit, OnDestroy {
   ngAfterViewInit() {
     
     this.wrapStyle = this.wrapStyleProcess;
+
+    let normalState = [];
+
+    this.subscriptions.push(this.shared.search.subscribe((search: string) => {
+      
+      if (search === '') {
+        
+        if (normalState.length === 0) {
+          normalState = this.entries; }
+
+        this.entries = normalState;
+        this.cd.detectChanges();
+      } 
+      
+      if (search !== '' && search !== '-1') {
+
+        this.entries = normalState.filter(e => e.name.includes(search));
+        this.cd.detectChanges();
+      }
+
+      if (search === '-1') {
+        this.entries = normalState;
+        normalState = [];
+      }
+
+    }));
 
     setTimeout(() => {
       this.searchItemContentStyle = this.searchItemContentStyleProcess;
@@ -58,6 +90,8 @@ export class SearchItemsComponent implements OnInit, AfterViewInit, OnDestroy {
     this.entries = [];
     this.wrapStyle = {};
     this.searchItemContentStyle = {};
+
+    this.subscriptions = [];
 
     setTimeout(() => {
       this.shared.updateIsLoadingSelection = false;
@@ -93,8 +127,11 @@ export class SearchItemsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   selectDisplay(option: number) {
 
-    this.entries = [];
-    this.shared.updateAppInitializationSelection = 3;
+    setTimeout(() => {
+      this.entries = [];
+      this.bottomSheet.dismiss();
+      this.shared.updateAppInitializationSelection = 3;
+    }, 50);
 
     if (option < 2) {
       this.shared.updateOptionLoadedSelection = true;
@@ -122,6 +159,7 @@ export class SearchItemsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   postEntries(entries: any[]) {
     this.entries = entries;
+    this.shared.updateHideSearchSelection = false;
     this.shared.updateOptionLoadedSelection = true;
   }
 

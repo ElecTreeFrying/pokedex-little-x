@@ -26,7 +26,7 @@ export class SearchOptionPokemonComponent implements OnInit, OnDestroy {
   
   constructor(
     public api: SearchOptionPokemonService,
-    private shared: SharedService
+    public shared: SharedService
   ) { }
   
   ngOnInit(): void {

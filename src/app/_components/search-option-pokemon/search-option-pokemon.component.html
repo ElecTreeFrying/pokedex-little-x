@@ -1,5 +1,5 @@
 
-<button mat-raised-button class="refresh" (click)="refreshed.next(true)">
+<button mat-raised-button class="refresh" (click)="refreshed.next(true);shared.updateHideSearchSelection = true">
   <span>Refresh</span>
   <mat-icon>refresh</mat-icon>
 </button>
