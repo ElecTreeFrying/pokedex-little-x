@@ -81,9 +81,20 @@ export class GamesComponent implements OnInit, AfterViewInit, OnDestroy {
 
       if (this.entries.length === this.all.length) {
         this.shared.loading = null;
-        this.shared.updatedLoadedAllSelection = true;
+        this.shared.index = { value: 30, count: 0 };
+        
+        this.shared.updateLoadMoreSelection = -1;
+        this.shared.isLoadAll = false;
+        
+        setTimeout(() => {
+          this.shared.updatedLoadedAllSelection = true;
+          this.shared.loading = true;
+        }, 150);
+
       } else {
+
         this.shared.updatedLoadedAllSelection = false;
+
       }
     }));
 
