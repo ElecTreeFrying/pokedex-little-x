@@ -462,7 +462,7 @@ export const version_group = [
   
   { key: 0, id: 12, name: 'Colosseum', display: 'Pokémon Colosseum' },
   { key: 0, id: 13, name: 'XD', display: 'Pokémon XD' },
-  { key: 0, id: 17, name: 'Sum, Moon', display: 'Pokémon Sun & Moon' },
+  { key: 0, id: 17, name: 'Sun, Moon', display: 'Pokémon Sun & Moon' },
   { key: 0, id: 18, name: 'Ultra Sun, Ultra Moon', display: 'Pokémon Ultra Sun & Ultra Moon' },
 
   { key: 9, id: 14, name: 'Black 2, White 2', display: 'Pokémon Black 2 & White 2' },
