@@ -3,6 +3,7 @@
 # user
 .vscode
 .firebase
+.netlify
 .firebaserc
 *.spec.ts
 firebase-debug.log
@@ -55,3 +56,6 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+# Local Netlify folder
+.netlify
