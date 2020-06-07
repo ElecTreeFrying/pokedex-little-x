@@ -36,13 +36,16 @@ export class SearchItemsComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit(): void {
 
     this.initialize();
-    this.selectedView();
+    // this.selectedView();
   }
   
   ngAfterViewInit() {
     
     this.wrapStyle = this.wrapStyleProcess;
-    this.searchItemContentStyle = this.searchItemContentStyleProcess;
+
+    setTimeout(() => {
+      this.searchItemContentStyle = this.searchItemContentStyleProcess;
+    });
   }
   
   ngOnDestroy() {
@@ -96,7 +99,9 @@ export class SearchItemsComponent implements OnInit, AfterViewInit, OnDestroy {
     if (option < 2) {
       this.shared.updateOptionLoadedSelection = true;
     } else {
-      this.searchItemContentStyle = this.searchItemContentStyleProcess;
+      setTimeout(() => {
+        this.searchItemContentStyle = this.searchItemContentStyleProcess;
+      }, 50);
     }
 
     this.writeSelectedView(option);

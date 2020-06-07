@@ -13,9 +13,9 @@ export class SearchPipe implements PipeTransform {
     if (option === 'selection-display') {
       const views = [ 'pokémon', 'moves', 'items', 'berries' ];
 
-      if (!value) return 'pokémon';
+      if (!value && value !== 0) return '';
 
-      return views[+value];
+      return `Select an option to display ${views[+value]}.`;
     }
 
     if (!value) return;
