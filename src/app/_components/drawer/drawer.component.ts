@@ -91,6 +91,9 @@ export class DrawerComponent implements OnInit {
   defaultSelection(parent: string, child: any) {
     const id = parent !== 'move' ? -99 : -1;
     
+    this.shared.updateHeaderTextSelection = child;
+    this.shared.updateScrollValueSelection = 100;
+    
     this.router.navigate([ 'selection' ], {  
       queryParams: { name: child.toLowerCase() },
       fragment: parent.toLowerCase()
@@ -103,6 +106,9 @@ export class DrawerComponent implements OnInit {
   }
 
   machineSelection(parent: string, child: any) {
+
+    this.shared.updateHeaderTextSelection = child.display;
+    this.shared.updateScrollValueSelection = 100;
 
     this.router.navigate([ 'selection' ], {  
       queryParams: { name: child.name.toLowerCase(), id: child.id },
@@ -118,6 +124,9 @@ export class DrawerComponent implements OnInit {
   regionSelection(parent: string, child: any) {
     const id = child.key;
     
+    this.shared.updateHeaderTextSelection = child.name;
+    this.shared.updateScrollValueSelection = 100;
+
     this.router.navigate([ 'selection' ], {  
       queryParams: { name: child.name.toLowerCase(), id },
       fragment: parent.toLowerCase()

@@ -1,6 +1,30 @@
 
 <div class="wrap">
   
+  <div class="header-content-selection expanded" *ngIf="type === 'type' || type === 'categories'">
+    
+    <p *ngIf="type === 'type'">Pokémon types</p>
+    <p *ngIf="type === 'categories'">Item categories</p>
+    
+
+  </div>
+
+  <div class="header-content mat-elevation-z5 expanded" headerAnimate [el]="headerContent" #headerContent *ngIf="!(type === 'type' || type === 'categories')">
+    
+    <p *ngIf="type === 'berries'">Berries</p>
+
+    <p *ngIf="type !== 'berries'">
+      <span *ngIf="type.includes('move-')">Moves</span>
+      <span *ngIf="type === 'machine'">Machines</span>
+      <span *ngIf="type.endsWith(' Region')">Locations</span>
+      <span>: {{ shared.headerText | async }}</span>
+    </p>
+
+
+  </div>
+
+  <mat-divider *ngIf="type === 'type' || type === 'categories'"></mat-divider>
+
   <div class="card-content" *ngIf="type === 'berries'">
     
     <div matRipple class="mat-elevation-z5"*ngFor="let selection of selections | selection: type">

@@ -95,21 +95,10 @@ export class RouteService {
     let type = split[1];
     
     const name = decodeURI(split[0].split('&')[0].split('=')[1]);
-
-    const isPokemon = type === 'pokedex' || type === 'generation' || type === 'version-group' || type === 'type';
-    
-    const isItem = type === 'items' || type === 'categories';
     
     const isSelection = 
       (name === 'type' && type === 'pokemon') || 
       (name === 'categories' && type === 'items');
-    
-    
-    if (isPokemon || type === 'machine') {
-      
-      const id = +split[0].split('&')[1].split('=')[1];
-      return this.updateHeaderText(split, type, name);
-    } 
     
     if (isSelection) {
       
@@ -117,29 +106,9 @@ export class RouteService {
       return this.updateHeaderText(split, type, name);
     }
     
-    if (isItem && name !== 'berries') {
-      
-      const id = +split[0].split('&')[1].split('=')[1];
-      
-      type = type === 'categories' ? 'category' : type;
-      return this.updateHeaderText(split, type, name);
-    }
+    type = type === 'categories' ? 'category' : type;
+    this.updateHeaderText(split, type, name);
 
-    if (type === 'move') {
-      
-      return this.shared.updatedRouteChangeSelection = { type: name, id: -1 };
-    } else if (type === 'region') {
-      
-      const id = +split[0].split('&')[1].split('=')[1];
-      const type = name.split(' ').map(e => capitalize(e)).join(' ');
-      
-      return this.shared.updatedRouteChangeSelection = { type, id };
-    }
-    
-    if (name === 'berries') {
-      
-      return this.shared.updatedRouteChangeSelection = { type: name, id: -99 };
-    }
   }
 
   private updateHeaderText(split: string, type: string, name: string) {
@@ -186,6 +155,34 @@ export class RouteService {
 
       this.shared.updatedRouteChangeSelection = { type, id, header };
       
+    } else if (type === 'move') {
+
+      const _name = capitalize(name);
+      this.shared.updateHeaderTextSelection = _name;
+      this.shared.updatedRouteChangeSelection = { type: name, id: -1 };
+
+      sessionStorage.setItem('route', JSON.stringify({ id: -1, type: _name }));
+
+    } else if (type === 'region') {
+
+      const id = +split[0].split('&')[1].split('=')[1];
+      const type = name.split(' ').map(e => capitalize(e)).join(' ');
+      
+      this.shared.updateHeaderTextSelection = type;
+      this.shared.updatedRouteChangeSelection = { type, id };
+      
+      sessionStorage.setItem('route', JSON.stringify({ id, type }));
+    
+    } else if (type === 'machine') {
+      
+      const id = +split[0].split('&')[1].split('=')[1];
+      const header = version_group.find(e => e.id === id).display;
+
+      this.shared.updateHeaderTextSelection = header;
+      this.shared.updatedRouteChangeSelection = { type, id };
+
+      sessionStorage.setItem('route', JSON.stringify({ id, type: 'machine' }));
+
     }
     
     if ((type === 'items' && name !== 'categories') || type === 'category') {
