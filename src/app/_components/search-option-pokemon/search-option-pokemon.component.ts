@@ -44,13 +44,10 @@ export class SearchOptionPokemonComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.shared.isSearchRoute = false;
     this.subscriptions.forEach((e) => e.unsubscribe());
   }
   
   initialize() {
-
-    this.shared.isSearchRoute = true;
     
     this.selections = {
       selectionList_1: {},
