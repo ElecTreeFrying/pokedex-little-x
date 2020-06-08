@@ -24,6 +24,7 @@ export class SearchItemsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   selected: number;
   entries: any[];
+  normalState: any[];
   wrapStyle: any;
   searchItemContentStyle: any;
 
@@ -49,28 +50,28 @@ export class SearchItemsComponent implements OnInit, AfterViewInit, OnDestroy {
     
     this.wrapStyle = this.wrapStyleProcess;
 
-    let normalState = [];
+    this.normalState = [];
 
     this.subscriptions.push(this.shared.search.subscribe((search: string) => {
       
       if (search === '') {
         
-        if (normalState.length === 0) {
-          normalState = this.entries; }
+        if (this.normalState.length === 0) {
+          this.normalState = this.entries; }
 
-        this.entries = normalState;
+        this.entries = this.normalState;
         this.cd.detectChanges();
       } 
       
       if (search !== '' && search !== '-1') {
 
-        this.entries = normalState.filter(e => e.name.includes(search));
+        this.entries = this.normalState.filter(e => e.name.includes(search));
         this.cd.detectChanges();
       }
 
       if (search === '-1') {
-        this.entries = normalState;
-        normalState = [];
+        this.entries = this.normalState;
+        this.normalState = [];
       }
 
     }));
@@ -88,6 +89,7 @@ export class SearchItemsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   initialize() {
     this.entries = [];
+    this.normalState = [];
     this.wrapStyle = {};
     this.searchItemContentStyle = {};
 
@@ -127,11 +129,12 @@ export class SearchItemsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   selectDisplay(option: number) {
 
-    setTimeout(() => {
-      this.entries = [];
-      this.bottomSheet.dismiss();
-      this.shared.updateAppInitializationSelection = 3;
-    }, 50);
+    this.entries = [];
+    this.normalState = [];
+
+    this.bottomSheet.dismiss();
+
+    this.shared.updateAppInitializationSelection = 3;
 
     if (option < 2) {
       this.shared.updateOptionLoadedSelection = true;
