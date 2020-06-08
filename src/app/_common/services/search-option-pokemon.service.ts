@@ -375,3 +375,91 @@ export class SearchOptionPokemonService {
   }
 
 }
+
+export const selections = {
+  selectionList_1: {},
+  selectionList_2: {},
+  selectionList_3: {},
+  selectionList_4: [],
+  selectionList_5: {},
+  selectionList_6: {},
+};
+
+export const options = {
+  selectionList_1: [ 
+    { option: 'ability', display: 'Ability', placeholder: 'ability', description: 'Abilities provide passive effects for pokémon in battle or in the overworld. Pokémon have mutiple possible abilities but can have only one ability at a time.' },
+    { option: 'color', display: 'Color', placeholder: 'color', description: `Colors used for sorting pokémon in a pokédex. The color listed in the Pokédex is usually the color most apparent or covering each Pokémon's body. No orange category exists; Pokémon that are primarily orange are listed as red or brown.` },
+    { option: 'eggGroup', display: 'Egg group', placeholder: 'egg group', description: 'A list of egg groups this pokémon species is a member of.' },
+    { option: 'growthRate', display: 'Growth rate', placeholder: 'growth rate', description: 'Growth rates are the speed with which pokémon gain levels through experience.' },
+    { option: 'habitat', display: 'Habitat', placeholder: 'habitat', description: 'Habitats are generally different terrain pokémon can be found in but can also be areas designated for rare or legendary pokémon.' },
+    { option: 'shape', display: 'Shape', placeholder: 'shape', description: 'Shapes used for sorting pokémon in a pokédex.' },
+    { option: 'type', display: 'Type', placeholder: 'type', description: '	A list of details showing types this pokémon has' }
+  ],
+  selectionList_2: [
+    { option: 'formsSwitchable', display: 'Forms switchable', description: 'Whether or not this pokémon has multiple forms and can switch between them.' },
+    { option: 'hasGenderDifferences', display: 'Has gender differences', description: 'Whether or not this pokémon can have different genders.' },
+    { option: 'isBaby', display: 'Is baby', description: 'Whether or not this is a baby pokémon.' },
+    { option: 'isDefault', display: 'Is default', description: 'Set for exactly one pokémon used as the default for each species.' },
+    { option: 'isMega', display: 'Is mega', description: 'Whether or not this form requires mega evolution.' },
+  ],
+  selectionList_3: [
+    { option: 'baseExperience', display: 'Base experience', description: 'The base experience gained for defeating this pokémon.' },
+    { option: 'baseHappiness', display: 'Base happiness', description: 'The happiness when caught by a normal pokéball; up to 255. The higher the number, the happier the pokémon.' },
+    { option: 'captureRate', display: 'Capture rate', description: 'The base capture rate; up to 255. The higher the number, the easier the catch.' },
+    { option: 'hatchCounter', display: 'Hatch counter', description: `Initial hatch counter: one must walk 255 × (hatch_counter + 1) steps before this Pokémon's egg hatches, unless utilizing bonuses like Flame Body's.` },
+    { option: 'height', display: 'Height', description: 'The height of this pokémon.' },
+    { option: 'pokemonNo', display: 'Pokémon no.', description: 'The identifier for this pokémon resource.' },
+    { option: 'weight', display: 'Weight', description: 'The mass of this pokémon.' },
+  ],
+  selectionList_4: [],
+  selectionList_5: [
+    { option: 'forms', display: 'Pokémon forms', description: `Some pokémon have the ability to take on different forms. At times, these differences are purely cosmetic and have no bearing on the difference in the Pokémon's stats from another; however, several Pokémon differ in stats (other than HP), type, and Ability depending on their form.` },
+    { option: 'pal_park', display: 'Pal park encounters', description: `Areas used for grouping pokémon encounters in Pal Park. They're like habitats that are specific to Pal Park.` },
+  ],
+  selectionList_6: [
+    { option: 'pokedex', display: 'Pokédex numbers', label1: 'Select pokédex', label2: 'Enter pokédex number', description: 'A list of pokedexes and the indexes reserved within them for this pokémon species.' },
+    { option: 'stats', display: 'Stats', label1: 'Select stat', label2: 'Enter base stat', description: 'Stats determine certain aspects of battles. Each pokémon has a value for each stat which grows as they gain levels and can be altered momenarily by effects in battles.' }
+  ]
+};
+
+export const option = {
+  selectionList_1: {
+    state: false, input: '',
+    selections: {
+      ability: false, color: false, eggGroup: false, 
+      growthRate: false, habitat: false, shape: false, type: false
+    }
+  },
+  selectionList_2: {
+    state: false, input: '',
+    selections: {
+      isBaby: false, isMega: false, isDefault: false,
+      formsSwitchable: false, hasGenderDifferences: false
+    }
+  },
+  selectionList_3: {
+    state: false, input: '', invalid: true,
+    selections: {
+      baseExperience: false, baseHappiness: false, captureRate: false, 
+      hatchCounter: false, height: false, pokemonNo: false, weight: false, 
+    }
+  },
+  selectionList_4: {
+    state: false, input: '', invalid: true,
+    selections: {
+      moves: false
+    }
+  },
+  selectionList_5: {
+    state: false, input: '', invalid: true,
+    selections: {
+      forms: false, pal_park: false
+    }
+  },
+  selectionList_6: {
+    state: false, input1: '', input2: '', invalid: true,
+    selections: {
+      stats: false, pokedex: false
+    }
+  }
+};
