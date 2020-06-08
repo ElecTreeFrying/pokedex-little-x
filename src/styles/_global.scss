@@ -19,3 +19,7 @@ span:focus,
 .mat-menu-item:focus {
   outline: none;
 }
+
+img {
+  pointer-events: none;
+}
