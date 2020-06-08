@@ -1,9 +1,10 @@
 import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
+import { NgModel } from '@angular/forms';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { Subscription } from 'rxjs';
 
 import { SearchOptionPokemonService, selections, options, option } from '../../_common/services/search-option-pokemon.service';
 import { SharedService } from '../../_common/services/shared.service';
-import { NgModel } from '@angular/forms';
 
 
 @Component({
@@ -80,14 +81,6 @@ export class SearchOptionPokemonComponent implements OnInit, OnDestroy {
       sl1(this.api.cached_sl1);
     }
 
-    this.option.selectionList_2.state = true
-    this.shared.updateOptionLoadedSelection = true;
-    this.selections.selectionList_2 = this.api.selectionList_2;
-
-    this.option.selectionList_3.state = true;
-    this.shared.updateOptionLoadedSelection = true;
-    this.selections.selectionList_3 = this.api.selectionList_3;
-
     const sl4 = () => {
       this.option.selectionList_4.state = true;
       this.shared.updateOptionLoadedSelection = true;
@@ -114,84 +107,127 @@ export class SearchOptionPokemonComponent implements OnInit, OnDestroy {
       });
     } else { sl5(this.api.cached_sl5); }
 
+    this.option.selectionList_2.state = true
+    this.selections.selectionList_2 = this.api.selectionList_2;
+
+    this.option.selectionList_3.state = true;
+    this.selections.selectionList_3 = this.api.selectionList_3;
+
     this.option.selectionList_6.state = true;
-    this.shared.updateOptionLoadedSelection = true;
     this.selections.selectionList_6 = this.api.selectionList_6;
 
+    this.shared.updateOptionLoadedSelection = true;
+
+  }
+
+  toggle(state: boolean, group: string, option: string) {
+
+    if (group === 'selectionList_6') {
+      this.option[group].input1 = '';
+      this.option[group].input2 = '';
+    } else {
+      this.option[group].input = '';
+    }
+
+    if (state) {
+      
+      setTimeout(() => 
+        this.option[group].selections[option] = state, 250
+      );
+      
+    } else {
+
+      this.option[group].selections[option] = state;
+
+      if (group === 'selectionList_6') return;
+
+      this.selections[group][option] = this._selections;
+      this._selections = [];
+    }
   }
 
   modelChangedSelection(model: string, group: string, type: string, others?: NgModel) {
 
     if (group === 'selectionList_3' || group === 'selectionList_6') {
-
-      this.option[group].invalid = others.invalid;
-
       return this.option[group].invalid = others.invalid;
     }
 
-    const _model = model.toLowerCase();
+    if (group === 'selectionList_4' && model === '') {
 
-    const filtered = (selection: any[]) => selection.filter(e => e.name.includes(_model));
-
-    if (model === null) {
       this.selections[group][type] = this._selections;
-    } else {
-      setTimeout(() => {
 
-        this.selections[group][type] = group !== 'selectionList_4'
-          ? filtered(this._selections)
-          : this._selections.map((group) => {
-              group.moves = this._selections_deep[group.name].filter(e => 
-                e.name.includes(_model.split(' ').join('-'))
-              );
-              return group;
-            }).filter((group) => group.moves.length > 0);
+      let data = [];
 
-      }, 150);
+      data = this._selections;
+      data[0].moves = this._selections_deep['physical'];
+      data[1].moves = this._selections_deep['special'];
+      data[2].moves = this._selections_deep['status'];
+
+      return this.selections[group][type] = data;
     }
+
+    if (model === null || model === '') {
+      return this.selections[group][type] = this._selections;
+    }
+
+    setTimeout(() => {
+
+      let data = null;
+
+      if (group === 'selectionList_4') {
+        data = this._selections.map((group) => {
+          group.moves = this._selections_deep[group.name].filter(e => 
+            e.name.includes(
+              model.toLowerCase().split(' ').join('-')
+            )
+          );
+          return group;
+        }).filter((group) => 
+          group.moves.length > 0
+        );
+      } else {
+        data = this._selections.filter(e => e.name.includes(model.toLowerCase()));
+      }
+
+      this.selections[group][type] = data;
+
+    }, 150);
+
   }
 
-  selectionChange(model: string, group: string, type: string) {
-
-    const entries = this.selections[group][type][model];
-
-    this.entries.next(entries);
-  }
-
-  focus(group: string, option: string) {
+  refreshSelectionList(group: string, option: string) {
 
     if (this.option[group].input.length > 0) return;
 
     const current = this.selections[group][option];
     const groups: any = {};
-    
-    if (group === 'selectionList_4') {
-      current.forEach((e: any) => {
-        groups[e.name] = e.moves
-      });
-    }
-
-    const filtered = (selection: any[]) => selection.filter(e => e.name.includes(this.option[group].input));
-    
-    if (this.option[group].input.length > 0) {
-      this.selections[group][option] = group !== 'selectionList_4'
-        ? filtered(current)
-        : current.map((group) => {
-            group.moves = groups[group.name].filter(e => e.name.includes(this.option[group].input));
-            return group;
-          });
-    }
 
     this._selections = current;
 
     if (group === 'selectionList_4') {
+      current.forEach((e: any) => {
+        groups[e.name] = e.moves  
+      });
+
       this._selections_deep = groups;
     }
+
+    const filtered = (selection: any[]) => selection.filter(e => e.name.includes(this.option[group].input));
+
+    setTimeout(() => {
+      this.selections[group][option] = group !== 'selectionList_4'
+        ? filtered(current)
+        : current.map((group) => {
+            group.moves = filtered(groups[group.name]);
+            return group;
+          });
+    });
+
   }
 
-  enter(group: string, type: string) {
+  autoCompleteSelection(event: MatAutocompleteSelectedEvent, group: string, type: string) {
 
-    const selected = this.selections[group][type].find(e => e.name === this.option[group].input);
+    const selected = this.selections[group][type].find(e => e.name === event.option.value);
 
     let entries = null;
     
@@ -202,6 +238,14 @@ export class SearchOptionPokemonComponent implements OnInit, OnDestroy {
     } else {
       entries = selected.data.pokemon_species;
     }
+
+    this.entries.next(entries);
+
+  }
+
+  selectionChange(model: string, group: string, type: string) {
+
+    const entries = this.api[group][type][model];
 
     this.entries.next(entries);
   }
@@ -226,29 +270,6 @@ export class SearchOptionPokemonComponent implements OnInit, OnDestroy {
     this.entries.next(
       this.api.filteredPokemonEntries(model)
     )
-  }
-
-  toggle(state: boolean, group: string, option: string) {
-
-    this.option[group].input = '';
-    this.option[group].input1 = '';
-    this.option[group].input2 = '';
-
-    if (state) {
-      
-      setTimeout(() => 
-        this.option[group].selections[option] = state, 250
-      );
-      
-    } else {
-
-      this.option[group].selections[option] = state;
-
-      if (group === 'selectionList_6') return;
-
-      this.selections[group][option] = this._selections;
-      this._selections = [];
-    }
   }
 
 }

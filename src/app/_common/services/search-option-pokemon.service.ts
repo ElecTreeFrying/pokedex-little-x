@@ -48,12 +48,7 @@ export class SearchOptionPokemonService {
       habitat: this._returnResults_1(this.http.get(this.url.habitat)),
       shape: this._returnResults_1(this.http.get(this.url.shape)),
       type: this._returnResults_1(this.http.get(this.url.type))
-    }).pipe(
-      map((data) => {
-        this.cached_sl1 = data;
-        return data;
-      })
-    );
+    })
   }
 
   get selectionList_2() {

@@ -31,12 +31,12 @@
           [placeholder]="'Select ' + item.placeholder" 
           [matAutocomplete]="auto" 
           [(ngModel)]="option.selectionList_1.input" 
-          (ngModelChange)="modelChangedSelection($event, 'selectionList_1', item.option)" 
-          (keydown.enter)="enter('selectionList_1', item.option)">
+          (ngModelChange)="modelChangedSelection($event, 'selectionList_1', item.option)">
         <mat-autocomplete 
           #auto="matAutocomplete" 
-          (opened)="focus('selectionList_1', item.option)" 
-          (closed)="selections.selectionList_1[item.option] = _selections">
+          (opened)="refreshSelectionList('selectionList_1', item.option)" 
+          (closed)="selections.selectionList_1[item.option] = _selections"
+          (optionSelected)="autoCompleteSelection($event, 'selectionList_1', item.option)">
           <mat-option 
             *ngFor="let x of selections.selectionList_1[item.option]" 
             [value]="x.name" 
@@ -169,13 +169,13 @@
           (ngModelChange)="modelChangedSelection($event, 'selectionList_4', 'moves')">
         <mat-autocomplete 
           #autoMove="matAutocomplete"
-          (opened)="focus('selectionList_4', 'moves')" 
+          (opened)="refreshSelectionList('selectionList_4', 'moves')" 
           (closed)="selections.selectionList_1['moves'] = _selections">
 
             <mat-optgroup 
               *ngFor="let group of selections.selectionList_4['moves']" 
               [label]="group.name">
-              <mat-option 
+              <mat-option
                 *ngFor="let move of group.moves" 
                 [value]="move | search: 'spn-move-name'" 
                 (click)="searchMove(move.name)">
@@ -222,12 +222,12 @@
           placeholder="Select" 
           [matAutocomplete]="auto" 
           [(ngModel)]="option.selectionList_5.input" 
-          (ngModelChange)="modelChangedSelection($event, 'selectionList_5', item.option)" 
-          (keydown.enter)="enter('selectionList_5', item.option)">
+          (ngModelChange)="modelChangedSelection($event, 'selectionList_5', item.option)">
         <mat-autocomplete 
           #auto="matAutocomplete" 
-          (opened)="focus('selectionList_5', item.option)" 
-          (closed)="selections.selectionList_5[item.option] = _selections">
+          (opened)="refreshSelectionList('selectionList_5', item.option)" 
+          (closed)="selections.selectionList_5[item.option] = _selections"
+          (optionSelected)="autoCompleteSelection($event, 'selectionList_5', item.option)">
           <mat-option 
             *ngFor="let x of selections.selectionList_5[item.option]" 
             [value]="x.name" 
