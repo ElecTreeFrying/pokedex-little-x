@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Location } from "@angular/common";
 import { Router, NavigationStart } from '@angular/router';
-import { map, filter, delay } from 'rxjs/operators';
+import { map, filter } from 'rxjs/operators';
 import { capitalize } from 'lodash';
 
 import { SharedService, pokedex, version_group, generation, type as SharedType } from './shared.service';

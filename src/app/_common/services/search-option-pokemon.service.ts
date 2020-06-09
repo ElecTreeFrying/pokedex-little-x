@@ -22,6 +22,8 @@ export class SearchOptionPokemonService {
     type: 'https://pokeapi.co/api/v2/type/'
   }
 
+  initializationBuffer: any[];
+
   constructor(
     private http: HttpClient,
     private shared: SharedService
@@ -37,7 +39,23 @@ export class SearchOptionPokemonService {
 
   private _cached_sl5: any;
   set cached_sl5(res: any) { this._cached_sl5 = res; }
-  get cached_sl5() { return this._cached_sl5; }
+  get cached_sl5() { return this._cached_sl5; } 
+
+  appInitialization(res: number, type: string = 'loading_indicator') {
+
+    if (res === 1) {
+      this.initializationBuffer = [];
+      this.shared.updateAppInitializationSelection = 1;
+    } else {
+      this.initializationBuffer.push(0);
+  
+      if (this.initializationBuffer.length === 3) {
+        this.initializationBuffer = undefined;
+        this.shared.updateAppInitializationSelection = 2;
+      }
+    }
+
+  }
 
   get selectionList_1() {
     return forkJoin({

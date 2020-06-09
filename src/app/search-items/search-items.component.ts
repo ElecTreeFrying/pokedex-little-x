@@ -126,7 +126,9 @@ export class SearchItemsComponent implements OnInit, AfterViewInit, OnDestroy {
   writeSelectedView(option: number) {
     
     this.selected = option;
-    this.cd.detectChanges();
+    setTimeout(() => {
+      this.shared.updateAppInitializationSelection = 8;
+    });
     
     sessionStorage.setItem('route', JSON.stringify({ id: option, type: 'search' }));
   }
@@ -137,7 +139,6 @@ export class SearchItemsComponent implements OnInit, AfterViewInit, OnDestroy {
     this.normalState = [];
 
     this.bottomSheet.dismiss();
-    this.shared.updateAppInitializationSelection = 3;
 
     if (option < 2) {
       this.shared.updateOptionLoadedSelection = true;

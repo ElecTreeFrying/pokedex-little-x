@@ -36,10 +36,16 @@ export class SearchOptionPokemonComponent implements OnInit, OnDestroy {
 
     this.subscriptions.push(this.shared.appInitialization.subscribe((res) => {
 
-      if (!(!!this.shared.keys && res === 3)) return;
+      if (!(!!this.shared.keys && res === 8)) return;
 
-      this.pageListeners();
-      
+      setTimeout(() => this.pageListeners(), 150);
+
+      const valid = !!this.api.cached_sl1 && !!this.api.cached_sl4 && !!this.api.cached_sl5;
+
+      if (!valid && !(!!this.api.initializationBuffer)) {
+        this.api.appInitialization(1);
+      }
+
     }))
 
   }
@@ -73,13 +79,13 @@ export class SearchOptionPokemonComponent implements OnInit, OnDestroy {
     };
 
     if (!this.api.cached_sl1) {
-      this.api.selectionList_1.subscribe((res) => {
+      const $ = this.api.selectionList_1.subscribe((res) => {
         this.api.cached_sl1 = res;
         sl1(res);
+        this.api.appInitialization(0, 'selectionList_1');
+        $.unsubscribe();
       });
-    } else {
-      sl1(this.api.cached_sl1);
-    }
+    } else { sl1(this.api.cached_sl1); }
 
     const sl4 = () => {
       this.option.selectionList_4.state = true;
@@ -88,9 +94,11 @@ export class SearchOptionPokemonComponent implements OnInit, OnDestroy {
     };
 
     if (!this.api.cached_sl4) {
-      this.api.loadedPokemonEntries.subscribe((res) => {
+      const $ = this.api.loadedPokemonEntries.subscribe((res) => {
         this.api.cached_sl4 = res;
         sl4();
+        this.api.appInitialization(0, 'selectionList_4');
+        $.unsubscribe();
       });
     } else { sl4(); }
 
@@ -101,9 +109,11 @@ export class SearchOptionPokemonComponent implements OnInit, OnDestroy {
     };
 
     if (!this.api.cached_sl5) {
-      this.api.selectionList_5.subscribe((res) => {
+      const $ = this.api.selectionList_5.subscribe((res) => {
         this.api.cached_sl5 = res;
         sl5(res);
+        this.api.appInitialization(0, 'selectionList_5');
+        $.unsubscribe();
       });
     } else { sl5(this.api.cached_sl5); }
 
