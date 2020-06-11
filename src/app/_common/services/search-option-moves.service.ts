@@ -156,7 +156,7 @@ export class SearchOptionMovesService {
           
         } else {
 
-          // e.moves = this.shared.moves.filter(e => e.contest_type).filter(c => c.contest_type.name === e.name);
+          e.moves = this.shared.moves.filter(e => e.contest_type).filter(c => c.contest_type.name === e.name);
 
         }
 
