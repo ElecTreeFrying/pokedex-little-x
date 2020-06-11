@@ -64,6 +64,27 @@ export class SearchPipe implements PipeTransform {
       if (data === 'weight') {
         return (+value / 4.536).toFixed(1).toString() + ' lbs';
       }
+      if (data === 'accuracy' || data === 'effectChance' || data === 'ailmentChance' || data === 'flinchChance' || data === 'statChance' || data === 'critRate') {
+        return `${value}%`;
+      }
+      if (data === 'moveNo') {
+        return `#${value}`;
+      }
+      if (data === 'drain' || data === 'healing') {
+        return +value < 0 ? `${value}% HP` : `+${value}% HP`;
+      }
+      if (data === 'maxHits' || data === 'maxTurns' || data === 'minHits' || data === 'minTurns') {
+        return `${value}`;
+      }
+      if (data === 'power') {
+        return `${value} Atk.`;
+      }
+      if (data === 'pp') {
+        return `${value} pp`;
+      }
+      if (data === 'priority') {
+        return `${value}`;
+      }
     }
 
     if (option === 'spn-move-name') {
