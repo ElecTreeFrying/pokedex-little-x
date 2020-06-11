@@ -29,10 +29,9 @@
           <p class="no-data">{{ selected | search: 'selection-display' }}</p>
 
         </mat-card-content>
-        <mat-card-content class="entries" *ngIf="entries !== null">
+        <mat-card-content class="pokemon-entry-content" *ngIf="entries !== null && selected === 0">
 
           <div matRipple class="entry" *ngFor="let entry of entries" (click)="selectEntry(entry.id)">
-            
             <img [src]="entry.byte64 | idToImage: 'byte64'" [alt]="entry.name">
             <div class="text-content">
               <div class="text">
@@ -40,7 +39,17 @@
                 <p>{{ entry.name | cardText }}</p>
               </div>
             </div>
+          </div>
 
+        </mat-card-content>
+        <mat-card-content class="moves-entry-content" *ngIf="entries !== null && selected === 1">
+
+          <div matRipple class="mat-elevation-z5" *ngFor="let move of entries">
+            <mat-card [ngStyle]="{ 'background': move | search: 'sm-type' }">
+              <mat-card-content>
+                <p class="text m-auto">{{ move | search: 'sm-name' }}</p>
+              </mat-card-content>
+            </mat-card>
           </div>
 
         </mat-card-content>
@@ -49,5 +58,7 @@
     </div>
 
   </div>
+
+  
 
 </div>

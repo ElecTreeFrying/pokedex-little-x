@@ -1,4 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import { capitalize } from 'lodash';
 
 import { type } from '../services/shared.service';
 
@@ -26,8 +27,12 @@ export class SearchPipe implements PipeTransform {
 
     if (option === 'spn-placeholder') {
 
-      if (value.meta.max > 10100) {
+      if (object === 'pokemonNo') {
         return `(${value.meta.min} to ${807}) and (${10001} to *${value.meta.max})`;
+      }
+
+      if (object === 'moveNo') {
+        return `(${value.meta.min} to ${728}) and (${10001} to *${value.meta.max})`;
       }
 
       return `(${value.meta.min} to *${value.meta.max})`;
@@ -67,6 +72,26 @@ export class SearchPipe implements PipeTransform {
 
     if (option === 'spn-selectionList_6') {
       return value.split(' ').join('-');
+    }
+
+    if (option === 'sm-list1-name') {
+
+      if (value.includes('generation')) {
+
+        value = value.split(' ');
+
+        return `${capitalize(value[0])} ${value[1].toUpperCase()}`;
+      }
+
+      return value.replace('pokemon', 'pokémon').replace('+', ' + ');
+    }
+
+    if (option === 'sm-name') {
+      return value.names.find(e => e.language.name === 'en').name;
+    }
+
+    if (option === 'sm-type') {
+      return type.find(e => e.name.toLowerCase() === value.type.name).color.default;
     }
 
   }

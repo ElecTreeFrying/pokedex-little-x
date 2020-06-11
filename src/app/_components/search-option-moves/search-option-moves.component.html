@@ -1,181 +1,158 @@
 
-<mat-accordion>
-  <mat-expansion-panel>
+<button mat-raised-button class="refresh" (click)="refreshed.next(true);shared.updateHideSearchSelection = true">
+  <span>Refresh</span>
+  <mat-icon>refresh</mat-icon>
+</button>
+
+<mat-divider></mat-divider>
+
+<div class="loading-progress" *ngIf="!option.selectionList_1.state">
+
+  <mat-spinner></mat-spinner>
+
+</div>
+
+<mat-accordion displayMode="flat" *ngIf="option.selectionList_1.state">
+
+  <mat-expansion-panel 
+    *ngFor="let item of options.selectionList_1" 
+    (opened)="toggle(true, 'selectionList_1', item?.option)" 
+    (closed)="toggle(false, 'selectionList_1', item?.option)">
     <mat-expansion-panel-header>
-      <mat-panel-title><span>Contest type</span></mat-panel-title>
+      <mat-panel-title><span>{{ item.display }}</span></mat-panel-title>
     </mat-expansion-panel-header>
     <ng-template matExpansionPanelContent>
+
+      <p *ngIf="option.selectionList_1.selections[item.option]">{{ item.description }}</p>
+
+      <mat-form-field appearance="outline" *ngIf="option.selectionList_1.selections[item.option]">
+        <input 
+          matInput 
+          [placeholder]="'Select ' + item.placeholder" 
+          [matAutocomplete]="auto" 
+          [(ngModel)]="option.selectionList_1.input" 
+          (ngModelChange)="modelChangedSelection($event, 'selectionList_1', item.option)">
+        <mat-autocomplete 
+          #auto="matAutocomplete" 
+          (opened)="refreshSelectionList('selectionList_1', item.option)" 
+          (closed)="closeSelection('selectionList_1', item.option)"
+          (optionSelected)="autoCompleteSelection($event, 'selectionList_1', item.option)">
+          <mat-option 
+            *ngFor="let x of selections.selectionList_1[item.option]" 
+            [value]="x.name">{{ x.name | search: 'sm-list1-name' }}</mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+
+      <p *ngIf="option.selectionList_1.selections[item.option]">Press enter to search</p>
+
+      <p class="loading"*ngIf="!option.selectionList_1.selections[item.option]">Please wait...</p>
+
     </ng-template>
   </mat-expansion-panel>
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title><span>Generation</span></mat-panel-title>
-    </mat-expansion-panel-header>
-    <ng-template matExpansionPanelContent>
-    </ng-template>
-  </mat-expansion-panel>
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title><span>Ailment</span></mat-panel-title>
-    </mat-expansion-panel-header>
-    <ng-template matExpansionPanelContent>
-    </ng-template>
-  </mat-expansion-panel>
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title><span>Category</span></mat-panel-title>
-    </mat-expansion-panel-header>
-    <ng-template matExpansionPanelContent>
-    </ng-template>
-  </mat-expansion-panel>
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title><span>Target</span></mat-panel-title>
-    </mat-expansion-panel-header>
-    <ng-template matExpansionPanelContent>
-    </ng-template>
-  </mat-expansion-panel>
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title><span>Type</span></mat-panel-title>
-    </mat-expansion-panel-header>
-    <ng-template matExpansionPanelContent>
-    </ng-template>
-  </mat-expansion-panel>
+
 </mat-accordion>
 
 <mat-divider></mat-divider>
 
-<mat-accordion>
-  <mat-expansion-panel>
+<div class="loading-progress" *ngIf="!option.selectionList_2.state">
+
+  <mat-spinner></mat-spinner>
+
+</div>
+
+<mat-accordion displayMode="flat" *ngIf="option.selectionList_2.state">
+
+  <mat-expansion-panel 
+    *ngFor="let item of options.selectionList_2"
+    (opened)="toggle(true, 'selectionList_2', item?.option)" 
+    (closed)="toggle(false, 'selectionList_2', item?.option)">
     <mat-expansion-panel-header>
-      <mat-panel-title><span>Accuracy</span></mat-panel-title>
+      <mat-panel-title><span>{{ item.display }}</span></mat-panel-title>
     </mat-expansion-panel-header>
     <ng-template matExpansionPanelContent>
+
+      <p *ngIf="option.selectionList_2.selections[item.option]">{{ item.description }}</p>
+
+      <mat-form-field appearance="outline" *ngIf="option.selectionList_2.selections[item.option]">
+        <mat-label>{{ selections.selectionList_2[item.option] | search: 'spn-placeholder': item.option }}</mat-label>
+        <input 
+          #numberModel="ngModel"
+          #numberModelEx
+          matInput
+          type="number"
+          autocomplete="off"
+          minMaxValidator 
+          [min-]="selections.selectionList_2[item.option].meta?.min" 
+          [max-]="selections.selectionList_2[item.option].meta?.max"
+          [type]="item.option"
+          [(ngModel)]="option.selectionList_2.input"
+          (ngModelChange)="modelChangedSelection($event, 'selectionList_2', item.option, numberModel)" 
+          (keydown.enter)="searchNumber('selectionList_2', item.option, '', numberModel)">
+      </mat-form-field>
+
+      <div class="text-below" *ngIf="option.selectionList_2.selections[item.option]">
+        <p>Press enter to search</p>
+        <p><strong>{{ option.selectionList_2.input | search: 'spn-input-display': option.selectionList_2.invalid: item.option }}</strong></p>
+      </div>
+
+      <p class="loading"*ngIf="!option.selectionList_2.selections[item.option]">Please wait...</p>
+
     </ng-template>
   </mat-expansion-panel>
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title><span>Damage class</span></mat-panel-title>
-    </mat-expansion-panel-header>
-    <ng-template matExpansionPanelContent>
-    </ng-template>
-  </mat-expansion-panel>
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title><span>Effect chance</span></mat-panel-title>
-    </mat-expansion-panel-header>
-    <ng-template matExpansionPanelContent>
-    </ng-template>
-  </mat-expansion-panel>
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title><span>Move no.</span></mat-panel-title>
-    </mat-expansion-panel-header>
-    <ng-template matExpansionPanelContent>
-    </ng-template>
-  </mat-expansion-panel>
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title><span>Ailment chance</span></mat-panel-title>
-    </mat-expansion-panel-header>
-    <ng-template matExpansionPanelContent>
-    </ng-template>
-  </mat-expansion-panel>
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title><span>Critical rate</span></mat-panel-title>
-    </mat-expansion-panel-header>
-    <ng-template matExpansionPanelContent>
-    </ng-template>
-  </mat-expansion-panel>
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title><span>Drain</span></mat-panel-title>
-    </mat-expansion-panel-header>
-    <ng-template matExpansionPanelContent>
-    </ng-template>
-  </mat-expansion-panel>
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title><span>Flinch chance</span></mat-panel-title>
-    </mat-expansion-panel-header>
-    <ng-template matExpansionPanelContent>
-    </ng-template>
-  </mat-expansion-panel>
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title><span>Healing</span></mat-panel-title>
-    </mat-expansion-panel-header>
-    <ng-template matExpansionPanelContent>
-    </ng-template>
-  </mat-expansion-panel>
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title><span>Max hits</span></mat-panel-title>
-    </mat-expansion-panel-header>
-    <ng-template matExpansionPanelContent>
-    </ng-template>
-  </mat-expansion-panel>
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title><span>Max turns</span></mat-panel-title>
-    </mat-expansion-panel-header>
-    <ng-template matExpansionPanelContent>
-    </ng-template>
-  </mat-expansion-panel>
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title><span>Min hits</span></mat-panel-title>
-    </mat-expansion-panel-header>
-    <ng-template matExpansionPanelContent>
-    </ng-template>
-  </mat-expansion-panel>
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title><span>Min turns</span></mat-panel-title>
-    </mat-expansion-panel-header>
-    <ng-template matExpansionPanelContent>
-    </ng-template>
-  </mat-expansion-panel>
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title><span>Stat chance</span></mat-panel-title>
-    </mat-expansion-panel-header>
-    <ng-template matExpansionPanelContent>
-    </ng-template>
-  </mat-expansion-panel>
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title><span>Power</span></mat-panel-title>
-    </mat-expansion-panel-header>
-    <ng-template matExpansionPanelContent>
-    </ng-template>
-  </mat-expansion-panel>
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title><span>PP</span></mat-panel-title>
-    </mat-expansion-panel-header>
-    <ng-template matExpansionPanelContent>
-    </ng-template>
-  </mat-expansion-panel>
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title><span>Priority</span></mat-panel-title>
-    </mat-expansion-panel-header>
-    <ng-template matExpansionPanelContent>
-    </ng-template>
-  </mat-expansion-panel>
+
 </mat-accordion>
 
 <mat-divider></mat-divider>
 
-<mat-accordion>
-  <mat-expansion-panel>
+<div class="loading-progress" *ngIf="!option.selectionList_3.state">
+
+  <mat-spinner></mat-spinner>
+
+</div>
+
+<mat-accordion displayMode="flat" *ngIf="option.selectionList_3.state">
+  
+  <mat-expansion-panel
+    (opened)="toggle(true, 'selectionList_3', 'superContestEffect')" 
+    (closed)="toggle(false, 'selectionList_3', 'superContestEffect')">
     <mat-expansion-panel-header>
-      <mat-panel-title><span>Super-contest-effect</span></mat-panel-title>
+      <mat-panel-title><span>{{ options.selectionList_3[0].display }}</span></mat-panel-title>
     </mat-expansion-panel-header>
     <ng-template matExpansionPanelContent>
+
+      <p *ngIf="option.selectionList_3.selections['superContestEffect']">{{ options.selectionList_3[0].description }}</p>
+
+      <mat-form-field appearance="outline" *ngIf="option.selectionList_3.selections['superContestEffect']">
+        <input 
+          matInput 
+          placeholder="Select" 
+          [matAutocomplete]="autoMove" 
+          [(ngModel)]="option.selectionList_3.input"
+          (ngModelChange)="modelChangedSelection($event, 'selectionList_3', 'superContestEffect')">
+        <mat-autocomplete 
+          #autoMove="matAutocomplete"
+          (opened)="refreshSelectionList('selectionList_3', 'superContestEffect')" 
+          (closed)="selections.selectionList_1['superContestEffect'] = _selections">
+
+            <mat-optgroup 
+              *ngFor="let group of selections.selectionList_3['superContestEffect']" 
+              [label]="group.name">
+              <mat-option
+                *ngFor="let move of group.moves" 
+                [value]="move | search: 'spn-move-name'" 
+                (click)="searchMove(move.name)">
+                <span [ngStyle]="{ 'color': move.type | search: 'type-color' }"><strong>({{ move.type }})</strong></span> {{ move | search: 'spn-move-name' }}
+              </mat-option>
+            </mat-optgroup>
+
+        </mat-autocomplete>
+      </mat-form-field>
+
+      <p *ngIf="option.selectionList_3.selections['superContestEffect']">Press enter to search</p>
+
+      <p class="loading"*ngIf="!option.selectionList_3.selections['superContestEffect']">Please wait...</p>
+
     </ng-template>
   </mat-expansion-panel>
+
 </mat-accordion>

@@ -46,7 +46,7 @@ export class SearchOptionPokemonComponent implements OnInit, OnDestroy {
         this.api.appInitialization(1);
       }
 
-    }))
+    }));
 
   }
 

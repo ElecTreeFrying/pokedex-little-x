@@ -7,7 +7,10 @@
     (refreshed)="refreshed.next($event)">
   </app-search-option-pokemon>
 
-  <app-search-option-moves *ngSwitchCase="1">
+  <app-search-option-moves
+    *ngSwitchCase="1" 
+    (entries)="entries.next($event)" 
+    (refreshed)="refreshed.next($event)">
   </app-search-option-moves>
 
   <app-search-option-items *ngSwitchCase="2">

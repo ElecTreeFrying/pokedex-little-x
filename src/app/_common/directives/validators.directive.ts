@@ -34,6 +34,11 @@ export class MinMaxValidatorDirective implements Validator {
             ((num >= this.min) && (num <= 807)) || 
             ((num >= 10001) && (num <= this.max))
           )
+        : this.type == 'moveNo'
+        ? (
+            ((num >= this.min) && (num <= 728)) || 
+            ((num >= 10001) && (num <= this.max))
+          )
         : (num > this.min - 1) && (num < this.max + 1);
 
       const isValid = num;

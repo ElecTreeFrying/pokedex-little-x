@@ -46,6 +46,7 @@ import { SearchPipe } from '../pipes/search.pipe';
     MatButtonModule,
     MatRippleModule,
     MatDialogModule,
+    MatIconModule,
     IdToImagePipeModule,
     CardTextPipeModule,
     MatProgressSpinnerModule,
