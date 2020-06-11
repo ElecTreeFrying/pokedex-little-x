@@ -135,7 +135,17 @@ export class SearchOptionMovesService {
         meta: { min: -7, max: 5 },
         data: this.shared.moves
       }
-    })
+    });
+  }
+
+  get selectionList_3() {
+
+    return of({
+      moveNo: {
+        meta: { min: 1, max: 10018 },
+        data: this.shared.moves
+      }
+    });
   }
 
   private _returnResults_1(result: Observable<any>) {
