@@ -22,6 +22,7 @@ export class SearchOptionPokemonComponent implements OnInit, OnDestroy {
   _selections_deep: any;
   options: any;
   option: any;
+  isListened: boolean;
 
   subscriptions: Subscription[];
   
@@ -40,9 +41,7 @@ export class SearchOptionPokemonComponent implements OnInit, OnDestroy {
 
       setTimeout(() => this.pageListeners(), 150);
 
-      const valid = !!this.api.cached_sl1 && !!this.api.cached_sl4 && !!this.api.cached_sl5;
-
-      if (!valid && !(!!this.api.initializationBuffer)) {
+      if (!(!!this.api.initializationBuffer || !!this.api.cached_sl1)) {
         this.api.appInitialization(1);
       }
 
@@ -63,11 +62,16 @@ export class SearchOptionPokemonComponent implements OnInit, OnDestroy {
 
     this.options = options;
     this.option = option;
+    this.isListened = false;
 
     this.subscriptions = [];
   }
 
   pageListeners() {
+    
+    if (this.isListened) return;
+
+    this.isListened = true;
     
     const sl1 = (res: any) => {
       this.option.selectionList_1.state = true;
